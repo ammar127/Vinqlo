@@ -71,7 +71,7 @@ module.exports = (app) => {
 // require('./models/User');
   
 
-  require('./utilities/passport');
+  //require('./utilities/passport');
 
   app.use(require('./routes'));
 
