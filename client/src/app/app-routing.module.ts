@@ -11,11 +11,7 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./layout/layout.component').then((m) => m.LayoutComponent),
-      },
+      
       {
         path: 'feed',
         loadChildren: () =>
@@ -54,6 +50,11 @@ const routes: Routes = [
         path: 'post',
         loadChildren: () =>
           import('./pages/post/post.module').then((m) => m.PostModule),
+      },
+      {
+        path: '',
+        redirectTo: 'feed',
+        pathMatch: 'full'
       },
     ],
   },
