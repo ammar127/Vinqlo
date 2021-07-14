@@ -8,12 +8,13 @@ import { SharedModule } from '../shared/shared.module';
 import { SidebarComponent } from './sidebar.component';
 
 @NgModule({
-  declarations: [LayoutComponent, FooterComponent,HeaderComponent, SidebarComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule
+  declarations: [
+    LayoutComponent,
+    FooterComponent,
+    HeaderComponent,
+    SidebarComponent,
   ],
-  exports:[LayoutComponent]
+  imports: [CommonModule, RouterModule, SharedModule],
+  exports: [LayoutComponent],
 })
-export class LayoutModule { }
+export class LayoutModule {}

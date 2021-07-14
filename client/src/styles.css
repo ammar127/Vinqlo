@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  background-color: #dafdfe !important;
+}
+.main-color {
+  color: #021a68;
+}
+.icons-color {
+  color: #25eaef;
+}
+.text-purple {
+  color: #91009b;
+}
+.btn-main {
+  background: #25eaef !important;
+  color: #fff !important;
+  display: block !important;
+  width: 100%;
+  border-radius: 30px !important;
+}
