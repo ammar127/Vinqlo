@@ -1,9 +1,0 @@
-{
-  "env": {
-    "FRONTEND_URL": "http://localhost:4200/",
-    "MONGO_PASSWORD": "__N4FWbp",
-    "JWT_KEY" : "secret_this_should_be_longer",
-    "GMAIL_USER": "vinqlo.gent@gmail.com",
-    "GMAIL_PASSWORD": "Vinqlo2020"
-  }
-}
