@@ -1,10 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-// TODO
-// export the array's from seeder folder 
-// and create the documents here
 
-let con = mongoose.connect('mongodb://localhost/SMARTUP', { // TODO mongodb URI config
+let con = mongoose.connect(process.env.dbUrl, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
   useFindAndModify: false,

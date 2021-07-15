@@ -4,9 +4,9 @@
   "description": "Gaming platform",
   "main": "app.js",
   "scripts": {
-    "install:admin": "cd admin && npm install --force --legacy-peer-deps",
-    "admin": "cd admin && npm start",
-    "build:admin": "cd admin && ng build --prod",
+    "install:client": "cd client && npm install --force --legacy-peer-deps",
+    "client": "cd client && npm start",
+    "build:client": "cd client && ng build --prod",
     "install:server": "npm install",
     "devStart": "nodemon app.js",
     "seed": "node server/seed.js"
