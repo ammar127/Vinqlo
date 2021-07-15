@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'SMART-UP', // TODO change the app name
+      name: 'Vinqlo',
       script: './app.js',
       instances: "1",
       exec_mode: 'cluster',
@@ -9,7 +9,6 @@ module.exports = {
       watch_delay: 1000,
       ignore_watch : ["node_modules", "server/public"],
       env: {
-
         PORT: '3000'
       }
     }
