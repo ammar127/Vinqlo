@@ -31,13 +31,13 @@ campusSchema.pre('validate', function(next){
 })
 
 campusSchema.methods.slugify = function(){
-    this.slug = slug('or') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
+    this.slug = slug('ca') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
 campusSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
-        name: this.body,
+        name: this.name,
         degree: this.degree,
     }
 }

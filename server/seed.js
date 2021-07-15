@@ -15,17 +15,22 @@ let con = mongoose.connect(process.env.dbUrl, {
     init()
   });
 
-require('./models/User');
+const campus = require('./seeder/campus');
+const user = require('./seeder/user');
+const community = require('./seeder/community');
+const post = require('./seeder/post');
 
-const packages = require('./seeder/packages');
-const users = require('./seeder/users');
-
-function init() {
+async function init() {
   
     console.log("dropping DB");
     mongoose.connection.db.dropDatabase();
-  
-   
+    await campus();
+    await user();
+    await community();
+    await post();
+
+    exit();
+
 }
  
 function exit() {

@@ -40,7 +40,7 @@ var reportSchema = mongoose.Schema({
 
 });
 
-reportSchema.pre('find', (next) => {
+reportSchema.pre('findOne', (next) => {
     this.populate('post');
     this.populate('user');
     this.populate('by');
@@ -58,7 +58,7 @@ reportSchema.pre('validate', function(next){
 })
 
 reportSchema.methods.slugify = function(){
-    this.slug = slug('or') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
+    this.slug = slug('re') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
 reportSchema.methods.toJSON = function(){

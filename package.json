@@ -1,7 +1,7 @@
 {
-  "name": "SMARTUP",
+  "name": "Vinqlo",
   "version": "1.0.0",
-  "description": "Gaming platform",
+  "description": "Bloging Site",
   "main": "app.js",
   "scripts": {
     "install:client": "cd client && npm install --force --legacy-peer-deps",

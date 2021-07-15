@@ -23,7 +23,7 @@ var communitySchema = mongoose.Schema({
 
 });
 
-communitySchema.pre('find', (next) => {
+communitySchema.pre('findOne', (next) => {
     this.populate('by');
     next();
 });
@@ -39,7 +39,7 @@ communitySchema.pre('validate', function(next){
 })
 
 communitySchema.methods.slugify = function(){
-    this.slug = slug('or') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
+    this.slug = slug('com') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
 communitySchema.methods.toJSON = function(){
@@ -50,5 +50,5 @@ communitySchema.methods.toJSON = function(){
     }
 }
 
-const Community = mongoose.model('Comment', communitySchema);
+const Community = mongoose.model('Community', communitySchema);
 module.exports = Community;

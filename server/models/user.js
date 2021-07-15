@@ -56,7 +56,7 @@ var userSchema = mongoose.Schema({
 
 });
 
-userSchema.pre('find', (next) => {
+userSchema.pre('findOne', (next) => {
     this.populate('saved');
     this.populate('campus');
     this.populate('communities');

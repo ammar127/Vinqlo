@@ -28,7 +28,7 @@ var commentSchema = mongoose.Schema({
 
 });
 
-commentSchema.pre('find', (next) => {
+commentSchema.pre('findOne', (next) => {
     this.populate('by');
     next();
 });
@@ -44,7 +44,7 @@ commentSchema.pre('validate', function(next){
 })
 
 commentSchema.methods.slugify = function(){
-    this.slug = slug('or') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
+    this.slug = slug('co') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
 commentSchema.methods.toJSON = function(){

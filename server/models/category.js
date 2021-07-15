@@ -23,7 +23,7 @@ var categorySchema = mongoose.Schema({
 
 });
 
-categorySchema.pre('find', (next) => {
+categorySchema.pre('findOne', (next) => {
     this.populate('by');
     next();
 });
@@ -39,7 +39,7 @@ categorySchema.pre('validate', function(next){
 })
 
 categorySchema.methods.slugify = function(){
-    this.slug = slug('or') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
+    this.slug = slug('cat') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
 categorySchema.methods.toJSON = function(){
