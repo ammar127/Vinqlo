@@ -52,7 +52,7 @@ var postSchema = mongoose.Schema({
 
 });
 
-postSchema.pre('find', (next) => {
+postSchema.pre('findOne', (next) => {
     this.populate('by');
     this.populate('comments');
     next();

@@ -19,6 +19,7 @@ const campus = require('./seeder/campus');
 const user = require('./seeder/user');
 const community = require('./seeder/community');
 const post = require('./seeder/post');
+const report = require('./seeder/report');
 
 async function init() {
   
@@ -28,6 +29,7 @@ async function init() {
     await user();
     await community();
     await post();
+    await report();
 
     exit();
 
