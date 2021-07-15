@@ -1,51 +1,43 @@
- jwt = require('express-jwt');
-let secret = require('../config').secret;
-let mongoose = require('mongoose');
-let User = mongoose.model('User');
-let UnauthorizedResponse = require('express-http-response').UnauthorizedResponse;
-function getTokenFromHeader(req){
-  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' ||
-      req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    return req.headers.authorization.split(' ')[1];
-  }
+var jsonwebtoken = require('jsonwebtoken');
+var User = require('../models/User');
+var httpResponse = require('express-http-response');
 
-  return null;
-}
-const user = (req, res, next) => {
-  User.findById(req.payload.id).then(function(user){
-    if(!user){
-       next(new UnauthorizedResponse());
+const isToken = function (req, res, next){
+    var token = req.headers.authorization.split(' ')
+    if(typeof token[1] === 'undefined' || typeof token[1] === null){
+        next(new httpResponse.UnauthorizedResponse());
     }
-    // also add here bit of status
-    req.user = user
-    next();
-  }).catch(next(new UnauthorizedResponse()));
-}
-const admin = (req, res, next) => {
-  User.findById(req.payload.id).then(function(user){
-    if(!user){
-        next(new UnauthorizedResponse ());
-    }else if(user.role !== 2){
-      next(new UnauthorizedResponse());
+    else{
+        jsonwebtoken.verify(token[1], 'shhhhh', (err, data) => {
+            if(err){
+              next(new httpResponse.UnauthorizedResponse());
+            }
+            else{
+                req.email = data.user
+                next()
+            }
+        })
     }
-    req.user = user;
-    next();
-  }).catch();
 }
-let auth = {
-  required: jwt({
-    secret: secret,
-    userProperty: 'payload',
-    getToken: getTokenFromHeader
-  }),
-  optional: jwt({
-    secret: secret,
-    userProperty: 'payload',
-    credentialsRequired: false,
-    getToken: getTokenFromHeader
-  }),
-  user,
-  admin
-};
 
-module.exports = auth;
+const isUser = function(req, res, next){
+    User.findOne({email: req.email}, (err, user) => {
+        if(err){
+          next(new httpResponse.UnauthorizedResponse());
+        }
+        else{
+            req.user = user
+            next()
+        }
+    })   
+}
+
+const isAdmin = function(req, res, next){
+    if(req.user.userType === 1){
+        next()
+    }
+    else
+    next(new httpResponse.UnauthorizedResponse());
+}
+
+module.exports = {isToken, isUser, isAdmin}

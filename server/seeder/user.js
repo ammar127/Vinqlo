@@ -8,7 +8,7 @@ async function seedUser(){
     
     for(var i=0;i<100;i++){
 
-        const n1 = Math.floor(Math.random() * 9);
+        const n1 = Math.floor(Math.random() * 7);
         const n2 = Math.floor(Math.random() * 2);
 
         let user = new User();

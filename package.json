@@ -1,7 +1,7 @@
 {
   "name": "Vinqlo",
   "version": "1.0.0",
-  "description": "Bloging Site",
+  "description": "Blogging Site",
   "main": "app.js",
   "scripts": {
     "install:client": "cd client && npm install --force --legacy-peer-deps",

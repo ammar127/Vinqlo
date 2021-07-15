@@ -13,20 +13,10 @@ var categorySchema = mongoose.Schema({
     name:{
         type: String,
         required: true
-    },
-
-    by:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
     }
 
 });
 
-categorySchema.pre('findOne', (next) => {
-    this.populate('by');
-    next();
-});
 
 categorySchema.plugin(uniqueValidator);
 categorySchema.plugin(mongoosastic);
@@ -46,7 +36,6 @@ categorySchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         name: this.body,
-        by: this.by,
     }
 }
 
