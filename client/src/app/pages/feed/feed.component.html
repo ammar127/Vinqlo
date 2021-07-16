@@ -1,6 +1,11 @@
 <section>
   <div class="container">
     <div class="row">
+      <div class="col-md-12 my-3">
+        <button class="btn btn-lg btn-primary" (click)="open(content)">
+          Ad Post Modal
+        </button>
+      </div>
       <div class="col-md-12">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
           <li [ngbNavItem]="1">
@@ -276,3 +281,72 @@
     </div>
   </div>
 </section>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-purple" id="modal-basic-title">Create Post</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="input-field">
+          <label for="">Select Community</label>
+          <select class="selectpicker form-control custom-border">
+            <option>Mustard</option>
+            <option>Ketchup</option>
+            <option>Relish</option>
+          </select>
+          <img
+            src="../../assets/images/caret-down-solid.png"
+            class="select-arrow"
+            alt=""
+          />
+        </div>
+        <div class="input-field">
+          <label for=""> Title</label>
+          <input
+            type="text"
+            class="form-control custom-border"
+            placeholder="Title"
+          />
+        </div>
+        <div class="input-field">
+          <label for=""> Title</label>
+          <textarea
+            name=""
+            class="form-control"
+            placeholder="What do you want to share"
+            id=""
+            cols="30"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="input-field">
+          <label for=""> Tag</label>
+          <input
+            type="text"
+            class="form-control custom-border"
+            placeholder="Tags (separate with,)"
+          />
+        </div>
+        <div class="input-field">
+          <label for=""> Upload Image</label>
+          <input
+            type="file"
+            class="form-control custom-border"
+            placeholder="Title"
+          />
+        </div>
+        <button class="btn mb-2 btn-main">Post</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
