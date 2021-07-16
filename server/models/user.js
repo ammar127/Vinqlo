@@ -50,13 +50,25 @@ var userSchema = mongoose.Schema({
     role:{
         type: Number,
         enum:[1, 2, 3],
-        require: true,
         default: 3
-    } // 1- Super Admin, 2- Admin, 3- User
+    }, // 1- Super Admin, 2- Admin, 3- User
+
+    verified:{
+        type: Boolean,
+        default: false
+    }, 
+
+    otp:{
+        type: String,
+    }, 
+
+    otpExpiry: {
+        type: Date
+    }
 
 });
 
-userSchema.pre('findOne', (next) => {
+userSchema.pre('findOne', function (next) {
     this.populate('saved');
     this.populate('campus');
     this.populate('communities');
@@ -81,10 +93,23 @@ userSchema.methods.generateToken = function(){
     this.token = jsonwebtoken.sign({user: this.email}, 'shhhhh')
 }
 
-userSchema.methods.toJSON = function(){
+userSchema.methods.toAuthJSON = function(){
     this.generateToken()
     return{
         token: this.token,
+        name: this.name,
+        email: this.email,
+        bio: this.bio,
+        campus: this.campus,
+        degree: this.degree,
+        saved: this.saved,
+        communities: this.communities, 
+        role: this.role
+    }
+}
+
+userSchema.methods.toJSON = function(){
+    return{
         name: this.name,
         email: this.email,
         bio: this.bio,

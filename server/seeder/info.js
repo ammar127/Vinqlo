@@ -24,6 +24,7 @@ async function seedInfo(){
     user2.campus = campuses[2]._id;
     user2.degree = campuses[2].degree[2];
     user2.role = 2;
+    user2.verified = true;
     await user2.save();
 
     console.log('Your Info Seeded')

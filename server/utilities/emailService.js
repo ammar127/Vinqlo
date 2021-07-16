@@ -32,13 +32,13 @@ const sendEmail = (mailDetails) => {
 
 const sendEmailVerificationOTP = async (user) => {
   sendEmail({
-    from: " SMARTUP Notification <donotreply@SMARTUP.com>",
+    from: " Vinqlo Notification <donotreply@Vinqlo.com>",
     to: user.email,
-    subject: "SMARTUP Email Verification",
+    subject: "Vinqlo Email Verification",
     templateObj: {
       ...user,
-      emailText: `<p>Please verify that your email address is ${user.email} and that you entered it when signing up for SMARTUP.</p>
-       <p>Enter this OTP to complete the Signup.</p>`,
+      emailText: `<p>Please verify that your email address is ${user.email} and that you entered it when signing up for Vinqlo.</p>
+       <p>Enter this <u><b>${user.otp}</b></u> OTP to complete the Signup.</p>`,
     },
   });
 };
@@ -46,28 +46,28 @@ const sendEmailVerificationOTP = async (user) => {
 
 const sendEmailVerificationSuccess = async (user) => {
   sendEmail({
-    from: " SMARTUP Notification <donotreply@SMARTUP.com>",
+    from: " Vinqlo Notification <donotreply@Vinqlo.com>",
     to: user.email,
     subject: "Your Email verified successfully",
     templateObj: {
       ...user,
       emailText: `
-      <h1>Welcome to SMARTUP</h1>. <br>
+      <h1>Welcome to Vinqlo</h1>. <br>
         you have successfully verified your email address. <br>
-        <i>Let's Play</i>
+        <i>Let's Post something</i>
       `,
     },
   });
 };
 const sendEmailOTP = async (user) => {
   sendEmail({
-    from: " SMARTUP Notification <donotreply@SMARTUP.com>",
+    from: " Vinqlo Notification <donotreply@Vinqlo.com>",
     to: user.email,
     subject: "OTP Request",
     templateObj: {
       ...user,
       emailText: `
-      <p>We received an OTP request on your SMARTUP Account.</p>.
+      <p>We received an OTP request on your Vinqlo Account.</p>.
       <p>Enter this OTP to complete the process.</p>
       `,
     },
@@ -76,7 +76,7 @@ const sendEmailOTP = async (user) => {
 
 const sendEmailForgotPasswordSuccess = async (user) => {
   sendEmail({
-    from: " SMARTUP Notification <donotreply@SMARTUP.com>",
+    from: " Vinqlo Notification <donotreply@Vinqlo.com>",
     to: user.email,
     subject: "Your Account's password has been reset",
     templateObj: {
@@ -91,13 +91,13 @@ const sendEmailForgotPasswordSuccess = async (user) => {
 
 const sendEmailCreateAdmin = async (user) => {
   sendEmail({
-    from: " SMARTUP Notification <donotreply@SMARTUP.com>",
+    from: " Vinqlo Notification <donotreply@Vinqlo.com>",
     to: user.email,
     subject: "Your Admin Account is live",
     templateObj: {
       ...user,
       emailText: `
-      Congratulations – your account is live and ready for action. You now have access to SMARTUP admin.
+      Congratulations – your account is live and ready for action. You now have access to Vinqlo admin.
       Your password for the ${user.email} need to be reset. <br>
       `,
     },

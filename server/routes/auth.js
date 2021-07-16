@@ -1,5 +1,5 @@
 var jsonwebtoken = require('jsonwebtoken');
-var User = require('../models/User');
+var User = require('../models/user');
 var httpResponse = require('express-http-response');
 
 const isToken = function (req, res, next){

@@ -8,7 +8,7 @@ async function seedUser(){
     
     for(var i=0;i<100;i++){
 
-        const n1 = Math.floor(Math.random() * 7);
+        const n1 = Math.floor(Math.random() * 5);
         const n2 = Math.floor(Math.random() * 2);
 
         let user = new User();
@@ -18,6 +18,7 @@ async function seedUser(){
         user.bio = faker.lorem.sentence(); 
         user.campus = campuses[n1]._id;
         user.degree = campuses[n1].degree[n2];
+        user.verified = true;
 
         await user.save();
     }
