@@ -14,10 +14,10 @@
             </div>
             <form [formGroup]="authForm" (ngSubmit)="submitForm()">
               <div class="input-field">
-                <input formControlName="fname" type="text" class="form-control custom-border" placeholder="First Name"  *ngIf="!isLogin"/>
+                <input formControlName="firstName" type="text" class="form-control custom-border" placeholder="First Name"  *ngIf="!isLogin"/>
               </div>
               <div class="input-field">
-                <input formControlName="lname" type="text" class="form-control custom-border" placeholder="Last Name" *ngIf="!isLogin"/>
+                <input formControlName="lastName" type="text" class="form-control custom-border" placeholder="Last Name" *ngIf="!isLogin"/>
               </div>
               <div class="input-field">
                 <input formControlName="email" type="email" class="form-control custom-border" placeholder="Email" />
