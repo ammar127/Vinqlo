@@ -1,0 +1,76 @@
+.card {
+  border: none;
+  border-radius: 15px;
+  padding: 30px;
+}
+.single-post-card {
+  border-radius: 20px;
+  padding: 15px;
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row !important;
+}
+.single-post-card .back {
+  width: 5%;
+  text-align: center;
+}
+.single-post-card .single-post {
+  width: 95%;
+}
+.client-card .client-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.btn-join {
+  background-color: #f6f6f6;
+}
+
+::ng-deep .dropdown-toggle::after {
+  display: none !important;
+}
+
+.client-card {
+  border-radius: 20px;
+  padding: 15px;
+  margin: 10px 0px;
+}
+.client-card .client-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.client-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.client-footer div ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+.client-footer div ul li {
+  margin-left: 20px;
+}
+.client-post img {
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.comment-box {
+  border-radius: 15px;
+  background: #fff;
+  padding: 44px;
+}
+.comment p {
+  color: #433acd;
+  margin-bottom: 9px;
+}
+.comment span {
+  color: #6f7072;
+}
+.comment-input input {
+  border-radius: 30px;
+  border: none;
+}
