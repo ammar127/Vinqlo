@@ -31,14 +31,13 @@
   margin-bottom: 0;
   list-style: none;
   align-items: center !important;
-  justify-content: space-around !important;
   background: #fff;
   border-top-left-radius: 25px !important;
   border-top-right-radius: 25px !important;
 }
 
 ::ng-deep .nav-item {
-  width: 50% !important;
+  width: 25% !important;
   text-align: center;
 }
 ::ng-deep .nav-tabs .nav-link {
@@ -54,6 +53,12 @@
 }
 ::ng-deep .dropdown-toggle::after {
   display: none !important;
+}
+::ng-deep .tab-content {
+  margin-top: 0px !important;
+}
+.main-profile-card {
+  border-radius: 0px 0px 15px 15px !important;
 }
 .card {
   border: none;

@@ -45,21 +45,13 @@
         </div>
       </div>
       <div class="col-md-8">
-        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mt-4">
           <li [ngbNavItem]="1">
-            <a ngbNavLink
-              ><img
-                src="../../assets/images/home.svg"
-                class="mr-2"
-                width="20px"
-                alt=""
-              />
-              Feed</a
-            >
+            <a ngbNavLink> Saved Posts</a>
             <ng-template ngbNavContent>
               <div class="row">
-                <div class="col-md-12 my-3">
-                  <div class="card shadow-sm">
+                <div class="col-md-12">
+                  <div class="card shadow-sm main-profile-card">
                     <div class="client-card shadow-sm">
                       <div class="client-header">
                         <div>
@@ -183,58 +175,18 @@
             </ng-template>
           </li>
           <li [ngbNavItem]="2">
-            <a ngbNavLink
-              ><img
-                src="../../assets/images/explore.svg"
-                class="mr-2"
-                width="20px"
-                alt=""
-              />
-              Academics</a
-            >
+            <a ngbNavLink> Communities</a>
             <ng-template ngbNavContent>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="search-field">
-                    <input
-                      type="text"
-                      class="form-control shadow-sm"
-                      placeholder="Search by name"
-                    />
-                    <img
-                      src="../../../assets/images/search-solid.svg"
-                      width="30px"
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="community">
-                    <h5 class="text-purple">Create commuinty</h5>
-                    <a href=""
-                      ><i
-                        class="fa main-color fa-plus-circle"
-                        aria-hidden="true"
-                      ></i
-                    ></a>
-                  </div>
-                  <div class="campus">
-                    <h5 class="text-purple">Campus</h5>
-                    <div class="campus-list">
-                      <a class="mt-2" href="">Campus boekentoren</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-9">
-                  <div class="community">
-                    <h5 class="text-purple">Civil Engineering</h5>
-                  </div>
-                  <div class="card shadow-sm">
+                  <div class="card shadow-sm main-profile-card">
                     <div class="client-card shadow-sm">
                       <div class="client-header">
                         <div>
-                          <h6 class="main-color mb-0">Physics</h6>
-                          <small class="text-muted">Jaun jose</small>
+                          <h6 class="main-color mb-0">Overpoort Warriors</h6>
+                          <small class="text-muted"
+                            >Jaun jose jan 10, 2021, 4:58:23 AM</small
+                          >
                         </div>
                         <div>
                           <button class="btn btn-join">
@@ -277,8 +229,10 @@
                     <div class="client-card shadow-sm">
                       <div class="client-header">
                         <div>
-                          <h6 class="main-color mb-0">Physics</h6>
-                          <small class="text-muted">Jaun jose</small>
+                          <h6 class="main-color mb-0">Overpoort Warriors</h6>
+                          <small class="text-muted"
+                            >Jaun jose jan 10, 2021, 4:58:23 AM</small
+                          >
                         </div>
                         <div>
                           <button class="btn btn-join">
@@ -317,6 +271,134 @@
                         ></i>
                         1</span
                       >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink> My Posts</a>
+            <ng-template ngbNavContent>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card shadow-sm main-profile-card">
+                    <div class="client-card shadow-sm">
+                      <div class="client-header">
+                        <div>
+                          <h6 class="main-color mb-0">Running every day</h6>
+                        </div>
+
+                        <div ngbDropdown class="d-inline-block">
+                          <button
+                            class="btn"
+                            id="dropdownBasic1"
+                            ngbDropdownToggle
+                          >
+                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                          </button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem>Action - 1</button>
+                            <button ngbDropdownItem>Another Action</button>
+                            <button ngbDropdownItem>
+                              Something else is here
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="my-4">Any group of people to go running ?</p>
+                      <div class="client-footer">
+                        <div>
+                          <span class="text-purple">running, outdoors</span>
+                        </div>
+                        <div>
+                          <ul>
+                            <li>
+                              <a href="">
+                                <i class="fas icons-color fa-heart"></i> 2
+                              </a>
+                            </li>
+                            <li>
+                              <a href=""
+                                ><i class="fas icons-color fa-comments"></i>
+                                23</a
+                              >
+                            </li>
+                            <li>
+                              <a href=""
+                                ><i class="fas icons-color fa-bookmark"></i
+                              ></a>
+                            </li>
+                            <li>
+                              <a href="">
+                                <i class="fas icons-color fa-share"></i
+                              ></a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="client-card shadow-sm">
+                      <div class="client-header">
+                        <div>
+                          <h6 class="main-color mb-0">Running every day</h6>
+                        </div>
+
+                        <div ngbDropdown class="d-inline-block">
+                          <button
+                            class="btn"
+                            id="dropdownBasic1"
+                            ngbDropdownToggle
+                          >
+                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                          </button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem>Action - 1</button>
+                            <button ngbDropdownItem>Another Action</button>
+                            <button ngbDropdownItem>
+                              Something else is here
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="my-4">Any group of people to go running ?</p>
+                      <div class="client-post">
+                        <img
+                          src="../../../assets/images/20487.png"
+                          class="img-fluid"
+                          alt=""
+                        />
+                      </div>
+                      <div class="client-footer">
+                        <div>
+                          <span class="text-purple">running, outdoors</span>
+                        </div>
+                        <div>
+                          <ul>
+                            <li>
+                              <a href="">
+                                <i class="fas icons-color fa-heart"></i> 2
+                              </a>
+                            </li>
+                            <li>
+                              <a href=""
+                                ><i class="fas icons-color fa-comments"></i>
+                                23</a
+                              >
+                            </li>
+                            <li>
+                              <a href=""
+                                ><i class="fas icons-color fa-bookmark"></i
+                              ></a>
+                            </li>
+                            <li>
+                              <a href="">
+                                <i class="fas icons-color fa-share"></i
+                              ></a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
