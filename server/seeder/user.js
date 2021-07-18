@@ -17,7 +17,7 @@ async function seedUser(){
         await user.setPassword(faker.internet.password());
         user.bio = faker.lorem.sentence(); 
         user.campus = campuses[n1]._id;
-        user.degree = campuses[n1].degree[n2];
+        user.degree = campuses[n1].degrees[n2]._id;
         user.verified = true;
 
         await user.save();

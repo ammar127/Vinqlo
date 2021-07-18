@@ -19,6 +19,11 @@ var communitySchema = mongoose.Schema({
         ref: 'Campus',
         required: true
     },
+    degree:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Degree',
+        required: true
+    },
     by:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

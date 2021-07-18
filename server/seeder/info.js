@@ -12,7 +12,7 @@ async function seedInfo(){
     await user.setPassword('1234');
     user.bio = faker.lorem.sentence(); 
     user.campus = campuses[2]._id;
-    user.degree = campuses[2].degree[2];
+    user.degree = campuses[2].degrees[2]._id;
 
     await user.save();
 
@@ -22,7 +22,7 @@ async function seedInfo(){
     await user2.setPassword('1234');
     user2.bio = faker.lorem.sentence(); 
     user2.campus = campuses[2]._id;
-    user2.degree = campuses[2].degree[2];
+    user2.degree = campuses[2].degrees[2]._id;
     user2.role = 2;
     user2.verified = true;
     await user2.save();

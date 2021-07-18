@@ -33,7 +33,8 @@ var userSchema = mongoose.Schema({
     },
 
     degree:{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Degree',
         required: true,
     },
 
