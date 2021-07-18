@@ -73,6 +73,15 @@ module.exports = (app) => {
 
   //require('./utilities/passport');
 
+  require('./models/user')
+  require('./models/post')
+  require('./models/degree')
+  require('./models/campus')
+  require('./models/category')
+  require('./models/community')
+  require('./models/comment')
+  require('./models/report')
+
   app.use(require('./routes'));
 
   app.use(function (req, res, next) {

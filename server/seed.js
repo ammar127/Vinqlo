@@ -1,10 +1,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-// TODO
-// export the array's from seeder folder 
-// and create the documents here
+const MONGODB_URI = require('./config').MONGODB_URI;
 
-let con = mongoose.connect('mongodb://localhost/SMARTUP', { // TODO mongodb URI config
+let con = mongoose.connect(MONGODB_URI, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -18,17 +16,31 @@ let con = mongoose.connect('mongodb://localhost/SMARTUP', { // TODO mongodb URI 
     init()
   });
 
-require('./models/User');
+const campus = require('./seeder/campus');
+const info = require('./seeder/info');
+const user = require('./seeder/user');
+const community = require('./seeder/community');
+const post = require('./seeder/post');
+const report = require('./seeder/report');
+const category = require('./seeder/category')
+const comment = require('./seeder/comment')
 
-const packages = require('./seeder/packages');
-const users = require('./seeder/users');
-
-function init() {
+async function init() {
   
     console.log("dropping DB");
-    mongoose.connection.db.dropDatabase();
-  
-   
+    await mongoose.connection.db.dropDatabase();
+    
+    await campus();
+    await info();
+    await user();
+    await community();
+    await post();
+    await report();
+    await category();
+    await comment();
+
+    exit();
+
 }
  
 function exit() {
