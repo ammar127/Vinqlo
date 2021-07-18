@@ -69,12 +69,15 @@ var userSchema = mongoose.Schema({
 
 });
 
-userSchema.pre('findOne', function (next) {
+const preFind = function () {
     this.populate('saved');
     this.populate('campus');
+    this.populate('degree');
     this.populate('communities');
-    next();
-});
+}
+userSchema.pre('findOne', preFind);
+userSchema.pre('find', preFind);
+userSchema.pre('findById', preFind);
 
 userSchema.plugin(uniqueValidator);
 userSchema.plugin(mongoosastic);
