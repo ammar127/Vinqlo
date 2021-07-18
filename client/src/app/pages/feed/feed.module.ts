@@ -7,6 +7,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [FeedComponent],
-  imports: [CommonModule, FeedRoutingModule],
+  imports: [CommonModule, FeedRoutingModule, SharedModule],
 })
 export class FeedModule {}
