@@ -14,7 +14,11 @@ var communitySchema = mongoose.Schema({
         type: String,
         required: true
     },
-
+    campus:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Campus',
+        required: true
+    },
     by:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

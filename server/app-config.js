@@ -75,6 +75,7 @@ module.exports = (app) => {
 
   require('./models/user')
   require('./models/post')
+  require('./models/degree')
   require('./models/campus')
   require('./models/category')
   require('./models/community')

@@ -1,7 +1,4 @@
 var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
-var mongoosastic = require('mongoosastic');
-var mongoosePaginate = require('mongoose-paginate-v2');
 var slug = require('slug');
 
 var campusSchema = mongoose.Schema({
@@ -15,14 +12,18 @@ var campusSchema = mongoose.Schema({
         required: true
     },
 
-    degree:{
-        type: [String]
-    }
+    degrees:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Degree',}]
 
 });
 
-campusSchema.plugin(mongoosastic);
-campusSchema.plugin(mongoosePaginate);
+const prePopulate = function () {
+        this.populate('degrees');
+}
+campusSchema.pre('find', prePopulate);
+campusSchema.pre('findOne', prePopulate);
+campusSchema.pre('findById',prePopulate);
 
 campusSchema.pre('validate', function(next){
     if(!this.slug)
@@ -38,7 +39,7 @@ campusSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         name: this.name,
-        degree: this.degree,
+        degrees: this.degrees,
     }
 }
 

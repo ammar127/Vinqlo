@@ -28,7 +28,7 @@ const comment = require('./seeder/comment')
 async function init() {
   
     console.log("dropping DB");
-    mongoose.connection.db.dropDatabase();
+    await mongoose.connection.db.dropDatabase();
     
     await campus();
     await info();

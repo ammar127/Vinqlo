@@ -45,6 +45,7 @@ export class AuthComponent implements OnInit {
       this.authForm.removeControl('campus');
     }
   }
+  get f() {return this.authForm.controls}
 
   submitForm() {
     this.isSubmitting = true;
