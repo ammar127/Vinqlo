@@ -1,9 +1,0 @@
-<div class="m-sidebar-wrapper">
-  <h2 class="a-sidebar-header-title">Categories</h2>
-  <div *ngIf="categories !== undefined">
-    <div *ngFor="let category of categories">
-      <mat-divider></mat-divider>
-      <p class="a-category-item" (click)="goToCategoryPage(category.id)">{{ category?.name }}</p>
-    </div>
-  </div>
-</div>
