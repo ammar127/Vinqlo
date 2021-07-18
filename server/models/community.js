@@ -32,7 +32,7 @@ var communitySchema = mongoose.Schema({
 
 });
 
-communitySchema.pre('findOne', (next) => {
+communitySchema.pre('findOne', function(next) {
     this.populate('by');
     next();
 });
@@ -54,7 +54,7 @@ communitySchema.methods.slugify = function(){
 communitySchema.methods.toJSON = function(){
     return{
         slug: this.slug,
-        name: this.body,
+        name: this.name,
         by: this.by,
     }
 }

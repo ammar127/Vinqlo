@@ -36,7 +36,7 @@ body('name').isLength({min: 4}),
 body('email').isEmail(),
 body('password').isLength({min: 4}),
 body('campus').isLength({min: 24}),
-body('degree').isLength({min: 4}),
+body('degree').isLength({min: 2}),
 
 (req, res, next) => {
     const errors = validationResult(req);
@@ -91,7 +91,7 @@ router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 
-router.get('/get/all', (req, res, next) => {
+router.get('/get/all', auth.isToken, auth.isAdmin, (req, res, next) => {
     User.find((err, users) => {
         next(new httpResponse.OkResponse(users))
     })
