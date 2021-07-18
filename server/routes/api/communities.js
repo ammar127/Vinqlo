@@ -66,15 +66,19 @@ router.delete('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 
 
 router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
-    Community.find({by: req.user._id}, (err, communities) => {
-        console.log(err);
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    Community.paginate({}, options, (err, communities) => {
         if(!err && communities !== null){
             next(new httpResponse.OkResponse(communities));
         }
         else{
             next(new httpResponse.UnauthorizedResponse(err));
         }
-    })
+    });
 })
 
 module.exports = router;
