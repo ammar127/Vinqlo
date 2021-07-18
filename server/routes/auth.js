@@ -3,14 +3,14 @@ var User = require('../models/user');
 var httpResponse = require('express-http-response');
 
 const isToken = function (req, res, next){
-    var token = req.headers.authorization.split(' ')
+    var token = req.headers.authorization.split(' ');
     if(typeof token[1] === 'undefined' || typeof token[1] === null){
         next(new httpResponse.UnauthorizedResponse());
     }
     else{
         jsonwebtoken.verify(token[1], 'shhhhh', (err, data) => {
             if(err){
-              next(new httpResponse.UnauthorizedResponse());
+              next(new httpResponse.UnauthorizedResponse(err));
             }
             else{
                 req.email = data.user
@@ -22,8 +22,8 @@ const isToken = function (req, res, next){
 
 const isUser = function(req, res, next){
     User.findOne({email: req.email}, (err, user) => {
-        if(err){
-          next(new httpResponse.UnauthorizedResponse());
+        if(err || !user.verified){
+          next(new httpResponse.UnauthorizedResponse('You are not logged in'));
         }
         else{
             req.user = user
