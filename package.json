@@ -1,7 +1,7 @@
 {
-  "name": "SMARTUP",
+  "name": "Vinqlo",
   "version": "1.0.0",
-  "description": "Gaming platform",
+  "description": "Blogging Site",
   "main": "app.js",
   "scripts": {
     "install:client": "cd client && npm install --force --legacy-peer-deps",
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.7.1",
     "dotenv": "^8.6.0",
@@ -32,6 +33,7 @@
     "method-override": "^2.3.10",
     "methods": "1.1.2",
     "moment": "^2.29.1",
+    "mongoosastic": "^4.6.0",
     "mongoose": "^5.13.2",
     "mongoose-paginate-v2": "^1.4.1",
     "mongoose-slug-generator": "^1.0.4",
@@ -41,10 +43,12 @@
     "multer": "^1.4.2",
     "node-polyglot": "^2.3.0",
     "nodemailer": "^6.6.2",
+    "otp-generator": "^2.0.1",
     "passport": "0.3.2",
     "passport-local": "1.0.0",
     "request": "^2.88.2",
     "slug": "^0.9.4",
+    "slugify": "^1.5.3",
     "socket.io": "^3.1.1",
     "uuidv4": "^6.2.10"
   },

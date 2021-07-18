@@ -1,11 +1,11 @@
 "use strict";
 module.exports = {
   PORT : 3000,
-  MONGODB_URI : 'mongodb://localhost:27017/SMARTUP?retryWrites=false',
+  MONGODB_URI : 'mongodb://localhost/Vinqlo',
   secret : 'secret',
   host : 'localhost:3000',
   smtpAuth: {
-    user: 'SMARTUP2021@gmail.com',
-    pass: 'P0o9i8u7!!'
+    user: 'devusman2000@gmail.com',
+    pass: 'Nova2668*'
   },
 };
