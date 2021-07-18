@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class AuthComponent implements OnInit {
   isLogin:boolean=true;
   isSubmit = false;
   authForm: FormGroup;
-  constructor(private router: Router,private fb: FormBuilder,private service:AuthService)
+  onInputChange!:number;
+  constructor(private api:ApiService, private router: Router,private fb: FormBuilder,private service:AuthService)
   {
     this.authForm = this.fb.group({'email': ['', Validators.email],'password': ['', Validators.required]});
   }
@@ -22,8 +24,13 @@ export class AuthComponent implements OnInit {
   submitForm()
   {
     console.log(this.authForm.value);
-    this.service.post(this.authForm.value,this.isLogin ? '/login':'/signup').subscribe
-    ()
+    this.service.post(this.isLogin ? '/login':'/signup',this.authForm.value).subscribe
+    (
+      res=>
+      {
+        console.log(res)
+      }
+    )
   }
   addFormControl()
   {
@@ -37,5 +44,5 @@ export class AuthComponent implements OnInit {
       this.authForm.addControl('campus', new FormControl());
     }
   }
-
+  
 }
