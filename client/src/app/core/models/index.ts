@@ -1,3 +1,5 @@
+
+export * from './errors.model';
 export * from './User'
 export * from './campus'
 export * from './category'

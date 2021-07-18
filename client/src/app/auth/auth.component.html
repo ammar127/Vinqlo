@@ -47,7 +47,7 @@
                 <input formControlName="password" type="password" class="form-control custom-border" placeholder="Confirm Password" />
               </div>
               <button class="btn mb-2 btn-main"  [disabled]="!authForm.valid" type="submit">{{isLogin ? 'Log In':'Sign Up'}}</button>
-              <span>Or </span> <a class="main-color" (click)="addFormControl()">{{isLogin ? 'Sign Up':'Log In'}}</a>
+              <span>Or </span> <a class="main-color" (click)="onChangeType()">{{isLogin ? 'Sign Up':'Log In'}}</a>
             </form>
           </div>
         </div>
