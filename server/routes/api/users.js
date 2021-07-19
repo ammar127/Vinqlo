@@ -50,7 +50,7 @@ body('degree').isLength({min: 2}),
     user.email = req.body.email;
     user.setPassword(req.body.password);
     user.campus = mongoose.Types.ObjectId(req.body.campus);
-    user.degree = req.body.degree
+    user.degree = mongoose.Types.ObjectId(req.body.degree);
 
     //OTP
     var otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
@@ -91,7 +91,7 @@ router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 
-router.get('/get/all', auth.isToken, auth.isAdmin, (req, res, next) => {
+router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     User.find((err, users) => {
         next(new httpResponse.OkResponse(users))
     })

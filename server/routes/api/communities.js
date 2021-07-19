@@ -21,6 +21,13 @@ router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse(req.community));
 })
 
+router.post('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    req.user.communities.push(req.community._id);
+    req.user.save((err, user) => {
+        next(new httpResponse.OkResponse('Community Join ed Successfully'));
+    });
+})
+
 router.post('/', auth.isToken, auth.isUser, 
 body('name').isLength({min: 4})
 ,(req, res, next) => {
@@ -33,9 +40,15 @@ body('name').isLength({min: 4})
     let community = new Community();
     community.name = req.body.name;
     community.by = req.user._id;
+    community.campus = req.user.campus;
+    community.degree = req.user.degree;
 
-    community.save();
-    next(new httpResponse.OkResponse(community));
+    req.user.communities.push(community._id);
+    req.user.save();
+
+    community.save((err, savedCommunity) => {
+        next(new httpResponse.OkResponse(savedCommunity));
+    });
 })
 
 router.put('/:slug', auth.isToken, auth.isUser, 
@@ -71,7 +84,7 @@ router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({}, options, (err, communities) => {
+    Community.paginate({by: req.user._id}, options, (err, communities) => {
         if(!err && communities !== null){
             next(new httpResponse.OkResponse(communities));
         }
