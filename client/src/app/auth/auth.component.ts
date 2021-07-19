@@ -1,13 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-<<<<<<< HEAD
-import { Router } from '@angular/router';
-import { ApiService } from '../core/services/api.service';
-import { AuthService } from '../core/services/auth.service';
-=======
 import { ActivatedRoute, Router } from '@angular/router';
 import { Errors, UserService } from '../core';
->>>>>>> master
 
 @Component({
   selector: 'app-auth',
@@ -20,25 +14,6 @@ export class AuthComponent implements OnInit {
   errors: Errors = {errors: {}};
   isSubmitting = false;
   authForm: FormGroup;
-<<<<<<< HEAD
-  onInputChange!:number;
-  constructor(private api:ApiService, private router: Router,private fb: FormBuilder,private service:AuthService)
-  {
-    this.authForm = this.fb.group({'email': ['', Validators.email],'password': ['', Validators.required]});
-  }
-  ngOnInit(): void {
-  }
-  submitForm()
-  {
-    console.log(this.authForm.value);
-    this.service.post(this.isLogin ? '/login':'/signup',this.authForm.value).subscribe
-    (
-      res=>
-      {
-        console.log(res)
-      }
-    )
-=======
 
   constructor(
     private route: ActivatedRoute,
@@ -51,7 +26,6 @@ export class AuthComponent implements OnInit {
       'email': ['', Validators.required],
       'password': ['', Validators.required]
     });
->>>>>>> master
   }
 
   ngOnInit() {}
@@ -71,9 +45,6 @@ export class AuthComponent implements OnInit {
       this.authForm.removeControl('campus');
     }
   }
-<<<<<<< HEAD
-  
-=======
   get f() {return this.authForm.controls}
 
   submitForm() {
@@ -91,5 +62,4 @@ export class AuthComponent implements OnInit {
       }
     );
   }
->>>>>>> master
 }
