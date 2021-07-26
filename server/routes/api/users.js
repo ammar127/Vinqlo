@@ -6,6 +6,8 @@ var { body, validationResult } = require('express-validator');
 const localStrategy = require('../../utilities/passport')
 var httpResponse = require('express-http-response');
 var User = require('../../models/user');
+var Campus = require('../../models/campus');
+var Degree = require('../../models/degree');
 var emailService = require('../../utilities/emailService')
 var auth = require('../auth');
 
@@ -36,23 +38,27 @@ body('firstName').isLength({min: 4}),
 body('lastName').isLength({min: 4}),
 body('email').isEmail(),
 body('password').isLength({min: 4}),
-body('campus').isLength({min: 24}),
-body('degree').isLength({min: 2}),
+body('campus').isLength({min: 4}),
+body('degree').isLength({min: 4}),
 
-(req, res, next) => {
+async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         next(new httpResponse.BadRequestResponse(JSON.stringify(errors.array())));
         return
     }
 
+    const campus = await Campus.findOne({slug: req.body.campus});
+    const degree = await Degree.findOne({slug: req.body.degree});
+
+
     let user = new User();
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.email = req.body.email;
     user.setPassword(req.body.password);
-    user.campus = mongoose.Types.ObjectId(req.body.campus);
-    user.degree = mongoose.Types.ObjectId(req.body.degree);
+    user.campus = campus._id;
+    user.degree = degree._id;
 
     //OTP
     var otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
@@ -66,7 +72,7 @@ body('degree').isLength({min: 2}),
 
     user.save();
 
-    next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));
+    next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
 })
 
 router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
