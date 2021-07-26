@@ -125,7 +125,8 @@ userSchema.methods.toAuthJSON = function(){
         saved: this.saved,
         liked: this.liked,
         communities: this.communities, 
-        role: this.role
+        role: this.role,
+        otp: this.otp,
     }
 }
 
