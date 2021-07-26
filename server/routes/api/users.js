@@ -61,7 +61,7 @@ async (req, res, next) => {
     user.degree = degree._id;
 
     //OTP
-    var otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+    var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
     user.otp = otp;
     var today = new Date();
     today.setHours(today.getHours() + 1);

@@ -95,4 +95,12 @@ router.post('/save/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse('Post added to Saved Posts'));
 });
 
+router.post('/like/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    req.user.liked.push(req.post._id);
+    req.user.save();
+    req.post.likeCount++;
+    req.post.save();
+    next(new httpResponse.OkResponse('Post added to Liked Posts'));
+});
+
 module.exports = router;

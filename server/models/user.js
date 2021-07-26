@@ -53,7 +53,7 @@ var userSchema = mongoose.Schema({
         ref: 'Post'
     },
 
-    linked:{
+    liked:{
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Post'
     },
