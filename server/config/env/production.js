@@ -5,7 +5,7 @@ module.exports = {
   secret : 'secret',
   host : 'localhost:3000',
   smtpAuth: {
-    user: 'devusman2000@gmail.com',
-    pass: 'Nova2668*'
+    user: 'smartup2021@gmail.com',
+    pass: 'P0o9i8u7!!'
   },
 };

@@ -22,7 +22,7 @@ const sendEmail = (mailDetails) => {
     { ...mailDetails, html: template(mailDetails.templateObj) },
     function (err, info) {
       if (err) {
-        console.error("Email error", err);
+        console.error("Email error", info);
       } else {
         console.log("Email sent", info);
       }
