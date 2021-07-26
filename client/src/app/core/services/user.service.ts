@@ -93,4 +93,8 @@ export class UserService {
   {
     return this.apiService.put('/users/delete/'+email);
   }
+  blockUser(email:string)
+  {
+    return this.apiService.put('/users/block/'+email);
+  }
 }

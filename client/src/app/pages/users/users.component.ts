@@ -63,8 +63,40 @@ export class UsersComponent implements OnInit
           Swal.fire("Cancelled", "Your user is safe :)", "error");
         }
       });
-      }
+    }
+    blockUser(email:string)
+  {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "you wanna block this user.",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, Block it!",
+        cancelButtonText: "No, cancel please!",
+      }).then(({isConfirmed}) => {
+        if (isConfirmed) {
+          this.userService.blockUser(email).subscribe
+          (
+      
+            res=>
+            {
+              if(res.status==200)
+              {
+                this.get();
+                Toast.fire({
+                  icon: 'success',
+                  title: 'User Blocked in successfully'
+                })
+
+              }
+            }
+          )
+        } else {
+          Swal.fire("Cancelled", "Your user is safe :)", "error");
+        }
+      });
+    }
   
     
-  }
+}
 
