@@ -2,131 +2,48 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 my-3">
-        <button class="btn btn-lg btn-primary" (click)="open(content)">
-          Ad Post Modal
-        </button>
+        <button class="btn btn-lg btn-primary" (click)="open(content)">Ad Post Modal</button>
       </div>
       <div class="col-md-12">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
           <li [ngbNavItem]="1">
             <a ngbNavLink
-              ><img
-                src="../../assets/images/home.svg"
-                class="mr-2"
-                width="20px"
-                alt=""
-              />
-              Feed</a
-            >
+              ><img src="../../assets/images/home.svg" class="mr-2" width="20px" alt="" /> Feed</a>
             <ng-template ngbNavContent>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="search-field">
-                    <input
-                      type="text"
-                      class="form-control shadow-sm"
-                      placeholder="Search by tag"
-                    />
-                    <img
-                      src="../../../assets/images/search-solid.svg"
-                      width="30px"
-                      alt=""
-                    />
+                  <div class="search-field" >
+                    <input type="text" [(ngModel)]="searchQuery" class="form-control shadow-sm" placeholder="Search by name . . ."/>
+                    <img src="../../../assets/images/search-solid.svg" width="30px" alt=""  />
                   </div>
                 </div>
                 <div class="col-md-12 my-3">
                   <div class="card shadow-sm">
-                    <div class="client-card shadow-sm">
+                    <div *ngFor="let tmp of filteredArray" class="client-card shadow-sm">
                       <div class="client-header">
                         <div>
-                          <h6 class="main-color mb-0">Overpoort Warriors</h6>
-                          <small class="text-muted"
-                            >Jaun jose jan 10, 2021, 4:58:23 AM</small
-                          >
+                          <h6 class="main-color mb-0">{{tmp.title}}</h6>
+                          <small class="text-muted">Jaun jose jan 10, 2021, 4:58:23 AM</small>
                         </div>
                         <div>
                           <button class="btn btn-join">
-                            <i
-                              class="fa fa-link icons-color"
-                              aria-hidden="true"
-                            ></i>
-                            <span class="main-color"> Join</span>
+                            <i class="fa fa-link icons-color" aria-hidden="true" ></i>
+                            <span class="main-color">{{tmp.community}}</span>
                           </button>
                         </div>
                         <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
+                          <button class="btn" id="dropdownBasic1" ngbDropdownToggle >
                             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                           </button>
                           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                             <button ngbDropdownItem>Action - 1</button>
                             <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
+                            <button ngbDropdownItem> Something else is here </button>
                           </div>
                         </div>
                       </div>
-                      <p class="my-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Tenetur, veritatis.
-                      </p>
-                      <span class="main-color"
-                        ><i
-                          class="fa icons-color fa-users"
-                          aria-hidden="true"
-                        ></i>
-                        1</span
-                      >
-                    </div>
-                    <div class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">Overpoort Warriors</h6>
-                          <small class="text-muted"
-                            >Jaun jose jan 10, 2021, 4:58:23 AM</small
-                          >
-                        </div>
-                        <div>
-                          <button class="btn btn-join">
-                            <i
-                              class="fa fa-link icons-color"
-                              aria-hidden="true"
-                            ></i>
-                            <span class="main-color"> Join</span>
-                          </button>
-                        </div>
-                        <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="my-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Tenetur, veritatis.
-                      </p>
-                      <span class="main-color"
-                        ><i
-                          class="fa icons-color fa-users"
-                          aria-hidden="true"
-                        ></i>
-                        1</span
-                      >
+                      <p class="my-4">{{tmp.body}}</p>
+                      <span class="main-color"><i class="fa icons-color fa-users" aria-hidden="true" ></i> 1</span>
                     </div>
                   </div>
                 </div>
@@ -134,29 +51,13 @@
             </ng-template>
           </li>
           <li [ngbNavItem]="2">
-            <a ngbNavLink
-              ><img
-                src="../../assets/images/explore.svg"
-                class="mr-2"
-                width="20px"
-                alt=""
-              />
-              Academics</a
-            >
+            <a ngbNavLink><img src="../../assets/images/explore.svg" class="mr-2" width="20px" alt="" />Academics</a>
             <ng-template ngbNavContent>
               <div class="row">
                 <div class="col-md-12">
                   <div class="search-field">
-                    <input
-                      type="text"
-                      class="form-control shadow-sm"
-                      placeholder="Search by name"
-                    />
-                    <img
-                      src="../../../assets/images/search-solid.svg"
-                      width="30px"
-                      alt=""
-                    />
+                    <input type="text" class="form-control shadow-sm" placeholder="Search by Tag" />
+                    <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -285,67 +186,48 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title text-purple" id="modal-basic-title">Create Post</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form>
+    <form [formGroup]="addPostForm">
       <div class="form-group">
         <div class="input-field">
           <label for="">Select Community</label>
-          <select class="selectpicker form-control custom-border">
+          <select formControlName="community" class="selectpicker form-control custom-border">
             <option>Mustard</option>
             <option>Ketchup</option>
             <option>Relish</option>
           </select>
-          <img
-            src="../../assets/images/caret-down-solid.png"
-            class="select-arrow"
-            alt=""
-          />
+          <img src="../../assets/images/caret-down-solid.png" class="select-arrow" alt="" />
         </div>
         <div class="input-field">
           <label for=""> Title</label>
-          <input
-            type="text"
-            class="form-control custom-border"
-            placeholder="Title"
-          />
+          <input type="text" formControlName="title" class="form-control custom-border" placeholder="Title" />
         </div>
         <div class="input-field">
-          <label for=""> Title</label>
-          <textarea
-            name=""
-            class="form-control"
-            placeholder="What do you want to share"
-            id=""
-            cols="30"
-            rows="3"
-          ></textarea>
+          <label for=""> Body </label>
+          <textarea formControlName="body" name="" class="form-control" placeholder="What do you want to share" id="" cols="30" rows="3" ></textarea>
         </div>
-        <div class="input-field">
+        <!-- <div class="input-field">
           <label for=""> Tag</label>
-          <input
-            type="text"
-            class="form-control custom-border"
-            placeholder="Tags (separate with,)"
-          />
-        </div>
+          <input type="text" formControlName="tags" class="form-control custom-border" placeholder="Tags (separate with,)" />
+        </div> -->
+        <fieldset class="form-group">
+              <input class="form-control" type="text" [formControl]="tagField" placeholder="Enter tags" (keyup.enter)="addTag()" />
+              <div class="tag-list">
+                <span *ngFor="let tag of tags" style="background-color:LightGray;" class="tag-default tag-pill">
+                  <i class="fa fa-close" (click)="removeTag(tag)"></i>
+                  {{ tag }}
+                </span> 
+              </div>
+            </fieldset>
         <div class="input-field">
           <label for=""> Upload Image</label>
-          <input
-            type="file"
-            class="form-control custom-border"
-            placeholder="Title"
-          />
+          <input type="file" formControlName="img" class="form-control custom-border" placeholder="Title" />
         </div>
-        <button class="btn mb-2 btn-main">Post</button>
+        <button class="btn mb-2 btn-main" [disabled]="!addPostForm.valid" (click)="onPost()">Post</button>
       </div>
     </form>
   </div>

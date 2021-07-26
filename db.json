@@ -1,0 +1,85 @@
+{
+  "login": [
+    {
+      "email": "lund@lundo.com",
+      "password": "ajsndajkdn",
+      "id": 1
+    },
+    {
+      "email": "adas@ads.com",
+      "password": "fjsjkfsd",
+      "id": 2
+    }
+  ],
+  "signup": [
+    {
+      "email": "adas@ads.com",
+      "password": "fjsjkfsd",
+      "firstName": "adasd",
+      "lastName": "aded",
+      "degree": "Relish",
+      "campus": "Ketchup",
+      "id": 1
+    }
+  ],
+  "post": [
+    {
+      "community": "Ketchup",
+      "title": "Ttile",
+      "body": "body",
+      "tags": [
+        "sdfsf",
+        "sf"
+      ],
+      "img": "C:\\fakepath\\myFirstSale.JPG",
+      "id": 1
+    },
+    {
+      "community": "Ketchup",
+      "title": "asd",
+      "body": "qw",
+      "tags": [
+        "qweq"
+      ],
+      "img": "C:\\fakepath\\proof.png",
+      "id": 2
+    },
+    {
+      "community": "Relish",
+      "title": "Testing ",
+      "body": "This is Testing Body",
+      "tags": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "img": "C:\\fakepath\\myFirstSale.JPG",
+      "id": 3
+    },
+    {
+      "community": "Mustard",
+      "title": "TITLE",
+      "body": "bODY IS HERE\n",
+      "tags": [
+        "12",
+        "13"
+      ],
+      "img": "C:\\fakepath\\myFirstSale.JPG",
+      "id": 4
+    },
+    {
+      "community": "Ketchup",
+      "title": "Testing123",
+      "body": "Body123",
+      "tags": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "img": "C:\\fakepath\\myFirstSale.JPG",
+      "id": 5
+    }
+  ]
+}
