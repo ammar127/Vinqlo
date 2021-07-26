@@ -18,7 +18,7 @@ router.param('email', (req, res, next, email) => {
     User.findOne({email: email}, (err, user) => {
         if(!err && user !==null){
             req.User = user;
-            next();
+            return next();
         }
         next(new httpResponse.BadRequestResponse('User not found!'));
     });
@@ -101,7 +101,7 @@ router.get('/verify/:otp', auth.isToken, async (req, res, next) => {
 
 
 router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    User.find((err, users) => {
+    User.find({status: 1}, (err, users) => {
         next(new httpResponse.OkResponse({users: users}))
     })
 })
@@ -119,7 +119,7 @@ router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res,
 router.put('/block/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.User.status = 2;
     req.User.save();
-    next(new httpResponse.OkResponse('User Deleted'));
+    next(new httpResponse.OkResponse('User Blocked'));
 });
 
 
