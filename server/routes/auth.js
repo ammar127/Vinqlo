@@ -36,7 +36,7 @@ const isUser = function(req, res, next){
 }
 
 const isAdmin = function(req, res, next){
-    if(req.user.role === 3){
+    if(req.user.role === 2){
         next()
     }
     else

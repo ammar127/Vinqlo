@@ -36,7 +36,8 @@ campusSchema.methods.slugify = function(){
 }
 
 campusSchema.methods.toJSON = function(){
-    return{
+    return {
+        id: this._id,
         slug: this.slug,
         name: this.name,
         degrees: this.degrees,
