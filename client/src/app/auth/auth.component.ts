@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Errors, UserService } from '../core';
+import { Campus, CommonService, Errors, UserService } from '../core';
 
 @Component({
   selector: 'app-auth',
@@ -14,12 +14,14 @@ export class AuthComponent implements OnInit {
   errors: Errors = {errors: {}};
   isSubmitting = false;
   authForm: FormGroup;
-
+  campus:any;
+  selectedCampus!:any[];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private commonService:CommonService
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
@@ -28,8 +30,10 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
+  ngOnInit()
+  {
+    
+  }
   onChangeType() {
     this.isLogin=!this.isLogin;
     if (!this.isLogin) 
@@ -38,6 +42,7 @@ export class AuthComponent implements OnInit {
       this.authForm.addControl('lastName', new FormControl());
       this.authForm.addControl('degree', new FormControl());
       this.authForm.addControl('campus', new FormControl());
+      this.campus=this.commonService.campuses();
     }else {
       this.authForm.removeControl('firstName');
       this.authForm.removeControl('lastName');
@@ -46,17 +51,22 @@ export class AuthComponent implements OnInit {
     }
   }
   get f() {return this.authForm.controls}
-
+  get degrees() {return this.f.campus.value ? this.campus.find((e: Campus) => e.slug === this.f.campus.value).degrees : [] }
   submitForm() {
     this.isSubmitting = true;
     this.errors = {errors: {}};
 
     const credentials = this.authForm.value;
-    this.userService
-    .attemptAuth(this.isLogin, credentials)
-    .subscribe(
-      data => this.router.navigateByUrl('/'),
-      err => {
+    this.userService.attemptAuth(this.isLogin, credentials).subscribe
+    (
+      data =>
+      {
+        console.log(data)
+      //this.router.navigateByUrl('/')
+      },
+      err => 
+      {
+        console.log(err)
         this.errors = err;
         this.isSubmitting = false;
       }

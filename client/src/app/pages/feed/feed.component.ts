@@ -37,7 +37,9 @@ export class FeedComponent implements OnInit {
       },
       err=>
       {
+
         console.log('nai chala')
+
       }
     )
   }

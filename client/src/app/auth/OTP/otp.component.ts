@@ -8,6 +8,6 @@ export class OtpComponent
 {
     onOtpChange(e:any)
     {
-        console.log(e);
+        console.log(e)
     }
 }
