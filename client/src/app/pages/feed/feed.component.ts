@@ -38,7 +38,7 @@ export class FeedComponent implements OnInit {
       },
       err=>
       {
-        alert('nai chala')
+        alert('feed nai chala')
       }
     )
   }

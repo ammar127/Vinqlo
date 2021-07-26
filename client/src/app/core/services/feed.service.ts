@@ -14,6 +14,6 @@ export class FeedService {
   }
   getAllPosts():Observable<any>
   {
-    return this.apiService.get('/post');
+    return this.apiService.get('/posts/get/feed');
   }
 }
