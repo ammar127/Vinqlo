@@ -4,8 +4,17 @@ import { Component } from '@angular/core';
   selector: 'app-layout',
   template: `
     <app-header></app-header>
-    <app-sidebar></app-sidebar>
-    <router-outlet></router-outlet>
+    <div class="conatiner">
+      <div class="row">
+        <div class="col-md-3">
+          <app-sidebar></app-sidebar>
+        </div>
+        <div class="col-md-9">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+
     <app-footer></app-footer>
   `,
 })
