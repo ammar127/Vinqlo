@@ -32,7 +32,8 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
 
 router.post('/signup',
 
-body('name').isLength({min: 4}),
+body('firstName').isLength({min: 4}),
+body('lastName').isLength({min: 4}),
 body('email').isEmail(),
 body('password').isLength({min: 4}),
 body('campus').isLength({min: 24}),
@@ -46,7 +47,8 @@ body('degree').isLength({min: 2}),
     }
 
     let user = new User();
-    user.name = req.body.name;
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
     user.email = req.body.email;
     user.setPassword(req.body.password);
     user.campus = mongoose.Types.ObjectId(req.body.campus);

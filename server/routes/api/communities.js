@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Community = require('../../models/community');
+var Category = require('../../models/category');
 var User = require('../../models/user');
 var auth = require('../auth');
 
@@ -29,7 +30,8 @@ router.post('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 router.post('/', auth.isToken, auth.isUser, 
-body('name').isLength({min: 4})
+body('name').isLength({min: 4}),
+body('category').isLength({min: 4})
 ,(req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -43,11 +45,19 @@ body('name').isLength({min: 4})
     community.campus = req.user.campus;
     community.degree = req.user.degree;
 
-    req.user.communities.push(community._id);
-    req.user.save();
-
-    community.save((err, savedCommunity) => {
-        next(new httpResponse.OkResponse(savedCommunity));
+    Category.findOne({slug: req.body.category}, (err, category) => {
+        if(!err && category !== null){
+            community.category = category._id;
+            req.user.communities.push(community._id);
+            req.user.save((err, user) => {
+                community.save((err, savedCommunity) => {
+                    next(new httpResponse.OkResponse(savedCommunity));
+                });
+            });
+        }
+        else{
+            next(new httpResponse.BadRequestResponse('Category not found!'));
+        }
     });
 })
 
@@ -95,3 +105,4 @@ router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 module.exports = router;
+

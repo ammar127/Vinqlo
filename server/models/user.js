@@ -6,7 +6,12 @@ var bcrypt = require('bcrypt');
 var jsonwebtoken = require('jsonwebtoken');
 
 var userSchema = mongoose.Schema({
-    name:{
+    firstName:{
+        type: String,
+        required: true,
+    },
+    
+    lastName:{
         type: String,
         required: true,
     },
@@ -106,7 +111,8 @@ userSchema.methods.toAuthJSON = function(){
     this.generateToken()
     return{
         token: this.token,
-        name: this.name,
+        firstName: this.firstName,
+        lastName: this.lastName,
         email: this.email,
         bio: this.bio,
         campus: this.campus,
@@ -119,7 +125,8 @@ userSchema.methods.toAuthJSON = function(){
 
 userSchema.methods.toJSON = function(){
     return{
-        name: this.name,
+        firstName: this.firstName,
+        lastName: this.lastName,
         email: this.email,
         bio: this.bio,
         campus: this.campus,

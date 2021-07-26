@@ -7,7 +7,8 @@ async function seedInfo(){
     const campuses = await Campus.find();
 
     let user = new User();
-    user.name = 'Usman';
+    user.firstName = 'Usman';
+    user.lastName = 'Farooq';
     user.email = 'usman@gmail.com';
     await user.setPassword('1234');
     user.bio = faker.lorem.sentence(); 
@@ -18,7 +19,8 @@ async function seedInfo(){
     await user.save();
 
     let user2 = new User();
-    user2.name = 'admin';
+    user2.firstName = 'admin';
+    user2.lastName = 'abc';
     user2.email = 'admin@gmail.com';
     await user2.setPassword('1234');
     user2.bio = faker.lorem.sentence(); 

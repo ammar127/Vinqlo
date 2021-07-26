@@ -28,12 +28,18 @@ var communitySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    category:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true
     }
 
 });
 
 communitySchema.pre('findOne', function(next) {
     this.populate('by');
+    this.populate('category');
     next();
 });
 
@@ -56,6 +62,7 @@ communitySchema.methods.toJSON = function(){
         slug: this.slug,
         name: this.name,
         by: this.by,
+        category: this.category
     }
 }
 
