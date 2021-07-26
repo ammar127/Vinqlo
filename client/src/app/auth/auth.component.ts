@@ -59,14 +59,17 @@ export class AuthComponent implements OnInit {
     const credentials = this.authForm.value;
     this.userService.attemptAuth(this.isLogin, credentials).subscribe
     (
-      data =>
+      (res: any) =>
       {
-        console.log(data)
-      //this.router.navigateByUrl('/')
+        let route = '';
+        if(res.status === 200) {
+          route = this.isLogin ? '/feed': '/auth/otp';
+        }
+        this.router.navigate([route])
       },
       err => 
       {
-        console.log(err)
+        console.log('nai chala', err)
         this.errors = err;
         this.isSubmitting = false;
       }

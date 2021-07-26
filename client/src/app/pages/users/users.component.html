@@ -1,14 +1,22 @@
 <div class="card shadow-sm">
-    <h4 class="modal-title text-purple" id="modal-basic-title">Create Post</h4>
+    <h4 class="modal-title text-purple" id="modal-basic-title">Users</h4>
 </div>
-<div class="card shadow-sm">
-    <div class="input-field">
-        <label for="">Select Degree</label>
-        <select class="selectpicker form-control custom-border">
-          <option>Mustard</option>
-          <option>Ketchup</option>
-          <option>Relish</option>
-        </select>
-        <img src="../../assets/images/caret-down-solid.png" class="select-arrow" alt="" />
+<div class="row">
+  <div class="col-md-10">
+    <div class="search-field">
+      <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
+      <input type="text" class="form-control shadow-sm" placeholder="Search by name" />
+    </div>
+  </div>
+</div>
+<form>
+  <div *ngFor="let user of allUsers;">
+    <div>
+      {{user.email}}
+      <div align="right">
+        <a href="javascript:void(0)" (click)="deleteUser(user.email)"><i class="fas fa-trash-alt"></i></a>
+        <a><i class="fas fa-ban"></i></a>
       </div>
-</div>
+    </div>
+  </div>
+</form>
