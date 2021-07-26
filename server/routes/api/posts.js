@@ -89,5 +89,10 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
+router.post('/save/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    req.user.saved.push(req.post._id);
+    req.user.save();
+    next(new httpResponse.OkResponse('Post added to Saved Posts'));
+});
 
 module.exports = router;

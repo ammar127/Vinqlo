@@ -53,6 +53,11 @@ var userSchema = mongoose.Schema({
         ref: 'Post'
     },
 
+    linked:{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Post'
+    },
+
     role:{
         type: Number,
         enum:[1, 2, 3],
@@ -118,6 +123,7 @@ userSchema.methods.toAuthJSON = function(){
         campus: this.campus,
         degree: this.degree,
         saved: this.saved,
+        liked: this.liked,
         communities: this.communities, 
         role: this.role
     }

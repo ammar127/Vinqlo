@@ -45,6 +45,11 @@ var postSchema = mongoose.Schema({
         required: true
     },
 
+    likeCount:{
+        type: Number,
+        default: 0
+    },
+
     time:{
         type: Date,
         default: Date.now
