@@ -25,7 +25,6 @@ export class FeedComponent implements OnInit {
   }
   ngOnInit(): void {
     this.get();
-    throw new Error('Method not implemented.');
     
   }
   get()
@@ -38,7 +37,7 @@ export class FeedComponent implements OnInit {
       },
       err=>
       {
-        alert('nai chala')
+        console.log('nai chala')
       }
     )
   }

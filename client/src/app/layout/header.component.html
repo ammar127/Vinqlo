@@ -1,9 +1,9 @@
 <header>
-  <nav>
+  <nav [ngClass]="isAdmin ? 'bg-dark': 'bg-white'">
     <a class="nav-main" href=""
       ><img src="../../assets/images/logo-01.png" alt=""
     /></a>
-    <ul class="ml-auto nav-list">
+    <ul *ngIf="isAdmin" class="ml-auto nav-list">
       <li class="nav-link">
         <a href=""><i class="fas fa-bell"></i></a>
       </li>

@@ -3,6 +3,9 @@
 body {
   background-color: #dafdfe !important;
 }
+.bg-dark {
+  background-color: #021a68;
+}
 .main-color {
   color: #021a68;
 }
