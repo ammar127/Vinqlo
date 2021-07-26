@@ -63,7 +63,7 @@ router.delete('/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next
     });
 });
 
-router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) =>{
+router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) =>{
     Campus.find({}, (err, campus) => {
         if(!err){
             next(new httpResponse.OkResponse(campus));

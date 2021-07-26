@@ -6,5 +6,6 @@ router.use('/users', require('./users'));
 router.use('/communities', require('./communities'));
 router.use('/posts', require('./posts'));
 router.use('/campuses', require('./campuses'));
+router.use('/degrees', require('./degrees'));
 
 module.exports = router;
