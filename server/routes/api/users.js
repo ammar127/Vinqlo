@@ -75,7 +75,8 @@ async (req, res, next) => {
     next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
 })
 
-router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
+router.get('/verify/:otp', auth.isToken, async (req, res, next) => {
+    req.user = await User.findOne({email: req.email})  
     var today = new Date();
     if(today.getTime() > req.user.otpExpiry.getTime()){
         next(new httpResponse.UnauthorizedResponse('OTP is expired'));
