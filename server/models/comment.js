@@ -28,7 +28,7 @@ var commentSchema = mongoose.Schema({
 
 });
 
-commentSchema.pre('findOne', (next) => {
+commentSchema.pre('findOne', function (next) {
     this.populate('by');
     next();
 });

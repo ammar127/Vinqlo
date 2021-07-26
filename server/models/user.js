@@ -65,6 +65,11 @@ var userSchema = mongoose.Schema({
 
     otpExpiry: {
         type: Date
+    },
+
+    status:{
+        type: Number,
+        default: 1,
     }
 
 });
@@ -119,9 +124,9 @@ userSchema.methods.toJSON = function(){
         bio: this.bio,
         campus: this.campus,
         degree: this.degree,
-        saved: this.saved,
         communities: this.communities, 
-        role: this.role
+        role: this.role,
+        status: this.status
     }
 }
 

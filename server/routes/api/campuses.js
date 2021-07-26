@@ -17,7 +17,7 @@ router.param('slug', (req, res, next, slug) => {
 });
 
 router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    next(new httpResponse.OkResponse(req.campus));
+    next(new httpResponse.OkResponse({campus: req.campus}));
 });
 
 router.post('/', auth.isToken, auth.isUser, auth.isAdmin, 
@@ -40,7 +40,7 @@ body('name').isLength({min: 4}),
             next(new httpResponse.BadRequestResponse(err));
             return;
         }
-        next(new httpResponse.OkResponse(campus));
+        next(new httpResponse.OkResponse({campus: campus}));
     });
 
 });
@@ -52,7 +52,7 @@ router.put('/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) =
 
     req.campus.save();
 
-    next(new httpResponse.OkResponse(req.campus));
+    next(new httpResponse.OkResponse({campus: req.campus}));
 });
 
 router.delete('/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
@@ -66,7 +66,7 @@ router.delete('/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next
 router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) =>{
     Campus.find({}, (err, campus) => {
         if(!err){
-            next(new httpResponse.OkResponse(campus));
+            next(new httpResponse.OkResponse({campuses: campus}));
         }
     });
 });

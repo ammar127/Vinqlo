@@ -13,6 +13,7 @@ async function seedInfo(){
     user.bio = faker.lorem.sentence(); 
     user.campus = campuses[2]._id;
     user.degree = campuses[2].degrees[2]._id;
+    user2.verified = true;
 
     await user.save();
 

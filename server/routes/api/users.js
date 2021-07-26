@@ -15,7 +15,7 @@ router.use(passport.initialize())
 router.param('email', (req, res, next, email) => {
     User.findOne({email: email}, (err, user) => {
         if(!err && user !==null){
-            req.user = user;
+            req.User = user;
             next();
         }
         next(new httpResponse.BadRequestResponse('User not found!'));
@@ -25,7 +25,7 @@ router.param('email', (req, res, next, email) => {
 router.post('/login', passport.authenticate('local', {session:false}), (req, res, next) => {
     req.user.generateToken();
     if(req.user.verified)
-        next(new httpResponse.OkResponse(req.user.toAuthJSON()));
+        next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));
     else
         next(new httpResponse.UnauthorizedResponse('Please verify your email address'));
 })
@@ -64,7 +64,7 @@ body('degree').isLength({min: 2}),
 
     user.save();
 
-    next(new httpResponse.OkResponse(user.toAuthJSON()));
+    next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));
 })
 
 router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
@@ -93,15 +93,25 @@ router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
 
 router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     User.find((err, users) => {
-        next(new httpResponse.OkResponse(users))
+        next(new httpResponse.OkResponse({users: users}))
     })
 })
 
 router.get('/:email', (req, res, next) => {
-    next(new httpResponse.OkResponse(req.user));
+    next(new httpResponse.OkResponse({user: req.User}));
 })
 
+router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.User.status = 0;
+    req.User.save();
+    next(new httpResponse.OkResponse('User Deleted'));
+});
 
+router.put('/block/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.User.status = 2;
+    req.User.save();
+    next(new httpResponse.OkResponse('User Deleted'));
+});
 
 
 module.exports = router;
