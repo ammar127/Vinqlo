@@ -106,3 +106,7 @@ li.sidebar-list {
 .text-green {
   color:#25eaef !important;
 }
+.text-dark.nav-list.nav-link a i {
+  color: #25eaef !important;
+  font-size: 26px;
+}
