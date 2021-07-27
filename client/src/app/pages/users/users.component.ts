@@ -13,8 +13,8 @@ export class UsersComponent implements OnInit
   result: any = null;
   page = 1;
   isLoading = false;
-  status = null;
-  statuses = [{name:'All', id: null},{name:'Active', id: 1},{name:'Inactive', id: 2},]
+  status = -1;
+  statuses = [{name:'All', id: -1},{name:'Active', id: 1},{name:'Inactive', id: 2},]
   constructor(private userService:UserService) {
     this.get();
   }
@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit
   {
     this.isLoading = true;
 
-    this.userService.getAllUsers(`/users/get/all?${this.status ? 'status='+this.status: ''}&page=${this.page}`).subscribe
+    this.userService.getAllUsers(`/users/get/all?${this.status !== -1 ? 'status='+this.status: ''}&page=${this.page}`).subscribe
     (
       res=>
       {

@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="col-md-3">
-    <ng-select [(ngModel)]="status" [items]="statuses" (change)="get()"></ng-select>
+    <ng-select [(ngModel)]="status" [items]="statuses" bindValue="id" bindLabel="name" (change)="get()"></ng-select>
   </div>
 </div>
 
