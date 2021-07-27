@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonService, UserService } from './core';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,8 +6,7 @@ import { CommonService, UserService } from './core';
 })
 export class AppComponent {
   title = 'vinqlo';
-  constructor(private commonService: CommonService, private userService: UserService) {
-    this.commonService.getCommon();
-    this.userService.populate();
+  constructor() {
+   
   }
 }
