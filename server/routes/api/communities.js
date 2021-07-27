@@ -18,7 +18,16 @@ router.param('slug', (req, res, next, slug) => {
         }
     })
 })
-
+router.get('/followed', auth.isToken, auth.isUser, (req, res, next) => {
+    console.log('req.user.communities', req.user.communities)
+    Community.find({_id: {$in: req.user.communities}}, (err, communities) => {
+        if(err){
+            next(new httpResponse.BadRequestResponse('Community not found!'));
+        }else {
+            next(new httpResponse.OkResponse(communities));
+        }
+    })
+})
 router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse(req.community));
 })
@@ -104,14 +113,6 @@ router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
         }
     });
 })
-router.get('/followed', auth.isToken, auth.isUser, (req, res, next) => {
-    Community.find({_id: {$in: req.user.communities}}, (err, communities) => {
-        if(!err){
-            next(new httpResponse.OkResponse(communities));
-        }else {
-            next(new httpResponse.BadRequestResponse('Community not found!'));
-        }
-    })
-})
+
 module.exports = router;
 
