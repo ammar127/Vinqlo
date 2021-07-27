@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit
   {
     this.isLoading = true;
 
-    this.userService.getAllUsers('/users/get/all?page='+this.page).subscribe
+    this.userService.getAllUsers('/users/get/all?status=1&page='+this.page).subscribe
     (
       res=>
       {
@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit
       cancelButtonText: 'No, cancel please!',
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
-        this.userService.deleteUser(email).subscribe((res) => {
+        this.userService.changeStatus(email, 0).subscribe((res) => {
           if (res.status == 200) {
             this.get();
             Toast.fire({
@@ -60,7 +60,7 @@ export class UsersComponent implements OnInit
       }
     });
   }
-  blockUser(email: string) {
+  blockUser(email: string, status: number) {
     Swal.fire({
         title: "Are you sure?",
         text: "you wanna block this user.",
@@ -70,10 +70,8 @@ export class UsersComponent implements OnInit
         cancelButtonText: "No, cancel please!",
       }).then(({isConfirmed}) => {
         if (isConfirmed) {
-          this.userService.blockUser(email).subscribe
-          (
-
-            res=>
+          this.userService.changeStatus(email, status).subscribe
+          (res=>
             {
               if(res.status==200)
               {

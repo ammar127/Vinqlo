@@ -105,12 +105,8 @@ export class UserService {
     }));
   }
 
-  deleteUser(email:string)
+  changeStatus(email:string, status: number)
   {
-    return this.apiService.put('/users/delete/'+email);
-  }
-  blockUser(email:string)
-  {
-    return this.apiService.put('/users/block/'+email);
+    return this.apiService.put(`/users/status/${status}/${email}`);
   }
 }

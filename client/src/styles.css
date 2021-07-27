@@ -103,3 +103,6 @@ li.sidebar-list {
   border-radius: 100px;
   vertical-align: baseline;
 }
+.text-green {
+  color:#25eaef !important;
+}
