@@ -94,7 +94,9 @@ postSchema.methods.toJSON = function(){
         by: this.by,
         tags: this.tags,
         comments: this.comments,
+        community: this.community,
         time: this.time
+
     }
 }
 
