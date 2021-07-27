@@ -8,39 +8,19 @@
         <div class="card">
           <div class="profile-img">
             <img src="../../../assets/images/20487.png" alt="" />
-            <p class="text-purple my-3">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis,
-              consectetur.
-            </p>
+            <p class="text-purple my-3">{{user.bio}}</p>
           </div>
           <div class="profile-detail">
             <p>Bioengineering at Ugent</p>
             <a href="">
-              <img
-                src="../../../assets/images/instagram-brands.svg"
-                width="20px"
-                alt=""
-              />
-              +12345678</a
-            >
-
+              <img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" /> +12345678
+            </a>
             <a href="">
-              <img
-                src="../../../assets/images/phone-square-alt-solid.svg"
-                width="20px"
-                alt=""
-              />
-              @caeLopez</a
-            >
-
+              <img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" />
+              {{user.email}}</a>
             <a href="">
-              <img
-                src="../../../assets/images/pen-solid.svg"
-                width="20px"
-                alt=""
-              />
-              Edit personal information</a
-            >
+              <img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />
+              Edit personal information</a>
           </div>
         </div>
       </div>
@@ -418,19 +398,11 @@
                         </div>
 
                         <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
+                          <button class="btn" id="dropdownBasic1" ngbDropdownToggle >
                             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                           </button>
                           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
+                            <button ngbDropdownItem>Report</button>
                           </div>
                         </div>
                       </div>
@@ -533,7 +505,7 @@
               </div>
             </ng-template>
           </li>
-          
+
         </ul>
 
         <div [ngbNavOutlet]="nav" class="mt-2"></div>

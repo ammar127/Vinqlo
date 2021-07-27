@@ -71,7 +71,7 @@ export class FeedComponent implements OnInit {
 
   onReport()
   {
-    this.router.navigate(['/report']);
+    this.router.navigate(['/reports']);
   }
   openPost(slug:string)
   {
