@@ -17,7 +17,7 @@ router.use(passport.initialize())
 router.param('email', (req, res, next, email) => {
     User.findOne({email: email}, (err, user) => {
         if(!err && user !==null){
-            req.User = user;
+            req.emailUser = user;
             return next();
         }
         next(new httpResponse.BadRequestResponse('User not found!'));
@@ -132,11 +132,13 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
 })
 
 router.get('/:email', (req, res, next) => {
-    next(new httpResponse.OkResponse({user: req.User}));
+    next(new httpResponse.OkResponse({user: req.emailUser}));
 })
 
 router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = req.params.status;
+    req.emailUser.status = req.params.status;
+    req.emailUser.save();
+    next(new httpResponse.OkResponse('Updated Successfully'));
 })
 
 router.get('/', auth.isToken, auth.isUser,(req, res, next) => {
@@ -144,14 +146,14 @@ router.get('/', auth.isToken, auth.isUser,(req, res, next) => {
     next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));
 })
 router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = 0;
-    req.User.save();
+    req.emailUser.status = 0;
+    req.emailUser.save();
     next(new httpResponse.OkResponse('Updated Successfully'));
 });
 
 
 router.get('/resendOtp/:email', (req, res, next) => {
-    var user = req.User;
+    var user = req.emailUser;
     var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
     user.otp = otp;
     var today = new Date();
@@ -167,22 +169,22 @@ router.get('/resendOtp/:email', (req, res, next) => {
 
 router.get('/verifyOtp/:otp/:email', (req, res, next) => {
     var today = new Date();
-    if(today.getTime() > req.User.otpExpiry.getTime()){
+    if(today.getTime() > req.emailUser.otpExpiry.getTime()){
         next(new httpResponse.UnauthorizedResponse('OTP is expired'));
         return;
     }
-    if(req.params.otp !== req.User.otp){
+    if(req.params.otp !== req.emailUser.otp){
         next(new httpResponse.UnauthorizedResponse('OTP is invalid'));
         return;
     }
 
-    // req.User.otp = null;
-    // req.User.otpExpiry = null;
-    req.User.verified = true;
+    // req.emailUser.otp = null;
+    // req.emailUser.otpExpiry = null;
+    req.emailUser.verified = true;
 
-    emailService.sendEmailVerificationSuccess(req.User);
+    emailService.sendEmailVerificationSuccess(req.emailUser);
 
-    req.User.save();
+    req.emailUser.save();
 
     next(new httpResponse.OkResponse('Otp verified Successfully'));
 });
