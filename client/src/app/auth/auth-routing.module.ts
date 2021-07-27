@@ -1,3 +1,4 @@
+import { AuthGuard } from './../core/services/auth-guard.service';
 import { AuthComponent } from './auth.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,10 +17,10 @@ const routes: Routes = [
     // canActivate: [NoAuthGuard]
   },
   {
-    path: 'otp', component: OtpComponent
+    path: 'otp/:email', component: OtpComponent
   },
   {
-    path: '/auth' , redirectTo: '/auth/login', pathMatch: 'full'
+    path: '' , redirectTo: '/auth/login', pathMatch: 'full'
   }
 ];
 

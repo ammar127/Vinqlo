@@ -75,7 +75,11 @@ export class AuthComponent implements OnInit {
       {
         let route = '';
         if(res.status === 200) {
-          route = this.isLogin ? '/feed': '/auth/otp';
+          if(res.data.user && !res.data.user.verified ) {
+            route = '/auth/otp';
+          } else {
+            route = this.isLogin ? '/feed': '/auth/otp';
+          }
         }
         this.router.navigate([route])
       },
