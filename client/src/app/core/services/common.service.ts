@@ -7,8 +7,8 @@ import { ApiService } from './api.service';
 
 @Injectable()
 export class CommonService {
-  private campusSubject = new BehaviorSubject<Campus[]>([]);
- 
+  public campusSubject = new BehaviorSubject<Campus[]>([]);
+  temp!:Campus[];
   constructor (
     private apiService: ApiService,
   ) {}
@@ -17,12 +17,14 @@ export class CommonService {
     return this.campusSubject.value;
   }
 
-  getCampuses() {
-    return this.apiService
-    .get('/user',)
-    .subscribe((res => {
+  getCommon():void {
+    this.apiService.get('/common').subscribe(
+      (res => {
       // Update the campus observable
+      //console.log(res.data.campuses)
       this.campusSubject.next(res.data.campuses);
+      console.log(this.campusSubject.value);
+      //this.campusSubject.next(this.campusSubject.getValue().concat([res.data.campuses]));
     }));
   }
 

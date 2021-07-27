@@ -12,32 +12,24 @@
                 alt=""
               />
             </div>
-            <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+            <form autocomplete="off" [formGroup]="authForm" (ngSubmit)="submitForm()">
               <div class="input-field">
                 <input formControlName="firstName" type="text" class="form-control custom-border" placeholder="First Name"  *ngIf="!isLogin"/>
               </div>
               <div class="input-field">
-                <input formControlName="lastName" type="text" class="form-control custom-border" placeholder="Last Name" *ngIf="!isLogin"/>
+                <input type="text" formControlName="lastName" class="form-control custom-border" placeholder="Last Name" *ngIf="!isLogin"/>
               </div>
               <div class="input-field">
                 <input formControlName="email" type="email" class="form-control custom-border" placeholder="Email" />
               </div>
-              <div class="input-field"  *ngIf="!isLogin">
-                <select formControlName="degree" class="selectpicker form-control custom-border">
-                  <option selected hidden>Degree</option>
-                  <option>Mustard</option>
-                  <option>Ketchup</option>
-                  <option>Relish</option>
-                </select>
+              <div  class="input-field"  *ngIf="!isLogin">
+                <ng-select formControlName="campus" [items]="campus" bindValue="slug" bindLabel="name" class="selectpicker form-control custom-border">
+               </ng-select>
                 <img src="../../assets/images/caret-down-solid.png" class="select-arrow" alt="" />
               </div>
               <div class="input-field"  *ngIf="!isLogin">
-                <select formControlName="campus" class="selectpicker form-control custom-border">
-                  <option selected hidden>Campus</option>
-                  <option>Mustard</option>
-                  <option>Ketchup</option>
-                  <option>Relish</option>
-                </select>
+                <ng-select formControlName="degree" [disabled]="f.campus.value" [items]="degrees" bindValue="slug" bindLabel="name" class="selectpicker form-control custom-border">
+               </ng-select>
                 <img src="../../assets/images/caret-down-solid.png" class="select-arrow" alt="" />
               </div>
               <div class="input-field">
@@ -49,6 +41,7 @@
               <button class="btn mb-2 btn-main"  [disabled]="!authForm.valid" type="submit">{{isLogin ? 'Log In':'Sign Up'}}</button>
               <span>Or </span> <a class="main-color" (click)="onChangeType()">{{isLogin ? 'Sign Up':'Log In'}}</a>
             </form>
+            {{selectedCampus}}
           </div>
         </div>
       </div>

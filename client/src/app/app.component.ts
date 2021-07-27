@@ -9,6 +9,6 @@ import { CommonService } from './core';
 export class AppComponent {
   title = 'vinqlo';
   constructor(private commonService: CommonService) {
-    this.commonService.getCampuses();
+    this.commonService.getCommon();
   }
 }

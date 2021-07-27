@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "~@ng-select/ng-select/themes/default.theme.css";
 body {
   background-color: #dafdfe !important;
+}
+.bg-dark {
+  background-color: #021a68;
 }
 .main-color {
   color: #021a68;
@@ -22,4 +25,64 @@ body {
 a {
   color: #021a68 !important;
   text-decoration: none !important;
+}
+.accordion-toggle:after {
+  font-family: "FontAwesome"; /* essential to enable caret symbol*/
+  content: "\f00d"; /* adjust as needed, taken from font-awesome.css */
+  color: #25eaef;
+  font-size: 26px;
+  transition: all 0.3s;
+}
+.accordion-toggle.collapsed:after {
+  /* symbol for "collapsed" panels */
+  content: "\f0c9"; /* adjust as needed, taken from font-awesome.css */
+  color: #25eaef;
+  font-size: 26px;
+}
+
+nav {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background-color: #fff;
+}
+.nav-list {
+  display: flex;
+  list-style: none;
+}
+.nav-link a i {
+  color: #021a68;
+  font-size: 26px;
+}
+.nav-main img {
+  width: 100px;
+}
+.accordian-main {
+  position: absolute;
+  right: 1%;
+  background: rgb(255, 255, 255);
+  padding: 19px;
+  z-index: 1;
+}
+.accordian-list {
+  width: 30%;
+}
+.sidebar {
+  background-color: #6c6c6c;
+  height: 100%;
+}
+.sidebar-content {
+  list-style: none;
+  padding-left: 0px;
+}
+li.sidebar-list {
+  padding: 5px 35px;
+}
+.sidebar-list a {
+  color: #ffff !important;
+  transition: all 0.3s;
+}
+.sidebar-list:hover a {
+  color: #25eaef !important;
 }
