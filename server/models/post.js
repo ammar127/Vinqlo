@@ -45,6 +45,11 @@ var postSchema = mongoose.Schema({
         required: true
     },
 
+    likeCount:{
+        type: Number,
+        default: 0
+    },
+
     time:{
         type: Date,
         default: Date.now
@@ -52,7 +57,7 @@ var postSchema = mongoose.Schema({
 
 });
 
-postSchema.pre('findOne', (next) => {
+postSchema.pre('findOne', function (next) {
     this.populate('by');
     this.populate('comments');
     next();
