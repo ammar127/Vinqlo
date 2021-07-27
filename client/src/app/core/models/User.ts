@@ -2,6 +2,7 @@ export interface User {
     token:string;
     firstName:string;
     lastName:string;
+    image?: String;
     email:string;
     password:string;
     bio:string;
