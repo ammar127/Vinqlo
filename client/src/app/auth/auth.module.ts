@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import {NgOtpInputModule} from 'ng-otp-input'
+import { NgxOtpInputModule } from "ngx-otp-input";
 import { OtpComponent } from './OTP/otp.component';
 import { NoAuthGuard } from './no-auth-guard.service';
 import { ForgotComponent } from './forgot/forgot.component';
@@ -15,7 +15,7 @@ import { ResetComponent } from './reset/reset.component';
     CommonModule,
     AuthRoutingModule,
     SharedModule,
-    NgOtpInputModule
+    NgxOtpInputModule
   ], providers: [NoAuthGuard]
 })
 export class AuthModule { }

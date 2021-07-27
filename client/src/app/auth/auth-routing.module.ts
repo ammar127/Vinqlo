@@ -11,21 +11,21 @@ const routes: Routes = [
   {
     path: 'login',
     component: AuthComponent,
-    // canActivate: [NoAuthGuard]
+    canActivate: [NoAuthGuard]
   },
   {
     path: 'register',
     component: AuthComponent,
-    // canActivate: [NoAuthGuard]
+    canActivate: [NoAuthGuard]
   },
   {
-    path: 'otp/:email', component: OtpComponent
+    path: 'otp/:email/:type', component: OtpComponent
   },
   {
-    path: 'forgot', component: ForgotComponent
+    path: 'forgot', component: ForgotComponent, canActivate: [NoAuthGuard]
   },
   {
-    path: 'reset', component: ResetComponent
+    path: 'reset', component: ResetComponent, canActivate: [NoAuthGuard]
   },
   {
     path: '' , redirectTo: '/auth/login', pathMatch: 'full'

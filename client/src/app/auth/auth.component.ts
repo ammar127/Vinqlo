@@ -74,7 +74,7 @@ export class AuthComponent implements OnInit {
         let route = '';
         if(res.status === 200) {
           if(res.data.user && !res.data.user.verified ) {
-            route = '/auth/otp/'+res.data.user.email;
+            route = '/auth/otp/'+res.data.user.email+'/1';
           } else {
             route = '/feed';
           }
@@ -86,7 +86,7 @@ export class AuthComponent implements OnInit {
         if(err && err == 'Unauthorized') {
           this.errors = ['Invalid Email or Password'];
         } else if(err && err.code === 401.1 ) {
-          this.router.navigate(['/auth/otp', this.f.email.value])
+          this.router.navigate(['/auth/otp', this.f.email.value, 1])
         } else if(err && err.code === 401.2) {
           this.errors = [err.message];
         }  else if(err && err.code === 400.1) {

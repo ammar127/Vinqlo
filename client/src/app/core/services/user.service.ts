@@ -67,9 +67,13 @@ export class UserService {
       }
     ));
   }
-  getOtp(path:string)
+  verifyOtp(otp: string, email:string)
   {
-    return this.apiService.get(path)
+    return this.apiService.get(`/users/verifyOtp/${otp}/${email}`)
+  }
+  resendOtp(email:string)
+  {
+    return this.apiService.get(`/users/resendOtp/${email}`)
   }
   getCurrentUser(): User {
     return this.currentUserSubject.value;
