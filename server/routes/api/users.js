@@ -124,6 +124,8 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
 
     if(typeof req.query.status !== 'undefined' && req.query.status !== null){
         query = {status: req.query.status};
+    }else {
+        query = {status: {$ne: 0}};
     }
 
     User.paginate(query, options, (err, users) => {
@@ -136,7 +138,7 @@ router.get('/:email', (req, res, next) => {
 })
 
 router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.emailUser.status = req.params.status;
+    req.emailUser.status = +req.params.status;
     req.emailUser.save();
     next(new httpResponse.OkResponse('Updated Successfully'));
 })
