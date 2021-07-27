@@ -8,16 +8,24 @@ import Swal from 'sweetalert2';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
-export class UsersComponent implements OnInit {
-  allUsers!: User[];
-  constructor(private userService: UserService) {
+export class UsersComponent implements OnInit 
+{
+  allUsers!:User[];
+  page=10;
+  totalData!:number;
+  constructor(private userService:UserService) { 
     this.get();
   }
-  get() {
-    this.userService.getAllUsers('/users/get/all').subscribe(
-      (res) => {
-        this.allUsers = res.data.users;
-        console.log(this.allUsers);
+  get()
+  {
+    this.userService.getAllUsers('/users/get/all?page='+this.page).subscribe
+    (
+      res=>
+      {
+        this.allUsers=res.data.users.docs;
+        this.page=res.data.users.page;
+        this.totalData=res.data.users.totalDocs;
+        //console.log(this.allUsers)
       },
       (err) => {
         alert('chal jaye ga');
@@ -51,26 +59,38 @@ export class UsersComponent implements OnInit {
   }
   blockUser(email: string) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'you wanna block this user.',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, Block it!',
-      cancelButtonText: 'No, cancel please!',
-    }).then(({ isConfirmed }) => {
-      if (isConfirmed) {
-        this.userService.blockUser(email).subscribe((res) => {
-          if (res.status == 200) {
-            this.get();
-            Toast.fire({
-              icon: 'success',
-              title: 'User Blocked in successfully',
-            });
-          }
-        });
-      } else {
-        Swal.fire('Cancelled', 'Your user is safe :)', 'error');
-      }
-    });
-  }
+        title: "Are you sure?",
+        text: "you wanna block this user.",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, Block it!",
+        cancelButtonText: "No, cancel please!",
+      }).then(({isConfirmed}) => {
+        if (isConfirmed) {
+          this.userService.blockUser(email).subscribe
+          (
+      
+            res=>
+            {
+              if(res.status==200)
+              {
+                this.get();
+                Toast.fire({
+                  icon: 'success',
+                  title: 'User Blocked in successfully'
+                })
+
+              }
+            }
+          )
+        } else {
+          Swal.fire("Cancelled", "Your user is safe :)", "error");
+        }
+      });
+    }
+    onPageChange(pageNo: number) {
+      this.page = pageNo;
+      this.get();
+    }
+    
 }

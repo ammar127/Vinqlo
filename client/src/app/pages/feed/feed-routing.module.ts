@@ -1,3 +1,4 @@
+import { PostComponent } from './../post/post.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FeedComponent } from './feed.component';

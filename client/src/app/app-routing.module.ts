@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      
+
       {
         path: 'feed',
         loadChildren: () =>
@@ -47,7 +47,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'post',
+        path: 'post/:slug',
         loadChildren: () =>
           import('./pages/post/post.module').then((m) => m.PostModule),
       },

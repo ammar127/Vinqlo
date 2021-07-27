@@ -19,16 +19,16 @@
                 </div>
                 <div class="col-md-12 my-3">
                   <div class="card shadow-sm">
-                    <div *ngFor="let tmp of filteredArray" class="client-card shadow-sm">
+                    <div *ngFor="let tmp of allPosts" class="client-card shadow-sm">
                       <div class="client-header">
                         <div>
                           <h6 class="main-color mb-0">{{tmp.title}}</h6>
-                          <small class="text-muted">Jaun jose jan 10, 2021, 4:58:23 AM</small>
+                          <small class="text-muted">{{tmp.by.firstName}} {{tmp.by.lastName}} {{tmp.time | date : 'short'}}</small>
                         </div>
                         <div>
                           <button class="btn btn-join">
                             <i class="fa fa-link icons-color" aria-hidden="true" ></i>
-                            <span class="main-color">{{tmp.community}}</span>
+                            <span class="main-color">join</span>
                           </button>
                         </div>
                         <div ngbDropdown class="d-inline-block">
@@ -36,14 +36,18 @@
                             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                           </button>
                           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem> Something else is here </button>
+                            <button (click)="onReport()" ngbDropdownItem>Report</button>
                           </div>
                         </div>
                       </div>
-                      <p class="my-4">{{tmp.body}}</p>
+                      <span  (click)="openPost(tmp.slug)"  class="clickable-region">
+                        <p class="my-4">{{tmp.body}}</p>
+                      <div class="client-post">
+                        <img [src]="tmp.image|image" class="img-fluid" alt=""/>
+                      </div>
                       <span class="main-color"><i class="fa icons-color fa-users" aria-hidden="true" ></i> 1</span>
+
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -220,7 +224,7 @@
                 <span *ngFor="let tag of tags" style="background-color:LightGray;" class="tag-default tag-pill">
                   <i class="fa fa-close" (click)="removeTag(tag)"></i>
                   {{ tag }}
-                </span> 
+                </span>
               </div>
             </fieldset>
         <div class="input-field">
