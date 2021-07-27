@@ -11,16 +11,20 @@ import Swal from 'sweetalert2';
 export class UsersComponent implements OnInit 
 {
   allUsers!:User[];
+  page=10;
+  totalData!:number;
   constructor(private userService:UserService) { 
     this.get();
   }
   get()
   {
-    this.userService.getAllUsers('/users/get/all').subscribe
+    this.userService.getAllUsers('/users/get/all?page='+this.page).subscribe
     (
       res=>
       {
-        this.allUsers=res.data.users;
+        this.allUsers=res.data.users.docs;
+        this.page=res.data.users.page;
+        this.totalData=res.data.users.totalDocs;
         console.log(this.allUsers)
       },
       err=>
@@ -96,7 +100,10 @@ export class UsersComponent implements OnInit
         }
       });
     }
-  
+    onPageChange(pageNo: number) {
+      this.page = pageNo;
+      this.get();
+    }
     
 }
 
