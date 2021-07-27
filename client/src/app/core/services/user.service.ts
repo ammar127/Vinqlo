@@ -60,17 +60,24 @@ export class UserService {
     const route = type ? '/login' : '/signup';
     return this.apiService.post('/users' + route, credentials)
       .pipe(map(
-      data => {
-        this.setAuth(data.user);
-        return data;
+      res => {
+      console.log('res', res)
+        this.setAuth(res.data.user);
+        return res;
       }
     ));
   }
-
+  getOtp(path:string)
+  {
+    return this.apiService.get(path)
+  }
   getCurrentUser(): User {
     return this.currentUserSubject.value;
   }
-
+  getAllUsers(path:string)
+  {
+    return this.apiService.get(path);
+  }
   // Update the user on the server (email, pass, etc)
   update(user: User): Observable<User> {
     return this.apiService
@@ -82,4 +89,12 @@ export class UserService {
     }));
   }
 
+  deleteUser(email:string)
+  {
+    return this.apiService.put('/users/delete/'+email);
+  }
+  blockUser(email:string)
+  {
+    return this.apiService.put('/users/block/'+email);
+  }
 }

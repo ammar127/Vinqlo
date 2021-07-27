@@ -6,7 +6,12 @@ var bcrypt = require('bcrypt');
 var jsonwebtoken = require('jsonwebtoken');
 
 var userSchema = mongoose.Schema({
-    name:{
+    firstName:{
+        type: String,
+        required: true,
+    },
+    
+    lastName:{
         type: String,
         required: true,
     },
@@ -48,6 +53,11 @@ var userSchema = mongoose.Schema({
         ref: 'Post'
     },
 
+    liked:{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Post'
+    },
+
     role:{
         type: Number,
         enum:[1, 2, 3],
@@ -65,6 +75,11 @@ var userSchema = mongoose.Schema({
 
     otpExpiry: {
         type: Date
+    },
+
+    status:{
+        type: Number,
+        default: 1,
     }
 
 });
@@ -101,27 +116,31 @@ userSchema.methods.toAuthJSON = function(){
     this.generateToken()
     return{
         token: this.token,
-        name: this.name,
+        firstName: this.firstName,
+        lastName: this.lastName,
         email: this.email,
         bio: this.bio,
         campus: this.campus,
         degree: this.degree,
         saved: this.saved,
+        liked: this.liked,
         communities: this.communities, 
-        role: this.role
+        role: this.role,
+        otp: this.otp,
     }
 }
 
 userSchema.methods.toJSON = function(){
     return{
-        name: this.name,
+        firstName: this.firstName,
+        lastName: this.lastName,
         email: this.email,
         bio: this.bio,
         campus: this.campus,
         degree: this.degree,
-        saved: this.saved,
         communities: this.communities, 
-        role: this.role
+        role: this.role,
+        status: this.status
     }
 }
 

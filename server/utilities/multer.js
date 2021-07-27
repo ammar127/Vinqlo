@@ -1,28 +1,16 @@
 const multer = require("multer");
 const path = require("path");
-const filePath = path.join(process.cwd(), "public", "uploads");
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, path.join(process.cwd(), "server/public", "uploads"));
+  destination(req, file, cb) {
+    cb(null, path.join(process.cwd(), "server/public", "images"));
   },
-  filename: function(req, file, cb) {
+  filename(req, file, cb) {
+    const temp = file.originalname;
+    file.originalname = file.originalname.replace(/ /g, '');
     cb(null, Date.now() + "-" + file.originalname);
+    file.originalname = temp;
   }
 });
 
-function fileFilter(req, file, cb) {
-  // The function should call `cb` with a boolean
-  // to indicate if the file should be accepted
-
-  // To reject this file pass `false`, like so:
-  //   cb(null, false);
-
-  // To accept the file pass `true`, like so:
-  cb(null, true);
-
-  // You can always pass an error if something goes wrong:
-  //   cb(new Error("I don't have a clue!"));
-}
-
-module.exports = multer({ storage: storage, fileFilter });
+module.exports = multer({storage});

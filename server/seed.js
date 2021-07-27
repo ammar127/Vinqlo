@@ -19,11 +19,11 @@ let con = mongoose.connect(MONGODB_URI, {
 const campus = require('./seeder/campus');
 const info = require('./seeder/info');
 const user = require('./seeder/user');
+const category = require('./seeder/category');
 const community = require('./seeder/community');
 const post = require('./seeder/post');
 const report = require('./seeder/report');
-const category = require('./seeder/category')
-const comment = require('./seeder/comment')
+const comment = require('./seeder/comment');
 
 async function init() {
   
@@ -33,6 +33,7 @@ async function init() {
     await campus();
     await info();
     await user();
+    await category();
     await community();
     await post();
     await report();

@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { UserService } from "src/app/core";
 
 @Component({
     selector:'app-otp',
@@ -6,8 +8,25 @@ import { Component } from "@angular/core";
 })
 export class OtpComponent
 {
+    constructor(private userService:UserService,private router: Router)
+    {
+        
+    }
     onOtpChange(e:any)
     {
-        console.log(e)
+        if(e.length==6)
+        {
+            this.userService.getOtp('/users/verify/'+e).subscribe
+            (
+                res=>
+                {
+                    this.router.navigate(['/feed'])
+                },
+                err=>
+                {
+                    alert('ni chala')
+                }
+            )
+        }
     }
 }
