@@ -88,6 +88,7 @@ const preFind = function () {
     this.populate('saved');
     this.populate('campus');
     this.populate('degree');
+    this.populate('communities');
 }
 userSchema.pre('findOne', preFind);
 userSchema.pre('find', preFind);
