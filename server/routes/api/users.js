@@ -81,9 +81,13 @@ async (req, res, next) => {
     //SendOTP
     emailService.sendEmailVerificationOTP(user);
 
-    user.save();
-
-    next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
+    user.save((err, user) => {
+        if(err){
+            next(new httpResponse.BadRequestResponse(err));
+        }
+        else
+            next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
+    });
 })
 
 router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
