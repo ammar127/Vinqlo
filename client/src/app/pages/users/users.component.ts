@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit
         this.allUsers=res.data.users.docs;
         this.page=res.data.users.page;
         this.totalData=res.data.users.totalDocs;
-        console.log(this.allUsers)
+        //console.log(this.allUsers)
       },
       err=>
       {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Post } from 'src/app/core/models';
 import { FeedService} from 'src/app/core/services/feed.service';
@@ -18,14 +19,19 @@ export class FeedComponent implements OnInit {
   tags:string[]=[];
   allPosts!:Post[];
   searchQuery = '';
-  constructor(private service:FeedService, private modalService: NgbModal,private fb:FormBuilder)
+  constructor(
+    private service:FeedService,
+    private modalService: NgbModal,
+    private fb:FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
+    )
   {
     this.addPostForm = this.fb.group({community: ['', Validators.required],title: ['', Validators.required],body: ['', Validators.required],tags:[[]],img: ['', Validators.required]});
     this.article.tags=[];
   }
   ngOnInit(): void {
     this.get();
-    
   }
   get()
   {
@@ -33,17 +39,11 @@ export class FeedComponent implements OnInit {
     (
       res=>
       {
-        this.allPosts=res;
-      },
-      err=>
-      {
-
-        console.log('nai chala')
-
+        this.allPosts=res.data.docs;
       }
     )
   }
-  addTag() 
+  addTag()
   {
     // retrieve tag control
     const tag = this.tagField.value;
@@ -61,16 +61,21 @@ export class FeedComponent implements OnInit {
     console.log(this.article);
     this.service.createPost(this.article).subscribe
     (
-      
+
     )
     this.get();
   }
   removeTag(tagName: string) {
     this.tags = this.tags.filter(tag => tag !== tagName);
   }
-  get filteredArray () 
+
+  onReport()
   {
-            return this.searchQuery == '' ? this.allPosts : this.allPosts.filter(o => {return o.title.toLocaleLowerCase().includes(this.searchQuery.toLocaleLowerCase())})
+    this.router.navigate(['/report']);
+  }
+  openPost(slug:string)
+  {
+    this.router.navigate(['/post',slug])
   }
   open(content: any) {
     this.modalService

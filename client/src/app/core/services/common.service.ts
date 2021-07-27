@@ -23,7 +23,6 @@ export class CommonService {
       // Update the campus observable
       //console.log(res.data.campuses)
       this.campusSubject.next(res.data.campuses);
-      console.log(this.campusSubject.value);
       //this.campusSubject.next(this.campusSubject.getValue().concat([res.data.campuses]));
     }));
   }
