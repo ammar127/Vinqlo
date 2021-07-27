@@ -5,42 +5,10 @@
     </h4>
   </div>
 </div>
-<div class="col-md-12">
-  <div class="search-field my-4">
-    <input
-      type="text"
-      class="form-control shadow-sm"
-      placeholder="Search by Tag"
-    />
-    <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
-  </div>
-</div>
-<div class="col-md-12">
-  <div class="card shadow-sm pb-3 card-table">
+<div class="col-md-12 py-3">
+  <div class="card shadow-sm py-3 card-table">
     <div class="row">
-      <div class="col-md-12 px-5">
-        <div class="card shadow-sm card-accordian">
-          <a class="collapsed" data-toggle="collapse" href="#anyId">
-            <h5 class="icons-color mb-0">Users</h5>
-          </a>
-
-          <div
-            style="position: absolute"
-            id="anyId"
-            class="collapse shadow-sm custom-width accordian-main"
-          >
-            <div class="accordian-menu">
-              <div class="accordian-list">
-                <h5 class="main-color">Posts</h5>
-              </div>
-              <hr />
-              <div class="accordian-list">
-                <h5 class="main-color">Communities</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+     
       <div class="col-md-12 px-5">
         <div style="position: relative">
           <input
@@ -48,6 +16,7 @@
             type="text"
             class="form-control custom-border"
             placeholder="Enter Campus Name "
+            (keyup.enter)="createCampus(cName.value)"
           />
           <button
             class="btn btn-plus"
@@ -78,11 +47,3 @@
   </div>
 </div>
 
-<div class="card shadow-sm">
-  <div>
-    <input #cName type="text" placeholder="Enter Campus Name " />
-    <button align="right" (click)="createCampus(cName.value)">
-      <i class="fas fa-plus-circle"></i>
-    </button>
-  </div>
-</div>
