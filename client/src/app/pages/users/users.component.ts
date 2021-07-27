@@ -8,12 +8,12 @@ import Swal from 'sweetalert2';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
-export class UsersComponent implements OnInit 
+export class UsersComponent implements OnInit
 {
   allUsers!:User[];
-  page=10;
+  page=1;
   totalData!:number;
-  constructor(private userService:UserService) { 
+  constructor(private userService:UserService) {
     this.get();
   }
   get()
@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit
         this.allUsers=res.data.users.docs;
         this.page=res.data.users.page;
         this.totalData=res.data.users.totalDocs;
-        //console.log(this.allUsers)
+        console.log(this.allUsers)
       },
       (err) => {
         alert('chal jaye ga');
@@ -69,7 +69,7 @@ export class UsersComponent implements OnInit
         if (isConfirmed) {
           this.userService.blockUser(email).subscribe
           (
-      
+
             res=>
             {
               if(res.status==200)
@@ -92,5 +92,5 @@ export class UsersComponent implements OnInit
       this.page = pageNo;
       this.get();
     }
-    
+
 }

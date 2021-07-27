@@ -23,70 +23,17 @@
           <th scope="col">Actions</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let user of allUsers" >
         <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
+          <td>{{ user.firstName }} {{user.lastName}}</td>
+          <td>{{ user.email }}</td>
           <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
+            <a href="javascript:void(0)" (click)="deleteUser(user.email)"><img src="../../../assets/images/trash-alt-solid.svg" alt=""/></a>
+            <a href="javascript:void(0)" (click)="blockUser(user.email)" class="ml-3"><img src="../../../assets/images/Path 82.svg" alt=""/></a>
           </td>
-        </tr>
-        <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
-          <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
-          </td>
-        </tr>
-        <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
-          <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
-          </td>
-        </tr>
-        <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
-          <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
-          </td>
-        </tr>
       </tbody>
     </table>
-  </div>
-</div>
+    <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="120" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
 
-<div *ngFor="let user of allUsers">
-  <div>
-    {{ user.email }}
-    <div align="right">
-      <a href="javascript:void(0)" (click)="deleteUser(user.email)"
-        ><i class="fas fa-trash-alt"></i
-      ></a>
-      <a href="javascript:void(0)" (click)="blockUser(user.email)"
-        ><i class="fas fa-ban"></i
-      ></a>
-    </div>
   </div>
 </div>

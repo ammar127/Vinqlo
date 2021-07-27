@@ -5,11 +5,7 @@
 </div>
 <div class="col-md-12">
   <div class="search-field my-4">
-    <input
-      type="text"
-      class="form-control shadow-sm"
-      placeholder="Search by Tag"
-    />
+    <input type="text" class="form-control shadow-sm" placeholder="Search by Tag" />
     <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
   </div>
 </div>
@@ -18,62 +14,42 @@
     <div class="row">
       <div class="col-md-12 px-5">
         <div class="card shadow-sm card-accordian">
-          <a class="collapsed" data-toggle="collapse" href="#anyId">
-            <h5 class="icons-color mb-0">Users</h5>
-          </a>
-
-          <div
-            style="position: absolute"
-            id="anyId"
-            class="collapse shadow-sm custom-width accordian-main"
-          >
-            <div class="accordian-menu">
-              <div class="accordian-list">
-                <h5 class="main-color">Posts</h5>
-              </div>
-              <hr />
-              <div class="accordian-list">
-                <h5 class="main-color">Communities</h5>
-              </div>
-            </div>
-          </div>
+          <ng-select [items]="reports" bindLabel="name" bindValue="id" [(ngModel)]="reportType"></ng-select>
         </div>
       </div>
-      <div class="col-md-12 px-5">
+      <div *ngFor="let report of reports" class="col-md-12 px-5">
         <div class="card shadow-sm card-table">
           <div class="p-4">
-            <h4 class="main-color mb-4">Draktar Yorick</h4>
+            <h4 class="main-color mb-4">{{report.by.firstName}} {{report.by.lastName}}</h4>
             <h6>Reason</h6>
-            <p>user constantly posts motivational pages as link on posts</p>
+            <p>{{report.body}}</p>
           </div>
           <div class="card-footer">
-            <a href="" class="mr-3"
-              ><img
-                src="../../../assets/images/trash-alt-solid.svg"
-                width="20px"
-                alt=""
-              />
-              Delete report</a
-            >
-            <a href="" class="mr-3" class="ml-3"
-              ><img
-                src="../../../assets/images/Path 82.svg"
-                width="20px"
-                alt=""
-              />
-              Deactivate user</a
-            >
-            <a href="" class="mr-3">
-              <img
-                src="../../../assets/images/phone-square-alt-solid.svg"
-                width="20px"
-                alt=""
-              />
-              Add strike to user
-            </a>
+            <a href="" class="mr-3"><img src="../../../assets/images/trash-alt-solid.svg" width="20px"alt=""/>Delete report</a>
+            <a href="" class="mr-3" class="ml-3"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> Deactivate user</a>
+            <a href="" class="mr-3"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" /> Add strike to user</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!--
+<div class="col-md-12 px-5">
+  <div class="card shadow-sm card-accordian">
+    <a class="collapsed" data-toggle="collapse" href="#anyId">
+      <h5 class="icons-color mb-0">Users</h5>
+    </a>
+    <div style="position: absolute" id="anyId" class="collapse shadow-sm custom-width accordian-main">
+      <div class="accordian-menu">
+        <div class="accordian-list">
+          <h5 class="main-color">Posts</h5>
+        </div>
+        <hr />
+        <div class="accordian-list">
+          <h5 class="main-color">Communities</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

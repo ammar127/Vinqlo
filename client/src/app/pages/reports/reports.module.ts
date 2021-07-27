@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +13,7 @@ import { ReportsComponent } from './reports.component';
   ],
   imports: [
     CommonModule,
-    ReportsRoutingModule
+    ReportsRoutingModule,NgSelectModule, FormsModule
   ]
 })
 export class ReportsModule { }
