@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../core';
 
 @Component({
   selector: 'app-layout',
@@ -20,16 +21,10 @@ import { Router } from '@angular/router';
   `,
 })
 export class LayoutComponent {
-  isAdmin = false;
-  constructor(private router: Router) {
-    this.checkAdminRoute();
-    router.events.subscribe((val) => {
-    this.checkAdminRoute();
-        
-    });
+  
+  constructor(private router: Router, private userService: UserService) {
+   
   }
-  checkAdminRoute() {
-    this.isAdmin = this.router.url.includes('users') || this.router.url.includes('category') || this.router.url.includes('reports')
-  }
+ get isAdmin() {return +this.userService.getCurrentUser().role !== 3}
 
 }

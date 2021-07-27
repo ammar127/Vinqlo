@@ -17,7 +17,7 @@ router.use(passport.initialize())
 router.param('email', (req, res, next, email) => {
     User.findOne({email: email}, (err, user) => {
         if(!err && user !==null){
-            req.User = user;
+            req.emailUser = user;
             return next();
         }
         next(new httpResponse.BadRequestResponse('User not found!'));
@@ -29,15 +29,15 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
     user.generateToken();
 
     if(!user.verified){
-        return next(new httpResponse.UnauthorizedResponse('You email is not verified'));
+        return next(new httpResponse.UnauthorizedResponse('You email is not verified', 401.1));
     }
 
     if(user.status ===  0){
-        return next(new httpResponse.UnauthorizedResponse('Your account deleted by admin'));
+        return next(new httpResponse.UnauthorizedResponse('Your account deleted by admin' ,401.0));
     }
 
     if(user.status === 2){
-        return next(new httpResponse.UnauthorizedResponse('Your account blocked by admin'));
+        return next(new httpResponse.UnauthorizedResponse('Your account blocked by admin', 401.2));
     }
 
     next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));    
@@ -45,17 +45,17 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
 
 router.post('/signup',
 
-body('firstName').isLength({min: 4}),
-body('lastName').isLength({min: 4}),
-body('email').isEmail(),
-body('password').isLength({min: 4}),
-body('campus').isLength({min: 4}),
-body('degree').isLength({min: 4}),
+body('firstName').isLength({min: 4}).withMessage('First name is too short'),
+body('lastName').isLength({min: 4}).withMessage('Last name is too short'),
+body('email').isEmail().withMessage('Invalid Email'),
+body('password').isLength({min: 4}).withMessage('Password is too short'),
+body('campus').isLength({min: 4}).withMessage('Campus Required'),
+body('degree').isLength({min: 4}).withMessage('Degree Required'),
 
 async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        next(new httpResponse.BadRequestResponse(JSON.stringify(errors.array())));
+        next(new httpResponse.BadRequestResponse('Missing Paramter',422,errors));
         return
     }
 
@@ -78,12 +78,16 @@ async (req, res, next) => {
     today.setHours(today.getHours() + 1);
     user.otpExpiry = today;
 
-    //SendOTP
-    emailService.sendEmailVerificationOTP(user);
 
-    user.save();
-
-    next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
+    user.save((err, user) => {
+        if(err){
+            next(new httpResponse.BadRequestResponse(err, 400.1));
+        }
+        else{
+            emailService.sendEmailVerificationOTP(user);
+            next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
+        }
+    });
 })
 
 router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
@@ -120,6 +124,8 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
 
     if(typeof req.query.status !== 'undefined' && req.query.status !== null){
         query = {status: req.query.status};
+    }else {
+        query = {status: {$ne: 0}};
     }
 
     User.paginate(query, options, (err, users) => {
@@ -128,26 +134,61 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
 })
 
 router.get('/:email', (req, res, next) => {
-    next(new httpResponse.OkResponse({user: req.User}));
+    next(new httpResponse.OkResponse({user: req.emailUser}));
 })
 
+router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.emailUser.status = +req.params.status;
+    req.emailUser.save();
+    next(new httpResponse.OkResponse('Updated Successfully'));
+})
+
+router.get('/', auth.isToken, auth.isUser,(req, res, next) => {
+    req.user.generateToken();
+    next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));
+})
 router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = 0;
-    req.User.save();
-    next(new httpResponse.OkResponse('User Deleted'));
+    req.emailUser.status = 0;
+    req.emailUser.save();
+    next(new httpResponse.OkResponse('Updated Successfully'));
 });
 
-router.put('/block/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = 2;
-    req.User.save();
-    next(new httpResponse.OkResponse('User Blocked'));
+
+router.get('/resendOtp/:email', (req, res, next) => {
+    var user = req.emailUser;
+    var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
+    user.otp = otp;
+    var today = new Date();
+    today.setHours(today.getHours() + 1);
+    user.otpExpiry = today;
+
+    //SendOTP
+    emailService.sendEmailVerificationOTP(user);
+
+    user.save();
+    next(new httpResponse.OkResponse({otp: user.otp}));
 });
 
-router.put('/unblock/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = 1;
-    req.User.save();
-    next(new httpResponse.OkResponse('User Unblocked'));
-});
+router.get('/verifyOtp/:otp/:email', (req, res, next) => {
+    var today = new Date();
+    if(today.getTime() > req.emailUser.otpExpiry.getTime()){
+        next(new httpResponse.UnauthorizedResponse('OTP is expired'));
+        return;
+    }
+    if(req.params.otp !== req.emailUser.otp){
+        next(new httpResponse.UnauthorizedResponse('OTP is invalid'));
+        return;
+    }
 
+    // req.emailUser.otp = null;
+    // req.emailUser.otpExpiry = null;
+    req.emailUser.verified = true;
+
+    emailService.sendEmailVerificationSuccess(req.emailUser);
+
+    req.emailUser.save();
+
+    next(new httpResponse.OkResponse('Otp verified Successfully'));
+});
 
 module.exports = router;

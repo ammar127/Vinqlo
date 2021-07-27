@@ -5,10 +5,10 @@ const localStrategy = new LocalStrategy({usernameField: 'email', passwordField: 
   User.findOne({email: email}, (err, user) => {
         if(err) return done(err)
         if(!user){
-            return done(null, false, {message: 'Incorrect Email Address'})
+            return done(null, false, {message: 'Invalid Email and Password Address'})
         }
         if(!user.comparePassword(password)){
-            return done(null, false, {message: 'Incorrect Password'})
+            return done(null, false, {message: 'Invalid Email and Password Address'})
         }
         return done(null, user)
     })

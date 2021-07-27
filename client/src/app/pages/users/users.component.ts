@@ -8,19 +8,32 @@ import Swal from 'sweetalert2';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
-export class UsersComponent implements OnInit {
-  allUsers!: User[];
-  constructor(private userService: UserService) {
+export class UsersComponent implements OnInit
+{
+  result: any = null;
+  page = 1;
+  isLoading = false;
+  status = -1;
+  statuses = [{name:'All', id: -1},{name:'Active', id: 1},{name:'Inactive', id: 2},]
+  constructor(private userService:UserService) {
     this.get();
   }
-  get() {
-    this.userService.getAllUsers('/users/get/all').subscribe(
-      (res) => {
-        this.allUsers = res.data.users;
-        console.log(this.allUsers);
+  get()
+  {
+    this.isLoading = true;
+
+    this.userService.getAllUsers(`/users/get/all?${this.status !== -1 ? 'status='+this.status: ''}&page=${this.page}`).subscribe
+    (
+      res=>
+      {
+        if(res.status === 200) {
+          this.result = res.data.users;
+        }
+        this.isLoading = false;
       },
       (err) => {
-        alert('chal jaye ga');
+        this.result = null;
+        this.isLoading = false;
       }
     );
   }
@@ -35,7 +48,7 @@ export class UsersComponent implements OnInit {
       cancelButtonText: 'No, cancel please!',
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
-        this.userService.deleteUser(email).subscribe((res) => {
+        this.userService.changeStatus(email, 0).subscribe((res) => {
           if (res.status == 200) {
             this.get();
             Toast.fire({
@@ -49,28 +62,39 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-  blockUser(email: string) {
+  blockUser(email: string, status: number) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'you wanna block this user.',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, Block it!',
-      cancelButtonText: 'No, cancel please!',
-    }).then(({ isConfirmed }) => {
-      if (isConfirmed) {
-        this.userService.blockUser(email).subscribe((res) => {
-          if (res.status == 200) {
-            this.get();
-            Toast.fire({
-              icon: 'success',
-              title: 'User Blocked in successfully',
-            });
-          }
-        });
-      } else {
-        Swal.fire('Cancelled', 'Your user is safe :)', 'error');
-      }
-    });
-  }
+        title: "Are you sure?",
+        text: `you wanna ${status == 1 ? 'activate': 'block'} this user.`,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: `Yes, ${status == 1 ? 'activate': 'block'}  it!`,
+        cancelButtonText: "No, cancel please!",
+      }).then(({isConfirmed}) => {
+        if (isConfirmed) {
+          this.userService.changeStatus(email, status).subscribe
+          (res=>
+            {
+              if(res.status==200)
+              {
+                this.get();
+                Toast.fire({
+                  icon: 'success',
+                  title: `User ${status == 1 ? 'activated': 'blocked'} successfully`
+                })
+
+              }
+            }
+          )
+        } else {
+          Swal.fire("Cancelled", "Your user is safe :)", "error");
+        }
+      });
+    }
+    onPageChange(pageNo: number) {
+      this.page = pageNo;
+      this.get();
+    }
+ 
+
 }

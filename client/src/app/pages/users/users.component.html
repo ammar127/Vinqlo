@@ -3,90 +3,53 @@
     <h4 class="modal-title text-purple" id="modal-basic-title">Users</h4>
   </div>
 </div>
-<div class="col-md-12">
-  <div class="search-field my-4">
-    <input
-      type="text"
-      class="form-control shadow-sm"
-      placeholder="Search by Tag"
-    />
-    <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
+<div class="row my-4">
+  <div class="col-md-9">
+    <div class="search-field ">
+      <input
+        type="text"
+        class="form-control shadow-sm"
+        placeholder="Search by Name"
+      />
+      <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
+    </div>
+  </div>
+  <div class="col-md-3">
+    <ng-select [clearable]="false" [(ngModel)]="status" [items]="statuses" bindValue="id" bindLabel="name" (change)="get()"></ng-select>
   </div>
 </div>
+
 <div class="col-md-12">
-  <div class="card card-table shadow-sm">
+  <div *ngIf="!isLoading && result && result.docs && result.docs.length > 0" class="card card-table shadow-sm">
     <table class="table">
       <thead>
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
+          <th scope="col">Status</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let user of result.docs" >
         <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
+          <td>{{ user.firstName }} {{user.lastName}}</td>
+          <td>{{ user.email }}</td>
           <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
+            <span class="badge" [ngClass]="{'badge-success': user.status === 1, 'badge-danger': user.status === 2}">
+              <span *ngIf="user.status === 1">Active</span>
+              <span *ngIf="user.status === 2">Inactive</span>
+            </span>
           </td>
-        </tr>
-        <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
           <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
+            <a href="javascript:void(0)" (click)="deleteUser(user.email)"><img src="../../../assets/images/trash-alt-solid.svg" alt=""/></a>
+            <a *ngIf="user.status === 1" href="javascript:void(0)" (click)="blockUser(user.email, 2)" class="ml-3"><i class="fa fa-ban fa-2 text-green" aria-hidden="true"></i></a>
+            <a *ngIf="user.status === 2" href="javascript:void(0)" (click)="blockUser(user.email, 1)" class="ml-3"><i class="fas fa-check fa-2 text-green"></i></a>
           </td>
-        </tr>
-        <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
-          <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
-          </td>
-        </tr>
-        <tr>
-          <td>Carlos Lopez</td>
-          <td>carlopez@student.arteveldehs.be</td>
-          <td>
-            <a href=""
-              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
-            /></a>
-            <a href="" class="ml-3"
-              ><img src="../../../assets/images/Path 82.svg" alt=""
-            /></a>
-          </td>
-        </tr>
       </tbody>
     </table>
-  </div>
-</div>
+    <ngb-pagination class="d-flex justify-content-end" (pageChange)="onPageChange($event)" [collectionSize]="result.totalDocs" [(page)]="page" ></ngb-pagination>
 
-<div *ngFor="let user of allUsers">
-  <div>
-    {{ user.email }}
-    <div align="right">
-      <a href="javascript:void(0)" (click)="deleteUser(user.email)"
-        ><i class="fas fa-trash-alt"></i
-      ></a>
-      <a href="javascript:void(0)" (click)="blockUser(user.email)"
-        ><i class="fas fa-ban"></i
-      ></a>
-    </div>
   </div>
+  <no-content *ngIf="!isLoading && !result || (result && result.docs && result.docs.length == 0)" [label]="'No Users here'"></no-content>
+  <loader *ngIf="isLoading"></loader>
 </div>

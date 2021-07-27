@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
 body {
   background-color: #dafdfe !important;
 }
@@ -99,9 +100,6 @@ li.sidebar-list {
   color: #25eaef !important;
 }
 
-/* footer */
-
-@import "../../../assets/styles/variables.scss";
 
 .o-footer {
   display: block;
@@ -146,3 +144,23 @@ li.sidebar-list {
   color: #fff;
   margin-right: 4px;
 }
+.h-1000{
+  height: 1000vh;
+}
+.user-img{
+  height: 40px;
+  width: 40px;
+  border-radius: 100px;
+  border: 1px solid lightgray;
+}
+.user-img img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 100px;
+  vertical-align: baseline;
+}
+.text-green {
+  color:#25eaef !important;
+}
+

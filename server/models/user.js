@@ -88,7 +88,6 @@ const preFind = function () {
     this.populate('saved');
     this.populate('campus');
     this.populate('degree');
-    this.populate('communities');
 }
 userSchema.pre('findOne', preFind);
 userSchema.pre('find', preFind);
@@ -127,6 +126,7 @@ userSchema.methods.toAuthJSON = function(){
         communities: this.communities, 
         role: this.role,
         otp: this.otp,
+        verified: this.verified
     }
 }
 

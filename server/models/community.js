@@ -43,6 +43,12 @@ communitySchema.pre('findOne', function(next) {
     next();
 });
 
+communitySchema.pre('find', function(next) {
+    this.populate('by');
+    this.populate('category');
+    next();
+});
+
 communitySchema.plugin(uniqueValidator);
 communitySchema.plugin(mongoosastic);
 communitySchema.plugin(mongoosePaginate);

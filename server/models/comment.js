@@ -33,6 +33,12 @@ commentSchema.pre('findOne', function (next) {
     next();
 });
 
+commentSchema.pre('find', function (next) {
+    this.populate('by');
+    next();
+});
+
+
 commentSchema.plugin(uniqueValidator);
 commentSchema.plugin(mongoosastic);
 commentSchema.plugin(mongoosePaginate);

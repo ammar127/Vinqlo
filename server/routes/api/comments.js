@@ -55,14 +55,19 @@ body('post').isLength({min: 4}),
 });
 
 router.delete('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    console.log(req.comment.by, req.user._id);
     if(req.comment.by._id.toString() === req.user._id.toString()){
-        req.comment.remove((err, comment) => {
-            if(!err){
-                next(new httpResponse.OkResponse('Comment Deleted'));
+        Post.findOne({comments: req.comment._id}, (err, post) => {
+            if(!err && post !== null){
+                post.comments.pull(req.comment._id);
+                post.save((err, post) => {
+                    req.comment.remove((err, comment) => {
+                        next(new httpResponse.OkResponse('Comment Deleted'));
+                    });
+                });
             }
             else{
-                next(new httpResponse.BadRequestResponse(err));
+                next(new httpResponse.BadRequestResponse('Post not found!'));
+                next();
             }
         });
     }

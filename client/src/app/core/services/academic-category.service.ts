@@ -11,4 +11,8 @@ export class AcademicCategoryService {
   {
     return this.api.post('/campuses',{name:name})
   }
+  getCampuses()
+  {
+    return this.api.get('/common');
+  }
 }

@@ -4,20 +4,24 @@ import { Observable } from 'rxjs';
 
 import { UserService } from './user.service';
 import { take } from 'rxjs/operators';
+import { JwtService } from './jwt.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private userService: UserService
+    private jwtService: JwtService
   ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
+  ): boolean {
 
-    return this.userService.isAuthenticated.pipe(take(1));
-
+    if(!this.jwtService.getToken()) {
+      this.router.navigate(['/auth']);
+      return false;
+    }
+    return true;
   }
 }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard, UserType } from './core';
 import { LayoutComponent } from './layout/layout.component';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
   {
@@ -10,12 +12,20 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
-      
+
       {
         path: 'feed',
         loadChildren: () =>
           import('./pages/feed/feed.module').then((m) => m.FeedModule),
+          canActivate: [NgxPermissionsGuard],
+          data: {
+            permissions: {
+              only: UserType.user.toString(),
+             redirectTo: '/access-denied'
+            }
+          },
       },
       {
         path: 'profile',
@@ -33,6 +43,13 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () =>
           import('./pages/users/users.module').then((m) => m.UsersModule),
+          canActivate: [NgxPermissionsGuard],
+          data: {
+            permissions: {
+              only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+              redirectTo: '/access-denied'
+            }
+          },
       },
       {
         path: 'reports',
@@ -47,10 +64,12 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'post',
+        path: 'post/:slug',
         loadChildren: () =>
           import('./pages/post/post.module').then((m) => m.PostModule),
       },
+  { path: 'access-denied', loadChildren: () => import('./pages/access-denied/access-denied.module').then(m => m.AccessDeniedModule) },
+
       {
         path: '',
         redirectTo: 'feed',
