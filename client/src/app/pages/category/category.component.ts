@@ -11,6 +11,7 @@ import { AcademicCategoryService } from 'src/app/core/services/academic-category
 })
 export class CategoryComponent implements OnInit {
   campuses!:Campus[];
+  isLoader:boolean=true;
   constructor(private service:AcademicCategoryService,private campusService:AcademicCategoryService) { }
 
   ngOnInit(): void {
@@ -18,10 +19,12 @@ export class CategoryComponent implements OnInit {
   }
   getCampus()
   {
+
     this.campusService.getCampuses().subscribe
     (
       res=>{
       this.campuses=res.data.campuses
+      this.isLoader=false;
     }
     )
   }
