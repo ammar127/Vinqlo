@@ -61,10 +61,18 @@ export class CreateComponent implements OnInit {
   }
   get f() {return this.addPostForm.controls;}
   onAddTag() {
-    this.f.tags.patchValue([...this.f.tags.value, this.tag])
-    this.tag = '';
+    let t = this.tag.trim();
+    console.log(t)
+    if (t && t !== "") {
+      const a = this.f.tags.value;
+      this.f.tags.setValue([...a, t]);
+      this.tag = '';
+    }
+    
   }
   onRemoveTag(index: number) {
-    this.f.tags.value.splice(index, 1);
+    const a = this.f.tags.value;
+    a.splice(index, 1)
+    this.f.tags.setValue([...a])
   }
 }

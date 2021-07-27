@@ -31,7 +31,7 @@
               <div class="tag-list">
                 <span *ngFor="let tagValue of f.tags.value; let i = index" style="background-color:LightGray;" class="tag-default tag-pill">
                   <i class="fa fa-close" (click)="onRemoveTag(i)"></i>
-                  {{ tag }}
+                  {{ tagValue }}
                 </span>
               </div>
             </fieldset>

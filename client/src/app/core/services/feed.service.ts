@@ -10,7 +10,7 @@ export class FeedService {
   constructor(private apiService:ApiService) { }
   createPost(formData:any): Observable<any>
   {
-    return this.apiService.post('/post',formData);
+    return this.apiService.post('/posts',formData);
   }
   getAllPosts():Observable<any>
   {
