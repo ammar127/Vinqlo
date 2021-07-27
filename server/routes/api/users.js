@@ -140,7 +140,8 @@ router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (r
 })
 
 router.get('/', auth.isToken, auth.isUser,(req, res, next) => {
-    next(new httpResponse.OkResponse({user: req.user}));
+    req.user.generateToken();
+    next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
 })
 router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.User.status = 0;
