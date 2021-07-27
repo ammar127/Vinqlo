@@ -10,6 +10,6 @@ export interface User {
     campus:string;
     communities:string;
     saved:string;
-    role:string;
+    role:number;
     verified:string;
 }
