@@ -12,7 +12,8 @@ async function seedUser(){
         const n2 = Math.floor(Math.random() * 2);
 
         let user = new User();
-        user.name = faker.name.findName();
+        user.firstName = faker.name.firstName();
+        user.lastName = faker.name.lastName();
         user.email = faker.internet.email();
         await user.setPassword(faker.internet.password());
         user.bio = faker.lorem.sentence(); 

@@ -35,7 +35,7 @@ categorySchema.methods.slugify = function(){
 categorySchema.methods.toJSON = function(){
     return{
         slug: this.slug,
-        name: this.body,
+        name: this.name,
     }
 }
 
