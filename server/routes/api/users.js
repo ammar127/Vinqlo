@@ -25,11 +25,22 @@ router.param('email', (req, res, next, email) => {
 });
 
 router.post('/login', passport.authenticate('local', {session:false}), (req, res, next) => {
-    req.user.generateToken();
-    if(req.user.verified)
-        next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));
-    else
-        next(new httpResponse.UnauthorizedResponse('Please verify your email address'));
+    const user = req.user;
+    user.generateToken();
+
+    if(!user.verified){
+        return next(new httpResponse.UnauthorizedResponse('You email is not verified'));
+    }
+
+    if(user.status ===  0){
+        return next(new httpResponse.UnauthorizedResponse('Your account deleted by admin'));
+    }
+
+    if(user.status === 2){
+        return next(new httpResponse.UnauthorizedResponse('Your account blocked by admin'));
+    }
+
+    next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));    
 })
 
 router.post('/signup',
@@ -75,8 +86,8 @@ async (req, res, next) => {
     next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
 })
 
-router.get('/verify/:otp', auth.isToken, async (req, res, next) => {
-    req.user = await User.findOne({email: req.email})  
+router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
+      
     var today = new Date();
     if(today.getTime() > req.user.otpExpiry.getTime()){
         next(new httpResponse.UnauthorizedResponse('OTP is expired'));
@@ -120,6 +131,12 @@ router.put('/block/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, 
     req.User.status = 2;
     req.User.save();
     next(new httpResponse.OkResponse('User Blocked'));
+});
+
+router.put('/unblock/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.User.status = 1;
+    req.User.save();
+    next(new httpResponse.OkResponse('User Unblocked'));
 });
 
 

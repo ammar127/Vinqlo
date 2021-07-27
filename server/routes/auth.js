@@ -25,7 +25,7 @@ const isToken = function (req, res, next){
 
 const isUser = function(req, res, next){
     User.findOne({email: req.email}, (err, user) => {
-        if(err || !user.verified){
+        if(err){
           next(new httpResponse.UnauthorizedResponse('You are not logged in'));
         }
         else{

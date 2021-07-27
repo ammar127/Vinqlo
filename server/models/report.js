@@ -17,14 +17,17 @@ var reportSchema = mongoose.Schema({
 
     post:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post',
-        required: true
+        ref: 'Post'
     },
 
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
+    },
+
+    community:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Community'
     },
 
     by:{
