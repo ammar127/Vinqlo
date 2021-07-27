@@ -14,9 +14,12 @@ export class CategoryComponent implements OnInit {
   }
   createCampus(name:string)
   {
-    this.service.create(name).subscribe
+    if(name !== '') {
+       this.service.create(name).subscribe
     (
       res=>{alert('chala')}
     )
+    }
+   
   }
 }

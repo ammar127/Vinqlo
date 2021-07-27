@@ -1,0 +1,29 @@
+.search-field {
+  position: relative;
+}
+.search-field input {
+  border: none;
+  border-radius: 30px;
+  padding-left: 50px;
+}
+.search-field img {
+  position: absolute;
+  top: 9px;
+  left: 13px;
+  width: 22px;
+}
+.card-table {
+  border-radius: 20px;
+  border: none;
+}
+.custom-width {
+  width: 96%;
+  top: 49px;
+  border-radius: 0px 0px 20px 20px;
+}
+.card-accordian {
+  border-radius: 30px;
+  border: none;
+  padding: 10px 19px;
+  margin: 20px 0px;
+}
