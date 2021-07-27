@@ -83,7 +83,7 @@ async (req, res, next) => {
 
     user.save((err, user) => {
         if(err){
-            next(new httpResponse.BadRequestResponse(err));
+            next(new httpResponse.BadRequestResponse({err: err, error: 'Email already in use' }, 400.1));
         }
         else
             next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
