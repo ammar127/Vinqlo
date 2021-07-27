@@ -8,7 +8,6 @@ import { FormControl } from '@angular/forms';
 })
 export class ErrorsComponent implements OnInit {
   @Input() control!: any;
-  @Input() isSubmit!: boolean;
   constructor() { }
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit 
 {
@@ -27,49 +27,37 @@ export class UsersComponent implements OnInit
         this.totalData=res.data.users.totalDocs;
         //console.log(this.allUsers)
       },
-      err=>
-      {
-        alert('nai chala')
+      (err) => {
+        alert('chal jaye ga');
       }
-    ) 
+    );
   }
-  ngOnInit(): void {
-
-  }
-  deleteUser(email:string)
-  {
+  ngOnInit(): void {}
+  deleteUser(email: string) {
     Swal.fire({
-        title: "Are you sure?",
-        text: "you wanna delete this user.",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Delete it!",
-        cancelButtonText: "No, cancel please!",
-      }).then(({isConfirmed}) => {
-        if (isConfirmed) {
-          this.userService.deleteUser(email).subscribe
-          (
-      
-            res=>
-            {
-              if(res.status==200)
-              {
-                this.get();
-                Toast.fire({
-                  icon: 'success',
-                  title: 'User deleted in successfully'
-                })
-
-              }
-            }
-          )
-        } else {
-          Swal.fire("Cancelled", "Your user is safe :)", "error");
-        }
-      });
-    }
-    blockUser(email:string)
-  {
+      title: 'Are you sure?',
+      text: 'you wanna delete this user.',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, Delete it!',
+      cancelButtonText: 'No, cancel please!',
+    }).then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        this.userService.deleteUser(email).subscribe((res) => {
+          if (res.status == 200) {
+            this.get();
+            Toast.fire({
+              icon: 'success',
+              title: 'User deleted in successfully',
+            });
+          }
+        });
+      } else {
+        Swal.fire('Cancelled', 'Your user is safe :)', 'error');
+      }
+    });
+  }
+  blockUser(email: string) {
     Swal.fire({
         title: "Are you sure?",
         text: "you wanna block this user.",
@@ -106,4 +94,3 @@ export class UsersComponent implements OnInit
     }
     
 }
-
