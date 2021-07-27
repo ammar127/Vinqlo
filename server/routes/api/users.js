@@ -112,7 +112,17 @@ router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
 
 
 router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    User.find({status: 1}, (err, users) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+    var query = {};
+
+    if(typeof req.query.status !== 'undefined' && req.query.status !== null){
+        query = {status: req.query.status};
+    }
+
+    User.paginate(query, options, (err, users) => {
         next(new httpResponse.OkResponse({users: users}))
     })
 })

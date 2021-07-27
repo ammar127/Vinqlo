@@ -39,8 +39,9 @@ const isAdmin = function(req, res, next){
     if(req.user.role === 2){
         next()
     }
-    else
-    next(new httpResponse.UnauthorizedResponse('You are not admin'));
+    else{
+        next(new httpResponse.UnauthorizedResponse('You are not admin'));
+    }
 }
 
 module.exports = {isToken, isUser, isAdmin}

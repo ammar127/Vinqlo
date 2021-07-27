@@ -15,6 +15,11 @@ var reportSchema = mongoose.Schema({
         required: true
     },
 
+    type:{
+        type: Number,
+        required: true
+    },
+
     post:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'
@@ -43,9 +48,18 @@ var reportSchema = mongoose.Schema({
 
 });
 
-reportSchema.pre('findOne', (next) => {
+reportSchema.pre('findOne', function(next){
     this.populate('post');
     this.populate('user');
+    this.populate('community');
+    this.populate('by');
+    next();
+});
+
+reportSchema.pre('find', function(next){
+    this.populate('post');
+    this.populate('user');
+    this.populate('community');
     this.populate('by');
     next();
 });
@@ -70,6 +84,7 @@ reportSchema.methods.toJSON = function(){
         body: this.body,
         post: this.post,
         user: this.user,
+        community: this.community,
         by: this.by,
         time: this.time
     }
