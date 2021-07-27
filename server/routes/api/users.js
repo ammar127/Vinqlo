@@ -131,22 +131,10 @@ router.get('/:email', (req, res, next) => {
     next(new httpResponse.OkResponse({user: req.User}));
 })
 
-router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = 0;
+router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.User.status = req.params.status;
     req.User.save();
-    next(new httpResponse.OkResponse('User Deleted'));
-});
-
-router.put('/block/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = 2;
-    req.User.save();
-    next(new httpResponse.OkResponse('User Blocked'));
-});
-
-router.put('/unblock/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.User.status = 1;
-    req.User.save();
-    next(new httpResponse.OkResponse('User Unblocked'));
+    next(new httpResponse.OkResponse('Updated Successfully'));
 });
 
 
