@@ -1,3 +1,4 @@
+import { campuses } from './../core/constants/campuses';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,30 +26,40 @@ export class AuthComponent implements OnInit {
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
-      'email': ['', Validators.required],
+      'email': ['', [Validators.required, Validators.email]],
       'password': ['', Validators.required]
-    });
+    }, {updateOn: 'blur'} );
   }
 
   ngOnInit()
   {
+    this.route.url.subscribe(data => {
+      let authType = data[data.length - 1].path;
+      this.isLogin = authType === 'login'
+      this.onChangeType();
+    });
     
   }
   onChangeType() {
-    this.isLogin=!this.isLogin;
     if (!this.isLogin) 
     {
       this.authForm.addControl('firstName', new FormControl());
       this.authForm.addControl('lastName', new FormControl());
       this.authForm.addControl('degree', new FormControl());
       this.authForm.addControl('campus', new FormControl());
+      this.authForm.addControl('confirmPassword', new FormControl());
       this.campus=this.commonService.campuses();
+      this.f.degree.disable();
     }else {
       this.authForm.removeControl('firstName');
       this.authForm.removeControl('lastName');
       this.authForm.removeControl('degree');
       this.authForm.removeControl('campus');
+      this.authForm.removeControl('confirmPassword');
     }
+  }
+  onCampusChange() {
+    this.f.degree.enable();
   }
   get f() {return this.authForm.controls}
   get degrees() {return this.f.campus.value ? this.campus.find((e: Campus) => e.slug === this.f.campus.value).degrees : [] }

@@ -13,33 +13,39 @@
               />
             </div>
             <form autocomplete="off" [formGroup]="authForm" (ngSubmit)="submitForm()">
-              <div class="input-field">
-                <input formControlName="firstName" type="text" class="form-control custom-border" placeholder="First Name"  *ngIf="!isLogin"/>
+              <div class="input-field" *ngIf="f.firstName" >
+                <input formControlName="firstName" type="text" class="form-control custom-border" placeholder="First Name"  />
+                <errors [control]="f.firstName"></errors>
               </div>
-              <div class="input-field">
-                <input type="text" formControlName="lastName" class="form-control custom-border" placeholder="Last Name" *ngIf="!isLogin"/>
+              <div class="input-field" *ngIf="f.lastName">
+                <input type="text" formControlName="lastName" class="form-control custom-border" placeholder="Last Name" />
+                <errors [control]="f.lastName"></errors>
+
               </div>
               <div class="input-field">
                 <input formControlName="email" type="email" class="form-control custom-border" placeholder="Email" />
+                <errors [control]="f.email"></errors>
               </div>
-              <div  class="input-field"  *ngIf="!isLogin">
-                <ng-select formControlName="campus" [items]="campus" bindValue="slug" bindLabel="name" class="selectpicker form-control custom-border">
+              <div  class="input-field"  *ngIf="f.campus">
+                <ng-select formControlName="campus"  (change)="onCampusChange()" [items]="campus" bindValue="slug" bindLabel="name" placeholder="Campus" class="selectpicker form-control custom-border">
                </ng-select>
-                <img src="../../assets/images/caret-down-solid.png" class="select-arrow" alt="" />
+               <errors [control]="f.campus"></errors>
               </div>
-              <div class="input-field"  *ngIf="!isLogin">
-                <ng-select formControlName="degree" [disabled]="f.campus.value" [items]="degrees" bindValue="slug" bindLabel="name" class="selectpicker form-control custom-border">
+              <div class="input-field" *ngIf="f.degree" >
+                <ng-select formControlName="degree"  [items]="degrees" bindValue="slug" bindLabel="name" placeholder="Degree" class="selectpicker form-control custom-border">
                </ng-select>
-                <img src="../../assets/images/caret-down-solid.png" class="select-arrow" alt="" />
+               <errors [control]="f.degree"></errors>
               </div>
               <div class="input-field">
                 <input formControlName="password" type="password" class="form-control custom-border" placeholder="Password" />
+               <errors [control]="f.password"></errors>
               </div>
-              <div class="input-field"  *ngIf="!isLogin">
-                <input formControlName="password" type="password" class="form-control custom-border" placeholder="Confirm Password" />
+              <div class="input-field"  *ngIf="f.confirmPassword" >
+                <input formControlName="confirmPassword" type="password" class="form-control custom-border" placeholder="Confirm Password" />
+               <errors [control]="f.confirmPassword"></errors>
               </div>
               <button class="btn mb-2 btn-main"  [disabled]="!authForm.valid" type="submit">{{isLogin ? 'Log In':'Sign Up'}}</button>
-              <span>Or </span> <a class="main-color" (click)="onChangeType()">{{isLogin ? 'Sign Up':'Log In'}}</a>
+              <span>Or </span> <a href="javascript:void(0)" class="main-color" [routerLink]="['/auth',isLogin ?'register' : 'login']" >{{isLogin ? 'Sign Up':'Log In'}}</a>
             </form>
             {{selectedCampus}}
           </div>
