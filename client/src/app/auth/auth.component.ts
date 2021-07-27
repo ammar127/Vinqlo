@@ -1,3 +1,4 @@
+import { campuses } from './../core/constants/campuses';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,10 +12,8 @@ import { Campus, CommonService, Errors, UserService } from '../core';
 export class AuthComponent implements OnInit {
   isLogin: boolean = true;
   title: String = '';
-  errors: Errors = {errors: {}};
-  isSubmitting = false;
+  errors: any= null;
   authForm: FormGroup;
-  campus:any;
   selectedCampus!:any[];
   constructor(
     private route: ActivatedRoute,
@@ -25,36 +24,47 @@ export class AuthComponent implements OnInit {
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
-      'email': ['', Validators.required],
+      'email': ['', [Validators.required, Validators.email]],
       'password': ['', Validators.required]
-    });
+    }, {updateOn: 'blur'} );
   }
 
   ngOnInit()
   {
+    this.onChangeType();
+    this.route.url.subscribe(data => {
+      let authType = data[data.length - 1].path;
+      this.isLogin = authType === 'login'
+      this.onChangeType();
+    });
     
   }
   onChangeType() {
-    this.isLogin=!this.isLogin;
     if (!this.isLogin) 
     {
-      this.authForm.addControl('firstName', new FormControl());
-      this.authForm.addControl('lastName', new FormControl());
-      this.authForm.addControl('degree', new FormControl());
-      this.authForm.addControl('campus', new FormControl());
-      this.campus=this.commonService.campuses();
+      this.authForm.addControl('firstName', new FormControl('', [Validators.required]));
+      this.authForm.addControl('lastName', new FormControl('', [Validators.required]));
+      this.authForm.addControl('degree', new FormControl('', [Validators.required]));
+      this.authForm.addControl('campus', new FormControl(null, [Validators.required]));
+      this.authForm.addControl('confirmPassword', new FormControl('', [Validators.required]));
+
+      this.f.degree.disable();
     }else {
       this.authForm.removeControl('firstName');
       this.authForm.removeControl('lastName');
       this.authForm.removeControl('degree');
       this.authForm.removeControl('campus');
+      this.authForm.removeControl('confirmPassword');
     }
   }
+  get campuses()  {return this.commonService.campuses()}
+  onCampusChange() {
+    this.f.degree.enable();
+  }
   get f() {return this.authForm.controls}
-  get degrees() {return this.f.campus.value ? this.campus.find((e: Campus) => e.slug === this.f.campus.value).degrees : [] }
+  get degrees() {return this.f.campus.value ? this.campuses[this.campuses.findIndex((e: Campus) => e.slug === this.f.campus.value)].degrees : [] }
   submitForm() {
-    this.isSubmitting = true;
-    this.errors = {errors: {}};
+    this.errors = null;
 
     const credentials = this.authForm.value;
     this.userService.attemptAuth(this.isLogin, credentials).subscribe
@@ -63,15 +73,27 @@ export class AuthComponent implements OnInit {
       {
         let route = '';
         if(res.status === 200) {
-          route = this.isLogin ? '/feed': '/auth/otp';
+          if(res.data.user && !res.data.user.verified ) {
+            route = '/auth/otp/'+res.data.user.email;
+          } else {
+            route = '/feed';
+          }
         }
         this.router.navigate([route])
       },
       err => 
       {
-        console.log('nai chala', err)
-        this.errors = err;
-        this.isSubmitting = false;
+        if(err && err == 'Unauthorized') {
+          this.errors = ['Invalid Email or Password'];
+        } else if(err && err.code === 401.1 ) {
+          this.router.navigate(['/auth/otp', this.f.email.value])
+        } else if(err && err.code === 401.2) {
+          this.errors = [err.message];
+        }  else if(err && err.code === 400.1) {
+          this.errors = ['Email already exist'];
+        } else if(err && err.code === 422) {
+          this.errors = err.moreInfo.errors.map((e: any) => e.msg);
+        } 
       }
     );
   }

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { UserService } from "src/app/core";
+import { Toast, UserService } from "src/app/core";
 
 @Component({
     selector:'app-otp',
@@ -28,5 +28,8 @@ export class OtpComponent
                 }
             )
         }
+    }
+    onResendEmail() {
+        Toast.fire({text: 'OTP sent to your Email', icon: 'success'})
     }
 }
