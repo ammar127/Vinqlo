@@ -78,15 +78,15 @@ async (req, res, next) => {
     today.setHours(today.getHours() + 1);
     user.otpExpiry = today;
 
-    //SendOTP
-    emailService.sendEmailVerificationOTP(user);
 
     user.save((err, user) => {
         if(err){
-            next(new httpResponse.BadRequestResponse({err: err, error: 'Email already in use' }, 400.1));
+            next(new httpResponse.BadRequestResponse(err, 400.1));
         }
-        else
+        else{
+            emailService.sendEmailVerificationOTP(user);
             next(new httpResponse.OkResponse({user: user.toAuthJSON()}));
+        }
     });
 })
 
