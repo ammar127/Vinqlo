@@ -60,6 +60,14 @@ var postSchema = mongoose.Schema({
 postSchema.pre('findOne', function (next) {
     this.populate('by');
     this.populate('comments');
+    this.populate('community');
+    next();
+});
+
+postSchema.pre('find', function (next) {
+    this.populate('by');
+    this.populate('comments');
+    this.populate('user');
     next();
 });
 

@@ -29,15 +29,15 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
     user.generateToken();
 
     if(!user.verified){
-        return next(new httpResponse.UnauthorizedResponse('You email is not verified'));
+        return next(new httpResponse.UnauthorizedResponse('You email is not verified', 401.1));
     }
 
     if(user.status ===  0){
-        return next(new httpResponse.UnauthorizedResponse('Your account deleted by admin'));
+        return next(new httpResponse.UnauthorizedResponse('Your account deleted by admin' ,401.0));
     }
 
     if(user.status === 2){
-        return next(new httpResponse.UnauthorizedResponse('Your account blocked by admin'));
+        return next(new httpResponse.UnauthorizedResponse('Your account blocked by admin', 401.2));
     }
 
     next(new httpResponse.OkResponse({user: req.user.toAuthJSON()}));    
@@ -137,5 +137,20 @@ router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (r
     next(new httpResponse.OkResponse('Updated Successfully'));
 });
 
+
+router.get('/resendOtp/:email', (req, res, next) => {
+    var user = req.User;
+    var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
+    user.otp = otp;
+    var today = new Date();
+    today.setHours(today.getHours() + 1);
+    user.otpExpiry = today;
+
+    //SendOTP
+    emailService.sendEmailVerificationOTP(user);
+
+    user.save();
+    next(new httpResponse.OkResponse({otp: user.otp}));
+});
 
 module.exports = router;
