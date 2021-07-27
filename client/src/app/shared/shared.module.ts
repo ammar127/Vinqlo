@@ -13,6 +13,8 @@ import { ErrorsComponent } from './errors/errors.component';
 import { DecimalOnlyDirective } from './Directives/decimal-only.directive';
 import { ShowAuthedDirective } from './Directives/show-authed.directive';
 import { ImagePipe } from './Pipes/image.pipe';
+import { LoaderComponent } from './loader/loader.component';
+import { NoContentComponent } from './no-content/no-content.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { ImagePipe } from './Pipes/image.pipe';
     DecimalOnlyDirective,
     ShowAuthedDirective,
     ErrorsComponent,
-    ImagePipe
+    ImagePipe,
+    LoaderComponent,
+    NoContentComponent
   ],
   imports: [
     CommonModule,
