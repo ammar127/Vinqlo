@@ -12,6 +12,9 @@
                 alt=""
               />
             </div>
+            <div *ngIf="errors" class="alert alert-danger">
+              <div  *ngFor="let error of errors">{{error}}</div>
+            </div>
             <form autocomplete="off" [formGroup]="authForm" (ngSubmit)="submitForm()">
               <div class="input-field" *ngIf="f.firstName" >
                 <input formControlName="firstName" type="text" class="form-control custom-border" placeholder="First Name"  />

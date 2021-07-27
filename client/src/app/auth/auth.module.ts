@@ -6,9 +6,11 @@ import { SharedModule } from '../shared/shared.module';
 import {NgOtpInputModule} from 'ng-otp-input'
 import { OtpComponent } from './OTP/otp.component';
 import { NoAuthGuard } from './no-auth-guard.service';
+import { ForgotComponent } from './forgot/forgot.component';
+import { ResetComponent } from './reset/reset.component';
 
 @NgModule({
-  declarations: [AuthComponent,OtpComponent],
+  declarations: [AuthComponent,OtpComponent, ForgotComponent, ResetComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
