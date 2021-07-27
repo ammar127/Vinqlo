@@ -1,5 +1,5 @@
 <header>
-  <nav [ngClass]="isAdmin ? 'bg-dark': 'bg-white'">
+  <nav [ngClass]="isAdmin ? 'bg-dark' : 'bg-white'">
     <a class="nav-main" href=""
       ><img src="../../assets/images/logo-01.png" alt=""
     /></a>
@@ -24,26 +24,43 @@
         <div
           style="position: absolute"
           id="anyId"
-          class="collapse accordian-main"
+          class="collapse custom-align accordian-main"
         >
           <div class="accordian-menu">
             <div class="accordian-list">
-              <span class="main-color">Sports</span>
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-running"></i> Sports</span
+              >
             </div>
             <div class="accordian-list">
-              <span class="main-color">Events</span>
+              <span class="main-color">
+                <i class="fas icons-color d-block fa-calendar-day"></i>
+                Events</span
+              >
             </div>
             <div class="accordian-list">
-              <span class="main-color">Education</span>
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-file-invoice"></i>
+                Education</span
+              >
             </div>
             <div class="accordian-list">
-              <span class="main-color">Nightlife</span>
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-cocktail"></i>
+                Nightlife</span
+              >
             </div>
             <div class="accordian-list">
-              <span class="main-color">Handy tips</span>
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-info"></i> Handy
+                tips</span
+              >
             </div>
             <div class="accordian-list">
-              <span class="main-color">Culture</span>
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-university"></i>
+                Culture</span
+              >
             </div>
           </div>
         </div>
