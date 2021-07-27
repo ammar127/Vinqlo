@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     UsersRoutingModule,
-    NgbPaginationModule
+    SharedModule
   ]
 })
 export class UsersModule { }

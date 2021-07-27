@@ -57,6 +57,8 @@ import { NoContentComponent } from './no-content/no-content.component';
 
     // components
     ErrorsComponent,
+    LoaderComponent,
+    NoContentComponent,
 
     //Pipes
     ImagePipe

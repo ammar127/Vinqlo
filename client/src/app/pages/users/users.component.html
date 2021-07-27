@@ -14,7 +14,7 @@
   </div>
 </div>
 <div class="col-md-12">
-  <div class="card card-table shadow-sm">
+  <div *ngIf="!isLoading && result && result.docs && result.docs.length > 0" class="card card-table shadow-sm">
     <table class="table">
       <thead>
         <tr>
@@ -23,7 +23,7 @@
           <th scope="col">Actions</th>
         </tr>
       </thead>
-      <tbody *ngFor="let user of allUsers" >
+      <tbody *ngFor="let user of result.docs" >
         <tr>
           <td>{{ user.firstName }} {{user.lastName}}</td>
           <td>{{ user.email }}</td>
@@ -33,7 +33,9 @@
           </td>
       </tbody>
     </table>
-    <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="120" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+    <ngb-pagination class="d-flex justify-content-end" (pageChange)="onPageChange($event)" [collectionSize]="result.totalDocs" [(page)]="page" ></ngb-pagination>
 
   </div>
+  <no-content *ngIf="!isLoading && !result || (result && result.docs && result.docs.length == 0)"></no-content>
+  <loader *ngIf="isLoading"></loader>
 </div>

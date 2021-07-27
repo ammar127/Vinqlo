@@ -10,25 +10,28 @@ import Swal from 'sweetalert2';
 })
 export class UsersComponent implements OnInit
 {
-  allUsers!:User[];
-  page=1;
-  totalData!:number;
+  result: any = null;
+  page = 1;
+  isLoading = false;
   constructor(private userService:UserService) {
-    this.get();
+    // this.get();
   }
   get()
   {
+    this.isLoading = true;
+
     this.userService.getAllUsers('/users/get/all?page='+this.page).subscribe
     (
       res=>
       {
-        this.allUsers=res.data.users.docs;
-        this.page=res.data.users.page;
-        this.totalData=res.data.users.totalDocs;
-        console.log(this.allUsers)
+        if(res.status === 200) {
+          this.result = res.data.users;
+        }
+        this.isLoading = false;
       },
       (err) => {
-        alert('chal jaye ga');
+        this.result = null;
+        this.isLoading = false;
       }
     );
   }
