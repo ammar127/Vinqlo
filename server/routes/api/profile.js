@@ -22,9 +22,31 @@ router.get('/:email', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse({user: req.User}));
 });
 
-// router.get('/community/:email', auth.isToken, auth.isUser, (req, res, next) => {
+router.get('/community/:email', auth.isToken, auth.isUser, (req, res, next) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
 
-// });
+    Community.paginate({_id: { $in: req.User.communities }}, options, (err, communities) => {
+        if(!err){
+            next(new httpResponse.OkResponse({communities: communities}));
+        }
+    });
+});
+
+router.get('/post/:email', auth.isToken, auth.isUser, (req, res, next) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    Post.paginate({by: req.User._id}, options, (err, posts) => {
+        if(!err){
+            next(new httpResponse.OkResponse({posts: posts}));
+        }
+    });
+});
 
 
 module.exports = router;
