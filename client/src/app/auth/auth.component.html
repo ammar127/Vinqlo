@@ -27,7 +27,7 @@
                 <errors [control]="f.email"></errors>
               </div>
               <div  class="input-field"  *ngIf="f.campus">
-                <ng-select formControlName="campus"  (change)="onCampusChange()" [items]="campus" bindValue="slug" bindLabel="name" placeholder="Campus" class="selectpicker form-control custom-border">
+                <ng-select formControlName="campus"  (change)="onCampusChange()" [items]="campuses" bindValue="slug" bindLabel="name" placeholder="Campus" class="selectpicker form-control custom-border">
                </ng-select>
                <errors [control]="f.campus"></errors>
               </div>

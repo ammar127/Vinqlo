@@ -15,7 +15,6 @@ export class AuthComponent implements OnInit {
   errors: Errors = {errors: {}};
   isSubmitting = false;
   authForm: FormGroup;
-  campus:any;
   selectedCampus!:any[];
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +32,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit()
   {
+    this.onChangeType();
     this.route.url.subscribe(data => {
       let authType = data[data.length - 1].path;
       this.isLogin = authType === 'login'
@@ -43,12 +43,12 @@ export class AuthComponent implements OnInit {
   onChangeType() {
     if (!this.isLogin) 
     {
-      this.authForm.addControl('firstName', new FormControl());
-      this.authForm.addControl('lastName', new FormControl());
-      this.authForm.addControl('degree', new FormControl());
-      this.authForm.addControl('campus', new FormControl());
-      this.authForm.addControl('confirmPassword', new FormControl());
-      this.campus=this.commonService.campuses();
+      this.authForm.addControl('firstName', new FormControl('', [Validators.required]));
+      this.authForm.addControl('lastName', new FormControl('', [Validators.required]));
+      this.authForm.addControl('degree', new FormControl('', [Validators.required]));
+      this.authForm.addControl('campus', new FormControl(null, [Validators.required]));
+      this.authForm.addControl('confirmPassword', new FormControl('', [Validators.required]));
+
       this.f.degree.disable();
     }else {
       this.authForm.removeControl('firstName');
@@ -58,11 +58,12 @@ export class AuthComponent implements OnInit {
       this.authForm.removeControl('confirmPassword');
     }
   }
+  get campuses()  {return this.commonService.campuses()}
   onCampusChange() {
     this.f.degree.enable();
   }
   get f() {return this.authForm.controls}
-  get degrees() {return this.f.campus.value ? this.campus.find((e: Campus) => e.slug === this.f.campus.value).degrees : [] }
+  get degrees() {return this.f.campus.value ? this.campuses[this.campuses.findIndex((e: Campus) => e.slug === this.f.campus.value)].degrees : [] }
   submitForm() {
     this.isSubmitting = true;
     this.errors = {errors: {}};
