@@ -95,8 +95,8 @@ postSchema.methods.toJSON = function(){
         tags: this.tags,
         comments: this.comments,
         community: this.community,
-        time: this.time
-
+        time: this.time,
+        likeCount: this.likeCount
     }
 }
 
