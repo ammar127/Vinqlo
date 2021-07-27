@@ -1,9 +1,10 @@
-<div class="card shadow-sm">
-
-  <h4 class="modal-title text-purple" id="modal-basic-title">Users</h4>
+<div class="col-md-12">
+  <div class="card card-table mt-5 pl-3 shadow-sm">
+    <h4 class="modal-title text-purple" id="modal-basic-title">Users</h4>
+  </div>
 </div>
 <div class="col-md-12">
-  <div class="search-field">
+  <div class="search-field my-4">
     <input
       type="text"
       class="form-control shadow-sm"
@@ -12,32 +13,80 @@
     <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
   </div>
 </div>
-<div class="card shadow-sm">
-  <div class="input-field">
-    <label for="">Select Degree</label>
-    <select class="selectpicker form-control custom-border">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </select>
-    <img
-      src="../../assets/images/caret-down-solid.png"
-      class="select-arrow"
-      alt=""
-    />
+<div class="col-md-12">
+  <div class="card card-table shadow-sm">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Carlos Lopez</td>
+          <td>carlopez@student.arteveldehs.be</td>
+          <td>
+            <a href=""
+              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
+            /></a>
+            <a href="" class="ml-3"
+              ><img src="../../../assets/images/Path 82.svg" alt=""
+            /></a>
+          </td>
+        </tr>
+        <tr>
+          <td>Carlos Lopez</td>
+          <td>carlopez@student.arteveldehs.be</td>
+          <td>
+            <a href=""
+              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
+            /></a>
+            <a href="" class="ml-3"
+              ><img src="../../../assets/images/Path 82.svg" alt=""
+            /></a>
+          </td>
+        </tr>
+        <tr>
+          <td>Carlos Lopez</td>
+          <td>carlopez@student.arteveldehs.be</td>
+          <td>
+            <a href=""
+              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
+            /></a>
+            <a href="" class="ml-3"
+              ><img src="../../../assets/images/Path 82.svg" alt=""
+            /></a>
+          </td>
+        </tr>
+        <tr>
+          <td>Carlos Lopez</td>
+          <td>carlopez@student.arteveldehs.be</td>
+          <td>
+            <a href=""
+              ><img src="../../../assets/images/trash-alt-solid.svg" alt=""
+            /></a>
+            <a href="" class="ml-3"
+              ><img src="../../../assets/images/Path 82.svg" alt=""
+            /></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
- 
-
-  <div *ngFor="let user of allUsers;">
-    <div>
-      {{user.email}}
-      <div align="right">
-        <a href="javascript:void(0)" (click)="deleteUser(user.email)"><i class="fas fa-trash-alt"></i></a>
-        <a href="javascript:void(0)" (click)="blockUser(user.email)"><i class="fas fa-ban"></i></a>
-      </div>
+<div *ngFor="let user of allUsers">
+  <div>
+    {{ user.email }}
+    <div align="right">
+      <a href="javascript:void(0)" (click)="deleteUser(user.email)"
+        ><i class="fas fa-trash-alt"></i
+      ></a>
+      <a href="javascript:void(0)" (click)="blockUser(user.email)"
+        ><i class="fas fa-ban"></i
+      ></a>
     </div>
   </div>
-
-
+</div>
