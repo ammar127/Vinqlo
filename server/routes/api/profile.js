@@ -8,7 +8,8 @@ var Community = require('../../models/community');
 var auth = require('../auth');
 
 router.param('email', (req, res, next, email) => {
-    User.findOne({ email }, (err, user) => {
+    User.findOne({ email: email }, (err, user) => {
+        console.log(err);
         if (!err && user !== null) {
             req.User = user;
             return next();
@@ -18,12 +19,12 @@ router.param('email', (req, res, next, email) => {
 });
 
 router.get('/:email', auth.isToken, auth.isUser, (req, res, next) => {
-    next(httpResponse.OkResponse(req.User));
+    next(new httpResponse.OkResponse({user: req.User}));
 });
 
-router.get('/community/:email', auth.isToken, auth.isUser, (req, res, next) => {
+// router.get('/community/:email', auth.isToken, auth.isUser, (req, res, next) => {
 
-});
+// });
 
 
 module.exports = router;

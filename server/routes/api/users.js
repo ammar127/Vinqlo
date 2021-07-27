@@ -45,17 +45,17 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
 
 router.post('/signup',
 
-body('firstName').isLength({min: 4}),
-body('lastName').isLength({min: 4}),
-body('email').isEmail(),
-body('password').isLength({min: 4}),
-body('campus').isLength({min: 4}),
-body('degree').isLength({min: 4}),
+body('firstName').isLength({min: 4}).withMessage('First name is too short'),
+body('lastName').isLength({min: 4}).withMessage('Last name is too short'),
+body('email').isEmail().withMessage('Invalid Email'),
+body('password').isLength({min: 4}).withMessage('Password is too short'),
+body('campus').isLength({min: 4}).withMessage('Campus Required'),
+body('degree').isLength({min: 4}).withMessage('Degree Required'),
 
 async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        next(new httpResponse.BadRequestResponse(JSON.stringify(errors.array())));
+        next(new httpResponse.BadRequestResponse('Missing Paramter',422,errors));
         return
     }
 
