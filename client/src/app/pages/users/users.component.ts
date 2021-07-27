@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit
   page = 1;
   isLoading = false;
   constructor(private userService:UserService) {
-    // this.get();
+    this.get();
   }
   get()
   {

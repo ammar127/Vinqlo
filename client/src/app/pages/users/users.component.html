@@ -36,6 +36,6 @@
     <ngb-pagination class="d-flex justify-content-end" (pageChange)="onPageChange($event)" [collectionSize]="result.totalDocs" [(page)]="page" ></ngb-pagination>
 
   </div>
-  <no-content *ngIf="!isLoading && !result || (result && result.docs && result.docs.length == 0)"></no-content>
+  <no-content *ngIf="!isLoading && !result || (result && result.docs && result.docs.length == 0)" [label]="'No Users here'"></no-content>
   <loader *ngIf="isLoading"></loader>
 </div>
