@@ -61,7 +61,9 @@ import { NoContentComponent } from './no-content/no-content.component';
     NoContentComponent,
 
     //Pipes
-    ImagePipe
+    ImagePipe,
+    LoaderComponent,
+    NoContentComponent
   ]
 })
 export class SharedModule { }

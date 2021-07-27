@@ -3,16 +3,22 @@
     <h4 class="modal-title text-purple" id="modal-basic-title">Users</h4>
   </div>
 </div>
-<div class="col-md-12">
-  <div class="search-field my-4">
-    <input
-      type="text"
-      class="form-control shadow-sm"
-      placeholder="Search by Name"
-    />
-    <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
+<div class="row my-4">
+  <div class="col-md-9">
+    <div class="search-field ">
+      <input
+        type="text"
+        class="form-control shadow-sm"
+        placeholder="Search by Name"
+      />
+      <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
+    </div>
+  </div>
+  <div class="col-md-3">
+    <ng-select [(ngModel)]="status" [items]="statuses" (change)="get()"></ng-select>
   </div>
 </div>
+
 <div class="col-md-12">
   <div *ngIf="!isLoading && result && result.docs && result.docs.length > 0" class="card card-table shadow-sm">
     <table class="table">

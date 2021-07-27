@@ -13,6 +13,8 @@ export class UsersComponent implements OnInit
   result: any = null;
   page = 1;
   isLoading = false;
+  status = null;
+  statuses = [{name:'All', id: null},{name:'Active', id: 1},{name:'Inactive', id: 2},]
   constructor(private userService:UserService) {
     this.get();
   }
@@ -20,7 +22,7 @@ export class UsersComponent implements OnInit
   {
     this.isLoading = true;
 
-    this.userService.getAllUsers('/users/get/all?status=1&page='+this.page).subscribe
+    this.userService.getAllUsers(`/users/get/all?${this.status ? 'status='+this.status: ''}&page=${this.page}`).subscribe
     (
       res=>
       {
@@ -63,10 +65,10 @@ export class UsersComponent implements OnInit
   blockUser(email: string, status: number) {
     Swal.fire({
         title: "Are you sure?",
-        text: "you wanna block this user.",
+        text: `you wanna ${status == 1 ? 'activate': 'block'} this user.`,
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Block it!",
+        confirmButtonText: `Yes, ${status == 1 ? 'activate': 'block'}  it!`,
         cancelButtonText: "No, cancel please!",
       }).then(({isConfirmed}) => {
         if (isConfirmed) {
@@ -78,7 +80,7 @@ export class UsersComponent implements OnInit
                 this.get();
                 Toast.fire({
                   icon: 'success',
-                  title: 'User Blocked in successfully'
+                  title: `User ${status == 1 ? 'activated': 'blocked'} successfully`
                 })
 
               }
@@ -93,5 +95,6 @@ export class UsersComponent implements OnInit
       this.page = pageNo;
       this.get();
     }
+ 
 
 }
