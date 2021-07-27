@@ -12,7 +12,7 @@ var cpUpload = multer.fields([
   { name: "file", maxCount: 1 },
 ]);
 router.post("/", cpUpload, function (req, res, next) {
-  return res.json({ url: `uploads/${req.files["file"][0].filename}` });
+  return res.json({ url: `images/${req.files["file"][0].filename}` });
 });
 
 
