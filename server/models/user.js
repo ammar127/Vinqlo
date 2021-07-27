@@ -127,6 +127,7 @@ userSchema.methods.toAuthJSON = function(){
         communities: this.communities, 
         role: this.role,
         otp: this.otp,
+        verified: this.verified
     }
 }
 

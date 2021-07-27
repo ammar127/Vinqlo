@@ -10,5 +10,6 @@ router.use('/degrees', require('./degrees'));
 router.use('/comments', require('./comments'));
 router.use('/reports', require('./reports'));
 router.use('/common', require('./common'));
+router.use('/profile', require('./profile'));
 
 module.exports = router;
