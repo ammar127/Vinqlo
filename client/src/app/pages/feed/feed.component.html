@@ -1,9 +1,6 @@
 <section>
   <div class="container">
-    <div class="row">
-      <div class="col-md-12 my-3">
-        <button class="btn btn-lg btn-primary" (click)="open(content)">Ad Post Modal</button>
-      </div>
+    <div class="row py-3">
       <div class="col-md-12">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
           <li [ngbNavItem]="1">
@@ -11,15 +8,18 @@
               ><img src="../../assets/images/home.svg" class="mr-2" width="20px" alt="" /> Feed</a>
             <ng-template ngbNavContent>
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-9">
                   <div class="search-field" >
                     <input type="text" [(ngModel)]="searchQuery" class="form-control shadow-sm" placeholder="Search by name . . ."/>
                     <img src="../../../assets/images/search-solid.svg" width="30px" alt=""  />
                   </div>
                 </div>
+                <div class="col-md-3">
+                  <button class="btn btn-light btn-block rounded-pill" (click)="create.open()"> <i class="fa fa-plus"></i> Create Post</button>
+                </div>
                 <div class="col-md-12 my-3">
                   <div class="card shadow-sm">
-                    <div *ngFor="let tmp of allPosts" class="client-card shadow-sm">
+                    <!-- <div *ngFor="let tmp of allPosts" class="client-card shadow-sm">
                       <div class="client-header">
                         <div>
                           <h6 class="main-color mb-0">{{tmp.title}}</h6>
@@ -40,7 +40,7 @@
                           </div>
                         </div>
                       </div>
-                      <span  (click)="openPost(tmp.slug)"  class="clickable-region">
+                      <span  class="clickable-region">
                         <p class="my-4">{{tmp.body}}</p>
                       <div class="client-post">
                         <img [src]="tmp.image|image" class="img-fluid" alt=""/>
@@ -48,7 +48,7 @@
                       <span class="main-color"><i class="fa icons-color fa-users" aria-hidden="true" ></i> 1</span>
 
                       </span>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -187,52 +187,4 @@
   </div>
 </section>
 
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title text-purple" id="modal-basic-title">Create Post</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="addPostForm">
-      <div class="form-group">
-        <div class="input-field">
-          <label for="">Select Community</label>
-          <select formControlName="community" class="selectpicker form-control custom-border">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
-          </select>
-          <img src="../../assets/images/caret-down-solid.png" class="select-arrow" alt="" />
-        </div>
-        <div class="input-field">
-          <label for=""> Title</label>
-          <input type="text" formControlName="title" class="form-control custom-border" placeholder="Title" />
-        </div>
-        <div class="input-field">
-          <label for=""> Body </label>
-          <textarea formControlName="body" name="" class="form-control" placeholder="What do you want to share" id="" cols="30" rows="3" ></textarea>
-        </div>
-        <!-- <div class="input-field">
-          <label for=""> Tag</label>
-          <input type="text" formControlName="tags" class="form-control custom-border" placeholder="Tags (separate with,)" />
-        </div> -->
-        <fieldset class="form-group">
-              <input class="form-control" type="text" [formControl]="tagField" placeholder="Enter tags" (keyup.enter)="addTag()" />
-              <div class="tag-list">
-                <span *ngFor="let tag of tags" style="background-color:LightGray;" class="tag-default tag-pill">
-                  <i class="fa fa-close" (click)="removeTag(tag)"></i>
-                  {{ tag }}
-                </span>
-              </div>
-            </fieldset>
-        <div class="input-field">
-          <label for=""> Upload Image</label>
-          <input type="file" formControlName="img" class="form-control custom-border" placeholder="Title" />
-        </div>
-        <button class="btn mb-2 btn-main" [disabled]="!addPostForm.valid" (click)="onPost()">Post</button>
-      </div>
-    </form>
-  </div>
-</ng-template>
+<post-create #create></post-create>

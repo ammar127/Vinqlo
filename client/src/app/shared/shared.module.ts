@@ -15,6 +15,12 @@ import { ShowAuthedDirective } from './Directives/show-authed.directive';
 import { ImagePipe } from './Pipes/image.pipe';
 import { LoaderComponent } from './loader/loader.component';
 import { NoContentComponent } from './no-content/no-content.component';
+import { CreateComponent } from './post/create/create.component';
+import { ListComponent } from './post/list/list.component';
+import { CardComponent } from './post/card/card.component';
+import { UploadFileComponent } from './upload-file/upload-file.component';
+import { UploadImgComponent } from './upload-img/upload-img.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 @NgModule({
@@ -29,14 +35,20 @@ import { NoContentComponent } from './no-content/no-content.component';
     ErrorsComponent,
     ImagePipe,
     LoaderComponent,
-    NoContentComponent
+    NoContentComponent,
+    CreateComponent,
+    ListComponent,
+    CardComponent,
+    UploadFileComponent,
+    UploadImgComponent,
   ],
   imports: [
     CommonModule,
     NgbModule,
     NgSelectModule, FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-
+    FileUploadModule,
   ],
   exports: [
     // shared modules
@@ -59,6 +71,9 @@ import { NoContentComponent } from './no-content/no-content.component';
     ErrorsComponent,
     LoaderComponent,
     NoContentComponent,
+    CreateComponent,
+    ListComponent,
+    CardComponent,
 
     //Pipes
     ImagePipe,
