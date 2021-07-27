@@ -5,20 +5,20 @@ import { environment } from 'src/environments/environment';
   name: 'image'
 })
 export class ImagePipe implements PipeTransform {
-  imgSrc = '/images/user.png';
+  imgSrc = 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg';
 
 
 
   // args description:
   // args[0] 1 : for tournaments
-  transform(image: string): string {
+  transform(image: any): string {
 
     if (image && (image.includes('http') || image.includes('https'))) {
       return image;
     } else if (image && image !== '') {
       return environment.api_url +"/"+ image;
     }
-      return environment.api_url + this.imgSrc;
+      return this.imgSrc;
     }
   }
 

@@ -8,8 +8,23 @@
       <li class="nav-link">
         <a href=""><i class="fas fa-home"></i></a>
       </li>
-      <li class="nav-link">
-        <a href="javascript:void(0)" [routerLink]="['/profile']" routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
+      <li class="nav-link" *ngIf="user" ngbDropdown>
+        <a href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem routerLink="/profile">
+            <div class="d-flex align-items-center" ngbDropdownToggle>
+              <div class="user-img">
+                <img [src]="user.image | image" alt="">
+              </div>
+              <h6 class="mb-0 ml-2">{{user.firstName + '' + user.lastName }}</h6>
+
+            </div>  
+          </button>
+          <button ngbDropdownItem (click)="onLogoutClick()"><i class="fas fa-sign-out mr-2"></i>
+            Logout</button>
+
+
+        </div>
       </li>
       <li>
         <a
