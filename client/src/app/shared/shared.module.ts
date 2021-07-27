@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { UsernameDirective } from './Directives/username.directive';
 import { ErrorsComponent } from './errors/errors.component';
 import { DecimalOnlyDirective } from './Directives/decimal-only.directive';
 import { ShowAuthedDirective } from './Directives/show-authed.directive';
+import { ImagePipe } from './Pipes/image.pipe';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ShowAuthedDirective } from './Directives/show-authed.directive';
     DecimalOnlyDirective,
     ShowAuthedDirective,
     ErrorsComponent,
+    ImagePipe
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { ShowAuthedDirective } from './Directives/show-authed.directive';
     NgSelectModule, FormsModule,
     ReactiveFormsModule,
 
+
     // shared directives
     AlphaOnlyDirective,
     NumericOnlyDirective,
@@ -51,7 +54,8 @@ import { ShowAuthedDirective } from './Directives/show-authed.directive';
     // components
     ErrorsComponent,
 
-
+    //Pipes
+    ImagePipe
   ]
 })
 export class SharedModule { }

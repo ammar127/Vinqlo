@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core';
 import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
@@ -10,8 +11,9 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
-      
+
       {
         path: 'feed',
         loadChildren: () =>
@@ -47,7 +49,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'post',
+        path: 'post/:slug',
         loadChildren: () =>
           import('./pages/post/post.module').then((m) => m.PostModule),
       },

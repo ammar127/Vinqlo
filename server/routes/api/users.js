@@ -137,6 +137,13 @@ router.get('/:email', (req, res, next) => {
 
 router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.User.status = req.params.status;
+})
+
+router.get('/', auth.isToken, auth.isUser,(req, res, next) => {
+    next(new httpResponse.OkResponse({user: req.user}));
+})
+router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.User.status = 0;
     req.User.save();
     next(new httpResponse.OkResponse('Updated Successfully'));
 });

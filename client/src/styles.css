@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
 body {
   background-color: #dafdfe !important;
 }
@@ -85,4 +86,7 @@ li.sidebar-list {
 }
 .sidebar-list:hover a {
   color: #25eaef !important;
+}
+.h-1000{
+  height: 1000vh;
 }

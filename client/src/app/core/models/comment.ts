@@ -1,7 +1,9 @@
+import { User } from "./User";
+
 export interface Comment
 {
     body:string;
-    by:string;
     time:Date;
+    by:User;
     slug:string;
 }
