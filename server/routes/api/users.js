@@ -157,4 +157,26 @@ router.get('/resendOtp/:email', (req, res, next) => {
     next(new httpResponse.OkResponse({otp: user.otp}));
 });
 
+router.get('/verifyOtp/:otp/:email', (req, res, next) => {
+    var today = new Date();
+    if(today.getTime() > req.User.otpExpiry.getTime()){
+        next(new httpResponse.UnauthorizedResponse('OTP is expired'));
+        return;
+    }
+    if(req.params.otp !== req.User.otp){
+        next(new httpResponse.UnauthorizedResponse('OTP is invalid'));
+        return;
+    }
+
+    // req.User.otp = null;
+    // req.User.otpExpiry = null;
+    req.User.verified = true;
+
+    emailService.sendEmailVerificationSuccess(req.User);
+
+    req.User.save();
+
+    next(new httpResponse.OkResponse('Otp verified Successfully'));
+});
+
 module.exports = router;
