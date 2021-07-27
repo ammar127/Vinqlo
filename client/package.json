@@ -21,7 +21,6 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@ng-select/ng-select": "^7.2.0",
     "bootstrap": "^4.5.0",
-    "ng-bootstrap-select": "^0.5.0",
     "ng-otp-input": "^1.7.1",
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.0.20",
