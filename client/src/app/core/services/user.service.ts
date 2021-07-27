@@ -1,6 +1,7 @@
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable ,  BehaviorSubject ,  ReplaySubject } from 'rxjs';
+import { Observable ,  BehaviorSubject ,  ReplaySubject, of } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
@@ -19,7 +20,9 @@ export class UserService {
   constructor (
     private apiService: ApiService,
     private http: HttpClient,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private permissionsService: NgxPermissionsService,
+
   ) {}
 
   // Verify JWT in localstorage with server & load user's info.
@@ -27,18 +30,25 @@ export class UserService {
   populate() {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
-      this.apiService.get('/user')
-      .subscribe(
-        data => this.setAuth(data.user),
-        err => this.purgeAuth()
-      );
+      return this.apiService.get('/users')
+      .pipe(map(
+        res => {
+          
+            //console.log('res', res)
+              this.setAuth(res.data.user);
+              return res.data.user;
+            }
+        
+      ))
     } else {
-      // Remove any potential remnants of previous auth states
-      this.purgeAuth();
+     return  of(null);
     }
   }
 
   setAuth(user: User) {
+    console.log('in setAuth')
+    // set permissions
+    this.permissionsService.loadPermissions([user.role.toString()]);
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(user.token);
     // Set current user data into observable
@@ -52,6 +62,8 @@ export class UserService {
     this.jwtService.destroyToken();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
+    // flush permissions
+    this.permissionsService.flushPermissions();
     // Set auth status to false
     this.isAuthenticatedSubject.next(false);
   }
