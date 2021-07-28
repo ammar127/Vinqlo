@@ -1,3 +1,4 @@
+import { PasswordValidator } from './../Validators/password-validator';
 import { UserService } from './../../core/services/user.service';
 import { ProfileService } from './../../core/services/profile.service';
 import { CommonService } from './../../core/services/common.service';
@@ -5,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Toast } from 'src/app/core';
+import { ConfirmPasswordValidator } from '../Validators/confirm-password';
 
 @Component({
   selector: 'app-change-password',
@@ -34,10 +36,10 @@ export class ChangePasswordComponent implements OnInit {
   create()
   {
     this.passForm = this.fb.group({
-      password:['',Validators.required],
-      confirmPassword:['',Validators.required],
-
-    });
+      password:['', [Validators.required, PasswordValidator.patternValidator()]],
+      confirmPassword:['',Validators.required]}, {
+        validator: ConfirmPasswordValidator('password', 'confirmPassword')
+      });
   }
   close() {
     this.modalService.dismissAll();
@@ -52,6 +54,7 @@ export class ChangePasswordComponent implements OnInit {
         if(res.status === 200) {
           Toast.fire({icon:'success', title:'Profile updated successfully'})
           this.userService.populate();
+          this.close();
         }
       });
     }
