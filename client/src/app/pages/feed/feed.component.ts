@@ -1,3 +1,5 @@
+import { Community } from './../../core/models/community';
+import { CommunityService } from './../../core/services/community.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -18,13 +20,13 @@ export class FeedComponent implements OnInit {
   article: Post = {} as Post;
   tags:string[]=[];
   allPosts!:Post[];
-  searchQuery = '';
+  communities!:Community;
   constructor(
     private service:FeedService,
     private modalService: NgbModal,
     private fb:FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private communityService:CommunityService
     )
   {
     this.addPostForm = this.fb.group({community: ['', Validators.required],title: ['', Validators.required],body: ['', Validators.required],tags:[[]],img: ['', Validators.required]});
@@ -76,6 +78,15 @@ export class FeedComponent implements OnInit {
   openPost(slug:string)
   {
     this.router.navigate(['/post',slug])
+  }
+  getAllCommunities()
+  {
+    this.communityService.getAll().subscribe
+    (
+      res=>{
+        console.log(res)
+      }
+    )
   }
   open(content: any) {
     this.modalService

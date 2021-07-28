@@ -7,7 +7,7 @@ export interface Post
     title:string;
     body:string;
     tags:string[];
-    image:any;
+    image:string;
     slug:string;
     likeCount:number;
     by:User;
