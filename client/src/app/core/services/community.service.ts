@@ -6,9 +6,12 @@ import { ApiService } from './api.service';
 })
 export class CommunityService {
 
+
   constructor(private api:ApiService) { }
   getAll()
   {
     return this.api.get('/communities/get/all');
   }
+  getFollowed() {return this.api.get('/communities/followed')}
+
 }

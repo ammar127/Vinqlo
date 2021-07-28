@@ -10,6 +10,7 @@ import { UserService } from "../core";
 )
 export class HeaderComponent {
     @Input() isAdmin = false;
+    public isCollapsed = true;
     constructor(private userService: UserService,private router: Router){
 
     }

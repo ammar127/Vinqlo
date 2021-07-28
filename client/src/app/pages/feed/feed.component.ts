@@ -15,10 +15,8 @@ import { FeedService} from 'src/app/core/services/feed.service';
 export class FeedComponent implements OnInit {
   active = 1;
   closeResult = '';
-  addPostForm:FormGroup;
-  tagField = new FormControl();
-  article: Post = {} as Post;
-  tags:string[]=[];
+  
+  
   allPosts!:Post[];
   communities!:Community[];
   postSlug!:Community;
@@ -30,8 +28,7 @@ export class FeedComponent implements OnInit {
     private communityService:CommunityService
     )
   {
-    this.addPostForm = this.fb.group({community: ['', Validators.required],title: ['', Validators.required],body: ['', Validators.required],tags:[[]]});
-    this.article.tags=[];
+     
   }
   ngOnInit(): void {
     this.get();
@@ -46,32 +43,8 @@ export class FeedComponent implements OnInit {
       }
     )
   }
-  addTag()
-  {
-    // retrieve tag control
-    const tag = this.tagField.value;
-    // only add tag if it does not exist yet
-    if (this.tags.indexOf(tag) < 0) {
-      this.tags.push(tag);
-    }
-    // clear the input
-    this.tagField.reset('');
-  }
-  onPost()
-  {
-    this.article=this.addPostForm.value;
-    this.article.tags=this.tags;
-    this.article.slug=this.postSlug.slug;
-    console.log(this.article);
-    this.service.createPost(this.article).subscribe
-    (
-
-    )
-    this.get();
-  }
-  removeTag(tagName: string) {
-    this.tags = this.tags.filter(tag => tag !== tagName);
-  }
+ 
+ 
 
   onReport()
   {
