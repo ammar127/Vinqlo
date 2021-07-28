@@ -10,6 +10,9 @@ import { User, UserService } from 'src/app/core';
 export class ProfileComponent implements OnInit {
   active = 1;
   communityUrl = '/communities/get/followed';
+  myCommunityUrl = '/communities/get/my';
+  savedPostUrl = '/posts/get/saved';
+  myPostUrl = '/posts/get/my';
   constructor(private userService:UserService) {}
 
   ngOnInit(): void {

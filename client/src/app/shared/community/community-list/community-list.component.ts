@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { Community, CommunityService } from 'src/app/core';
+import { Community, CommunityService, Toast } from 'src/app/core';
 
 @Component({
   selector: 'app-community-list',
@@ -15,6 +15,8 @@ export class CommunityListComponent implements OnInit {
  
   page = 1;
   isLoader = false;
+
+  joinSlug:any = null;
   constructor(private communityService: CommunityService) { }
 
   ngOnInit(): void {
@@ -22,7 +24,6 @@ export class CommunityListComponent implements OnInit {
   }
   get() {
     this.isLoader = true;
-
     let params= new HttpParams().set('page', this.page.toString());
     this.communityService.getAll(this.url+'?'+params.toString()).subscribe(res => {
       if(res.status === 200) {
@@ -38,6 +39,17 @@ export class CommunityListComponent implements OnInit {
   onLoadMoreClick() {
     this.page++;
     this.get();
+  }
+  onJoinClick(slug: string) {
+    this.joinSlug = slug;
+    this.communityService.join(slug).subscribe(res => {
+      if(res.status === 200) {
+        Toast.fire({icon:'success', title: 'you joined a Community '});
+        this.communities = this.communities.filter(c => c.slug !== slug);
+        this.joinSlug = null;
+
+      }
+   } )
   }
 
 }

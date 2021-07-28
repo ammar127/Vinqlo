@@ -14,7 +14,7 @@ import { PostService } from 'src/app/core/services/post.service';
 export class CreateComponent implements OnInit {
   addPostForm!:FormGroup;
   tag = '';
-  commuities!: Community[];
+  commuities: Community[] = [];
   @ViewChild('content') content! : TemplateRef<any>;
   constructor(private fb: FormBuilder,
     private postService: PostService,
@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit {
   getCommunities() {
     this.communityService.getFollowed().subscribe(res => {
       if(res.status === 200) {
-        this.commuities = res.data;
+        this.commuities = res.data.docs;
       }
     })
   }
@@ -39,7 +39,8 @@ export class CreateComponent implements OnInit {
     this.postService.createPost(this.addPostForm.value)
     .subscribe(res=> {
       if(res.status === 200) {
-        Toast.fire({icon:'success', title:'Post Created successfully'})
+        Toast.fire({icon:'success', title:'Post Created successfully'});
+        this.close();
       }
     });
   }
@@ -52,8 +53,8 @@ export class CreateComponent implements OnInit {
   create() {
     this.addPostForm = this.fb.group({
       community: ['', Validators.required],
-      title: ['', Validators.required],
-      body: ['', Validators.required],
+      title: ['',[ Validators.required, Validators.minLength(10)]],
+      body: ['', [ Validators.required, Validators.minLength(10)]],
       tags:[[]],
       image: ['']
     });

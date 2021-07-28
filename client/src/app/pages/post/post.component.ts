@@ -13,6 +13,7 @@ import {  ActivatedRoute } from '@angular/router';
 export class PostComponent implements OnInit {
   slug!:string;
   postData!:Post;
+  isLoader = false;
   constructor(private route: ActivatedRoute,private service:PostService,private commentService:CommentService) { }
 
   ngOnInit(): void
@@ -20,10 +21,12 @@ export class PostComponent implements OnInit {
     this.route.params.subscribe(params =>
     {
       this.slug = params['slug'];
+      this.isLoader = true;
       this.service.get(this.slug).subscribe
       (
         res=>
         {
+          this.isLoader = false;
           this.postData=res.data;
           console.log(this.postData)
         }

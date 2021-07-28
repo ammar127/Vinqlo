@@ -8,5 +8,5 @@ export interface Community
     by:User;
     category:Category;
     members:User[];
-    membersCount:number;
+    membersCount?:number;
 }

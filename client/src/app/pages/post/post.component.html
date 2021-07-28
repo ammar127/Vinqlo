@@ -1,16 +1,16 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div *ngIf="!isLoader" class="col-md-12">
         <div class="single-post-card card shadow-sm">
           <div class="back">
-            <a href=""> <i class="fas text-purple fa-chevron-left"></i></a>
+            <a href="javascript:void(0)"> <i class="fas text-purple fa-chevron-left"></i></a>
           </div>
           <div class="single-post">
             <div class="client-header">
               <div>
                 <h6 class="main-color mb-0">{{postData.community.name}}</h6>
-                <small class="text-muted">{{postData.community.by.firstName}} {{postData.community.by.lastName}}</small>
+                <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
               </div>
               <div>
                 <button class="btn btn-join">
@@ -55,7 +55,7 @@
             </div>
             <p class="my-4">{{postData.body}}</p>
             <div class="client-post">
-              <img [src]="postData.image|image"alt="" class="img-fluid" alt=""/>
+              <img *ngIf="postData.image" [src]="postData.image|image"alt="" class="img-fluid" alt=""/>
             </div>
             <div class="client-footer">
               <div *ngFor="let tag of postData.tags">
@@ -64,16 +64,16 @@
               <div>
                 <ul>
                   <li>
-                    <a href=""> <i class="fas icons-color fa-heart"></i> {{postData.likeCount}}</a>
+                    <a href="javascript:void(0)"> <i class="fas icons-color fa-heart"></i> {{postData.likeCount}}</a>
                   </li>
                   <li>
-                    <a href=""><i class="fas icons-color fa-comments"></i>{{postData.tags.length}}</a>
+                    <a href="javascript:void(0)"><i class="fas icons-color fa-comments"></i>{{postData.tags.length}}</a>
                   </li>
                   <li>
-                    <a href=""><i class="fas icons-color fa-bookmark"></i></a>
+                    <a href="javascript:void(0)"><i class="fas icons-color fa-bookmark"></i></a>
                   </li>
                   <li>
-                    <a href=""> <i class="fas icons-color fa-share"></i></a>
+                    <a href="javascript:void(0)"> <i class="fas icons-color fa-share"></i></a>
                   </li>
                 </ul>
               </div>
@@ -82,7 +82,7 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{comment.by.firstName}} {{comment.by.lastName}}</p>
-              <span >{{comment.body}} <a href="">{{comment.by.email}}</a></span>
+              <span >{{comment.body}} <a href="javascript:void(0)">{{comment.by.email}}</a></span>
               <hr />
             </div>
             <div class="comment-input">
@@ -92,6 +92,7 @@
           </div>
         </div>
       </div>
+      <loader *ngIf="isLoader"></loader>
     </div>
   </div>
 </section>

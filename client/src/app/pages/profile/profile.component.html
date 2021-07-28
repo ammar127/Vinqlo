@@ -27,125 +27,7 @@
             <ng-template ngbNavContent>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="card shadow-sm main-profile-card">
-                    <div class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">Running every day</h6>
-                        </div>
-
-                        <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="my-4">Any group of people to go running ?</p>
-                      <div class="client-footer">
-                        <div>
-                          <span class="text-purple">running, outdoors</span>
-                        </div>
-                        <div>
-                          <ul>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-heart"></i> 2
-                              </a>
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-comments"></i>
-                                23</a
-                              >
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-bookmark"></i
-                              ></a>
-                            </li>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-share"></i
-                              ></a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">Running every day</h6>
-                        </div>
-
-                        <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="my-4">Any group of people to go running ?</p>
-                      <div class="client-post">
-                        <img
-                          src="../../../assets/images/20487.png"
-                          class="img-fluid"
-                          alt=""
-                        />
-                      </div>
-                      <div class="client-footer">
-                        <div>
-                          <span class="text-purple">running, outdoors</span>
-                        </div>
-                        <div>
-                          <ul>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-heart"></i> 2
-                              </a>
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-comments"></i>
-                                23</a
-                              >
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-bookmark"></i
-                              ></a>
-                            </li>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-share"></i
-                              ></a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <post-list [url]="savedPostUrl"></post-list>
                 </div>
               </div>
             </ng-template>
@@ -165,130 +47,21 @@
             <ng-template ngbNavContent>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="card shadow-sm main-profile-card">
-                    <div class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">Running every day</h6>
-                        </div>
-
-                        <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="my-4">Any group of people to go running ?</p>
-                      <div class="client-footer">
-                        <div>
-                          <span class="text-purple">running, outdoors</span>
-                        </div>
-                        <div>
-                          <ul>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-heart"></i> 2
-                              </a>
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-comments"></i>
-                                23</a
-                              >
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-bookmark"></i
-                              ></a>
-                            </li>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-share"></i
-                              ></a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">Running every day</h6>
-                        </div>
-
-                        <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="my-4">Any group of people to go running ?</p>
-                      <div class="client-post">
-                        <img
-                          src="../../../assets/images/20487.png"
-                          class="img-fluid"
-                          alt=""
-                        />
-                      </div>
-                      <div class="client-footer">
-                        <div>
-                          <span class="text-purple">running, outdoors</span>
-                        </div>
-                        <div>
-                          <ul>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-heart"></i> 2
-                              </a>
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-comments"></i>
-                                23</a
-                              >
-                            </li>
-                            <li>
-                              <a href=""
-                                ><i class="fas icons-color fa-bookmark"></i
-                              ></a>
-                            </li>
-                            <li>
-                              <a href="">
-                                <i class="fas icons-color fa-share"></i
-                              ></a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <post-list [url]="myPostUrl"></post-list>
                 </div>
               </div>
             </ng-template>
           </li>
-          
+          <li [ngbNavItem]="4">
+            <a ngbNavLink> My Communities</a>
+            <ng-template ngbNavContent>
+              <div class="row">
+                <div class="col-md-12">
+                  <app-community-list [url]="myCommunityUrl"></app-community-list>
+                </div>
+              </div>
+            </ng-template>
+          </li>
 
         </ul>
 

@@ -27,8 +27,12 @@ export class ListComponent implements OnInit {
     this.postService.getAll(this.url+'?'+params.toString()).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;
-        this.posts.push(...res.data.docs as Post[]);
-        this.hasNextPage = res.data.hasNextPage;
+        if(res.data.docs) {
+          this.posts.push(...res.data.docs as Post[]);
+          this.hasNextPage = res.data.hasNextPage;
+        } else {
+          this.hasNextPage = false;
+        }
       }
     })
   }

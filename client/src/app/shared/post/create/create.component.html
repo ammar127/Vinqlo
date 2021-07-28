@@ -6,7 +6,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="addPostForm">
+    <div [formGroup]="addPostForm">
       <div class="form-group">
         <div class="input-field">
           <label for="">Select Community  </label>
@@ -42,6 +42,6 @@
         </div>
         <button class="btn mb-2 btn-main" [disabled]="!addPostForm.valid" (click)="onPost()">Post</button>
       </div>
-    </form>
+    </div>
   </div>
 </ng-template>

@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgModule, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -57,6 +58,7 @@ import { CommunityCreateComponent } from './community/community-create/community
     ReactiveFormsModule,
     HttpClientModule,
     FileUploadModule,
+    RouterModule
   ],
   exports: [
     // shared modules

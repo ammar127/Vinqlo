@@ -1,3 +1,4 @@
+import { UserService } from './../../core/services/user.service';
 import { Community } from './../../core/models/community';
 import { CommunityService } from './../../core/services/community.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,15 +16,14 @@ export class FeedComponent implements OnInit {
   active = 1;
   
   feedpath = '/posts/get/feed';
-  constructor(
-   
-    )
+  academicesPath = '/communities/get/academics';
+  constructor(private userService: UserService)
   {
      
   }
   ngOnInit(): void {
   }
- 
+  get user() {return this.userService.getCurrentUser()  }
  
  
 

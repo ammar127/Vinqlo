@@ -7,7 +7,7 @@
           <small class="text-muted">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
         </div>
         <div>
-          <button class="btn btn-join">
+          <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug)">
             <i
               class="fa fa-link icons-color"
               aria-hidden="true"
@@ -41,8 +41,11 @@
           class="fa icons-color fa-users"
           aria-hidden="true"
         ></i>
-        1</span
+        {{community.membersCount}}
+        </span
       >
     </div>
-
+    <no-content *ngIf="!isLoader && communities.length === 0" [label]="'No Posts here'"></no-content>
+    <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
+    <loader *ngIf="isLoader"></loader>
   </div>
