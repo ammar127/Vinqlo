@@ -4,6 +4,7 @@ import { Post } from 'src/app/core/models';
 import { PostService } from './../../core/services/post.service';
 import { Component, OnInit } from '@angular/core';
 import {  ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/core';
 
 @Component({
   selector: 'app-post',
@@ -14,7 +15,8 @@ export class PostComponent implements OnInit {
   slug!:string;
   postData!:Post;
   isLoader = false;
-  constructor(private route: ActivatedRoute,private service:PostService,private commentService:CommentService) { }
+  comment = '';
+  constructor(private route: ActivatedRoute,private service:PostService,private userService: UserService,private commentService:CommentService) { }
 
   ngOnInit(): void
   {
@@ -33,11 +35,17 @@ export class PostComponent implements OnInit {
       )
     });
   }
-  postComment(cmnt:string,slug:string)
+  postComment(slug:string)
   {
-    this.commentService.postComment({body:cmnt,post:slug}).subscribe
+    this.commentService.postComment({body:this.comment,post:slug}).subscribe
     (
-      res=>{console.log(res)}
+      res=>{
+        if(res.status === 200 ) {
+          this.postData.comments.push({body: this.comment, by: this.userService.getCurrentUser(), })
+          this.comment = '';
+
+        }
+      }
     )
   }
 }

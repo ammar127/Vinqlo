@@ -58,8 +58,8 @@
               <img *ngIf="postData.image" [src]="postData.image|image"alt="" class="img-fluid" alt=""/>
             </div>
             <div class="client-footer">
-              <div *ngFor="let tag of postData.tags">
-                <span class="text-purple">{{tag}}</span>
+              <div >
+                <span class="text-purple" *ngFor="let tag of postData.tags; let i = index">{{tag}} <span *ngIf="i+1 !== postData.tags.length">, </span> </span>
               </div>
               <div>
                 <ul>
@@ -67,7 +67,7 @@
                     <a href="javascript:void(0)"> <i class="fas icons-color fa-heart"></i> {{postData.likeCount}}</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)"><i class="fas icons-color fa-comments"></i>{{postData.tags.length}}</a>
+                    <a href="javascript:void(0)"><i class="fas icons-color fa-comments"></i>{{postData.comments.length}}</a>
                   </li>
                   <li>
                     <a href="javascript:void(0)"><i class="fas icons-color fa-bookmark"></i></a>
@@ -82,12 +82,14 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{comment.by.firstName}} {{comment.by.lastName}}</p>
-              <span >{{comment.body}} <a href="javascript:void(0)">{{comment.by.email}}</a></span>
+              <span >{{comment.body}} 
+                <!-- <a href="javascript:void(0)">{{comment.by.email}}</a> -->
+              </span>
               <hr />
             </div>
             <div class="comment-input">
-              <input   type="text" class="form-control shadow-sm" placeholder="Write a comment..." #cmntBox />
-              <button class="btn btn-primary" (click)="postComment(cmntBox.value,postData.slug)">Comment</button>
+              <input   type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="comment" />
+              <button class="btn btn-primary" (click)="postComment(postData.slug)">Comment</button>
             </div>
           </div>
         </div>
