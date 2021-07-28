@@ -7,8 +7,8 @@ import { ApiService } from './api.service';
 export class ReportService {
 
   constructor(private api:ApiService) { }
-  getAllReports()
+  getAllReports(type:number)
   {
-    return this.api.get('/reports/get/all?type=2')
+    return this.api.get('/reports/get/all?type='+type)
   }
 }

@@ -1,18 +1,18 @@
 <header>
   <nav [ngClass]="isAdmin ? 'bg-dark': 'bg-white'">
-    <a class="nav-main" href=""><img src="../../assets/images/logo-01.png" alt=""/></a>
-    <ul *ngIf="!isAdmin" class="ml-auto nav-list">
-      <li class="nav-link">
-        <a href=""><i class="fas fa-bell"></i></a>
+    <a class="nav-main" href="javascript:void(0)"><img src="../../assets/images/logo-01.png" alt=""/></a>
+    <ul  class="ml-auto nav-list">
+      <li *ngIf="!isAdmin" class="nav-link">
+        <a href="javascript:void(0)"><i class="fas fa-bell"></i></a>
       </li>
-      <li class="nav-link">
-        <a href=""><i class="fas fa-home"></i></a>
+      <li *ngIf="!isAdmin" class="nav-link">
+        <a [routerLink]="['/feed']"   href="javascript:void(0)"><i class="fas fa-home"></i></a>
       </li>
       <li class="nav-link" *ngIf="user" ngbDropdown>
         <a href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem routerLink="/profile">
-            <div class="d-flex align-items-center" ngbDropdownToggle>
+            <div class="d-flex align-items-center" >
               <div class="user-img">
                 <img [src]="user.image | image" alt="">
               </div>
@@ -26,37 +26,54 @@
 
         </div>
       </li>
-      <li>
+      <li *ngIf="!isAdmin" >
         <a
           class="accordion-toggle collapsed"
-          data-toggle="collapse"
-          href="#anyId"
+          (click)="collapse.toggle()"
+          href="javascript:void(0)"
         >
         </a>
 
         <div
           style="position: absolute"
-          id="anyId"
-          class="collapse accordian-main"
+          #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed"
+          class="collapse custom-align accordian-main"
         >
-          <div class="accordian-menu">
-            <div class="accordian-list">
-              <span class="main-color">Sports</span>
+          <div class="accordian-menu" >
+            <div class="accordian-list" (click)="collapse.toggle()">
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-running"></i> Sports</span
+              >
             </div>
-            <div class="accordian-list">
-              <span class="main-color">Events</span>
+            <div class="accordian-list" (click)="collapse.toggle()">
+              <span class="main-color">
+                <i class="fas icons-color d-block fa-calendar-day"></i>
+                Events</span
+              >
             </div>
-            <div class="accordian-list">
-              <span class="main-color">Education</span>
+            <div class="accordian-list" (click)="collapse.toggle()">
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-file-invoice"></i>
+                Education</span
+              >
             </div>
-            <div class="accordian-list">
-              <span class="main-color">Nightlife</span>
+            <div class="accordian-list" (click)="collapse.toggle()">
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-cocktail"></i>
+                Nightlife</span
+              >
             </div>
-            <div class="accordian-list">
-              <span class="main-color">Handy tips</span>
+            <div class="accordian-list" (click)="collapse.toggle()">
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-info"></i> Handy
+                tips</span
+              >
             </div>
-            <div class="accordian-list">
-              <span class="main-color">Culture</span>
+            <div class="accordian-list" (click)="collapse.toggle()">
+              <span class="main-color"
+                ><i class="fas icons-color d-block fa-university"></i>
+                Culture</span
+              >
             </div>
           </div>
         </div>

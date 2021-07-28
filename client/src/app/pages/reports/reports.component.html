@@ -14,23 +14,50 @@
     <div class="row">
       <div class="col-md-12 px-5">
         <div class="card shadow-sm card-accordian">
-          <ng-select [items]="reports" bindLabel="name" bindValue="id" [(ngModel)]="reportType"></ng-select>
+          <div class="col-md-12 px-5">
+            <div class="card shadow-sm card-accordian">
+              <a class="collapsed" data-toggle="collapse" (click)="collapse.toggle()">
+                <h5 class="icons-color mb-0">{{reportType}}</h5>
+              </a>
+              <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed"  class="collapse shadow-sm custom-width accordian-main">
+                <div class="accordian-menu">
+                  <div class="accordian-list">
+                    <h5 (click)="onChange(1);collapse.toggle()" data-toggle="collapse" class="main-color">Posts</h5>
+                  </div>
+                  <hr />
+                  <a ><div (click)="onChange(2);collapse.toggle()" data-toggle="collapse" class="accordian-list">
+                    <h5  class="main-color">Communities</h5>
+                  </div></a>
+                  <hr />
+                  <a ><div (click)="onChange(0);collapse.toggle()" data-toggle="collapse" class="accordian-list">
+                    <h5  class="main-color">Users</h5>
+                  </div></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div *ngFor="let report of reports" class="col-md-12 px-5">
-        <div class="card shadow-sm card-table">
-          <div class="p-4">
-            <h4 class="main-color mb-4">{{report.by.firstName}} {{report.by.lastName}}</h4>
-            <h6>Reason</h6>
-            <p>{{report.body}}</p>
-          </div>
-          <div class="card-footer">
-            <a href="" class="mr-3"><img src="../../../assets/images/trash-alt-solid.svg" width="20px"alt=""/>Delete report</a>
-            <a href="" class="mr-3" class="ml-3"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> Deactivate user</a>
-            <a href="" class="mr-3"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" /> Add strike to user</a>
+
+        <div  class="col-md-12 px-5">
+          <div *ngIf="!isLoader">
+          <div *ngFor="let report of reports" class="card shadow-sm card-table">
+            <div class="p-4">
+              <h4 class="main-color mb-4">{{report.by.firstName}} {{report.by.lastName}}</h4>
+              <h6>Reason</h6>
+              <p>{{report.body}}</p>
+            </div>
+            <div class="card-footer">
+              <a href="" class="mr-3"><img src="../../../assets/images/trash-alt-solid.svg" width="20px"alt=""/>Delete report</a>
+              <a href="" class="mr-3" class="ml-3"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> Deactivate user</a>
+              <a href="" class="mr-3"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" /> Add strike to user</a>
+            </div>
           </div>
         </div>
+      <loader *ngIf="isLoader"></loader>
+
       </div>
+
     </div>
   </div>
 </div>

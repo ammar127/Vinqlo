@@ -7,16 +7,12 @@ import { environment } from 'src/environments/environment';
 export class ImagePipe implements PipeTransform {
   imgSrc = 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg';
 
-
-
-  // args description:
-  // args[0] 1 : for tournaments
   transform(image: any): string {
 
     if (image && (image.includes('http') || image.includes('https'))) {
       return image;
     } else if (image && image !== '') {
-      return environment.api_url +"/"+ image;
+      return environment.fileUrl +"/"+ image;
     }
       return this.imgSrc;
     }

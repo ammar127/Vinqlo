@@ -6,11 +6,6 @@ var { body, validationResult } = require('express-validator');
 var Post = require('../../models/post');
 var Community = require('../../models/community');
 var auth = require('../auth');
-var multer = require('../../utilities/multer');
-
-const cpUpload = multer.fields([
-    { name: "header", maxCount: 1 },
-]);
 
 
 router.param('slug', (req, res, next, slug) => {
@@ -29,12 +24,6 @@ router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse(req.post));
 });
 
-router.post('/upload', auth.isToken, auth.isUser, cpUpload, (req, res, next) => {
-    console.log('here');
-    const file = req.files.header[0];
-    const path = '/images/' + file.filename;
-    next(new httpResponse.OkResponse(path));
-})
 
 router.post('/', auth.isToken, auth.isUser, 
 

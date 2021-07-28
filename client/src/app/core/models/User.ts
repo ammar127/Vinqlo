@@ -1,3 +1,5 @@
+import { Community } from "./community";
+
 export interface User {
     token:string;
     firstName:string;
@@ -8,8 +10,8 @@ export interface User {
     bio:string;
     degree:string;
     campus:string;
-    communities:string;
+    communities: Community[];
     saved:string;
-    role:string;
+    role:number;
     verified:string;
 }

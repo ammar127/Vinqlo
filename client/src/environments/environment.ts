@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://165.22.228.6/api'
+  api_url: 'http://165.22.228.6/api',
+  fileUploadUrl: 'http://165.22.228.6',
+  fileUrl: 'http://165.22.228.6',
 };
 
 /*

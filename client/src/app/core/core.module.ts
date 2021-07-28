@@ -7,7 +7,9 @@ import {
   ApiService,
   AuthGuard,
   CommonService,
+  CommunityService,
   JwtService,
+  UnlinkService,
   UserService
 } from './services';
 
@@ -21,7 +23,9 @@ import {
     AuthGuard,
     JwtService,
     UserService,
-    CommonService
+    CommonService,
+    CommunityService,
+    UnlinkService
   ],
   declarations: []
 })

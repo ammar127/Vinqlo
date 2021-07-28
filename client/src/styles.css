@@ -66,8 +66,20 @@ nav {
   padding: 19px;
   z-index: 1;
 }
-.accordian-list {
-  width: 30%;
+.custom-align {
+  position: absolute;
+  width: 32% !important;
+}
+.custom-align .accordian-menu {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.custom-align .accordian-menu .accordian-list {
+  width: 26%;
+  text-align: center;
+  margin-top: 12px;
 }
 .sidebar {
   background-color: #6c6c6c;
@@ -86,6 +98,51 @@ li.sidebar-list {
 }
 .sidebar-list:hover a {
   color: #25eaef !important;
+}
+
+
+.o-footer {
+  display: block;
+  position: static;
+  background-color: #021a68;
+  width: 100%;
+}
+
+.m-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: baseline;
+  width: 100%;
+  padding: 4%;
+  margin: auto;
+}
+
+.m-section {
+  width: 23%;
+}
+.m-section ul {
+  list-style: none;
+  padding-left: 0px;
+}
+.a-footer-title,
+.a-footer-text {
+  color: #fff;
+}
+
+.a-footer-text {
+  font: 300 13px "Open Sans";
+  margin-bottom: 10px;
+}
+
+.a-footer-title {
+  font: 500 16px "Open Sans";
+  margin-bottom: 1em;
+}
+
+.a-footer-icon {
+  color: #fff;
+  margin-right: 4px;
 }
 .h-1000{
   height: 1000vh;
@@ -106,3 +163,4 @@ li.sidebar-list {
 .text-green {
   color:#25eaef !important;
 }
+
