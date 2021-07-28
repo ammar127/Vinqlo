@@ -7,16 +7,16 @@
       <div class="col-md-4">
         <div class="card">
           <div class="profile-img">
-            <img src="../../../assets/images/20487.png" alt="" />
+            <img [src]="user.image | image" alt="" />
             <h3>{{user.firstName}} {{user.lastName}}</h3>
             <p class="text-purple my-3">{{user.bio ? user.bio : '-' }}</p>
           </div>
           <div class="profile-detail">
             <p>{{user.degree.name}} at {{user.campus.name}}</p>
-            <a href="javascript:void(0)"><img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" /> +12345678</a>
+            <a href="javascript:void(0)"><img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" />{{user.phone}}</a>
             <a #email href="javascript:void(0)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" />{{user.email}}</a>
             <a href="javascript:void(0)" (click)="edit.open()"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Edit personal information</a>
-            <a href="javascript:void(0)"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Change password</a>
+            <a href="javascript:void(0)" (click)="changePassword.open()"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Change password</a>
           </div>
         </div>
       </div>
@@ -62,12 +62,11 @@
               </div>
             </ng-template>
           </li>
-
         </ul>
-
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
       </div>
     </div>
   </div>
 </section>
 <app-edit-profile #edit></app-edit-profile>
+<app-change-password #changePassword></app-change-password>

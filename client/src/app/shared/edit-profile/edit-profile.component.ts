@@ -26,7 +26,6 @@ export class EditProfileComponent implements OnInit {
     }
   @ViewChild('content') content! : TemplateRef<any>;
   ngOnInit(): void {
-
   }
   open()
   {
@@ -48,7 +47,7 @@ export class EditProfileComponent implements OnInit {
   }
   nullDegree()
   {
-    this.f.degree.setValue(null);
+    this.f.degree.reset();
   }
   close() {
     this.modalService.dismissAll();
@@ -57,7 +56,8 @@ export class EditProfileComponent implements OnInit {
   {
     this.profileService.editUser(this.editForm.value).subscribe(res=> {
       if(res.status === 200) {
-        Toast.fire({icon:'success', title:'Post Created successfully'})
+        Toast.fire({icon:'success', title:'Profile updated successfully'})
+        this.userService.populate();
       }
     });
   }

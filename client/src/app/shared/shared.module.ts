@@ -26,6 +26,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CommunityListComponent } from './community/community-list/community-list.component';
 import { CommunityCreateComponent } from './community/community-create/community-create.component';
+import { CreateReportComponent } from './create-report/create-report.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { CommunityCreateComponent } from './community/community-create/community
     ChangePasswordComponent,
     CommunityListComponent,
     CommunityCreateComponent,
+    CreateReportComponent,
   ],
   imports: [
     CommonModule,
@@ -88,6 +90,8 @@ import { CommunityCreateComponent } from './community/community-create/community
     CommunityListComponent,
     CommunityCreateComponent,
     EditProfileComponent,
+    ChangePasswordComponent,
+    CreateReportComponent,
 
     //Pipes
     ImagePipe,
