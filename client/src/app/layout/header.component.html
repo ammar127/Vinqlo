@@ -1,18 +1,18 @@
 <header>
   <nav [ngClass]="isAdmin ? 'bg-dark': 'bg-white'">
     <a class="nav-main" href=""><img src="../../assets/images/logo-01.png" alt=""/></a>
-    <ul *ngIf="!isAdmin" class="ml-auto nav-list">
-      <li class="nav-link">
+    <ul  class="ml-auto nav-list">
+      <li *ngIf="!isAdmin" class="nav-link">
         <a href=""><i class="fas fa-bell"></i></a>
       </li>
-      <li class="nav-link">
+      <li *ngIf="!isAdmin" class="nav-link">
         <a href=""><i class="fas fa-home"></i></a>
       </li>
       <li class="nav-link" *ngIf="user" ngbDropdown>
         <a href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem routerLink="/profile">
-            <div class="d-flex align-items-center" ngbDropdownToggle>
+            <div class="d-flex align-items-center" >
               <div class="user-img">
                 <img [src]="user.image | image" alt="">
               </div>
@@ -26,7 +26,7 @@
 
         </div>
       </li>
-      <li>
+      <li *ngIf="!isAdmin" >
         <a
           class="accordion-toggle collapsed"
           data-toggle="collapse"
