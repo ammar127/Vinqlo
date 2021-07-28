@@ -24,8 +24,12 @@ router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 
 router.post('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     req.user.communities.push(req.community._id);
+    req.community.members.push(req.user._id);
+    req.community.membersCount++;
     req.user.save((err, user) => {
-        next(new httpResponse.OkResponse('Community Join ed Successfully'));
+        req.community.save((err, community) => {
+            next(new httpResponse.OkResponse('Community Joined Successfully'));
+        });
     });
 })
 
@@ -42,6 +46,7 @@ body('category').isLength({min: 4})
     let community = new Community();
     community.name = req.body.name;
     community.by = req.user._id;
+    community.members.push(req.user._id);
     community.campus = req.user.campus;
     community.degree = req.user.degree;
 

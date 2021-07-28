@@ -33,6 +33,14 @@ var communitySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
         required: true
+    },
+    members:{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User'
+    },
+    membersCount: {
+        type: Number,
+        default: 1
     }
 
 });
@@ -40,12 +48,14 @@ var communitySchema = mongoose.Schema({
 communitySchema.pre('findOne', function(next) {
     this.populate('by');
     this.populate('category');
+    this.populate('members');
     next();
 });
 
 communitySchema.pre('find', function(next) {
     this.populate('by');
     this.populate('category');
+    this.populate('members');
     next();
 });
 
@@ -68,7 +78,9 @@ communitySchema.methods.toJSON = function(){
         slug: this.slug,
         name: this.name,
         by: this.by,
-        category: this.category
+        category: this.category,
+        members: this.members,
+        membersCount: this.membersCount
     }
 }
 

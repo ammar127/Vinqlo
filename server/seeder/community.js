@@ -17,6 +17,7 @@ async function seedCommunity(){
         let community = new Community();
         community.name = faker.company.companyName();
         community.by = users[n]._id;
+        community.members.push(users[n]._id);
         community.campus = campuses[n1]._id;
         community.degree = campuses[n1].degrees[n2]._id;
         community.category = categories[n1]._id;

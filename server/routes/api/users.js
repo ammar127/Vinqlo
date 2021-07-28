@@ -32,10 +32,6 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
         return next(new httpResponse.UnauthorizedResponse('You email is not verified', 401.1));
     }
 
-    if(user.status ===  0){
-        return next(new httpResponse.UnauthorizedResponse('Your account deleted by admin' ,401.0));
-    }
-
     if(user.status === 2){
         return next(new httpResponse.UnauthorizedResponse('Your account blocked by admin', 401.2));
     }

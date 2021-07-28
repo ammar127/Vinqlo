@@ -10,7 +10,10 @@ const localStrategy = new LocalStrategy({usernameField: 'email', passwordField: 
         if(!user.comparePassword(password)){
             return done(null, false, {message: 'Invalid Email and Password Address'})
         }
-        return done(null, user)
+        if(user.status ===  0){
+            return done(null, false, { message: 'Invalid Email and Password Address' });
+        }
+        return done(null, user);
     })
     }
 )
