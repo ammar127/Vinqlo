@@ -19,7 +19,7 @@ async function seedPost(){
         post.tags.push(faker.lorem.word());
         post.tags.push(faker.lorem.word());
         post.tags.push(faker.lorem.word());
-        post.image = faker.image.imageUrl();
+        post.image = faker.image.image();
         post.community = communities[n2]._id;
 
         await post.save();

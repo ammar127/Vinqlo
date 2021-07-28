@@ -5,6 +5,7 @@ var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Post = require('../../models/post');
 var Community = require('../../models/community');
+var Category = require('../../models/category');
 var auth = require('../auth');
 
 
@@ -99,21 +100,27 @@ router.post('/like/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse('Post added to Liked Posts'));
 });
 
-router.get('/get/academics', auth.isToken, auth.isUser, (req, res, next) => {
-    
-    Community.find();
-    
-    const options = {
-        page: req.query.page || 1,
-        limit: req.query.limit || 10
-    };
+router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) => {
+    var query = {campus: req.user.campus, degree: req.user.degree};
 
-    var query = {};
+    if(typeof req.query.category !== 'undefined' && req.query.category !== null){
+        const category = await Category.findOne({slug: req.query.category});
+        query = {campus: req.user.campus, degree: req.user.degree, category: category._id};
+    }
 
-    Post.paginate(query, options, (err, posts) => {
-        if (err) return next(err);
-        next(new httpResponse.OkResponse(posts));
-    }); 
+
+    Community.find(query, (err, communities) => {
+        
+        const options = {
+            page: req.query.page || 1,
+            limit: req.query.limit || 10
+        };
+    
+        Post.paginate({community: {$in : communities}}, options, (err, posts) => {
+            if (err) return next(err);
+            next(new httpResponse.OkResponse(posts));
+        }); 
+    });
 });
 
 module.exports = router;

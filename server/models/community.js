@@ -84,7 +84,7 @@ communitySchema.methods.toJSON = function(){
             image: this.by.image
         },
         category: this.category,
-        members: this.members,
+        members: this.members.map(({firstName, lastName, email, image}) => ({firstName, lastName, email, image}) ),
         membersCount: this.membersCount
     }
 }
