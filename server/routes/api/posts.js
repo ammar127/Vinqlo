@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Post = require('../../models/post');
+var Community = require('../../models/community');
 var auth = require('../auth');
 var multer = require('../../utilities/multer');
 
@@ -39,7 +40,7 @@ router.post('/', auth.isToken, auth.isUser,
 
 body('title').isLength({min: 5}),
 body('body').isLength({min: 5}),
-body('community').isLength({min: 24}),
+body('community').isLength({min: 5}),
 
 (req, res, next) => {
     const errors = validationResult(req);
@@ -47,21 +48,27 @@ body('community').isLength({min: 24}),
         next(new httpResponse.BadRequestResponse(JSON.stringify(errors.array())));
         return
     }
-    if(req.user.communities.filter(comm => comm._id.toString() === req.body.community).length === 0){
-        return next(new httpResponse.BadRequestResponse('You are not part of this community'));
-    }
-    let post = new Post();
-    post.title = req.body.title;
-    post.body = req.body.body;
-    post.image = req.body.image;
-    post.by = req.user._id;
-    post.tags = req.body.tags;
-    post.community = mongoose.Types.ObjectId(req.body.community);
 
-    post.save((err, savedPost) => {
-        if (err) return next(err);
-        next(new httpResponse.OkResponse(savedPost));
-    })
+    const community = Community.findOne({slug: req.body.community}, (err, community) => {
+        console.log(community, req.user);
+
+        if(req.user.communities.filter(comm => comm._id.toString() === community._id.toString()).length === 0){
+            return next(new httpResponse.BadRequestResponse('You are not part of this community'));
+        }
+
+        let post = new Post();
+        post.title = req.body.title;
+        post.body = req.body.body;
+        post.image = req.body.image;
+        post.by = req.user._id;
+        post.tags = req.body.tags;
+        post.community = community._id;
+
+        post.save((err, savedPost) => {
+            if (err) return next(err);
+            next(new httpResponse.OkResponse(savedPost));
+        })
+    });
 });
 
 
