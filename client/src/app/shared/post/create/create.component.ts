@@ -4,7 +4,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Toast, UserService } from 'src/app/core';
-import { FeedService } from 'src/app/core/services/feed.service';
+import { PostService } from 'src/app/core/services/post.service';
 
 @Component({
   selector: 'post-create',
@@ -17,7 +17,7 @@ export class CreateComponent implements OnInit {
   commuities!: Community[];
   @ViewChild('content') content! : TemplateRef<any>;
   constructor(private fb: FormBuilder,
-    private feedService: FeedService,
+    private postService: PostService,
     private communityService: CommunityService,
     private modalService: NgbModal) {
     this.create();
@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
   onPost()
   {
    
-    this.feedService.createPost(this.addPostForm.value)
+    this.postService.createPost(this.addPostForm.value)
     .subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Post Created successfully'})

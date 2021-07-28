@@ -1,0 +1,48 @@
+
+  <div class="card shadow-sm p-3">
+    <div class="client-card shadow-sm" *ngFor="let community of communities">
+      <div class="client-header">
+        <div>
+          <h6 class="main-color mb-0">{{community.name}}</h6>
+          <small class="text-muted">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
+        </div>
+        <div>
+          <button class="btn btn-join">
+            <i
+              class="fa fa-link icons-color"
+              aria-hidden="true"
+            ></i>
+            <span class="main-color"> Join</span>
+          </button>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem>Action - 1</button>
+            <button ngbDropdownItem>Another Action</button>
+            <button ngbDropdownItem>
+              Something else is here
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="my-4">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Tenetur, veritatis.
+      </p>
+      <span class="main-color"
+        ><i
+          class="fa icons-color fa-users"
+          aria-hidden="true"
+        ></i>
+        1</span
+      >
+    </div>
+
+  </div>

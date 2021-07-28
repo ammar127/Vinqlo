@@ -23,6 +23,8 @@ import { UploadImgComponent } from './upload-img/upload-img.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CommunityListComponent } from './community/community-list/community-list.component';
+import { CommunityCreateComponent } from './community/community-create/community-create.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     UploadImgComponent,
     EditProfileComponent,
     ChangePasswordComponent,
+    CommunityListComponent,
+    CommunityCreateComponent,
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,6 @@ export class CommunityService {
   {
     return this.api.get('/communities/get/all');
   }
-  getFollowed() {return this.api.get('/communities/followed')}
+  getFollowed() {return this.api.get('/communities/get/followed')}
 
 }
