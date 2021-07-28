@@ -21,6 +21,8 @@ import { CardComponent } from './post/card/card.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { UploadImgComponent } from './upload-img/upload-img.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CommunityListComponent } from './community/community-list/community-list.component';
 import { CommunityCreateComponent } from './community/community-create/community-create.component';
 
@@ -43,6 +45,8 @@ import { CommunityCreateComponent } from './community/community-create/community
     CardComponent,
     UploadFileComponent,
     UploadImgComponent,
+    EditProfileComponent,
+    ChangePasswordComponent,
     CommunityListComponent,
     CommunityCreateComponent,
   ],
@@ -71,6 +75,7 @@ import { CommunityCreateComponent } from './community/community-create/community
     DecimalOnlyDirective,
     ShowAuthedDirective,
 
+
     // components
     ErrorsComponent,
     LoaderComponent,
@@ -80,6 +85,8 @@ import { CommunityCreateComponent } from './community/community-create/community
     CardComponent,
     CommunityListComponent,
     CommunityCreateComponent,
+    EditProfileComponent,
+
     //Pipes
     ImagePipe,
     LoaderComponent,
