@@ -10,19 +10,19 @@
       <div class="form-group">
         <div class="input-field">
           <label for=""> First Name </label>
-          <input type="text" formControlName="title" formControlName="firstName" class="form-control custom-border" placeholder="Title" />
+          <input type="text" formControlName="firstName" formControlName="firstName" class="form-control custom-border" placeholder="First Name" />
           <errors [control]="f.phone"></errors>
 
         </div>
         <div class="input-field">
           <label for=""> Last Name</label>
-          <input type="text" formControlName="title" formControlName="lastName" class="form-control custom-border" placeholder="Title" />
+          <input type="text" formControlName="lastName" formControlName="lastName" class="form-control custom-border" placeholder="Last Name" />
           <errors [control]="f.phone"></errors>
 
         </div>
         <div class="input-field">
           <label for="">Select Campus  </label>
-          <ng-select formControlName="campus" (onChange)="nullDegree()" [items]="campuses" bindValue="slug" bindLabel="name"></ng-select>
+          <ng-select formControlName="campus" (change)="nullDegree()" [items]="campuses" bindValue="slug" bindLabel="name"></ng-select>
           <errors [control]="f.campus"></errors>
 
         </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="input-field">
           <label for=""> Phone</label>
-          <input type="text" formControlName="phone" formControlName="phone" class="form-control custom-border" placeholder="Title" />
+          <input type="text" formControlName="phone" formControlName="phone" class="form-control custom-border" placeholder="Phone Number" />
           <errors [control]="f.phone"></errors>
 
         </div>
@@ -47,7 +47,7 @@
           <label for=""> Upload Image</label>
           <upload-img [control]="f.image"></upload-img>
         </div>
-        <button class="btn mb-2 btn-main" [disabled]="!editForm.valid" (click)="onPost()">Post</button>
+        <button class="btn mb-2 btn-main" (click)="onPost()">Post</button>
       </div>
     </form>
   </div>

@@ -86,6 +86,7 @@ import { CommunityCreateComponent } from './community/community-create/community
     CommunityListComponent,
     CommunityCreateComponent,
     EditProfileComponent,
+    ChangePasswordComponent,
 
     //Pipes
     ImagePipe,

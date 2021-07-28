@@ -11,6 +11,7 @@ export interface User {
     bio:string;
     degree:Degree;
     campus:Campus;
+    phone:string;
     communities: Community[];
     saved:string;
     role:number;

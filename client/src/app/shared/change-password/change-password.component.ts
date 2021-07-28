@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { UserService } from './../../core/services/user.service';
+import { ProfileService } from './../../core/services/profile.service';
+import { CommonService } from './../../core/services/common.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Toast } from 'src/app/core';
 
 @Component({
   selector: 'app-change-password',
@@ -7,9 +13,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  constructor() { }
-
   ngOnInit(): void {
   }
+  passForm!:FormGroup;
+  obj!:Object;
+  constructor(private modalService: NgbModal,
+    private fb: FormBuilder,
+    private profileService:ProfileService,
+    private userService:UserService
+    ) {
+      this.create();
+    }
+  @ViewChild('content') content! : TemplateRef<any>;
 
+  open()
+  {
+    this.modalService.open(this.content);
+  }
+  get user(){return this.userService.getCurrentUser()}
+  create()
+  {
+    this.passForm = this.fb.group({
+      password:['',Validators.required],
+      confirmPassword:['',Validators.required],
+
+    });
+  }
+  close() {
+    this.modalService.dismissAll();
+  }
+  onPost()
+  {
+    console.log(this.f.password.value)
+    if(this.f.password.value===this.f.confirmPassword.value)
+    {
+
+      this.profileService.editUser({password: this.f.password.value}).subscribe(res=> {
+        if(res.status === 200) {
+          Toast.fire({icon:'success', title:'Profile updated successfully'})
+          this.userService.populate();
+        }
+      });
+    }
+    else
+    {
+      Toast.fire({icon:'error', title:'Password DidNot Match'})
+    }
+  }
+  get f() {return this.passForm.controls}
 }
