@@ -149,8 +149,7 @@ router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res,
     next(new httpResponse.OkResponse('Updated Successfully'));
 });
 
-
-router.get('/resendOtp/:email', (req, res, next) => {
+function sendOtp(req, res, next){
     var user = req.emailUser;
     var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
     user.otp = otp;
@@ -159,11 +158,16 @@ router.get('/resendOtp/:email', (req, res, next) => {
     user.otpExpiry = today;
 
     //SendOTP
-    emailService.sendEmailVerificationOTP(user);
+    emailService.sendEmailOTP(user);
 
     user.save();
     next(new httpResponse.OkResponse({otp: user.otp}));
+}
+
+router.get('/resendOtp/:email', (req, res, next) => {
+    sendOtp(req, res, next);
 });
+
 
 router.get('/verifyOtp/:otp/:email', (req, res, next) => {
     var today = new Date();
@@ -185,6 +189,38 @@ router.get('/verifyOtp/:otp/:email', (req, res, next) => {
     req.emailUser.save();
 
     next(new httpResponse.OkResponse('Otp verified Successfully'));
+});
+
+router.get('/forgotPassword/:email', (req, res, next) => {
+    sendOtp(req, res, next);
+});
+
+router.put('/forgotPassword/:otp/:email', (req, res, next) => {
+    var today = new Date();
+    if(today.getTime() > req.emailUser.otpExpiry.getTime()){
+        next(new httpResponse.UnauthorizedResponse('OTP is expired'));
+        return;
+    }
+    if(req.params.otp !== req.emailUser.otp){
+        next(new httpResponse.UnauthorizedResponse('OTP is invalid'));
+        return;
+    }
+
+    req.emailUser.otp = null;
+    req.emailUser.otpExpiry = null;
+    if(typeof req.body.password !== 'undefined' && req.body.password !== null){
+        req.emailUser.setPassword(req.body.password);
+    }
+    else{
+        next(new httpResponse.BadRequestResponse('Password is required'));
+        return;
+    }
+
+    emailService.sendEmailForgotPasswordSuccess(req.emailUser);
+
+    req.emailUser.save();
+
+    next(new httpResponse.OkResponse('Password changed successfully'));
 });
 
 module.exports = router;
