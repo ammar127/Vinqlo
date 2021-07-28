@@ -67,7 +67,7 @@ postSchema.pre('findOne', function (next) {
 postSchema.pre('find', function (next) {
     this.populate('by');
     this.populate('comments');
-    this.populate('user');
+    this.populate('community');
     next();
 });
 
@@ -91,10 +91,19 @@ postSchema.methods.toJSON = function(){
         title: this.title,
         body: this.body,
         image: this.image,
-        by: this.by,
+        by: {
+            firstName: this.by.firstName,
+            lastName: this.by.firstName,
+            email: this.by.email,
+            image: this.by.image
+        },
         tags: this.tags,
         comments: this.comments,
-        community: this.community,
+        community: {
+            slug: this.community.slug,
+            name: this.community.name,
+            category: this.community.category
+        },
         time: this.time,
         likeCount: this.likeCount
     }

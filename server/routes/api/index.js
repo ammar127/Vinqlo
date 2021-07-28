@@ -11,6 +11,7 @@ router.use('/comments', require('./comments'));
 router.use('/reports', require('./reports'));
 router.use('/common', require('./common'));
 router.use('/profile', require('./profile'));
+router.use('/search', require('./search'));
 
 router.use('/upload', require('./upload'));
 

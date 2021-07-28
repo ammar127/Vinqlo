@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Post = require('../../models/post');
+var Community = require('../../models/community');
+var Category = require('../../models/category');
 var auth = require('../auth');
 
 
@@ -28,7 +30,7 @@ router.post('/', auth.isToken, auth.isUser,
 
 body('title').isLength({min: 5}),
 body('body').isLength({min: 5}),
-body('community').isLength({min: 24}),
+body('community').isLength({min: 5}),
 
 (req, res, next) => {
     const errors = validationResult(req);
@@ -36,21 +38,27 @@ body('community').isLength({min: 24}),
         next(new httpResponse.BadRequestResponse(JSON.stringify(errors.array())));
         return
     }
-    if(req.user.communities.filter(comm => comm._id.toString() === req.body.community).length === 0){
-        return next(new httpResponse.BadRequestResponse('You are not part of this community'));
-    }
-    let post = new Post();
-    post.title = req.body.title;
-    post.body = req.body.body;
-    post.image = req.body.image;
-    post.by = req.user._id;
-    post.tags = req.body.tags;
-    post.community = mongoose.Types.ObjectId(req.body.community);
 
-    post.save((err, savedPost) => {
-        if (err) return next(err);
-        next(new httpResponse.OkResponse(savedPost));
-    })
+    const community = Community.findOne({slug: req.body.community}, (err, community) => {
+        console.log(community, req.user);
+
+        if(req.user.communities.filter(comm => comm._id.toString() === community._id.toString()).length === 0){
+            return next(new httpResponse.BadRequestResponse('You are not part of this community'));
+        }
+
+        let post = new Post();
+        post.title = req.body.title;
+        post.body = req.body.body;
+        post.image = req.body.image;
+        post.by = req.user._id;
+        post.tags = req.body.tags;
+        post.community = community._id;
+
+        post.save((err, savedPost) => {
+            if (err) return next(err);
+            next(new httpResponse.OkResponse(savedPost));
+        })
+    });
 });
 
 
@@ -91,5 +99,29 @@ router.post('/like/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     req.post.save();
     next(new httpResponse.OkResponse('Post added to Liked Posts'));
 });
+
+router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
+    next(new httpResponse.OkResponse(req.user.saved));
+});
+
+router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => {
+
+    Community.findOne({slug: req.params.community}, (err, community) => {
+        if(!err && community !== null){
+            const options = {
+                page: req.query.page || 1,
+                limit: req.query.limit || 10
+            };
+        
+            Post.paginate({community: community}, options, (err, posts) => {
+                if (err) return next(err);
+                next(new httpResponse.OkResponse(posts));
+            }); 
+        }
+        else{
+            next(new httpResponse.UnauthorizedResponse('Community not found!'));
+        }
+    });
+})
 
 module.exports = router;

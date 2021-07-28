@@ -36,7 +36,7 @@ const sendEmailVerificationOTP = async (user) => {
     to: user.email,
     subject: "Vinqlo Email Verification",
     templateObj: {
-      fullName: user.name, 
+      fullName: user.firstName, 
       otp: user.otp, 
       email: user.email,
       emailText:`Please verify that your email address is ${user.email} and that you entered it when signing up for Vinqlo.`
@@ -66,7 +66,9 @@ const sendEmailOTP = async (user) => {
     to: user.email,
     subject: "OTP Request",
     templateObj: {
-      ...user,
+      fullName: user.firstName, 
+      otp: user.otp, 
+      email: user.email,
       emailText: `
       <p>We received an OTP request on your Vinqlo Account.</p>.
       <p>Enter this OTP to complete the process.</p>
