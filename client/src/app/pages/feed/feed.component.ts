@@ -20,7 +20,8 @@ export class FeedComponent implements OnInit {
   article: Post = {} as Post;
   tags:string[]=[];
   allPosts!:Post[];
-  communities!:Community;
+  communities!:Community[];
+  postSlug!:Community;
   constructor(
     private service:FeedService,
     private modalService: NgbModal,
@@ -29,7 +30,7 @@ export class FeedComponent implements OnInit {
     private communityService:CommunityService
     )
   {
-    this.addPostForm = this.fb.group({community: ['', Validators.required],title: ['', Validators.required],body: ['', Validators.required],tags:[[]],img: ['', Validators.required]});
+    this.addPostForm = this.fb.group({community: ['', Validators.required],title: ['', Validators.required],body: ['', Validators.required],tags:[[]]});
     this.article.tags=[];
   }
   ngOnInit(): void {
@@ -60,6 +61,7 @@ export class FeedComponent implements OnInit {
   {
     this.article=this.addPostForm.value;
     this.article.tags=this.tags;
+    this.article.slug=this.postSlug.slug;
     console.log(this.article);
     this.service.createPost(this.article).subscribe
     (
@@ -84,7 +86,7 @@ export class FeedComponent implements OnInit {
     this.communityService.getAll().subscribe
     (
       res=>{
-        console.log(res)
+        this.communities=res.data.docs
       }
     )
   }

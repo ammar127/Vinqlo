@@ -13,7 +13,7 @@ export class ProfileComponent implements OnInit {
   constructor(private profileService:ProfileService) {}
 
   ngOnInit(): void {
-    this.profileService.getUser('/users/admin@gmail.com').subscribe
+    this.profileService.getUser('admin@gmail.com').subscribe
     (
       res=>{
        this.user=res.data.user;
