@@ -8,9 +8,9 @@ export class CommunityService {
 
 
   constructor(private api:ApiService) { }
-  getAll()
+  getAll(path: string)
   {
-    return this.api.get('/communities/get/all');
+    return this.api.get(path);
   }
   getFollowed() {return this.api.get('/communities/get/followed')}
 

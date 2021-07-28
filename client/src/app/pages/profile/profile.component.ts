@@ -9,7 +9,7 @@ import { User, UserService } from 'src/app/core';
 })
 export class ProfileComponent implements OnInit {
   active = 1;
-  
+  communityUrl = '/communities/get/followed';
   constructor(private userService:UserService) {}
 
   ngOnInit(): void {

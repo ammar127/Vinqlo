@@ -78,7 +78,8 @@ import { CommunityCreateComponent } from './community/community-create/community
     CreateComponent,
     ListComponent,
     CardComponent,
-
+    CommunityListComponent,
+    CommunityCreateComponent,
     //Pipes
     ImagePipe,
     LoaderComponent,

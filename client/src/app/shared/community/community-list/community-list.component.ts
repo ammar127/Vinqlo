@@ -1,5 +1,6 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { Community } from 'src/app/core';
+import { Community, CommunityService } from 'src/app/core';
 
 @Component({
   selector: 'app-community-list',
@@ -11,9 +12,32 @@ export class CommunityListComponent implements OnInit {
 
   communities: Community[] = [];
   hasNextPage = true;
-  constructor() { }
+ 
+  page = 1;
+  isLoader = false;
+  constructor(private communityService: CommunityService) { }
 
   ngOnInit(): void {
+    this.get();
+  }
+  get() {
+    this.isLoader = true;
+
+    let params= new HttpParams().set('page', this.page.toString());
+    this.communityService.getAll(this.url+'?'+params.toString()).subscribe(res => {
+      if(res.status === 200) {
+        this.isLoader = false;
+        this.communities.push(...res.data.docs as Community[]);
+        this.hasNextPage = res.data.hasNextPage;
+      }
+    })
+  }
+  onReport() {
+    
+  }
+  onLoadMoreClick() {
+    this.page++;
+    this.get();
   }
 
 }
