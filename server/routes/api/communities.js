@@ -115,6 +115,22 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
+    Community.paginate({members: req.user._id}, options, (err, communities) => {
+        if(!err && communities !== null){
+            next(new httpResponse.OkResponse(communities));
+        }
+        else{
+            next(new httpResponse.UnauthorizedResponse(err));
+        }
+    });
+})
+
+router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
     Community.paginate({by: req.user._id}, options, (err, communities) => {
         if(!err && communities !== null){
             next(new httpResponse.OkResponse(communities));
@@ -124,6 +140,29 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         }
     });
 })
+
+router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) => {
+    var query = {campus: req.user.campus, degree: req.user.degree, members: {$nin: [req.user._id]}};
+
+    if(typeof req.query.category !== 'undefined' && req.query.category !== null){
+        const category = await Category.findOne({slug: req.query.category});
+        query = {campus: req.user.campus, degree: req.user.degree, members: {$nin: [req.user._id]}, category: category._id};
+    }
+
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    Community.paginate(query, options, (err, communities) => {
+        if(!err && communities.length !== 0){
+            next(new httpResponse.OkResponse(communities));
+        }
+        else{
+            next(new httpResponse.BadRequestResponse('No Community found'));
+        }
+    });
+});
 
 module.exports = router;
 

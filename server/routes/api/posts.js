@@ -100,27 +100,28 @@ router.post('/like/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse('Post added to Liked Posts'));
 });
 
-router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) => {
-    var query = {campus: req.user.campus, degree: req.user.degree};
-
-    if(typeof req.query.category !== 'undefined' && req.query.category !== null){
-        const category = await Category.findOne({slug: req.query.category});
-        query = {campus: req.user.campus, degree: req.user.degree, category: category._id};
-    }
-
-
-    Community.find(query, (err, communities) => {
-        
-        const options = {
-            page: req.query.page || 1,
-            limit: req.query.limit || 10
-        };
-    
-        Post.paginate({community: {$in : communities}}, options, (err, posts) => {
-            if (err) return next(err);
-            next(new httpResponse.OkResponse(posts));
-        }); 
-    });
+router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
+    next(new httpResponse.OkResponse(req.user.saved));
 });
+
+router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => {
+
+    Community.findOne({slug: req.params.community}, (err, community) => {
+        if(!err && community !== null){
+            const options = {
+                page: req.query.page || 1,
+                limit: req.query.limit || 10
+            };
+        
+            Post.paginate({community: community}, options, (err, posts) => {
+                if (err) return next(err);
+                next(new httpResponse.OkResponse(posts));
+            }); 
+        }
+        else{
+            next(new httpResponse.UnauthorizedResponse('Community not found!'));
+        }
+    });
+})
 
 module.exports = router;
