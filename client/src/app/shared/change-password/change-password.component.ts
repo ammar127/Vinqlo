@@ -18,7 +18,6 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
   }
   passForm!:FormGroup;
-  obj!:Object;
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private profileService:ProfileService,

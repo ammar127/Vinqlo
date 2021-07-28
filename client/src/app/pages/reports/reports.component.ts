@@ -1,3 +1,4 @@
+import { report } from './../../core/constants/report';
 import { Report } from './../../core/models/report';
 import { ReportService } from './../../core/services/report.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,6 @@ export class ReportsComponent implements OnInit {
 
   reports!: Report[];
   reportType = 'Users';
-  report = ['Users', 'Posts', 'Community']
   constructor(private reportService: ReportService) { }
 
   ngOnInit(): void {
@@ -22,12 +22,12 @@ export class ReportsComponent implements OnInit {
   }
   get() {
     this.isLoader = true;
-    this.reportService.getAllReports(this.report.findIndex(e => e == this.reportType)).subscribe(res => {
+    this.reportService.getAllReports(report.findIndex(e => e == this.reportType)).subscribe(res => {
       this.isLoader = false;
       this.reports = res.data.reports.docs });
   }
   onChange(type: number) {
-    this.reportType = this.report[type];
+    this.reportType = report[type];
     this.get();
 
   }

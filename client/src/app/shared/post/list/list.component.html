@@ -5,8 +5,8 @@
           <h6 class="main-color mb-0">{{post.title}}</h6>
           <small class="text-muted">{{post.by.firstName + ' ' + post.by.lastName  }} {{post.time | date : 'long'}}</small>
         </div>
-  
-        <div ngbDropdown class="d-inline-block">
+
+        <div  ngbDropdown class="d-inline-block">
           <button
             class="btn"
             id="dropdownBasic1"
@@ -14,11 +14,11 @@
           >
             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
           </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-             
-            <button ngbDropdownItem> Report User </button>
-            <button ngbDropdownItem> Report Community </button>
-            <button ngbDropdownItem> Report Post</button>
+          <div  ngbDropdownMenu aria-labelledby="dropdownBasic1">
+
+            <button ngbDropdownItem (click)="report.open(0, post.slug)"> Report Post </button>
+            <button ngbDropdownItem (click)="report.open(1, post.by.email)"> Report User </button>
+            <button ngbDropdownItem (click)="report.open(2, post.community.slug)"> Report Community</button>
           </div>
         </div>
       </div>
@@ -62,5 +62,6 @@
     </div>
     <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
   <loader *ngIf="isLoader"></loader>
-  
+
 </div>
+<app-create-report #report></app-create-report>
