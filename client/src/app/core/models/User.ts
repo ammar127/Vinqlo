@@ -1,3 +1,4 @@
+import { Campus, Degree } from "./campus";
 import { Community } from "./community";
 
 export interface User {
@@ -8,8 +9,8 @@ export interface User {
     email:string;
     password:string;
     bio:string;
-    degree:string;
-    campus:string;
+    degree:Degree;
+    campus:Campus;
     communities: Community[];
     saved:string;
     role:number;

@@ -8,10 +8,10 @@
         <div class="card">
           <div class="profile-img">
             <img src="../../../assets/images/20487.png" alt="" />
-            <p class="text-purple my-3">{{user.bio}}</p>
+            <p class="text-purple my-3">{{user.bio ? user.bio : '-' }}</p>
           </div>
           <div class="profile-detail">
-            <p>Bioengineering at Ugent</p>
+            <p>{{user.degree.name}} at {{user.campus.name}}</p>
             <a href="">
               <img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" /> +12345678
             </a>
