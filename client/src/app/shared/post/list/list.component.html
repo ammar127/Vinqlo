@@ -1,1 +1,66 @@
-<p>list works!</p>
+<div class="card shadow-sm main-profile-card">
+    <div class="client-card shadow-sm" *ngFor="let post of posts">
+      <div class="client-header">
+        <div>
+          <h6 class="main-color mb-0">{{post.title}}</h6>
+          <small class="text-muted">{{post.by.firstName + ' ' + post.by.lastName  }} {{post.time | date : 'long'}}</small>
+        </div>
+  
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+             
+            <button ngbDropdownItem> Report User </button>
+            <button ngbDropdownItem> Report Community </button>
+            <button ngbDropdownItem> Report Post</button>
+          </div>
+        </div>
+      </div>
+      <p class="my-4"> {{post.body}} </p>
+      <div class="client-post">
+        <img
+          [src]="post.image | image"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="client-footer">
+        <div>
+          <span class="text-purple" *ngFor="let tag of post.tags; let i = index">{{tag}} <span *ngIf="i+1 !== post.tags.length">, </span> </span>
+        </div>
+        <div>
+          <ul>
+            <li>
+              <a href="">
+                <i class="fas icons-color fa-heart"></i> {{post.likeCount}}
+              </a>
+            </li>
+            <li>
+              <a href=""
+                ><i class="fas icons-color fa-comments"></i> {{post.comments.length}}</a
+              >
+            </li>
+            <li>
+              <a href=""
+                ><i class="fas icons-color fa-bookmark"></i
+              ></a>
+            </li>
+            <li>
+              <a href="">
+                <i class="fas icons-color fa-share"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
+  <loader *ngIf="isLoader"></loader>
+  
+</div>

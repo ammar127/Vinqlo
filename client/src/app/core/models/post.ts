@@ -1,6 +1,7 @@
 import { Community } from './community';
 import { Comment } from './comment';
 import { User } from './User';
+
 export interface Post
 {
     community:Community;

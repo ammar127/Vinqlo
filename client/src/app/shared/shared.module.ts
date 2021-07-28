@@ -21,6 +21,8 @@ import { CardComponent } from './post/card/card.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { UploadImgComponent } from './upload-img/upload-img.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { CommunityListComponent } from './community/community-list/community-list.component';
+import { CommunityCreateComponent } from './community/community-create/community-create.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     CardComponent,
     UploadFileComponent,
     UploadImgComponent,
+    CommunityListComponent,
+    CommunityCreateComponent,
   ],
   imports: [
     CommonModule,
