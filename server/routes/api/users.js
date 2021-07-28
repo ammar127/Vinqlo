@@ -223,4 +223,30 @@ router.put('/forgotPassword/:otp/:email', (req, res, next) => {
     next(new httpResponse.OkResponse('Password changed successfully'));
 });
 
+router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
+    if(typeof req.body.firstName !== 'undefined' && req.body.firstName !== null){
+        req.user.firstName = req.body.firstName;
+    }
+    if(typeof req.body.lastName !== 'undefined' && req.body.lastName !== null){
+        req.user.lastName = req.body.lastName;
+    }
+    if(typeof req.body.password !== 'undefined' && req.body.password !== null){
+        req.user.setPassword(req.body.password);
+    }
+    if(typeof req.body.image !== 'undefined' && req.body.image !== null){
+        req.user.image = req.body.image;
+    }
+    if(typeof req.body.bio !== 'undefined' && req.body.bio !== null){
+        req.user.bio = req.body.bio;
+    }
+
+    req.user.save((err, user) => {
+        if(err){
+            next(new httpResponse.BadRequestResponse(err));
+            return;
+        }
+        next(new httpResponse.OkResponse({user: user}));
+    });
+});
+
 module.exports = router;

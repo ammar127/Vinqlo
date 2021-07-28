@@ -80,6 +80,10 @@ var userSchema = mongoose.Schema({
     status:{
         type: Number,
         default: 1,
+    },
+    
+    image:{
+        type: String,
     }
 
 });
@@ -119,14 +123,18 @@ userSchema.methods.toAuthJSON = function(){
         lastName: this.lastName,
         email: this.email,
         bio: this.bio,
-        campus: this.campus,
+        campus: {
+            slug: this.campus.slug,
+            name: this.campus.name
+        },
         degree: this.degree,
         saved: this.saved,
         liked: this.liked,
         communities: this.communities, 
         role: this.role,
         otp: this.otp,
-        verified: this.verified
+        verified: this.verified,
+        image: this.image
     }
 }
 
@@ -136,11 +144,15 @@ userSchema.methods.toJSON = function(){
         lastName: this.lastName,
         email: this.email,
         bio: this.bio,
-        campus: this.campus,
+        campus: {
+            slug: this.campus.slug,
+            name: this.campus.name
+        },
         degree: this.degree,
         communities: this.communities, 
         role: this.role,
-        status: this.status
+        status: this.status,
+        image: this.image
     }
 }
 

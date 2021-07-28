@@ -99,4 +99,21 @@ router.post('/like/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse('Post added to Liked Posts'));
 });
 
+router.get('/get/academics', auth.isToken, auth.isUser, (req, res, next) => {
+    
+    Community.find();
+    
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    var query = {};
+
+    Post.paginate(query, options, (err, posts) => {
+        if (err) return next(err);
+        next(new httpResponse.OkResponse(posts));
+    }); 
+});
+
 module.exports = router;

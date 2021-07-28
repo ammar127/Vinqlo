@@ -57,7 +57,12 @@ commentSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         body: this.body,
-        by: this.by,
+        by: {
+            firstName: this.by.firstName,
+            lastName: this.by.firstName,
+            email: this.by.email,
+            image: this.by.image
+        },
         time: this.time
     }
 }
