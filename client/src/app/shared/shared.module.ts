@@ -21,6 +21,8 @@ import { CardComponent } from './post/card/card.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { UploadImgComponent } from './upload-img/upload-img.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     CardComponent,
     UploadFileComponent,
     UploadImgComponent,
+    EditProfileComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +71,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     DecimalOnlyDirective,
     ShowAuthedDirective,
 
+
     // components
     ErrorsComponent,
     LoaderComponent,
@@ -74,6 +79,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     CreateComponent,
     ListComponent,
     CardComponent,
+    EditProfileComponent,
 
     //Pipes
     ImagePipe,

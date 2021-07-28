@@ -12,18 +12,10 @@
           </div>
           <div class="profile-detail">
             <p>{{user.degree.name}} at {{user.campus.name}}</p>
-            <a href="">
-              <img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" /> +12345678
-            </a>
-            <a href="">
-              <img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" />
-              {{user.email}}</a>
-            <a href="">
-              <img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />
-              Edit personal information</a>
-              <a href="">
-                <img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />
-                Change password</a>
+            <a href="javascript:void(0)"><img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" /> +12345678</a>
+            <a #email href="javascript:void(0)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" />{{user.email}}</a>
+            <a href="javascript:void(0)" (click)="edit.open()"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Edit personal information</a>
+            <a href="javascript:void(0)"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Change password</a>
           </div>
         </div>
       </div>
@@ -516,3 +508,4 @@
     </div>
   </div>
 </section>
+<app-edit-profile #edit></app-edit-profile>
