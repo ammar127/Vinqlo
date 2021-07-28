@@ -99,6 +99,22 @@ router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
+    Community.paginate({}, options, (err, communities) => {
+        if(!err && communities !== null){
+            next(new httpResponse.OkResponse(communities));
+        }
+        else{
+            next(new httpResponse.UnauthorizedResponse(err));
+        }
+    });
+})
+
+router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
     Community.paginate({by: req.user._id}, options, (err, communities) => {
         if(!err && communities !== null){
             next(new httpResponse.OkResponse(communities));
