@@ -55,6 +55,13 @@ const routes: Routes = [
         path: 'reports',
         loadChildren: () =>
           import('./pages/reports/reports.module').then((m) => m.ReportsModule),
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            redirectTo: '/access-denied'
+          }
+        },
       },
 
       {
@@ -63,7 +70,24 @@ const routes: Routes = [
           import('./pages/post/post.module').then((m) => m.PostModule),
       },
       { path: 'access-denied', loadChildren: () => import('./pages/access-denied/access-denied.module').then(m => m.AccessDeniedModule) },
-
+      {
+        path: 'category', loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule), canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [UserType.user.toString(),],
+            redirectTo: '/access-denied'
+          }
+        },
+      },
+      {
+        path: 'academic-category', loadChildren: () => import('./pages/academic-category/academic-category.module').then(m => m.AcademicCategoryModule), canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            redirectTo: '/access-denied'
+          }
+        },
+      },
       {
         path: '',
         redirectTo: 'feed',
@@ -71,8 +95,7 @@ const routes: Routes = [
       },
     ],
   },
-  { path: 'category', loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule) },
-  { path: 'academic-category', loadChildren: () => import('./pages/academic-category/academic-category.module').then(m => m.AcademicCategoryModule) },
+
 ];
 
 @NgModule({

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AcademicCategoryRoutingModule } from './academic-category-routing.module';
 import { AcademicCategoryComponent } from './academic-category.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AcademicCategoryComponent } from './academic-category.component';
   ],
   imports: [
     CommonModule,
-    AcademicCategoryRoutingModule
+    AcademicCategoryRoutingModule,
+    SharedModule
   ]
 })
 export class AcademicCategoryModule { }
