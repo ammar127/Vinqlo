@@ -37,4 +37,10 @@ export class ReportsComponent implements OnInit {
     this.reportType = report[type];
     this.get();
   }
+  deleteReport(slug:string)
+  {
+    this.reportService.deleteReport(slug).subscribe(
+      res=> { console.log(res)}
+    )
+  }
 }

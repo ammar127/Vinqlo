@@ -31,8 +31,7 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
               veritatis.
             </p>
-            <span class="main-color"><i class="fa icons-color fa-users" aria-hidden="true"></i>
-              1</span
+            <span class="main-color"><i class="fa icons-color fa-users" aria-hidden="true"></i>{{postData.community.membersCount}}</span
             >
           </div>
         </div>
@@ -82,19 +81,32 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{comment.by.firstName}} {{comment.by.lastName}}</p>
-              <span >{{comment.body}} 
+              <span >{{comment.body}}
                 <!-- <a href="javascript:void(0)">{{comment.by.email}}</a> -->
               </span>
+              <div align="right" *ngIf="by.email==comment.by.email" ngbDropdown class="d-inline-block">
+                <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button (click)="editComment(comment.slug)" ngbDropdownItem>Edit</button>
+                  <button (click)="deleteComment(comment.slug)" ngbDropdownItem>Delete</button>
+                </div>
+              </div>
               <hr />
             </div>
             <div class="comment-input">
-              <input   type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="comment" />
-              <button class="btn btn-primary" (click)="postComment(postData.slug)">Comment</button>
+              <input   type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="commentt" />
+              <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
             </div>
           </div>
         </div>
       </div>
-      <loader *ngIf="isLoader"></loader>
+     
+    </div>
+    <div class="row py-5 my-5 d-flex justify-content-center">
+      <div class="col-md-3">
+        <loader *ngIf="isLoader"></loader>
+      </div>
     </div>
   </div>
 </section>

@@ -9,14 +9,17 @@ import { Community, CommunityService, Toast } from 'src/app/core';
 })
 export class CommunityListComponent implements OnInit {
   @Input() url  = '';
+  
+  @Input() isJoin = true;
 
   communities: Community[] = [];
   hasNextPage = true;
- 
+
   page = 1;
   isLoader = false;
 
   joinSlug:any = null;
+
   constructor(private communityService: CommunityService) { }
 
   ngOnInit(): void {
@@ -33,8 +36,20 @@ export class CommunityListComponent implements OnInit {
       }
     })
   }
+  getByCategory(slug:string)
+  {
+    this.isLoader = true;
+    let params= new HttpParams().set('slug', this.page.toString());
+    this.communityService.getAll(this.url+'?'+params.toString()).subscribe(res => {
+      if(res.status === 200) {
+        this.isLoader = false;
+        this.communities.push(...res.data.docs as Community[]);
+        this.hasNextPage = res.data.hasNextPage;
+      }
+    })
+  }
   onReport() {
-    
+
   }
   onLoadMoreClick() {
     this.page++;
@@ -43,6 +58,17 @@ export class CommunityListComponent implements OnInit {
   onJoinClick(slug: string) {
     this.joinSlug = slug;
     this.communityService.join(slug).subscribe(res => {
+      if(res.status === 200) {
+        Toast.fire({icon:'success', title: 'you joined a Community '});
+        this.communities = this.communities.filter(c => c.slug !== slug);
+        this.joinSlug = null;
+
+      }
+   } )
+  }
+  onUnJoinClick(slug:string)
+  {
+    this.communityService.unJoin(slug).subscribe(res => {
       if(res.status === 200) {
         Toast.fire({icon:'success', title: 'you joined a Community '});
         this.communities = this.communities.filter(c => c.slug !== slug);

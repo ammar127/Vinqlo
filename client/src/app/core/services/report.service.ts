@@ -17,4 +17,8 @@ export class ReportService {
 
     return this.api.post('/reports',data)
   }
+  deleteReport(data:string)
+  {
+    return this.api.delete('/reports/'+data)
+  }
 }

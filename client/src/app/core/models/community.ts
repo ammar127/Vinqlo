@@ -6,6 +6,7 @@ export interface Community
     name:string;
     slug:string;
     by:User;
+    isJoined:boolean;
     category:Category;
     members:User[];
     membersCount?:number;

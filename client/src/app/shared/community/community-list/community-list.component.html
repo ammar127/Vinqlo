@@ -3,18 +3,22 @@
     <div class="client-card shadow-sm" *ngFor="let community of communities">
       <div class="client-header">
         <div>
-          <h6 class="main-color mb-0">{{community.name}}</h6>
+          <a routerLink="['/community]"  routerLinkActive="active"><h6 class="main-color mb-0">{{community.name}}</h6></a>
           <small class="text-muted">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
         </div>
-        <div>
-          <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug)">
-            <i
-              class="fa fa-link icons-color"
-              aria-hidden="true"
-            ></i>
-            <span class="main-color"> Join</span>
-          </button>
+        <div *ngIf="isJoin">
+          <div *ngIf="!community.isJoined">
+            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug)">
+              <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> Join</span>
+            </button>
+          </div>
+          <div *ngIf="community.isJoined">
+            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onUnJoinClick(community.slug)">
+              <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> Un Join</span>
+            </button>
+          </div>
         </div>
+        
         <div ngbDropdown class="d-inline-block">
           <button
             class="btn"
@@ -24,16 +28,11 @@
             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem>Action - 1</button>
-            <button ngbDropdownItem>Another Action</button>
-            <button ngbDropdownItem>
-              Something else is here
-            </button>
+            <button ngbDropdownItem (click)="report.open(2, community.slug)">Report Community</button>
           </div>
         </div>
       </div>
-      <p class="my-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <p class="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Tenetur, veritatis.
       </p>
       <span class="main-color"
@@ -49,3 +48,4 @@
     <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
     <loader *ngIf="isLoader"></loader>
   </div>
+<app-create-report #report></app-create-report>

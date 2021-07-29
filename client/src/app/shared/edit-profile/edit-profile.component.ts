@@ -15,7 +15,6 @@ import { Toast } from 'src/app/core';
 })
 export class EditProfileComponent implements OnInit {
   editForm!:FormGroup;
-  obj!:Object;
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private commonService:CommonService,
@@ -57,7 +56,8 @@ export class EditProfileComponent implements OnInit {
     this.profileService.editUser(this.editForm.value).subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Profile updated successfully'})
-        this.userService.populate();
+        this.userService.updateUserContext();
+        this.close();
       }
     });
   }

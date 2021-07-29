@@ -15,6 +15,8 @@ export class ListComponent implements OnInit {
   page = 1;
   hasNextPage = true;
   isLoader = false;
+  isLike=true;
+  get myStyle(){ return this.isLike? {color:'red'}:{ } }
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
@@ -36,8 +38,14 @@ export class ListComponent implements OnInit {
       }
     })
   }
-  onReport() {
-    
+  toggleLike(like:boolean,slug:string)
+  {
+      this.postService.toggleLike(like?0:1,slug).subscribe( res=> {
+        var foundIndex = this.posts.findIndex(x => x.slug == slug);
+        this.posts[foundIndex].isLiked = !this.posts[foundIndex].isLiked;
+        this.posts[foundIndex].isLiked ? this.posts[foundIndex].likeCount++ : this.posts[foundIndex].likeCount--;
+      })
+
   }
   onLoadMoreClick() {
     this.page++;
