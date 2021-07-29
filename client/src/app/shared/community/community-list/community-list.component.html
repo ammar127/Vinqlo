@@ -3,7 +3,7 @@
     <div class="client-card shadow-sm" *ngFor="let community of communities">
       <div class="client-header">
         <div>
-          <h6 class="main-color mb-0">{{community.name}}</h6>
+          <a routerLink="['/community]"  routerLinkActive="active"><h6 class="main-color mb-0">{{community.name}}</h6></a>
           <small class="text-muted">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
         </div>
         <div *ngIf="!community.isJoined">
