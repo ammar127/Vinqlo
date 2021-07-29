@@ -57,11 +57,16 @@ const routes: Routes = [
           import('./pages/reports/reports.module').then((m) => m.ReportsModule),
       },
       {
-        path: 'category',
+        path: 'academic-category',
+        loadChildren: () =>
+          import('./pages/academic-category/academic-category.module').then(
+            (m) => m.AcademicCategoryModule),
+      },
+      {
+        path: 'category/:slug',
         loadChildren: () =>
           import('./pages/category/category.module').then(
-            (m) => m.CategoryModule
-          ),
+            (m) => m.CategoryModule),
       },
       {
         path: 'post/:slug',

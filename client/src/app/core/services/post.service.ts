@@ -13,6 +13,9 @@ export class PostService {
   get(slug:string)  {
     return this.api.get('/posts/'+slug);
   }
-    
+
   getAll(path: string) {return this.api.get(path);}
+  toggleLike(type:number,slug:string){
+    return this.api.get(`/posts/like/${type}/${slug}`)
+  }
 }

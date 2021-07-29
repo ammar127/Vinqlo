@@ -1,8 +1,5 @@
-import { Campus } from './../../core/models/campus';
-import { campuses } from './../../core/constants/campuses';
-import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/core';
-import { AcademicCategoryService } from 'src/app/core/services/academic-category.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-category',
@@ -10,33 +7,11 @@ import { AcademicCategoryService } from 'src/app/core/services/academic-category
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-  campuses!:Campus[];
-  isLoader:boolean=true;
-  constructor(private service:AcademicCategoryService,private campusService:AcademicCategoryService) { }
+
+  constructor(private commonService:CommonService) { }
 
   ngOnInit(): void {
-    this.getCampus();
+    //this.get();
   }
-  getCampus()
-  {
-
-    this.campusService.getCampuses().subscribe
-    (
-      res=>{
-      this.campuses=res.data.campuses
-      this.isLoader=false;
-    }
-    )
-  }
-  createCampus(name:string)
-  {
-    if(name !== '') {
-       this.service.create(name).subscribe
-       (
-         res=>{console.log(res)}
-       )
-       this.getCampus();
-    }
-
-  }
+  get category()  {return this.commonService.categories(); }
 }

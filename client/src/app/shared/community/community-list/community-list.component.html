@@ -6,13 +6,14 @@
           <h6 class="main-color mb-0">{{community.name}}</h6>
           <small class="text-muted">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
         </div>
-        <div>
+        <div *ngIf="!community.isJoined">
           <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug)">
-            <i
-              class="fa fa-link icons-color"
-              aria-hidden="true"
-            ></i>
-            <span class="main-color"> Join</span>
+            <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> Join</span>
+          </button>
+        </div>
+        <div *ngIf="community.isJoined">
+          <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onUnJoinClick(community.slug)">
+            <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> Un Join</span>
           </button>
         </div>
         <div ngbDropdown class="d-inline-block">

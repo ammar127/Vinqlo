@@ -24,11 +24,7 @@
       </div>
       <p class="my-4"> {{post.body}} </p>
       <div class="client-post">
-        <img *ngIf="post.image"
-          [src]="post.image | image"
-          class="img-fluid"
-          alt=""
-        />
+        <img *ngIf="post.image" [src]="post.image | image" class="img-fluid" alt="" />
       </div>
       <div class="client-footer">
         <div>
@@ -37,15 +33,13 @@
         <div>
           <ul>
             <li>
-              <a href="javascript:void(0)"><i class="fas icons-color fa-heart" onclick="toggaleLike()"></i> {{post.likeCount}}</a>
+            <a href="javascript:void(0)"  (click)="toggleLike(post.isLiked,post.slug)"><i   class="fas fa-heart" [ngStyle]="{'color': post.isLiked ? '#dc3545': 'black'}" ></i> {{post.likeCount}}</a>
             </li>
             <li>
               <a href="javascript:void(0)"><i class="fas icons-color fa-comments"></i> {{post.comments.length}}</a>
             </li>
             <li>
-              <a href="javascript:void(0)"
-                ><i class="fas icons-color fa-bookmark"></i
-              ></a>
+              <a href="javascript:void(0)"><i class="fas icons-color fa-bookmark"></i></a>
             </li>
             <li>
               <a href="javascript:void(0)">
