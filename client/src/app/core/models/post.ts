@@ -10,6 +10,7 @@ export interface Post
     tags:string[];
     image:string;
     slug:string;
+    isLike:boolean;
     likeCount:number;
     by:User;
     comments:Comment[];

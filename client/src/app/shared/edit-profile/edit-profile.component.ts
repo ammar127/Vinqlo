@@ -15,7 +15,6 @@ import { Toast } from 'src/app/core';
 })
 export class EditProfileComponent implements OnInit {
   editForm!:FormGroup;
-  obj!:Object;
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private commonService:CommonService,

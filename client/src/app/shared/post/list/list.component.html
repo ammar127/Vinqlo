@@ -37,14 +37,10 @@
         <div>
           <ul>
             <li>
-              <a href="javascript:void(0)">
-                <i class="fas icons-color fa-heart"></i> {{post.likeCount}}
-              </a>
+              <a href="javascript:void(0)"><i class="fas icons-color fa-heart" onclick="toggaleLike()"></i> {{post.likeCount}}</a>
             </li>
             <li>
-              <a href="javascript:void(0)"
-                ><i class="fas icons-color fa-comments"></i> {{post.comments.length}}</a
-              >
+              <a href="javascript:void(0)"><i class="fas icons-color fa-comments"></i> {{post.comments.length}}</a>
             </li>
             <li>
               <a href="javascript:void(0)"
