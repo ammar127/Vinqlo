@@ -6,7 +6,7 @@ import { Observable ,  BehaviorSubject ,  ReplaySubject, of } from 'rxjs';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User } from '../models';
-import { map ,  distinctUntilChanged } from 'rxjs/operators';
+import { map ,  distinctUntilChanged, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -39,7 +39,7 @@ export class UserService {
               return res.data.user;
             }
         
-      ))
+      ), catchError(e => of(null)))
     } else {
      return  of(null);
     }
@@ -49,7 +49,7 @@ export class UserService {
     if (this.jwtService.getToken()) {
         this.apiService.get('/users').subscribe(res => {
               this.setAuth(res.data.user);
-            })
+            }, )
     }
   }
 
