@@ -13,44 +13,99 @@
               />
             </div>
             <div *ngIf="errors" class="alert alert-danger">
-              <div  *ngFor="let error of errors">{{error}}</div>
+              <div *ngFor="let error of errors">{{ error }}</div>
             </div>
-            <form autocomplete="off" [formGroup]="authForm" (ngSubmit)="submitForm()">
-              <div class="input-field" *ngIf="f.firstName" >
-                <input formControlName="firstName" type="text" class="form-control custom-border" placeholder="First Name"  />
+            <form
+              autocomplete="off"
+              [formGroup]="authForm"
+              (ngSubmit)="submitForm()"
+            >
+              <div class="input-field" *ngIf="f.firstName">
+                <input
+                  formControlName="firstName"
+                  type="text"
+                  class="form-control custom-border"
+                  placeholder="First Name"
+                />
                 <errors [control]="f.firstName"></errors>
               </div>
               <div class="input-field" *ngIf="f.lastName">
-                <input type="text" formControlName="lastName" class="form-control custom-border" placeholder="Last Name" />
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  class="form-control custom-border"
+                  placeholder="Last Name"
+                />
                 <errors [control]="f.lastName"></errors>
-
               </div>
               <div class="input-field">
-                <input formControlName="email" type="email" class="form-control custom-border" placeholder="Email" />
+                <input
+                  formControlName="email"
+                  type="email"
+                  class="form-control custom-border"
+                  placeholder="Email"
+                />
                 <errors [control]="f.email"></errors>
               </div>
-              <div  class="input-field"  *ngIf="f.campus">
-                <ng-select formControlName="campus"  (change)="onCampusChange()" [items]="campuses" bindValue="slug" bindLabel="name" placeholder="Campus" class="selectpicker form-control custom-border">
-               </ng-select>
-               <errors [control]="f.campus"></errors>
+              <div class="input-field" *ngIf="f.campus">
+                <ng-select
+                  formControlName="campus"
+                  (change)="onCampusChange()"
+                  [items]="campuses"
+                  bindValue="slug"
+                  bindLabel="name"
+                  placeholder="Campus"
+                  class="selectpicker custom-border"
+                >
+                </ng-select>
+                <errors [control]="f.campus"></errors>
               </div>
-              <div class="input-field" *ngIf="f.degree" >
-                <ng-select formControlName="degree"  [items]="degrees" bindValue="slug" bindLabel="name" placeholder="Degree" class="selectpicker form-control custom-border">
-               </ng-select>
-               <errors [control]="f.degree"></errors>
+              <div class="input-field" *ngIf="f.degree">
+                <ng-select
+                  formControlName="degree"
+                  [items]="degrees"
+                  bindValue="slug"
+                  bindLabel="name"
+                  placeholder="Degree"
+                  class="selectpicker custom-border"
+                >
+                </ng-select>
+                <errors [control]="f.degree"></errors>
               </div>
               <div class="input-field">
-                <input formControlName="password" type="password" class="form-control custom-border" placeholder="Password" />
-               <errors [control]="f.password"></errors>
+                <input
+                  formControlName="password"
+                  type="password"
+                  class="form-control custom-border"
+                  placeholder="Password"
+                />
+                <errors [control]="f.password"></errors>
               </div>
-              <div class="input-field"  *ngIf="f.confirmPassword" >
-                <input formControlName="confirmPassword" type="password" class="form-control custom-border" placeholder="Confirm Password" />
-               <errors [control]="f.confirmPassword"></errors>
+              <div class="input-field" *ngIf="f.confirmPassword">
+                <input
+                  formControlName="confirmPassword"
+                  type="password"
+                  class="form-control custom-border"
+                  placeholder="Confirm Password"
+                />
+                <errors [control]="f.confirmPassword"></errors>
               </div>
-              <button class="btn mb-2 btn-main"  [disabled]="!authForm.valid" type="submit">{{isLogin ? 'Log In':'Sign Up'}}</button>
-              <span>Or </span> <a href="javascript:void(0)" class="main-color" [routerLink]="['/auth',isLogin ?'register' : 'login']" >{{isLogin ? 'Sign Up':'Log In'}}</a>
+              <button
+                class="btn mb-2 btn-main"
+                [disabled]="!authForm.valid"
+                type="submit"
+              >
+                {{ isLogin ? "Log In" : "Sign Up" }}
+              </button>
+              <span>Or </span>
+              <a
+                href="javascript:void(0)"
+                class="main-color"
+                [routerLink]="['/auth', isLogin ? 'register' : 'login']"
+                >{{ isLogin ? "Sign Up" : "Log In" }}</a
+              >
             </form>
-            {{selectedCampus}}
+            {{ selectedCampus }}
           </div>
         </div>
       </div>

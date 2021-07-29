@@ -6,29 +6,35 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.css']
+  styleUrls: ['./reports.component.css'],
 })
 export class ReportsComponent implements OnInit {
   public isCollapsed = true;
   isLoader = false;
-
+  status = -1;
+  statuses = [
+    { name: 'All', id: -1 },
+    { name: 'Active', id: 1 },
+    { name: 'Inactive', id: 2 },
+  ];
   reports!: Report[];
   reportType = 'Users';
-  constructor(private reportService: ReportService) { }
+  constructor(private reportService: ReportService) {}
 
   ngOnInit(): void {
     this.get();
-
   }
   get() {
     this.isLoader = true;
-    this.reportService.getAllReports(report.findIndex(e => e == this.reportType)).subscribe(res => {
-      this.isLoader = false;
-      this.reports = res.data.reports.docs });
+    this.reportService
+      .getAllReports(report.findIndex((e) => e == this.reportType))
+      .subscribe((res) => {
+        this.isLoader = false;
+        this.reports = res.data.reports.docs;
+      });
   }
   onChange(type: number) {
     this.reportType = report[type];
     this.get();
-
   }
 }
