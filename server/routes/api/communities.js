@@ -125,13 +125,8 @@ router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
 
     Community.paginate({}, options, (err, communities) => {
         if(!err && communities !== null){
-            console.log(communities);
-            next(new httpResponse.OkResponse({
-                communities: communities.docs.map(community => community.toJSONFor(req.user)),
-                totalDocs: communities.totalDocs,
-                totalPages: communities.totalPages,
-                page: communities.page
-            }));
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
+            next(new httpResponse.OkResponse(communities));
         }
         else{
             next(new httpResponse.UnauthorizedResponse(err));
@@ -147,12 +142,8 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
 
     Community.paginate({_id: { $in: req.user.communities }}, options, (err, communities) => {
         if(!err && communities !== null){
-            next(new httpResponse.OkResponse({
-                communities: communities.docs.map(community => community.toJSONFor(req.user)),
-                totalDocs: communities.totalDocs,
-                totalPages: communities.totalPages,
-                page: communities.page
-            }));
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
+            next(new httpResponse.OkResponse(communities));
         }
         else{
             next(new httpResponse.UnauthorizedResponse(err));
@@ -168,12 +159,8 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
 
     Community.paginate({by: req.user._id}, options, (err, communities) => {
         if(!err && communities !== null){
-            next(new httpResponse.OkResponse({
-                communities: communities.docs.map(community => community.toJSONFor(req.user)),
-                totalDocs: communities.totalDocs,
-                totalPages: communities.totalPages,
-                page: communities.page
-            }));
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
+            next(new httpResponse.OkResponse(communities));
         }
         else{
             next(new httpResponse.UnauthorizedResponse(err));
@@ -196,12 +183,8 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
 
     Community.paginate(query, options, (err, communities) => {
         if(!err && communities.length !== 0){
-            next(new httpResponse.OkResponse({
-                communities: communities.docs.map(community => community.toJSONFor(req.user)),
-                totalDocs: communities.totalDocs,
-                totalPages: communities.totalPages,
-                page: communities.page
-            }));
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
+            next(new httpResponse.OkResponse(communities));
         }
         else{
             next(new httpResponse.BadRequestResponse('No Community found'));

@@ -70,12 +70,8 @@ router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({community: {$in : req.user.communities}}, options, (err, posts) => {
         if (err) return next(err);
-        next(new httpResponse.OkResponse({
-            posts: posts.docs.map(post => post.toJSONFor(req.user)),
-            totalDocs: posts.totalDocs,
-            totalPages: posts.totalPages,
-            page: posts.page
-        }));
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+        next(new httpResponse.OkResponse(posts));
     });
 });
 
@@ -87,12 +83,8 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({by: req.user._id}, options, (err, posts) => {
         if (err) return next(err);
-        next(new httpResponse.OkResponse({
-            posts: posts.docs.map(post => post.toJSONFor(req.user)),
-            totalDocs: posts.totalDocs,
-            totalPages: posts.totalPages,
-            page: posts.page
-        }));
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+        next(new httpResponse.OkResponse(posts));
     });
 });
 
@@ -129,12 +121,8 @@ router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({_id: {$in: req.user.saved}}, options, (err, posts) => {
         if (err) return next(err);
-        next(new httpResponse.OkResponse({
-            posts: posts.docs.map(post => post.toJSONFor(req.user)),
-            totalDocs: posts.totalDocs,
-            totalPages: posts.totalPages,
-            page: posts.page
-        }));
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+        next(new httpResponse.OkResponse(posts));
     });
 });
 
@@ -146,12 +134,8 @@ router.get('/get/liked',  auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({_id: {$in: req.user.liked}}, options, (err, posts) => {
         if (err) return next(err);
-        next(new httpResponse.OkResponse({
-            posts: posts.docs.map(post => post.toJSONFor(req.user)),
-            totalDocs: posts.totalDocs,
-            totalPages: posts.totalPages,
-            page: posts.page
-        }));
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+        next(new httpResponse.OkResponse(posts));
     });
 });
 
@@ -166,12 +150,8 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
         
             Post.paginate({community: community}, options, (err, posts) => {
                 if (err) return next(err);
-                next(new httpResponse.OkResponse({
-                    posts: posts.docs.map(post => post.toJSONFor(req.user)),
-                    totalDocs: posts.totalDocs,
-                    totalPages: posts.totalPages,
-                    page: posts.page
-                }));
+                posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+                next(new httpResponse.OkResponse(posts));
             }); 
         }
         else{
