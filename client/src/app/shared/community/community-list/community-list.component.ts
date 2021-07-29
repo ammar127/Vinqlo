@@ -12,7 +12,7 @@ export class CommunityListComponent implements OnInit {
 
   communities: Community[] = [];
   hasNextPage = true;
- 
+
   page = 1;
   isLoader = false;
 
@@ -34,7 +34,7 @@ export class CommunityListComponent implements OnInit {
     })
   }
   onReport() {
-    
+
   }
   onLoadMoreClick() {
     this.page++;

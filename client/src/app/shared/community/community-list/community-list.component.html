@@ -24,16 +24,11 @@
             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem>Action - 1</button>
-            <button ngbDropdownItem>Another Action</button>
-            <button ngbDropdownItem>
-              Something else is here
-            </button>
+            <button ngbDropdownItem (click)="report.open(2, community.slug)">Report Community</button>
           </div>
         </div>
       </div>
-      <p class="my-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <p class="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Tenetur, veritatis.
       </p>
       <span class="main-color"
@@ -49,3 +44,4 @@
     <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
     <loader *ngIf="isLoader"></loader>
   </div>
+<app-create-report #report></app-create-report>
