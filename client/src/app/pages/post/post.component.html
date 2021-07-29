@@ -4,12 +4,14 @@
       <div *ngIf="!isLoader" class="col-md-12">
         <div class="single-post-card card shadow-sm">
           <div class="back">
-            <a href="javascript:void(0)"> <i class="fas text-purple fa-chevron-left"></i></a>
+            <a href="javascript:void(0)">
+              <i class="fas text-purple fa-chevron-left"></i
+            ></a>
           </div>
           <div class="single-post">
             <div class="client-header">
               <div>
-                <h6 class="main-color mb-0">{{postData.community.name}}</h6>
+                <h6 class="main-color mb-0">{{ postData.community.name }}</h6>
                 <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
               </div>
               <div>
@@ -31,7 +33,9 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
               veritatis.
             </p>
-            <span class="main-color"><i class="fa icons-color fa-users" aria-hidden="true"></i>{{postData.community.membersCount}}</span
+            <span class="main-color"
+              ><i class="fa icons-color fa-users" aria-hidden="true"></i
+              >{{ postData.community.membersCount }}</span
             >
           </div>
         </div>
@@ -39,8 +43,11 @@
           <div class="client-card p-5 card mt-4 shadow-sm">
             <div class="client-header">
               <div>
-                <h6 class="main-color mb-0">{{postData.title}}</h6>
-                <small class="text-muted">{{postData.by.firstName}} {{postData.by.lastName}} {{postData.time | date : 'short'}}</small>
+                <h6 class="main-color mb-0">{{ postData.title }}</h6>
+                <small class="text-muted"
+                  >{{ postData.by.firstName }} {{ postData.by.lastName }}
+                  {{ postData.time | date: "short" }}</small
+                >
               </div>
 
               <div ngbDropdown class="d-inline-block">
@@ -52,27 +59,48 @@
                 </div>
               </div>
             </div>
-            <p class="my-4">{{postData.body}}</p>
+            <p class="my-4">{{ postData.body }}</p>
             <div class="client-post">
-              <img *ngIf="postData.image" [src]="postData.image|image"alt="" class="img-fluid" alt=""/>
+              <img
+                *ngIf="postData.image"
+                [src]="postData.image | image"
+                alt=""
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="client-footer">
-              <div >
-                <span class="text-purple" *ngFor="let tag of postData.tags; let i = index">{{tag}} <span *ngIf="i+1 !== postData.tags.length">, </span> </span>
+              <div>
+                <span
+                  class="text-purple"
+                  *ngFor="let tag of postData.tags; let i = index"
+                  >{{ tag }}
+                  <span *ngIf="i + 1 !== postData.tags.length">, </span>
+                </span>
               </div>
               <div>
                 <ul>
                   <li>
-                    <a href="javascript:void(0)"> <i class="fas icons-color fa-heart"></i> {{postData.likeCount}}</a>
+                    <a href="javascript:void(0)">
+                      <i class="fas icons-color fa-heart"></i>
+                      {{ postData.likeCount }}</a
+                    >
                   </li>
                   <li>
-                    <a href="javascript:void(0)"><i class="fas icons-color fa-comments"></i>{{postData.comments.length}}</a>
+                    <a href="javascript:void(0)"
+                      ><i class="fas icons-color fa-comments"></i
+                      >{{ postData.comments.length }}</a
+                    >
                   </li>
                   <li>
-                    <a href="javascript:void(0)"><i class="fas icons-color fa-bookmark"></i></a>
+                    <a href="javascript:void(0)"
+                      ><i class="fas icons-color fa-bookmark"></i
+                    ></a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)"> <i class="fas icons-color fa-share"></i></a>
+                    <a href="javascript:void(0)">
+                      <i class="fas icons-color fa-share"></i
+                    ></a>
                   </li>
                 </ul>
               </div>
@@ -80,28 +108,49 @@
           </div>
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
-              <p>{{comment.by.firstName}} {{comment.by.lastName}}</p>
-              <span >{{comment.body}}
+              <p>{{ comment.by.firstName }} {{ comment.by.lastName }}</p>
+              <span
+                >{{ comment.body }}
                 <!-- <a href="javascript:void(0)">{{comment.by.email}}</a> -->
               </span>
-              <div align="right" *ngIf="by.email==comment.by.email" ngbDropdown class="d-inline-block">
-                <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+              <div
+                align="right"
+                *ngIf="by.email == comment.by.email"
+                ngbDropdown
+                class="d-inline-block"
+              >
+                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button (click)="editComment(comment.slug)" ngbDropdownItem>Edit</button>
-                  <button (click)="deleteComment(comment.slug)" ngbDropdownItem>Delete</button>
+                  <button (click)="editComment(comment.slug)" ngbDropdownItem>
+                    Edit
+                  </button>
+                  <button (click)="deleteComment(comment.slug)" ngbDropdownItem>
+                    Delete
+                  </button>
                 </div>
               </div>
               <hr />
             </div>
             <div class="comment-input">
-              <input   type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="commentt" />
-              <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
+              <input
+                type="text"
+                class="form-control shadow-sm"
+                placeholder="Write a comment..."
+                (keyup.enter)="postComment(postData.slug)"
+                [(ngModel)]="commentt"
+              />
+              <button
+                class="btn btn-comment"
+                (click)="postComment(postData.slug)"
+              >
+                {{ btnText }}
+              </button>
             </div>
           </div>
         </div>
       </div>
-     
     </div>
     <div class="row py-5 my-5 d-flex justify-content-center">
       <div class="col-md-3">
