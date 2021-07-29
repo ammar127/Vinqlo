@@ -93,7 +93,7 @@ postSchema.methods.toJSON = function(){
         image: this.image,
         by: {
             firstName: this.by.firstName,
-            lastName: this.by.firstName,
+            lastName: this.by.lastName,
             email: this.by.email,
             image: this.by.image
         },
