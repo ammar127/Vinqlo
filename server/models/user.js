@@ -120,6 +120,14 @@ userSchema.methods.isJoined = function(id){
     return this.communities.indexOf(id) !== -1
 }
 
+userSchema.methods.isLiked = function(id){
+    return this.liked.indexOf(id) !== -1
+}
+
+userSchema.methods.isSaved = function(id){
+    return this.saved.indexOf(id) !== -1
+}
+
 userSchema.methods.toAuthJSON = function(){
     this.generateToken()
     return{

@@ -22,7 +22,7 @@ router.param('slug', (req, res, next, slug) => {
 
 
 router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    next(new httpResponse.OkResponse(req.post));
+    next(new httpResponse.OkResponse(req.post.toJSONFor(req.user)));
 });
 
 
@@ -70,7 +70,12 @@ router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({community: {$in : req.user.communities}}, options, (err, posts) => {
         if (err) return next(err);
-        next(new httpResponse.OkResponse(posts));
+        next(new httpResponse.OkResponse({
+            posts: posts.docs.map(post => post.toJSONFor(req.user)),
+            totalDocs: posts.totalDocs,
+            totalPages: posts.totalPages,
+            page: posts.page
+        }));
     });
 });
 
@@ -82,22 +87,72 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({by: req.user._id}, options, (err, posts) => {
         if (err) return next(err);
-        next(new httpResponse.OkResponse(posts));
+        next(new httpResponse.OkResponse({
+            posts: posts.docs.map(post => post.toJSONFor(req.user)),
+            totalDocs: posts.totalDocs,
+            totalPages: posts.totalPages,
+            page: posts.page
+        }));
     });
 });
 
-router.post('/save/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    req.user.saved.push(req.post._id);
-    req.user.save();
-    next(new httpResponse.OkResponse('Post added to Saved Posts'));
+router.get('/save/:status/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+    if(+req.params.status === 1){
+
+        if(req.user.saved.indexOf(req.post._id) !== -1){
+            next(new httpResponse.BadRequestResponse('You have already saved this post'));
+            return;
+        }
+
+        req.user.saved.push(req.post._id);
+    }
+    else{
+
+        if(req.user.saved.indexOf(req.post._id) === -1){
+            next(new httpResponse.BadRequestResponse('You have not already saved this post'));
+            return;
+        }
+        req.user.saved.pull(req.post._id);
+    }
+
+    await req.user.save();
+    await req.post.save();
+
+    next(new httpResponse.OkResponse('Successful'));
 });
 
 router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
-    next(new httpResponse.OkResponse(req.user.saved));
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    Post.paginate({_id: {$in: req.user.saved}}, options, (err, posts) => {
+        if (err) return next(err);
+        next(new httpResponse.OkResponse({
+            posts: posts.docs.map(post => post.toJSONFor(req.user)),
+            totalDocs: posts.totalDocs,
+            totalPages: posts.totalPages,
+            page: posts.page
+        }));
+    });
 });
 
 router.get('/get/liked',  auth.isToken, auth.isUser, (req, res, next) => {
-    next(new httpResponse.OkResponse(req.user.liked));
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    Post.paginate({_id: {$in: req.user.liked}}, options, (err, posts) => {
+        if (err) return next(err);
+        next(new httpResponse.OkResponse({
+            posts: posts.docs.map(post => post.toJSONFor(req.user)),
+            totalDocs: posts.totalDocs,
+            totalPages: posts.totalPages,
+            page: posts.page
+        }));
+    });
 });
 
 router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => {
@@ -111,7 +166,12 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
         
             Post.paginate({community: community}, options, (err, posts) => {
                 if (err) return next(err);
-                next(new httpResponse.OkResponse(posts));
+                next(new httpResponse.OkResponse({
+                    posts: posts.docs.map(post => post.toJSONFor(req.user)),
+                    totalDocs: posts.totalDocs,
+                    totalPages: posts.totalPages,
+                    page: posts.page
+                }));
             }); 
         }
         else{
@@ -128,7 +188,6 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
             return;
         }
 
-        req.post.likes.push(req.user._id);
         req.post.likeCount++;
         req.user.liked.push(req.post._id);
     }
@@ -139,7 +198,6 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
             return;
         }
 
-        req.post.likes.pull(req.user._id);
         req.post.likeCount--;
         req.user.liked.pull(req.post._id);
     }

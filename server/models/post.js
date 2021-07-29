@@ -45,11 +45,6 @@ var postSchema = mongoose.Schema({
         required: true
     },
 
-    likes:{
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'User',
-    },
-
     likeCount:{
         type: Number,
         default: 0
@@ -66,7 +61,6 @@ postSchema.pre('findOne', function (next) {
     this.populate('by');
     this.populate('comments');
     this.populate('community');
-    this.populate('likes');
     next();
 });
 
@@ -74,7 +68,6 @@ postSchema.pre('find', function (next) {
     this.populate('by');
     this.populate('comments');
     this.populate('community');
-    this.populate('likes');
     next();
 });
 
@@ -113,6 +106,32 @@ postSchema.methods.toJSON = function(){
         },
         time: this.time,
         likeCount: this.likeCount
+    }
+}
+
+postSchema.methods.toJSONFor = function(user){
+    return{
+        slug: this.slug,
+        title: this.title,
+        body: this.body,
+        image: this.image,
+        by: {
+            firstName: this.by.firstName,
+            lastName: this.by.lastName,
+            email: this.by.email,
+            image: this.by.image
+        },
+        tags: this.tags,
+        comments: this.comments,
+        community: {
+            slug: this.community.slug,
+            name: this.community.name,
+            category: this.community.category
+        },
+        time: this.time,
+        likeCount: this.likeCount,
+        isLiked: user.isLiked(this._id),
+        isSaved: user.isSaved(this._id)
     }
 }
 
