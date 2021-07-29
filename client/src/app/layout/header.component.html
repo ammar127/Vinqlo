@@ -23,9 +23,9 @@
       <li *ngIf="!isAdmin" >
         <a class="accordion-toggle collapsed" (click)="collapse.toggle()" href="javascript:void(0)"></a>
         <div style="position: absolute" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapse custom-align accordian-main">
-          <div *ngFor="let category of categories">
+          <div >
             <div class="accordian-menu" >
-              <div class="accordian-list" (click)="collapse.toggle()">
+              <div class="accordian-list" *ngFor="let category of categories" [routerLink]="['/category']"  (click)="collapse.toggle()">
                 <span class="main-color" ><i class="fas icons-color d-block fa-running"></i> {{category.name}}</span>
               </div>
             </div>

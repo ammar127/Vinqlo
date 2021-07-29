@@ -1,15 +1,17 @@
-import { CategoryRoutingModule } from './../academic-category/academic-category-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryComponent } from './category.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 
+import { CategoryRoutingModule } from './category-routing.module';
+import { CategoryComponent } from './category.component';
 
 
 @NgModule({
   declarations: [
     CategoryComponent
   ],
-  imports: [ CommonModule,SharedModule,CategoryRoutingModule ]
+  imports: [
+    CommonModule,
+    CategoryRoutingModule
+  ]
 })
 export class CategoryModule { }

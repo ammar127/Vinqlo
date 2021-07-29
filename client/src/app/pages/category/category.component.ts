@@ -1,4 +1,3 @@
-import { CommonService } from 'src/app/core';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor(private commonService:CommonService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    //this.get();
   }
-  get category()  {return this.commonService.categories(); }
+
 }

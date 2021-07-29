@@ -19,13 +19,13 @@ const routes: Routes = [
         path: 'feed',
         loadChildren: () =>
           import('./pages/feed/feed.module').then((m) => m.FeedModule),
-          canActivate: [NgxPermissionsGuard],
-          data: {
-            permissions: {
-              only: UserType.user.toString(),
-             redirectTo: '/access-denied'
-            }
-          },
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: UserType.user.toString(),
+            redirectTo: '/access-denied'
+          }
+        },
       },
       {
         path: 'profile',
@@ -43,37 +43,26 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () =>
           import('./pages/users/users.module').then((m) => m.UsersModule),
-          canActivate: [NgxPermissionsGuard],
-          data: {
-            permissions: {
-              only: [UserType.admin.toString(), UserType.superAdmin.toString()],
-              redirectTo: '/access-denied'
-            }
-          },
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            redirectTo: '/access-denied'
+          }
+        },
       },
       {
         path: 'reports',
         loadChildren: () =>
           import('./pages/reports/reports.module').then((m) => m.ReportsModule),
       },
-      {
-        path: 'academic-category',
-        loadChildren: () =>
-          import('./pages/academic-category/academic-category.module').then(
-            (m) => m.AcademicCategoryModule),
-      },
-      {
-        path: 'category/:slug',
-        loadChildren: () =>
-          import('./pages/category/category.module').then(
-            (m) => m.CategoryModule),
-      },
+
       {
         path: 'post/:slug',
         loadChildren: () =>
           import('./pages/post/post.module').then((m) => m.PostModule),
       },
-  { path: 'access-denied', loadChildren: () => import('./pages/access-denied/access-denied.module').then(m => m.AccessDeniedModule) },
+      { path: 'access-denied', loadChildren: () => import('./pages/access-denied/access-denied.module').then(m => m.AccessDeniedModule) },
 
       {
         path: '',
@@ -82,10 +71,12 @@ const routes: Routes = [
       },
     ],
   },
+  { path: 'category', loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule) },
+  { path: 'academic-category', loadChildren: () => import('./pages/academic-category/academic-category.module').then(m => m.AcademicCategoryModule) },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
