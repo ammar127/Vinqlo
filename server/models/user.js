@@ -89,9 +89,10 @@ var userSchema = mongoose.Schema({
 });
 
 const preFind = function () {
-    this.populate('saved');
+    //this.populate('saved');
     this.populate('campus');
     this.populate('degree');
+    //this.populate('liked');
 }
 userSchema.pre('findOne', preFind);
 userSchema.pre('find', preFind);
@@ -113,6 +114,18 @@ userSchema.methods.comparePassword = function(pass){
 
 userSchema.methods.generateToken = function(){
     this.token = jsonwebtoken.sign({user: this.email}, 'shhhhh')
+}
+
+userSchema.methods.isJoined = function(id){
+    return this.communities.indexOf(id) !== -1
+}
+
+userSchema.methods.isLiked = function(id){
+    return this.liked.indexOf(id) !== -1
+}
+
+userSchema.methods.isSaved = function(id){
+    return this.saved.indexOf(id) !== -1
 }
 
 userSchema.methods.toAuthJSON = function(){

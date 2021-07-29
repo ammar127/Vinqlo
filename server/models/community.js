@@ -34,10 +34,6 @@ var communitySchema = mongoose.Schema({
         ref: 'Category',
         required: true
     },
-    members:{
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'User'
-    },
     membersCount: {
         type: Number,
         default: 1
@@ -48,14 +44,12 @@ var communitySchema = mongoose.Schema({
 communitySchema.pre('findOne', function(next) {
     this.populate('by');
     this.populate('category');
-    this.populate('members');
     next();
 });
 
 communitySchema.pre('find', function(next) {
     this.populate('by');
     this.populate('category');
-    this.populate('members');
     next();
 });
 
@@ -73,21 +67,40 @@ communitySchema.methods.slugify = function(){
     this.slug = slug('com') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
+
+
 communitySchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         name: this.name,
         by: {
             firstName: this.by.firstName,
-            lastName: this.by.firstName,
+            lastName: this.by.lastName,
             email: this.by.email,
             image: this.by.image
         },
         category: this.category,
-        members: this.members.map(({firstName, lastName, email, image}) => ({firstName, lastName, email, image}) ),
         membersCount: this.membersCount
     }
 }
+
+communitySchema.methods.toJSONFor = function(user){
+    return{
+        slug: this.slug,
+        name: this.name,
+        by: {
+            firstName: this.by.firstName,
+            lastName: this.by.lastName,
+            email: this.by.email,
+            image: this.by.image
+        },
+        category: this.category,
+        membersCount: this.membersCount,
+        isJoined: user.isJoined(this._id)
+    }
+}
+
+
 
 const Community = mongoose.model('Community', communitySchema);
 module.exports = Community;

@@ -30,3 +30,8 @@ table thead tr th:nth-child(1) {
 table thead tr th:nth-last-child(1) {
   border-radius: 0px 18px 0px 0px;
 }
+
+::ng-deep .ng-select.ng-select-single .ng-select-container {
+  border: none;
+  border-radius: 30px;
+}

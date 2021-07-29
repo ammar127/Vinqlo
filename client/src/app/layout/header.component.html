@@ -1,17 +1,24 @@
 <header>
-  <nav [ngClass]="isAdmin ? 'bg-dark': 'bg-white'">
-    <a class="nav-main" href="javascript:void(0)"><img src="../../assets/images/logo-01.png" alt=""/></a>
-    <ul  class="ml-auto nav-list">
+  <nav [ngClass]="isAdmin ? 'bg-dark' : 'bg-white'">
+    <a class="nav-main" href="javascript:void(0)"
+      ><img src="../../assets/images/logo-01.png" alt=""
+    /></a>
+    <ul class="ml-auto mb-0 nav-list">
       <li *ngIf="!isAdmin" class="nav-link">
         <a href="javascript:void(0)"><i class="fas fa-bell"></i></a>
       </li>
       <li *ngIf="!isAdmin" class="nav-link">
-        <a [routerLink]="['/feed']"   href="javascript:void(0)"><i class="fas fa-home"></i></a>
+        <a [routerLink]="['/feed']" href="javascript:void(0)"
+          ><i class="fas fa-home"></i
+        ></a>
       </li>
       <li class="nav-link" *ngIf="user" ngbDropdown>
-        <a href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
+        <a href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active"
+          ><i class="fas fa-user-circle"></i
+        ></a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem routerLink="/profile">
+
             <div class="d-flex align-items-center" >
               <div class="user-img"><img [src]="user.image | image" alt=""></div>
               <h6 class="mb-0 ml-2">{{user.firstName + '' + user.lastName }}</h6>
@@ -28,6 +35,8 @@
               <div class="accordian-list" *ngFor="let category of categories" [routerLink]="['/category', category.slug]"  (click)="collapse.toggle()">
                 <span class="main-color" ><i class="fas icons-color d-block fa-running"></i> {{category.name}}</span>
               </div>
+
+ 
             </div>
           </div>
         </div>
