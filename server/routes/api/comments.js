@@ -76,6 +76,21 @@ router.delete('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     }
 });
 
+router.put('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    if(req.comment.by._id.toString() === req.user._id.toString()){
+        if(typeof req.body.body !== 'undefined' && req.body.body !== null){
+            req.comment.body = req.body.body;
+        };
+
+        req.comment.save((err, comment) => {
+            next(new httpResponse.OkResponse({updatedComment: comment}));
+        });
+    }
+    else{
+        next(new httpResponse.UnauthorizedResponse('You are not authorized to delete this comment'));
+    }
+});
+
 
 router.get('/post/:postSlug', auth.isToken, auth.isUser, (req, res, next) => {
     Post.findOne({slug: req.params.postSlug}, (err, post) => {

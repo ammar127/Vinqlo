@@ -89,9 +89,10 @@ var userSchema = mongoose.Schema({
 });
 
 const preFind = function () {
-    this.populate('saved');
+    //this.populate('saved');
     this.populate('campus');
     this.populate('degree');
+    //this.populate('liked');
 }
 userSchema.pre('findOne', preFind);
 userSchema.pre('find', preFind);

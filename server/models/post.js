@@ -45,6 +45,11 @@ var postSchema = mongoose.Schema({
         required: true
     },
 
+    likes:{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User',
+    },
+
     likeCount:{
         type: Number,
         default: 0
@@ -61,6 +66,7 @@ postSchema.pre('findOne', function (next) {
     this.populate('by');
     this.populate('comments');
     this.populate('community');
+    this.populate('likes');
     next();
 });
 
@@ -68,6 +74,7 @@ postSchema.pre('find', function (next) {
     this.populate('by');
     this.populate('comments');
     this.populate('community');
+    this.populate('likes');
     next();
 });
 

@@ -92,16 +92,12 @@ router.post('/save/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse('Post added to Saved Posts'));
 });
 
-router.post('/like/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    req.user.liked.push(req.post._id);
-    req.user.save();
-    req.post.likeCount++;
-    req.post.save();
-    next(new httpResponse.OkResponse('Post added to Liked Posts'));
-});
-
 router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
     next(new httpResponse.OkResponse(req.user.saved));
+});
+
+router.get('/get/liked',  auth.isToken, auth.isUser, (req, res, next) => {
+    next(new httpResponse.OkResponse(req.user.liked));
 });
 
 router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => {
@@ -124,6 +120,37 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
     });
 })
 
-router.get('/like/:status/:slug');
+router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+    if(+req.params.status === 1){
+
+        if(req.user.liked.indexOf(req.post._id) !== -1){
+            next(new httpResponse.BadRequestResponse('You have already liked this post'));
+            return;
+        }
+
+        req.post.likes.push(req.user._id);
+        req.post.likeCount++;
+        req.user.liked.push(req.post._id);
+    }
+    else{
+
+        if(req.user.liked.indexOf(req.post._id) === -1){
+            next(new httpResponse.BadRequestResponse('You have not already liked this post'));
+            return;
+        }
+
+        req.post.likes.pull(req.user._id);
+        req.post.likeCount--;
+        req.user.liked.pull(req.post._id);
+    }
+
+    await req.user.save();
+    await req.post.save();
+
+    next(new httpResponse.OkResponse('Successful'));
+
+});
+
+
 
 module.exports = router;
