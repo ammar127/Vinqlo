@@ -3,6 +3,7 @@
 
 body {
   background-color: #dafdfe !important;
+  overflow-x: hidden;
 }
 .bg-dark {
   background-color: #021a68;
@@ -61,7 +62,7 @@ nav {
 }
 .accordian-main {
   position: absolute;
-  right: 1%;
+  right: 0%;
   background: rgb(255, 255, 255);
   padding: 19px;
   z-index: 1;
@@ -99,7 +100,6 @@ li.sidebar-list {
 .sidebar-list:hover a {
   color: #25eaef !important;
 }
-
 
 .o-footer {
   display: block;
@@ -144,16 +144,16 @@ li.sidebar-list {
   color: #fff;
   margin-right: 4px;
 }
-.h-1000{
+.h-1000 {
   height: 1000vh;
 }
-.user-img{
+.user-img {
   height: 40px;
   width: 40px;
   border-radius: 100px;
   border: 1px solid lightgray;
 }
-.user-img img{
+.user-img img {
   height: 100%;
   width: 100%;
   object-fit: contain;
@@ -161,7 +161,7 @@ li.sidebar-list {
   vertical-align: baseline;
 }
 .text-green {
-  color:#25eaef !important;
+  color: #25eaef !important;
 }
 
 ::ng-deep .nav {
@@ -211,7 +211,7 @@ li.sidebar-list {
 .card {
   border: none;
   border-radius: 15px;
-  padding: 30px;
+  /* padding: 30px; */
 }
 .card .client-card {
   border-radius: 20px;
@@ -286,4 +286,13 @@ select {
 
 button:focus {
   outline: none !important;
+}
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: #25eaef transparent transparent;
+}
+.ng-select.ng-select-opened > .ng-select-container .ng-arrow {
+  border-color: transparent transparent #25eaef;
+}
+.ng-select .ng-arrow-wrapper:hover .ng-arrow {
+  border-top-color: #07fbff;
 }
