@@ -19,12 +19,15 @@ router.param('slug', (req, res, next, slug) => {
     })
 })
 router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    next(new httpResponse.OkResponse(req.community));
+    next(new httpResponse.OkResponse(req.community.toJSONFor(req.user)));
 })
 
 router.post('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    if(req.user.communities.indexOf(req.community._id) !== -1){
+        next(new httpResponse.BadRequestResponse('You are already a member of this community!'));
+        return;
+    }
     req.user.communities.push(req.community._id);
-    req.community.members.push(req.user._id);
     req.community.membersCount++;
     req.user.save((err, user) => {
         req.community.save((err, community) => {
@@ -33,29 +36,50 @@ router.post('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
     });
 })
 
+router.post('/leave/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    console.log(req.community);
+    if(req.user._id.toString() === req.community.by._id.toString()){
+        next(new httpResponse.BadRequestResponse('You can not leave this community as you are creator of this community'));
+        return;
+    }
+    if(req.user.communities.indexOf(req.community._id) === -1){
+        next(new httpResponse.BadRequestResponse('You are not a part of this community!'));
+        return;
+    }
+    req.user.communities.pull(req.community._id);
+    req.community.membersCount--;
+    req.user.save((err, user) => {
+        req.community.save((err, community) => {
+            next(new httpResponse.OkResponse('Community Left Successfully'));
+        });
+    });
+})
+
 router.post('/', auth.isToken, auth.isUser, 
 body('name').isLength({min: 4}),
 body('category').isLength({min: 4})
 ,(req, res, next) => {
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         next(new httpResponse.BadRequestResponse(JSON.stringify(errors.array())));
         return
     }
-
+   
     let community = new Community();
     community.name = req.body.name;
     community.by = req.user._id;
-    community.members.push(req.user._id);
     community.campus = req.user.campus;
     community.degree = req.user.degree;
 
     Category.findOne({slug: req.body.category}, (err, category) => {
+
         if(!err && category !== null){
             community.category = category._id;
             req.user.communities.push(community._id);
             req.user.save((err, user) => {
                 community.save((err, savedCommunity) => {
+                    console.log(err);
                     next(new httpResponse.OkResponse(savedCommunity));
                 });
             });
@@ -101,6 +125,7 @@ router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
 
     Community.paginate({}, options, (err, communities) => {
         if(!err && communities !== null){
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
         else{
@@ -115,8 +140,9 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({members: req.user._id}, options, (err, communities) => {
+    Community.paginate({_id: { $in: req.user.communities }}, options, (err, communities) => {
         if(!err && communities !== null){
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
         else{
@@ -133,6 +159,7 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
 
     Community.paginate({by: req.user._id}, options, (err, communities) => {
         if(!err && communities !== null){
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
         else{
@@ -156,6 +183,7 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
 
     Community.paginate(query, options, (err, communities) => {
         if(!err && communities.length !== 0){
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
         else{

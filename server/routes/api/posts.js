@@ -22,7 +22,7 @@ router.param('slug', (req, res, next, slug) => {
 
 
 router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    next(new httpResponse.OkResponse(req.post));
+    next(new httpResponse.OkResponse(req.post.toJSONFor(req.user)));
 });
 
 
@@ -70,6 +70,7 @@ router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({community: {$in : req.user.communities}}, options, (err, posts) => {
         if (err) return next(err);
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
         next(new httpResponse.OkResponse(posts));
     });
 });
@@ -82,26 +83,60 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
 
     Post.paginate({by: req.user._id}, options, (err, posts) => {
         if (err) return next(err);
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
         next(new httpResponse.OkResponse(posts));
     });
 });
 
-router.post('/save/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    req.user.saved.push(req.post._id);
-    req.user.save();
-    next(new httpResponse.OkResponse('Post added to Saved Posts'));
-});
+router.get('/save/:status/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+    if(+req.params.status === 1){
 
-router.post('/like/:slug', auth.isToken, auth.isUser, (req, res, next) => {
-    req.user.liked.push(req.post._id);
-    req.user.save();
-    req.post.likeCount++;
-    req.post.save();
-    next(new httpResponse.OkResponse('Post added to Liked Posts'));
+        if(req.user.saved.indexOf(req.post._id) !== -1){
+            next(new httpResponse.BadRequestResponse('You have already saved this post'));
+            return;
+        }
+
+        req.user.saved.push(req.post._id);
+    }
+    else{
+
+        if(req.user.saved.indexOf(req.post._id) === -1){
+            next(new httpResponse.BadRequestResponse('You have not already saved this post'));
+            return;
+        }
+        req.user.saved.pull(req.post._id);
+    }
+
+    await req.user.save();
+    await req.post.save();
+
+    next(new httpResponse.OkResponse('Successful'));
 });
 
 router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
-    next(new httpResponse.OkResponse(req.user.saved));
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    Post.paginate({_id: {$in: req.user.saved}}, options, (err, posts) => {
+        if (err) return next(err);
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+        next(new httpResponse.OkResponse(posts));
+    });
+});
+
+router.get('/get/liked',  auth.isToken, auth.isUser, (req, res, next) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
+
+    Post.paginate({_id: {$in: req.user.liked}}, options, (err, posts) => {
+        if (err) return next(err);
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+        next(new httpResponse.OkResponse(posts));
+    });
 });
 
 router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => {
@@ -115,6 +150,7 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
         
             Post.paginate({community: community}, options, (err, posts) => {
                 if (err) return next(err);
+                posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
                 next(new httpResponse.OkResponse(posts));
             }); 
         }
@@ -123,5 +159,36 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
         }
     });
 })
+
+router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+    if(+req.params.status === 1){
+
+        if(req.user.liked.indexOf(req.post._id) !== -1){
+            next(new httpResponse.BadRequestResponse('You have already liked this post'));
+            return;
+        }
+
+        req.post.likeCount++;
+        req.user.liked.push(req.post._id);
+    }
+    else{
+
+        if(req.user.liked.indexOf(req.post._id) === -1){
+            next(new httpResponse.BadRequestResponse('You have not already liked this post'));
+            return;
+        }
+
+        req.post.likeCount--;
+        req.user.liked.pull(req.post._id);
+    }
+
+    await req.user.save();
+    await req.post.save();
+
+    next(new httpResponse.OkResponse('Successful'));
+
+});
+
+
 
 module.exports = router;
