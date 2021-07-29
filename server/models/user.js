@@ -116,6 +116,10 @@ userSchema.methods.generateToken = function(){
     this.token = jsonwebtoken.sign({user: this.email}, 'shhhhh')
 }
 
+userSchema.methods.isJoined = function(id){
+    return this.communities.indexOf(id) !== -1
+}
+
 userSchema.methods.toAuthJSON = function(){
     this.generateToken()
     return{
