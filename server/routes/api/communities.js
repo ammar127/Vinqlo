@@ -23,12 +23,31 @@ router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 router.post('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    if(req.user.communities.indexOf(req.community._id) !== -1){
+        next(new httpResponse.BadRequestResponse('You are already a member of this community!'));
+        return;
+    }
     req.user.communities.push(req.community._id);
     req.community.members.push(req.user._id);
     req.community.membersCount++;
     req.user.save((err, user) => {
         req.community.save((err, community) => {
             next(new httpResponse.OkResponse('Community Joined Successfully'));
+        });
+    });
+})
+
+router.post('/leave/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    if(req.user.communities.indexOf(req.community._id) === -1){
+        next(new httpResponse.BadRequestResponse('You are not a part of this community!'));
+        return;
+    }
+    req.user.communities.pull(req.community._id);
+    req.community.members.pull(req.user._id);
+    req.community.membersCount--;
+    req.user.save((err, user) => {
+        req.community.save((err, community) => {
+            next(new httpResponse.OkResponse('Community Left Successfully'));
         });
     });
 })

@@ -124,4 +124,6 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
     });
 })
 
+router.get('/like/:status/:slug');
+
 module.exports = router;
