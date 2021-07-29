@@ -77,4 +77,15 @@ router.delete('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 });
 
 
+router.get('/post/:postSlug', auth.isToken, auth.isUser, (req, res, next) => {
+    Post.findOne({slug: req.params.postSlug}, (err, post) => {
+        if(!err && post !== null){
+            next(new httpResponse.OkResponse({comments: post.comments}));
+        }
+        else{
+            next(new httpResponse.BadRequestResponse('Post not found!'));
+        }
+    });
+});
+
 module.exports = router;

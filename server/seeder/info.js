@@ -12,8 +12,8 @@ async function seedInfo(){
     user.email = 'usman@gmail.com';
     await user.setPassword('1234');
     user.bio = faker.lorem.sentence(); 
-    user.campus = campuses[2]._id;
-    user.degree = campuses[2].degrees[2]._id;
+    user.campus = campuses[0]._id;
+    user.degree = campuses[0].degrees[0]._id;
     user.verified = true;
 
     await user.save();

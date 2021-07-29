@@ -32,10 +32,6 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
         return next(new httpResponse.UnauthorizedResponse('You email is not verified', 401.1));
     }
 
-    if(user.status ===  0){
-        return next(new httpResponse.UnauthorizedResponse('Your account deleted by admin' ,401.0));
-    }
-
     if(user.status === 2){
         return next(new httpResponse.UnauthorizedResponse('Your account blocked by admin', 401.2));
     }
@@ -153,8 +149,7 @@ router.put('/delete/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res,
     next(new httpResponse.OkResponse('Updated Successfully'));
 });
 
-
-router.get('/resendOtp/:email', (req, res, next) => {
+function sendOtp(req, res, next){
     var user = req.emailUser;
     var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
     user.otp = otp;
@@ -163,11 +158,16 @@ router.get('/resendOtp/:email', (req, res, next) => {
     user.otpExpiry = today;
 
     //SendOTP
-    emailService.sendEmailVerificationOTP(user);
+    emailService.sendEmailOTP(user);
 
     user.save();
     next(new httpResponse.OkResponse({otp: user.otp}));
+}
+
+router.get('/resendOtp/:email', (req, res, next) => {
+    sendOtp(req, res, next);
 });
+
 
 router.get('/verifyOtp/:otp/:email', (req, res, next) => {
     var today = new Date();
@@ -189,6 +189,64 @@ router.get('/verifyOtp/:otp/:email', (req, res, next) => {
     req.emailUser.save();
 
     next(new httpResponse.OkResponse('Otp verified Successfully'));
+});
+
+router.get('/forgotPassword/:email', (req, res, next) => {
+    sendOtp(req, res, next);
+});
+
+router.put('/forgotPassword/:otp/:email', (req, res, next) => {
+    var today = new Date();
+    if(today.getTime() > req.emailUser.otpExpiry.getTime()){
+        next(new httpResponse.UnauthorizedResponse('OTP is expired'));
+        return;
+    }
+    if(req.params.otp !== req.emailUser.otp){
+        next(new httpResponse.UnauthorizedResponse('OTP is invalid'));
+        return;
+    }
+
+    req.emailUser.otp = null;
+    req.emailUser.otpExpiry = null;
+    if(typeof req.body.password !== 'undefined' && req.body.password !== null){
+        req.emailUser.setPassword(req.body.password);
+    }
+    else{
+        next(new httpResponse.BadRequestResponse('Password is required'));
+        return;
+    }
+
+    emailService.sendEmailForgotPasswordSuccess(req.emailUser);
+
+    req.emailUser.save();
+
+    next(new httpResponse.OkResponse('Password changed successfully'));
+});
+
+router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
+    if(typeof req.body.firstName !== 'undefined' && req.body.firstName !== null){
+        req.user.firstName = req.body.firstName;
+    }
+    if(typeof req.body.lastName !== 'undefined' && req.body.lastName !== null){
+        req.user.lastName = req.body.lastName;
+    }
+    if(typeof req.body.password !== 'undefined' && req.body.password !== null){
+        req.user.setPassword(req.body.password);
+    }
+    if(typeof req.body.image !== 'undefined' && req.body.image !== null){
+        req.user.image = req.body.image;
+    }
+    if(typeof req.body.bio !== 'undefined' && req.body.bio !== null){
+        req.user.bio = req.body.bio;
+    }
+
+    req.user.save((err, user) => {
+        if(err){
+            next(new httpResponse.BadRequestResponse(err));
+            return;
+        }
+        next(new httpResponse.OkResponse({user: user}));
+    });
 });
 
 module.exports = router;
