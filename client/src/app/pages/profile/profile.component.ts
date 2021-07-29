@@ -13,6 +13,8 @@ export class ProfileComponent implements OnInit {
   myCommunityUrl = '/communities/get/my';
   savedPostUrl = '/posts/get/saved';
   myPostUrl = '/posts/get/my';
+
+  isJoin = false;
   constructor(private userService:UserService) {}
 
   ngOnInit(): void {

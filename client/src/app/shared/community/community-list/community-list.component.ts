@@ -9,6 +9,8 @@ import { Community, CommunityService, Toast } from 'src/app/core';
 })
 export class CommunityListComponent implements OnInit {
   @Input() url  = '';
+  
+  @Input() isJoin = true;
 
   communities: Community[] = [];
   hasNextPage = true;
@@ -17,6 +19,7 @@ export class CommunityListComponent implements OnInit {
   isLoader = false;
 
   joinSlug:any = null;
+
   constructor(private communityService: CommunityService) { }
 
   ngOnInit(): void {

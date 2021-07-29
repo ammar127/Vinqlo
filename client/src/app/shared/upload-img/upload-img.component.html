@@ -11,7 +11,7 @@
       <div id="notimage" class="hidden">Please select an image</div>
       <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
     </div>
-    <div *ngIf="control.value" id="response" class="hidden">
+    <div *ngIf="uploader.uploader.queue && uploader.uploader.queue[0]" id="response" class="hidden">
       <div id="messages"></div>
       <progress class="progress" id="file-progress" [value]="uploader.uploader.progress">
         <span>0</span>%
