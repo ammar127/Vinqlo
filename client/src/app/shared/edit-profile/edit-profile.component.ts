@@ -56,7 +56,8 @@ export class EditProfileComponent implements OnInit {
     this.profileService.editUser(this.editForm.value).subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Profile updated successfully'})
-        this.userService.populate();
+        this.userService.updateUserContext();
+        this.close();
       }
     });
   }

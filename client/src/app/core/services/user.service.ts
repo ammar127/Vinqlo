@@ -34,7 +34,7 @@ export class UserService {
       .pipe(map(
         res => {
           
-            //console.log('res', res)
+            console.log('res', res)
               this.setAuth(res.data.user);
               return res.data.user;
             }
@@ -44,11 +44,19 @@ export class UserService {
      return  of(null);
     }
   }
+  updateUserContext() {
+    // If JWT detected, attempt to get & store user's info
+    if (this.jwtService.getToken()) {
+        this.apiService.get('/users').subscribe(res => {
+              this.setAuth(res.data.user);
+            })
+    }
+  }
 
   setAuth(user: User) {
     console.log('in setAuth')
     // set permissions
-    this.permissionsService.loadPermissions([user.role.toString()]);
+    
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(user.token);
     // Set current user data into observable
