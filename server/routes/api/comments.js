@@ -7,6 +7,7 @@ var Post = require('../../models/post');
 var User = require('../../models/user');
 var Notification = require('../../models/notification');
 var auth = require('../auth');
+const { raw } = require('body-parser');
 
 router.param('slug', (req, res, next, slug) => {
     Comment.findOne({slug: slug}, (err, comment) => {
@@ -39,26 +40,33 @@ async (req, res, next) => {
     comment.body = req.body.body;
     comment.by = req.user._id;
 
-    if(typeof req.body.tag !== 'undefined' && req.body.tag !== null){
-        
-    }
-
     Post.findOne({slug: req.body.post}, (err, post) => {
         if(!err && post !== null){
             post.comments.push(comment);
             post.save((err, post) => {
                 comment.save(async (err, comment) => {
-                    if(typeof req.body.tag !== 'undefined' && req.body.tag !== null){
-                        const user = await User.findOne({email: req.body.tag});
-                        if(user !== null){
-                            let notification = new Notification();
-                            notification.body = `${req.user.firstName}  ${req.user.Name} tagged you in a post`;
-                            notification.by = req.user._id;
-                            notification.to = user._id;
-                            notification.post = post._id;
-                            await notification.save();   
-                        } //will change this
+                    
+                    var rawData = req.body.body.split("[[");
+                    console.log(req.body.body)
+                    
+                    if(rawData.length > 1){
+                        
+                        for(var i=1; i<rawData.length; i++) {
+                           
+                            var tag = JSON.parse(rawData[i].split("]]")[0]);
+                            const user = await User.findOne({email: tag.value.email});
+                           
+                            if(user !== null){
+                                let notification = new Notification();
+                                notification.body = `${req.user.firstName} ${req.user.lastName} tagged you in a post`;
+                                notification.by = req.user._id;
+                                notification.to = user._id;
+                                notification.post = post._id;
+                                await notification.save();   
+                            }
+                        }
                     }
+
                     next(new httpResponse.OkResponse(comment));
                 });
             });
