@@ -50,6 +50,12 @@ var postSchema = mongoose.Schema({
         default: 0
     },
 
+    status : {
+        type: Number,
+        default: 1
+        // 1 active 2 blocked
+    },
+
     time:{
         type: Date,
         default: Date.now
