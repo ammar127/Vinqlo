@@ -170,6 +170,7 @@ userSchema.methods.toJSON = function(){
         communities: this.communities, 
         role: this.role,
         status: this.status,
+        strikes: this.strikes,
         image: this.image
     }
 }
