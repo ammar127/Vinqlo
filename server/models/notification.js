@@ -4,7 +4,7 @@ var mongoosastic = require('mongoosastic');
 var mongoosePaginate = require('mongoose-paginate-v2');
 var slug = require('slug');
 
-var commentSchema = mongoose.Schema({
+var notificationSchema = mongoose.Schema({
     slug:{
         type: String,
         unique: true
@@ -21,9 +21,19 @@ var commentSchema = mongoose.Schema({
         required: true
     },
 
-    tag:{
+    to:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+
+    post:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+    },
+
+    isRead: {
+        type: Boolean,
+        default: false
     },
 
     time:{
@@ -33,34 +43,36 @@ var commentSchema = mongoose.Schema({
 
 });
 
-commentSchema.pre('findOne', function (next) {
+notificationSchema.pre('findOne', function (next) {
     this.populate('by');
-    this.populate('tag');
+    this.populate('to');
+    this.populate('post');
     next();
 });
 
-commentSchema.pre('find', function (next) {
+notificationSchema.pre('find', function (next) {
     this.populate('by');
-    this.populate('tag');
+    this.populate('to');
+    this.populate('post');
     next();
 });
 
 
-commentSchema.plugin(uniqueValidator);
-commentSchema.plugin(mongoosastic);
-commentSchema.plugin(mongoosePaginate);
+notificationSchema.plugin(uniqueValidator);
+notificationSchema.plugin(mongoosastic);
+notificationSchema.plugin(mongoosePaginate);
 
-commentSchema.pre('validate', function(next){
+notificationSchema.pre('validate', function(next){
     if(!this.slug)
       this.slugify()
     next()
 })
 
-commentSchema.methods.slugify = function(){
+notificationSchema.methods.slugify = function(){
     this.slug = slug('co') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
-commentSchema.methods.toJSON = function(){
+notificationSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         body: this.body,
@@ -70,14 +82,20 @@ commentSchema.methods.toJSON = function(){
             email: this.by.email,
             image: this.by.image
         },
-        tag: {
-            firstName: this.tag.firstName,
-            lastName: this.tag.lastName,
-            email: this.tag.email
+        to: {
+            firstName: this.to.firstName,
+            lastName: this.to.lastName,
+            email: this.to.email
         },
+        post: {
+            title: this.post.title,
+            slug: this.post.slug,
+        },
+
+        isRead: this.isRead,
         time: this.time
     }
 }
 
-const Comment = mongoose.model('Comment', commentSchema);
-module.exports = Comment;
+const Notification = mongoose.model('Notification', notificationSchema);
+module.exports = Notification;

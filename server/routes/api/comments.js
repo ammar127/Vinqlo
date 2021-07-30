@@ -4,6 +4,8 @@ var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Comment = require('../../models/comment');
 var Post = require('../../models/post');
+var User = require('../../models/user');
+var Notification = require('../../models/notification');
 var auth = require('../auth');
 
 router.param('slug', (req, res, next, slug) => {
@@ -25,7 +27,7 @@ router.post('/', auth.isToken, auth.isUser,
 
 body('body').isLength({min: 4}),
 body('post').isLength({min: 4}),
-(req, res, next) => {
+async (req, res, next) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -37,11 +39,26 @@ body('post').isLength({min: 4}),
     comment.body = req.body.body;
     comment.by = req.user._id;
 
+    if(typeof req.body.tag !== 'undefined' && req.body.tag !== null){
+        const user = await User.findOne({email: req.body.tag});
+        if(user !== null){
+            comment.tag = user._id;
+        }
+    }
+
     Post.findOne({slug: req.body.post}, (err, post) => {
         if(!err && post !== null){
             post.comments.push(comment);
             post.save((err, post) => {
-                comment.save((err, comment) => {
+                comment.save(async (err, comment) => {
+                    if(typeof req.body.tag !== 'undefined' && req.body.tag !== null){
+                        let notification = new Notification();
+                        notification.body = `${req.user.firstName}  ${req.user.lastName} tagged you in a post`;
+                        notification.by = req.user._id;
+                        notification.to = comment.tag;
+                        notification.post = post._id;
+                        await notification.save(); //will change this
+                    }
                     next(new httpResponse.OkResponse(comment));
                 });
             });

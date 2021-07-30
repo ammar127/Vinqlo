@@ -249,4 +249,13 @@ router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
+router.get('/search/:name', auth.isToken, auth.isUser, (req, res, next) => {
+    User.find({firstName: new RegExp(req.params.name, 'i')})
+    .limit(10)
+    .exec((err, users) => {
+        console.log(err);
+        next(new httpResponse.OkResponse({users: users}));
+    });
+});
+
 module.exports = router;

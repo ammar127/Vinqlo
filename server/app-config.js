@@ -81,6 +81,7 @@ module.exports = (app) => {
   require('./models/community')
   require('./models/comment')
   require('./models/report')
+  require('./models/notification')
 
   app.use(require('./routes'));
 
