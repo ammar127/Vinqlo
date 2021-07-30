@@ -18,25 +18,45 @@
         ></a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem routerLink="/profile">
-
-            <div class="d-flex align-items-center" >
-              <div class="user-img"><img [src]="user.image | image" alt=""></div>
-              <h6 class="mb-0 ml-2">{{user.firstName + '' + user.lastName }}</h6>
+            <div class="d-flex align-items-center">
+              <div class="user-img">
+                <img [src]="user.image | image" alt="" />
+              </div>
+              <h6 class="mb-0 ml-2">
+                {{ user.firstName + "" + user.lastName }}
+              </h6>
             </div>
           </button>
-          <button ngbDropdownItem (click)="onLogoutClick()"><i class="fas fa-sign-out mr-2"></i>Logout</button>
+          <button ngbDropdownItem (click)="onLogoutClick()">
+            <i class="fas fa-sign-out mr-2"></i>Logout
+          </button>
         </div>
       </li>
-      <li *ngIf="!isAdmin" >
-        <a class="accordion-toggle collapsed" (click)="collapse.toggle()" href="javascript:void(0)"></a>
-        <div style="position: absolute" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapse custom-align accordian-main">
-          <div >
-            <div class="accordian-menu" >
-              <div class="accordian-list" *ngFor="let category of categories" [routerLink]="['/category', category.slug]"  (click)="collapse.toggle()">
-                <span class="main-color" ><i class="fas icons-color d-block fa-running"></i> {{category.name}}</span>
+      <li *ngIf="!isAdmin">
+        <a
+          class="accordion-toggle collapsed"
+          (click)="collapse.toggle()"
+          href="javascript:void(0)"
+        ></a>
+        <div
+          style="position: absolute"
+          #collapse="ngbCollapse"
+          [(ngbCollapse)]="isCollapsed"
+          class="collapse custom-align accordian-main"
+        >
+          <div>
+            <div class="accordian-menu">
+              <div
+                class="accordian-list"
+                *ngFor="let category of categories"
+                [routerLink]="['/category', category.slug]"
+                (click)="collapse.toggle()"
+              >
+                <a href="javascript:void(0)" class="main-color"
+                  ><i class="fas icons-color d-block fa-running"></i>
+                  {{ category.name }}</a
+                >
               </div>
-
- 
             </div>
           </div>
         </div>
