@@ -81,6 +81,11 @@ var userSchema = mongoose.Schema({
         type: Number,
         default: 1,
     },
+
+    strikes: {
+        type: Number,
+        default: 0
+    },
     
     image:{
         type: String,

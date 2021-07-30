@@ -258,4 +258,20 @@ router.get('/search/:name', auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
+router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.emailUser.strikes++;
+    
+    if(req.emailUser.strikes > 2){
+        req.emailUser.status = 2;
+    }
+
+    req.emailUser.save((err, user) => {
+        if(err){
+            next(new httpResponse.BadRequestResponse(err));
+            return;
+        }
+        next(new httpResponse.OkResponse('Strike Added'));
+    });
+});
+
 module.exports = router;
