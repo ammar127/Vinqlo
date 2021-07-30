@@ -21,11 +21,6 @@ var commentSchema = mongoose.Schema({
         required: true
     },
 
-    tag:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-
     time:{
         type: Date,
         default: Date.now
@@ -69,11 +64,6 @@ commentSchema.methods.toJSON = function(){
             lastName: this.by.lastName,
             email: this.by.email,
             image: this.by.image
-        },
-        tag: {
-            firstName: this.tag.firstName,
-            lastName: this.tag.lastName,
-            email: this.tag.email
         },
         time: this.time
     }

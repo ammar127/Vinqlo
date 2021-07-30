@@ -40,10 +40,7 @@ async (req, res, next) => {
     comment.by = req.user._id;
 
     if(typeof req.body.tag !== 'undefined' && req.body.tag !== null){
-        const user = await User.findOne({email: req.body.tag});
-        if(user !== null){
-            comment.tag = user._id;
-        }
+        
     }
 
     Post.findOne({slug: req.body.post}, (err, post) => {
@@ -52,12 +49,15 @@ async (req, res, next) => {
             post.save((err, post) => {
                 comment.save(async (err, comment) => {
                     if(typeof req.body.tag !== 'undefined' && req.body.tag !== null){
-                        let notification = new Notification();
-                        notification.body = `${req.user.firstName}  ${req.user.lastName} tagged you in a post`;
-                        notification.by = req.user._id;
-                        notification.to = comment.tag;
-                        notification.post = post._id;
-                        await notification.save(); //will change this
+                        const user = await User.findOne({email: req.body.tag});
+                        if(user !== null){
+                            let notification = new Notification();
+                            notification.body = `${req.user.firstName}  ${req.user.Name} tagged you in a post`;
+                            notification.by = req.user._id;
+                            notification.to = user._id;
+                            notification.post = post._id;
+                            await notification.save();   
+                        } //will change this
                     }
                     next(new httpResponse.OkResponse(comment));
                 });

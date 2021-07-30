@@ -189,6 +189,17 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
 
 });
 
+router.get('/search/:title', auth.isToken, auth.isUser, (req, res, next) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10
+    };
 
+    Post.paginate({title: new RegExp(req.params.title, 'i')}, options, (err, posts) => {
+        console.log(err);
+        posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+        next(new httpResponse.OkResponse(posts));
+    });
+});
 
 module.exports = router;
