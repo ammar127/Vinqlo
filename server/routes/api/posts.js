@@ -202,8 +202,7 @@ router.get('/search/:title', auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
-
-router.post('/status/:status/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.post.status = +req.params.status;
     req.post.save((err, post) => {
         if(err) return next(err);
