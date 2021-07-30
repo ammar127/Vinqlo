@@ -1,3 +1,4 @@
+import { PostService } from './../../core/services/post.service';
 import { UserService } from './../../core/services/user.service';
 import { Community } from './../../core/models/community';
 import { CommunityService } from './../../core/services/community.service';
@@ -14,18 +15,14 @@ import { Post } from 'src/app/core/models';
 })
 export class FeedComponent implements OnInit {
   active = 1;
-  
+  searchQuery:string='';
   feedpath = '/posts/get/feed';
   academicesPath = '/communities/get/academics';
-  constructor(private userService: UserService)
+  constructor(private userService: UserService,private postService:PostService)
   {
-     
+
   }
   ngOnInit(): void {
   }
   get user() {return this.userService.getCurrentUser()  }
- 
- 
-
- 
 }

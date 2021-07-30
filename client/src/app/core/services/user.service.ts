@@ -33,12 +33,12 @@ export class UserService {
       return this.apiService.get('/users')
       .pipe(map(
         res => {
-          
+
             console.log('res', res)
               this.setAuth(res.data.user);
               return res.data.user;
             }
-        
+
       ), catchError(e => of(null)))
     } else {
      return  of(null);
@@ -56,7 +56,7 @@ export class UserService {
   setAuth(user: User) {
     console.log('in setAuth')
     // set permissions
-    
+
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(user.token);
     // Set current user data into observable
@@ -112,7 +112,10 @@ export class UserService {
       return data.user;
     }));
   }
-
+  updateStatus(type:number,email:string)
+  {
+    return this.apiService.put(`/users/status/${type}/${email}`)
+  }
   changeStatus(email:string, status: number)
   {
     return this.apiService.put(`/users/status/${status}/${email}`);
