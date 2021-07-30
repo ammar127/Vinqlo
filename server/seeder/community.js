@@ -8,20 +8,29 @@ async function seedCommunity(){
     const campuses = await Campus.find();
     const categories = await Category.find();
     
-    for(var i=0; i<20; i++){
-        const n = Math.floor(Math.random()*80);
-        const n1 = Math.floor(Math.random() * 3);
-        const n2 = Math.floor(Math.random() * 2);
-
+    for(var i=0; i<5; i++){
+        const n = Math.floor(Math.random()*50);
         
-        let community = new Community();
-        community.name = faker.company.companyName();
-        community.by = users[n1]._id;
-        community.campus = campuses[0]._id;
-        community.degree = campuses[0].degrees[0]._id;
-        community.category = categories[n1]._id;
+        for(var j=0; j<5; j++){
 
-        await community.save();
+            let community = new Community();
+            community.name = faker.company.companyName();
+            community.by = users[n]._id;
+            community.campus = campuses[i]._id;
+            community.degree = campuses[i].degrees[0]._id;
+            community.category = categories[i]._id;
+            await community.save();
+
+            let community2 = new Community();
+            community2.name = faker.company.companyName();
+            community2.by = users[n]._id;
+            community2.campus = campuses[i]._id;
+            community2.degree = campuses[i].degrees[1]._id;
+            community2.category = categories[i]._id;
+            await community.save();
+
+        }
+        
     }
 
     console.log('Communities Seeded!')
