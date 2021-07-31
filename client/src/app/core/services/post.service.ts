@@ -18,4 +18,5 @@ export class PostService {
   toggleLike(type:number,slug:string){
     return this.api.get(`/posts/like/${type}/${slug}`)
   }
+  searchByName(word:string){  return this.api.get('/users/search/'+word)}
 }

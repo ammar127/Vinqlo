@@ -15,9 +15,7 @@ export class ListComponent implements OnInit,OnChanges {
   page = 1;
   hasNextPage = true;
   isLoader = false;
-  isLike=true;
   @Input() searchQuery:string='';
-  get myStyle(){ return this.isLike? {color:'red'}:{ } }
   constructor(private postService: PostService) { }
 
   ngOnChanges(changes:SimpleChanges)
@@ -29,7 +27,8 @@ export class ListComponent implements OnInit,OnChanges {
   }
   get() {
     this.isLoader = true;
-    let params= new HttpParams().set('page', this.page.toString()).set('Title',this.searchQuery);
+    let params= new HttpParams().set('page', this.page.toString()).set('title',this.searchQuery);
+    console.log(params)
     this.postService.getAll(this.url+'?'+params.toString()).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;

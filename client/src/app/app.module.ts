@@ -11,9 +11,11 @@ import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 import { APP_INITIALIZER } from '@angular/core';
 import { map } from 'rxjs/operators';
 
+import { TagifyModule } from 'ngx-tagify';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, LayoutModule, CoreModule, NgbModule, NgxPermissionsModule.forRoot()],
+  imports: [BrowserModule, AppRoutingModule, LayoutModule, CoreModule, NgbModule, NgxPermissionsModule.forRoot(),TagifyModule.forRoot()],
   providers: [
     {
       provide: APP_INITIALIZER,
