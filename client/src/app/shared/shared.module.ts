@@ -60,7 +60,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
     ReactiveFormsModule,
     HttpClientModule,
     FileUploadModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     // shared modules

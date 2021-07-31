@@ -10,7 +10,8 @@
               <div class="row py-3">
                 <div class="col-md-9">
                   <div class="search-field" >
-                    <input type="text"  class="form-control shadow-sm" placeholder="Search by name . . ."/>
+                    <input type="text" [(ngModel)]="searchQuery"  class="form-control shadow-sm" placeholder="Search by name . . ."/>
+                    <!-- <button class="btn btn-primary" (click)="postList.get()">search</button> -->
                     <img src="../../../assets/images/search-solid.svg" width="30px" alt=""  />
                   </div>
                 </div>
@@ -18,7 +19,7 @@
                   <button class="btn btn-light btn-block rounded-pill" (click)="create.open()"> <i class="fa fa-plus"></i> Create Post</button>
                 </div>
               </div>
-              <div class="row"> <div class="col-md-12 my-3"> <post-list [url]="feedpath"></post-list></div></div>
+              <div class="row"> <div class="col-md-12 my-3"> <post-list #postList [searchQuery]="searchQuery"  [url]="feedpath"></post-list></div></div>
             </ng-template>
           </li>
           <li [ngbNavItem]="2">
