@@ -1,3 +1,5 @@
+import { Community } from './../../core/models/community';
+import { CategoryService } from './../../core/services/category.service';
 import { Component, OnInit } from '@angular/core';
 
 import { UserService } from './../../core/services/user.service';
