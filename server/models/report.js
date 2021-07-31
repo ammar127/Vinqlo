@@ -41,6 +41,11 @@ var reportSchema = mongoose.Schema({
         required: true
     },
 
+    status:{
+        type: Number,
+        default: 1
+    },
+
     time:{
         type: Date,
         default: Date.now

@@ -30,11 +30,13 @@ var commentSchema = mongoose.Schema({
 
 commentSchema.pre('findOne', function (next) {
     this.populate('by');
+    this.populate('tag');
     next();
 });
 
 commentSchema.pre('find', function (next) {
     this.populate('by');
+    this.populate('tag');
     next();
 });
 

@@ -140,7 +140,7 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({_id: { $in: req.user.communities }}, options, (err, communities) => {
+    Community.paginate({_id: { $in: req.user.communities }, by: { $ne: req.user._id }}, options, (err, communities) => {
         if(!err && communities !== null){
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));

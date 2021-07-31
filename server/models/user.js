@@ -81,6 +81,11 @@ var userSchema = mongoose.Schema({
         type: Number,
         default: 1,
     },
+
+    strikes: {
+        type: Number,
+        default: 0
+    },
     
     image:{
         type: String,
@@ -165,6 +170,7 @@ userSchema.methods.toJSON = function(){
         communities: this.communities, 
         role: this.role,
         status: this.status,
+        strikes: this.strikes,
         image: this.image
     }
 }

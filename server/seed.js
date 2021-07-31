@@ -37,9 +37,7 @@ async function init() {
     await community();
     await post();
     await report();
-    await category();
     await comment();
-
     exit();
 
 }

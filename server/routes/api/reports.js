@@ -79,7 +79,11 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
     console.log(req.query.type);
 
     if(typeof req.query.type !== 'undefined' && req.query.type !== null){
-        query = {type: +req.query.type};
+        query.type = +req.query.type;
+    }
+
+    if(typeof req.query.status !== 'undefined' && req.query.status !== null){
+        query.status = +req.query.status;
     }
 
     Report.paginate(query, options, (err, reports) => {
@@ -89,6 +93,14 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
         else{
             next(new httpResponse.OkResponse({reports: reports}));
         }
+    });
+});
+
+router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.report.status = +req.params.status;
+    req.report.save((err, post) => {
+        if(err) return next(err);
+        next(new httpResponse.OkResponse({message: 'Successful'}));
     });
 });
 

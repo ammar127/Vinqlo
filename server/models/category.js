@@ -13,6 +13,10 @@ var categorySchema = mongoose.Schema({
     name:{
         type: String,
         required: true
+    },
+
+    icon:{
+        type: String,
     }
 
 });
@@ -36,6 +40,7 @@ categorySchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         name: this.name,
+        icon: this.icon
     }
 }
 

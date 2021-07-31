@@ -4,7 +4,10 @@ var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Comment = require('../../models/comment');
 var Post = require('../../models/post');
+var User = require('../../models/user');
+var Notification = require('../../models/notification');
 var auth = require('../auth');
+const { raw } = require('body-parser');
 
 router.param('slug', (req, res, next, slug) => {
     Comment.findOne({slug: slug}, (err, comment) => {
@@ -25,7 +28,7 @@ router.post('/', auth.isToken, auth.isUser,
 
 body('body').isLength({min: 4}),
 body('post').isLength({min: 4}),
-(req, res, next) => {
+async (req, res, next) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -41,7 +44,29 @@ body('post').isLength({min: 4}),
         if(!err && post !== null){
             post.comments.push(comment);
             post.save((err, post) => {
-                comment.save((err, comment) => {
+                comment.save(async (err, comment) => {
+                    
+                    var rawData = req.body.body.split("[[");
+                    console.log(req.body.body)
+                    
+                    if(rawData.length > 1){
+                        
+                        for(var i=1; i<rawData.length; i++) {
+                           
+                            var tag = JSON.parse(rawData[i].split("]]")[0]);
+                            const user = await User.findOne({email: tag.value.email});
+                           
+                            if(user !== null){
+                                let notification = new Notification();
+                                notification.body = `${req.user.firstName} ${req.user.lastName} tagged you in a post`;
+                                notification.by = req.user._id;
+                                notification.to = user._id;
+                                notification.post = post._id;
+                                await notification.save();   
+                            }
+                        }
+                    }
+
                     next(new httpResponse.OkResponse(comment));
                 });
             });

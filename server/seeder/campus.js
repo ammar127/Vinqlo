@@ -3,7 +3,7 @@ var Campus = require('../models/campus');
 var Degree = require('../models/degree');
 
 async function seedCampus(){
-    for(var i=0; i<20; i++){
+    for(var i=0; i<5; i++){
         let campus = new Campus();
         campus.name = faker.company.companyName();
 
@@ -13,15 +13,9 @@ async function seedCampus(){
 
         let d1 = new Degree();
         d1.name = faker.company.companyName()
-        await d1.save();
+        await d1.save();        
 
-        let d2 = new Degree();
-        d2.name = faker.company.companyName()
-        await d2.save();
-        
-
-
-        campus.degrees = [d, d1, d2];
+        campus.degrees = [d, d1];
         await campus.save();
     }
 
