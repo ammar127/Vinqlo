@@ -18,7 +18,7 @@ export class ListComponent implements OnInit,OnChanges {
   @Input() searchQuery:string='';
   constructor(private postService: PostService) { }
 
-  ngOnChanges(changes:SimpleChanges)
+  ngOnChanges()
   {
     this.get();
   }
@@ -29,22 +29,6 @@ export class ListComponent implements OnInit,OnChanges {
     this.isLoader = true;
     let params= new HttpParams().set('page', this.page.toString()).set('title',this.searchQuery);
     this.postService.getAll(this.url+'?'+params.toString()).subscribe(res => {
-      if(res.status === 200) {
-        this.isLoader = false;
-        if(res.data.docs) {
-          this.posts=res.data.docs ;
-          this.hasNextPage = res.data.hasNextPage;
-        } else {
-          this.hasNextPage = false;
-        }
-      }
-    })
-  }
-  getByName()
-  {
-    console.log(this.searchQuery)
-    let params= new HttpParams().set('page', this.page.toString());
-    this.postService.getAll('/posts/search/'+this.searchQuery+'?'+params.toString()).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;
         if(res.data.docs) {

@@ -1,5 +1,5 @@
 
-  <div class="card shadow-sm p-3">
+  <div *ngIf="!noCommunity" class="card shadow-sm p-3">
     <div class="client-card shadow-sm" *ngFor="let community of communities">
       <div class="client-header">
         <div>
@@ -18,7 +18,7 @@
             </button>
           </div>
         </div>
-        
+
         <div ngbDropdown class="d-inline-block">
           <button
             class="btn"
@@ -44,8 +44,10 @@
         </span
       >
     </div>
-    <no-content *ngIf="!isLoader && communities.length === 0" [label]="'No Posts here'"></no-content>
     <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
     <loader *ngIf="isLoader"></loader>
+  </div>
+  <div *ngIf="noCommunity" class="community">
+    <h5 class="text-purple">No communities created yet</h5>
   </div>
 <app-create-report #report></app-create-report>

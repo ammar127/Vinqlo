@@ -1,3 +1,4 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +12,7 @@ import { CommunityComponent } from './community.component';
   ],
   imports: [
     CommonModule,
-    CommunityRoutingModule
+    CommunityRoutingModule,SharedModule
   ]
 })
 export class CommunityModule { }
