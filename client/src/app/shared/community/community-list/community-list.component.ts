@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Community, CommunityService, Toast } from 'src/app/core';
 
 @Component({
@@ -7,9 +7,9 @@ import { Community, CommunityService, Toast } from 'src/app/core';
   templateUrl: './community-list.component.html',
   styleUrls: ['./community-list.component.css']
 })
-export class CommunityListComponent implements OnInit {
+export class CommunityListComponent implements OnInit,OnChanges {
   @Input() url  = '';
-  
+  @Input() slug ='';
   @Input() isJoin = true;
 
   communities: Community[] = [];
@@ -21,13 +21,16 @@ export class CommunityListComponent implements OnInit {
   joinSlug:any = null;
 
   constructor(private communityService: CommunityService) { }
-
+  ngOnChanges()
+  {
+    this.get();
+  }
   ngOnInit(): void {
     this.get();
   }
   get() {
     this.isLoader = true;
-    let params= new HttpParams().set('page', this.page.toString());
+    let params= new HttpParams().set('page', this.page.toString()).set('slug',this.slug);
     this.communityService.getAll(this.url+'?'+params.toString()).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;

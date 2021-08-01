@@ -12,7 +12,6 @@ import { UserService } from "../core";
 export class HeaderComponent {
     @Input() isAdmin = false;
     public isCollapsed = true;
-    academicesPath = '/communities/get/academics';
     get categories()  {return this.commonService.categories(); }
     constructor(private userService: UserService,private commonService:CommonService,private router: Router){
 

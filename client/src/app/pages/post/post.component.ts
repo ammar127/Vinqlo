@@ -82,11 +82,9 @@ export class PostComponent implements OnInit {
         if(res.status === 200 ) {
           Toast.fire({icon:'success', title:'Comment Updated successfully'});
           this.isEdit=false;
-
           this.commentService.getCommentOfPost(this.postData.slug).subscribe( res=>{
             this.postData.comments=res.data.comments;
-          }
-          )
+            }  )
           this.commentt = '';
         }   }   )
     }
@@ -109,6 +107,9 @@ export class PostComponent implements OnInit {
     return this.commentService.deleteComment(slug).subscribe( res=>{
         if(res.status==200)
         {
+          this.commentService.getCommentOfPost(this.postData.slug).subscribe( res=>{
+            this.postData.comments=res.data.comments;
+            }  )
           Toast.fire({icon:'success', title:'Comment Deleted successfully'});
         }
       }

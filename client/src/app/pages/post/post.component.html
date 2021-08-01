@@ -95,7 +95,7 @@
               <hr />
             </div>
             <div class="comment-input">
-              <tagify [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" (keyup.enter)="postComment(postData.slug)" > </tagify>
+              <tagify [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
               <!-- <input  [(ngModel)]="commentt" type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="commentt" /> -->
               <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
             </div>
