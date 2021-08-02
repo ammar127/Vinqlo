@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Post = require('../../models/post');
+var User = require('../../models/user');
 var Community = require('../../models/community');
 var Category = require('../../models/category');
 var Notification = require('../../models/notification');
@@ -171,6 +172,28 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
         }
         else{
             next(new httpResponse.UnauthorizedResponse('Community not found!'));
+        }
+    });
+})
+
+router.get('/get/email/:email', auth.isToken, auth.isUser, (req, res, next) => {
+
+    User.findOne({email: req.params.email}, (err, user) => {
+        if(!err && user !== null){
+            const options = {
+                page: req.query.page || 1,
+                limit: req.query.limit || 10, 
+                sort: {time: -1}
+            };
+        
+            Post.paginate({by: user._id, status:1}, options, (err, posts) => {
+                if (err) return next(err);
+                posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+                next(new httpResponse.OkResponse(posts));
+            }); 
+        }
+        else{
+            next(new httpResponse.UnauthorizedResponse('User not found!'));
         }
     });
 })
