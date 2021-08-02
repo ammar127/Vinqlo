@@ -9,7 +9,9 @@ import { Community, CommunityService, Toast } from 'src/app/core';
 })
 export class CommunityListComponent implements OnInit,OnChanges {
   @Input() url  = '';
+
   @Input() slug ='';
+
   @Input() isJoin = true;
   @Input() searchQuery:string='';
   communities!: Community[];

@@ -249,4 +249,29 @@ router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
+router.get('/search/:name', auth.isToken, auth.isUser, (req, res, next) => {
+    User.find({firstName: new RegExp(req.params.name, 'i')})
+    .limit(10)
+    .exec((err, users) => {
+        console.log(err);
+        next(new httpResponse.OkResponse({users: users}));
+    });
+});
+
+router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.emailUser.strikes++;
+    
+    if(req.emailUser.strikes > 2){
+        req.emailUser.status = 2;
+    }
+
+    req.emailUser.save((err, user) => {
+        if(err){
+            next(new httpResponse.BadRequestResponse(err));
+            return;
+        }
+        next(new httpResponse.OkResponse('Strike Added'));
+    });
+});
+
 module.exports = router;

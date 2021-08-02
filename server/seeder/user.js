@@ -8,8 +8,8 @@ async function seedUser(){
     
     for(var i=0;i<100;i++){
 
-        const n1 = Math.floor(Math.random() * 5);
-        const n2 = Math.floor(Math.random() * 2);
+        const n1 = Math.floor(Math.random() * 3);
+        const n2 = Math.floor(Math.random() * 1);
 
         let user = new User();
         user.firstName = faker.name.firstName();

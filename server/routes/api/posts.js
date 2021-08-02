@@ -65,10 +65,19 @@ body('community').isLength({min: 5}),
 router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {
     const options = {
         page: req.query.page || 1,
-        limit: req.query.limit || 10
+        limit: req.query.limit || 10, 
+        sort: {time: -1}
     };
+    
+    var query = {};
+    query.community = {$in : req.user.communities}
+    query.status = 1;
 
-    Post.paginate({community: {$in : req.user.communities}}, options, (err, posts) => {
+    if(typeof req.query.title !== 'undefined' && req.query.title !== null){
+        query.title = new RegExp(req.query.title, 'i')
+    }
+
+    Post.paginate(query, options, (err, posts) => {
         if (err) return next(err);
         posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
         next(new httpResponse.OkResponse(posts));
@@ -78,10 +87,11 @@ router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {
 router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
     const options = {
         page: req.query.page || 1,
-        limit: req.query.limit || 10
+        limit: req.query.limit || 10, 
+        sort: {time: -1}
     };
 
-    Post.paginate({by: req.user._id}, options, (err, posts) => {
+    Post.paginate({by: req.user._id, status:1}, options, (err, posts) => {
         if (err) return next(err);
         posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
         next(new httpResponse.OkResponse(posts));
@@ -116,10 +126,11 @@ router.get('/save/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
 router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
     const options = {
         page: req.query.page || 1,
-        limit: req.query.limit || 10
+        limit: req.query.limit || 10, 
+        sort: {time: -1}
     };
 
-    Post.paginate({_id: {$in: req.user.saved}}, options, (err, posts) => {
+    Post.paginate({_id: {$in: req.user.saved}, status:1}, options, (err, posts) => {
         if (err) return next(err);
         posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
         next(new httpResponse.OkResponse(posts));
@@ -129,10 +140,11 @@ router.get('/get/saved',  auth.isToken, auth.isUser, (req, res, next) => {
 router.get('/get/liked',  auth.isToken, auth.isUser, (req, res, next) => {
     const options = {
         page: req.query.page || 1,
-        limit: req.query.limit || 10
+        limit: req.query.limit || 10, 
+        sort: {time: -1}
     };
 
-    Post.paginate({_id: {$in: req.user.liked}}, options, (err, posts) => {
+    Post.paginate({_id: {$in: req.user.liked}, status:1}, options, (err, posts) => {
         if (err) return next(err);
         posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
         next(new httpResponse.OkResponse(posts));
@@ -145,10 +157,11 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
         if(!err && community !== null){
             const options = {
                 page: req.query.page || 1,
-                limit: req.query.limit || 10
+                limit: req.query.limit || 10, 
+                sort: {time: -1}
             };
         
-            Post.paginate({community: community}, options, (err, posts) => {
+            Post.paginate({community: community, status:1}, options, (err, posts) => {
                 if (err) return next(err);
                 posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
                 next(new httpResponse.OkResponse(posts));
@@ -190,5 +203,12 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
 });
 
 
+router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    req.post.status = +req.params.status;
+    req.post.save((err, post) => {
+        if(err) return next(err);
+        next(new httpResponse.OkResponse({message: 'Successful'}));
+    });
+});
 
 module.exports = router;
