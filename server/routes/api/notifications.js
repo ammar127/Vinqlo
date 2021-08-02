@@ -21,7 +21,7 @@ router.get('/get/all' , auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Notification.paginate({ to: req.user._id, isRead: false }, options, (err, notifications) => {
+    Notification.paginate({ sentTo: req.user._id, isRead: false }, options, (err, notifications) => {
         if(!err && notifications !== null){
             next(new httpResponse.OkResponse({notifications: notifications}));
         }
@@ -30,5 +30,7 @@ router.get('/get/all' , auth.isToken, auth.isUser, (req, res, next) => {
         }
     });
 });
+
+
 
 module.exports = router;
