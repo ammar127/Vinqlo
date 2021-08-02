@@ -169,11 +169,18 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) => {
-    var query = {campus: req.user.campus, degree: req.user.degree, members: {$nin: [req.user._id]}};
+    var query = {};
+    query.campus = req.user.campus;
+    query.degree = req.user.degree;
+    query.members = {$nin: [req.user._id]};
 
     if(typeof req.query.category !== 'undefined' && req.query.category !== null){
         const category = await Category.findOne({slug: req.query.category});
-        query = {campus: req.user.campus, degree: req.user.degree, members: {$nin: [req.user._id]}, category: category._id};
+        query.category = category._id;
+    }
+
+    if(typeof req.query.name !== 'undefined' && req.query.name !== null){
+        query.name = new RegExp(req.query.name, 'i');
     }
 
     const options = {
