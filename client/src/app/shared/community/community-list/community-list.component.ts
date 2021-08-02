@@ -43,7 +43,7 @@ export class CommunityListComponent implements OnInit,OnChanges {
   getByCategory(slug:string)
   {
     this.isLoader = true;
-    let params= new HttpParams().set('slug', this.page.toString());
+    let params= new HttpParams().set('category', this.page.toString());
     this.communityService.getAll(this.url+'?'+params.toString()).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;

@@ -33,7 +33,7 @@ const routes: Routes = [
           import('./pages/profile/profile.module').then((m) => m.ProfileModule),
       },
       {
-        path: 'community',
+        path: 'community/:slug',
         loadChildren: () =>
           import('./pages/community/community.module').then(
             (m) => m.CommunityModule
