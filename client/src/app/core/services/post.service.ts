@@ -15,7 +15,7 @@ export class PostService {
   }
 
   getAll(path: string) {return this.api.get(path);}
-  getPostByCommunity(slug:string) { return this.api.get('/posts/get/by/'+slug) }
+ 
   toggleLike(type:number,slug:string){
     return this.api.get(`/posts/like/${type}/${slug}`)
   }

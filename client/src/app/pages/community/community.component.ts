@@ -1,5 +1,5 @@
 import { PostService } from 'src/app/core/services/post.service';
-import { Community, Post, } from 'src/app/core';
+import { CommonService, Community, Post, } from 'src/app/core';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -17,23 +17,20 @@ export class CommunityComponent implements OnInit {
 
   slug!: string;
   community!: Community;
-  posts!: Post[];
+
   isLoader: boolean = false;
-  constructor(private route: ActivatedRoute, private communityService: CommunityService, private postService: PostService) { }
+  postbyComunity = '/posts/get/by/';
+  constructor(private route: ActivatedRoute, 
+    private communityService: CommunityService,private commonService:CommonService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(res => this.slug = res['slug'])
     this.getCurrentCommunity();
-    this.getPostsByCommunity();
   }
+  get categories()  {return this.commonService.categories()}
+
   getCurrentCommunity() {
     this.communityService.getSingleCommunity(this.slug).subscribe(res => this.community = res.data)
   }
-  getPostsByCommunity() {
-    this.isLoader = true;
-    this.postService.getPostByCommunity(this.slug).subscribe(res => {
-      this.posts = res.data
-      this.isLoader = false
-    })
-  }
+ 
 }

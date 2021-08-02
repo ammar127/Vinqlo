@@ -2,14 +2,9 @@
 import { Category } from './../../core/models/category';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from './../../core/services/common.service';
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-
-import { Community } from './../../core/models/community';
-import { CategoryService } from './../../core/services/category.service';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 
-
-import { UserService } from './../../core/services/user.service';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
