@@ -28,31 +28,16 @@
           </button>
         </div>
       </li>
-      <li *ngIf="!isAdmin">
-        <a
-          class="accordion-toggle collapsed"
-          (click)="collapse.toggle()"
-          href="javascript:void(0)"
-        ></a>
-        <div
-          style="position: absolute"
-          #collapse="ngbCollapse"
-          [(ngbCollapse)]="isCollapsed"
-          class="collapse custom-align accordian-main"
-        >
-          <div>
-            <div class="accordian-menu">
-              <div
-                class="accordian-list"
-                *ngFor="let category of categories"
-                [routerLink]="['/category', category.slug]"
-                (click)="collapse.toggle()"
-              >
-                <a href="javascript:void(0)" class="main-color"
-                  ><i class="fas icons-color d-block fa-running"></i>
-                  {{ category.name }}</a
-                >
+      <li *ngIf="!isAdmin" >
+        <a class="accordion-toggle collapsed" (click)="collapse.toggle()" href="javascript:void(0)"></a>
+        <div style="position: absolute" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapse custom-align accordian-main">
+          <div >
+            <div class="accordian-menu" >
+              <div class="accordian-list" *ngFor="let category of categories" [routerLink]="['/category',category.slug]"   (click)="collapse.toggle()">
+                <span class="main-color" ><i [ngClass]="category.icon"></i> {{category.name}}</span>
               </div>
+
+
             </div>
           </div>
         </div>
