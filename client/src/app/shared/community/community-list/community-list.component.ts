@@ -7,7 +7,7 @@ import { Community, CommunityService, Toast } from 'src/app/core';
   templateUrl: './community-list.component.html',
   styleUrls: ['./community-list.component.css']
 })
-export class CommunityListComponent implements OnInit,OnChanges {
+export class CommunityListComponent implements OnInit {
   @Input() url  = '';
 
   @Input() slug ='';
@@ -16,10 +16,9 @@ export class CommunityListComponent implements OnInit,OnChanges {
   @Input() searchQuery:string='';
   communities!: Community[];
   hasNextPage = true;
-  noCommunity!:boolean;
   page = 1;
   isLoader = false;
-
+  params:any;
   joinSlug:any = null;
 
   constructor(private communityService: CommunityService) { }
@@ -32,13 +31,16 @@ export class CommunityListComponent implements OnInit,OnChanges {
   }
   get() {
     this.isLoader = true;
-    let params= new HttpParams().set('page', this.page.toString()).set('category',this.slug).set('title',this.searchQuery);
-    console.log(params)
-    this.communityService.getAll(this.url+'?'+params.toString()).subscribe(res => {
+    if(this.slug!='') {
+      this.params= new HttpParams().set('page', this.page.toString()).set('category',(this.slug!='')?this.slug:'').set('name',this.searchQuery);
+    }
+    else{
+      this.params= new HttpParams().set('page', this.page.toString()).set('name',this.searchQuery);
+    }
+    this.communityService.getAll(this.url+'?'+this.params.toString()).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;
         this.communities=res.data.docs;
-        (this.communities.length>0)?  this.noCommunity=false : this.noCommunity=true;
         this.hasNextPage = res.data.hasNextPage;
       }
     })
@@ -54,9 +56,6 @@ export class CommunityListComponent implements OnInit,OnChanges {
         this.hasNextPage = res.data.hasNextPage;
       }
     })
-  }
-  onReport() {
-
   }
   onLoadMoreClick() {
     this.page++;

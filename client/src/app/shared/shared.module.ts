@@ -28,7 +28,6 @@ import { CommunityListComponent } from './community/community-list/community-lis
 import { CommunityCreateComponent } from './community/community-create/community-create.component';
 import { CreateReportComponent } from './create-report/create-report.component';
 
-
 @NgModule({
   declarations: [
     AlphaOnlyDirective,
@@ -60,7 +59,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
     ReactiveFormsModule,
     HttpClientModule,
     FileUploadModule,
-    RouterModule,
+    RouterModule
   ],
   exports: [
     // shared modules

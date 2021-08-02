@@ -10,12 +10,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 import { APP_INITIALIZER } from '@angular/core';
 import { map } from 'rxjs/operators';
+import {ClipboardModule} from 'ngx-clipboard'
 
 import { TagifyModule } from 'ngx-tagify';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, LayoutModule, CoreModule, NgbModule, NgxPermissionsModule.forRoot(),TagifyModule.forRoot()],
+  imports: [BrowserModule, AppRoutingModule, LayoutModule, CoreModule, NgbModule,ClipboardModule, NgxPermissionsModule.forRoot(),TagifyModule.forRoot()],
   providers: [
     {
       provide: APP_INITIALIZER,

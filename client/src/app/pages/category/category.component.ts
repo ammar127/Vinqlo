@@ -11,21 +11,19 @@ import { Component, OnInit, OnChanges } from '@angular/core';
   styleUrls: ['./category.component.css'],
 })
 
-export class CategoryComponent implements OnInit,OnChanges {
+export class CategoryComponent implements OnInit {
   academicesPath='/communities/get/academics'
   slug!:string;
-  searchQuery!:string;
+  searchQuery:string='';
 
   constructor(private route:ActivatedRoute,private commonService:CommonService) {
    }
   isLoader = false;
   get categories()  {return this.commonService.categories()}
   get title (){ return this.categories.find(e=>e.slug==this.slug) }
-  ngOnChanges()
-  {
-  
-  }
+
   ngOnInit(): void {
-      this.route.params.subscribe( res=>{ this.slug=res['slug'] }  )
+      this.get();
   }
+  get() {   this.route.params.subscribe( res=>{ this.slug=res['slug'] }  ) }
 }
