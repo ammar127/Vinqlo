@@ -1,16 +1,11 @@
 <div class="card shadow-sm main-profile-card">
-  <div class="client-card shadow-sm" *ngFor="let post of posts">
-    <div class="client-header">
-      <div>
-        <h6
-          [routerLink]="['/post', post.slug]"
-          class="main-color mb-0"
-          style="cursor: pointer"
-        >
-          {{ post.title }}
-        </h6>
-        <small class="text-muted"
-          >{{ post.by.firstName + " " + post.by.lastName }}
+    <div class="client-card shadow-sm" *ngFor="let post of posts">
+        <div class="client-header">
+            <div>
+                <h6 [routerLink]="['/post', post.slug]" class="main-color mb-0" style="cursor: pointer">
+                    {{ post.title }}
+                </h6>
+                <small class="text-muted" [routerLink]="['/user-profile', post.by.email]">{{  post.by.firstName + " " + post.by.lastName }}
           {{ post.time | date: "long" }}</small
         >
       </div>
