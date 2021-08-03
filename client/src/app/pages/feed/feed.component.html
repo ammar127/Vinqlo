@@ -11,7 +11,6 @@
                 <div class="col-md-9">
                   <div class="search-field" >
                     <input type="text" [(ngModel)]="searchQuery"  class="form-control shadow-sm" placeholder="Search by name . . ."/>
-                    <!-- <button class="btn btn-primary" (click)="postList.get()">search</button> -->
                     <img src="../../../assets/images/search-solid.svg" width="30px" alt=""  />
                   </div>
                 </div>
@@ -28,36 +27,29 @@
               <div class="row py-3">
                 <div class="col-md-12">
                   <div class="search-field">
-                    <input type="text" class="form-control shadow-sm" placeholder="Search by Tag" />
+                    <input type="text" [(ngModel)]="searchQuery" class="form-control shadow-sm" placeholder="Search by Tag" />
                     <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="community">
                     <h5 class="text-purple">Create community</h5>
-                    <a href="javascript:void(0)" (click)="communityCreate.open()"
-                      ><i
-                        class="fa main-color fa-plus-circle"
-                        aria-hidden="true"
-                      ></i
-                    ></a>
-                                    </div>
-                                    <div class="campus">
-                                        <h5 class="text-purple">Campus</h5>
-                                        <div class="campus-list">
-                                            <a class="mt-2" href="javascript:void(0)">{{user.campus.name}}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="community">
-                                        <h5 class="text-purple">{{user.degree.name}}</h5>
-                                    </div>
-                                    <app-community-list [url]="academicesPath"></app-community-list>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </li>
+                    <a href="javascript:void(0)" (click)="communityCreate.open()" ><i class="fa main-color fa-plus-circle" aria-hidden="true" ></i ></a>
+                  </div>
+                   <div class="campus">
+                     <h5 class="text-purple">Campus</h5>
+                     <div class="campus-list">
+                       <a class="mt-2" href="javascript:void(0)">{{user.campus.name}}</a>
+                      </div>
+                    </div>
+                  </div>
+                 <div class="col-md-9">
+                   <div class="community"><h5 class="text-purple">{{user.degree.name}}</h5></div>
+                   <app-community-list [searchQuery]="searchQuery" [url]="academicesPath"></app-community-list>
+                  </div>
+                </div>
+              </ng-template>
+            </li>
                 </ul>
 
                 <div [ngbNavOutlet]="nav" class="mt-2"></div>

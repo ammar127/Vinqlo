@@ -17,10 +17,10 @@ export class CommunityComponent implements OnInit {
 
   slug!: string;
   community!: Community;
-
+  searchQuery:string='';
   isLoader: boolean = false;
   postbyComunity = '/posts/get/by/';
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute,
     private communityService: CommunityService,private commonService:CommonService) { }
 
   ngOnInit(): void {
@@ -32,5 +32,5 @@ export class CommunityComponent implements OnInit {
   getCurrentCommunity() {
     this.communityService.getSingleCommunity(this.slug).subscribe(res => this.community = res.data)
   }
- 
+
 }

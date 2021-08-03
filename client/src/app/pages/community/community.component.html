@@ -22,16 +22,12 @@
       </div>
       <div class="col-md-9">
         <div class="single-post-card card shadow-sm">
-          <div class="back">
-            <a href="javascript:void(0)">
-              <i class="fas text-purple fa-chevron-left"></i
-            ></a>
-          </div>
+          <div class="back"> <a href="javascript:void(0)"><i class="fas text-purple fa-chevron-left"></i ></a></div>
           <div class="single-post">
             <div class="client-header">
               <div>
                 <h6 class="main-color mb-0">{{ community.name }}</h6>
-                <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
+                <small class="text-muted">{{community.by.firstName}} {{community.by.lastName}}</small>
               </div>
               <div>
                 <button class="btn btn-join">
@@ -40,9 +36,7 @@
                 </button>
               </div>
               <div ngbDropdown class="d-inline-block">
-                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-                  <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                </button>
+                <button class="btn" id="dropdownBasic1" ngbDropdownToggle> <i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                   <button ngbDropdownItem>Report</button>
                 </div>
@@ -52,27 +46,15 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
               veritatis.
             </p>
-            <span class="main-color"
-              ><i class="fa icons-color fa-users" aria-hidden="true"></i
-              >{{ community.membersCount }}</span
-            >
+            <span class="main-color" ><i class="fa icons-color fa-users" aria-hidden="true"></i >{{ community.membersCount }}</span>
           </div>
         </div>
-
         <div class="search-field mb-4">
-          <input
-            type="text"
-            class="form-control shadow-sm"
-            placeholder="Search by Tag"
-          />
-          <img
-            src="../../../assets/images/search-solid.svg"
-            width="30px"
-            alt=""
-          />
+          <input [ngModel]="searchQuery" type="text" class="form-control shadow-sm" placeholder="Search by name" />
+          <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
         </div>
 
-        <post-list [url]="postbyComunity+slug"></post-list>
+        <post-list [searchQuery]="searchQuery" [url]="postbyComunity+slug"></post-list>
       </div>
     </div>
   </div>
