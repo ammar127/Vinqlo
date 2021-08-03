@@ -26,6 +26,7 @@ export class ForgotComponent implements OnInit {
   ngOnInit(): void {
     this.authForm = this.fb.group({
       email:[''],
+      type:['1'],
     })
   }
   get f() {return this.authForm.controls}
@@ -71,6 +72,7 @@ export class ForgotComponent implements OnInit {
     console.log(this.f.email.value)
     this.userService.sendOtp(this.f.email.value).subscribe(res=>{
       if(res.status == 200){
+        this.router.navigate([`/otp/${this.f.email.value}/1`]);
       }
       console.log(res)
     })

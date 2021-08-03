@@ -16,7 +16,7 @@
                                 <input #id formControlName="email" type="email" class="form-control custom-border" placeholder="Email" />
                                 <errors [control]="f.email"></errors>
                             </div>
-                            <button class="btn mb-2 btn-main" [disabled]="!authForm.valid" type="submit" (click)='send()' [routerLink]="['/otp',id.value,1]">
+                            <button class="btn mb-2 btn-main" [disabled]="!authForm.valid" type="submit" (click)='send()'>
                 Send Email
               </button>
                             <a [routerLink]="['/auth']">Sign In</a>
