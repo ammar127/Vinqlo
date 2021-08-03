@@ -22,7 +22,7 @@ const routes: Routes = [
     path: 'otp/:email/:type', component: OtpComponent
   },
   {
-    path: 'forgot', component: ForgotComponent, canActivate: [NoAuthGuard]
+    path: 'forgot', component: ForgotComponent
   },
   {
     path: 'reset', component: ResetComponent, canActivate: [NoAuthGuard]
