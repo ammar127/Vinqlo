@@ -70,6 +70,8 @@ export class ForgotComponent implements OnInit {
   send(){
     console.log(this.f.email.value)
     this.userService.sendOtp(this.f.email.value).subscribe(res=>{
+      if(res.status == 200){
+      }
       console.log(res)
     })
   }
