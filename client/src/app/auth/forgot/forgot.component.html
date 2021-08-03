@@ -11,12 +11,12 @@
                         <div *ngIf="errors" class="alert alert-danger">
                             <div *ngFor="let error of errors">{{ error }}</div>
                         </div>
-                        <form autocomplete="off" [formGroup]="authForm" (ngSubmit)="submitForm()">
+                        <form autocomplete="off" [formGroup]="authForm">
                             <div class="input-field">
                                 <input formControlName="email" type="email" class="form-control custom-border" placeholder="Email" />
                                 <errors [control]="f.email"></errors>
                             </div>
-                            <button class="btn mb-2 btn-main" [disabled]="!authForm.valid" type="submit">
+                            <button class="btn mb-2 btn-main" [disabled]="!authForm.valid" type="submit" (click)='send()'>
                 Send Email
               </button>
                         </form>

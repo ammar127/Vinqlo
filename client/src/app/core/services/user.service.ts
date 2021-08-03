@@ -120,4 +120,9 @@ export class UserService {
   {
     return this.apiService.put(`/users/status/${status}/${email}`);
   }
+
+  sendOtp(email:string)
+  {
+    return this.apiService.get(`/users/forgotPassword/${email}`)
+  }
 }

@@ -1,6 +1,7 @@
+import { UserService } from './../../core/services/user.service';
+import { ApiService } from './../../core/services/api.service';
 import { UserType } from './../../core/constants/UserType';
 import { CommonModule } from '@angular/common';
-import { UserService } from 'src/app/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -14,13 +15,18 @@ export class ForgotComponent implements OnInit {
   isLogin: boolean = true;
   errors: any= null;
   authForm!: FormGroup;
+
   constructor(private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
     private fb: FormBuilder,
+    apiService:ApiService,
     private commonService:CommonModule) { }
 
   ngOnInit(): void {
+    this.authForm = this.fb.group({
+      email:[''],
+    })
   }
   get f() {return this.authForm.controls}
 
@@ -61,6 +67,10 @@ export class ForgotComponent implements OnInit {
     );
   }
 
-
-
+  send(){
+    console.log(this.f.email.value)
+    this.userService.sendOtp(this.f.email.value).subscribe(res=>{
+      console.log(res)
+    })
+  }
 }
