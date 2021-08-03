@@ -27,6 +27,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { CommunityListComponent } from './community/community-list/community-list.component';
 import { CommunityCreateComponent } from './community/community-create/community-create.component';
 import { CreateReportComponent } from './create-report/create-report.component';
+import { ShowImageComponent } from './show-image/show-image.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
     CommunityListComponent,
     CommunityCreateComponent,
     CreateReportComponent,
+    ShowImageComponent,
   ],
   imports: [
     CommonModule,
@@ -91,6 +93,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
     EditProfileComponent,
     ChangePasswordComponent,
     CreateReportComponent,
+    ShowImageComponent,
 
     //Pipes
     ImagePipe,
