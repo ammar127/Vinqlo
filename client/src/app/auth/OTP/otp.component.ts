@@ -40,8 +40,9 @@ export class OtpComponent {
                 (
                     res => {
                         if (res.status === 200) {
+                          console.log(this.type)
                             if(this.type === 1) {
-                                this.router.navigate(['/feed']);
+                                this.router.navigate(['/reset']);
                             } else {
                                 this.router.navigate(['/auth/reset']);
                             }

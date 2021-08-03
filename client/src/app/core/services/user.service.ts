@@ -89,7 +89,7 @@ export class UserService {
   }
   verifyOtp(otp: string, email:string)
   {
-    return this.apiService.get(`/users/verify/${otp}/${email}`)
+    return this.apiService.get(`/users/verifyOtp/${otp}/${email}`)
   }
   resendOtp(email:string)
   {
