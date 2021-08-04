@@ -15,5 +15,6 @@ export interface User {
     communities: Community[];
     saved:string;
     role:number;
+    strikes:number;
     verified:string;
 }

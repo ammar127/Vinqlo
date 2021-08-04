@@ -7,9 +7,11 @@
   <div class="col-md-9">
     <div class="search-field">
       <input
+        [(ngModel)]="searchQuery"
         type="text"
         class="form-control shadow-sm"
         placeholder="Search by Name"
+        (ngModelChange)="get()"
       />
       <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
     </div>
@@ -17,6 +19,7 @@
   <div class="col-md-3">
     <ng-select
       [clearable]="false"
+      (ngModelChange)="searchQuery=''"
       [(ngModel)]="status"
       [items]="statuses"
       bindValue="id"
