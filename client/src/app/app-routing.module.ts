@@ -89,6 +89,10 @@ const routes: Routes = [
         },
       },
       {
+        path: 'user-profile', loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
+
+      },
+      {
         path: '',
         redirectTo: 'feed',
         pathMatch: 'full'

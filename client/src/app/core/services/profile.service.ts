@@ -17,6 +17,6 @@ export class ProfileService {
   }
   getUserInfo(email:string)
   {
-    return this.api.get('/users')
+    return this.api.get('/users/'+email)
   }
 }
