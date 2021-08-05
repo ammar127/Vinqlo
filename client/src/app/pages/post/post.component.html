@@ -81,12 +81,15 @@
               <div>
                 <ul>
                   <li>
-
                     <a href="javascript:void(0)">
-                      <i  class="fas icons-color fa-heart" [ngStyle]="{'color': postData.isLiked ? '#dc3545': 'black'}" ></i>
+                      <i
+                        class="fas icons-color fa-heart"
+                        [ngStyle]="{
+                          color: postData.isLiked ? '#dc3545' : 'icons-color'
+                        }"
+                      ></i>
                       {{ postData.likeCount }}</a
                     >
-
                   </li>
                   <li>
                     <a href="javascript:void(0)"
@@ -136,17 +139,24 @@
               <hr />
             </div>
             <div class="comment-input">
-
-              <tagify [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
+              <tagify
+                [(ngModel)]="commentt"
+                [whitelist]="whiteList$"
+                [settings]="mixedSettings"
+              >
+              </tagify>
               <!-- <input  [(ngModel)]="commentt" type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="commentt" /> -->
-              <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
-
+              <button
+                class="btn btn-comment"
+                (click)="postComment(postData.slug)"
+              >
+                {{ btnText }}
+              </button>
             </div>
-            <p>{{commentt |  json}}</p>
+            <!-- <p>{{commentt |  json}}</p> -->
           </div>
         </div>
       </div>
-
     </div>
     <div class="row py-5 my-5 d-flex justify-content-center">
       <div class="col-md-3">

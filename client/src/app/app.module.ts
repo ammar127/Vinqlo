@@ -12,9 +12,10 @@ import { APP_INITIALIZER } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { TagifyModule } from 'ngx-tagify';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [BrowserModule, AppRoutingModule, LayoutModule, CoreModule, NgbModule, NgxPermissionsModule.forRoot(),TagifyModule.forRoot()],
   providers: [
     {
