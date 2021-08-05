@@ -38,7 +38,7 @@ export class PostComponent implements OnInit {
         }   ) },
     },
     dropdown: {
-      enabled:2,
+      enabled:1,
       maxItems:10,
       position: 'text',
       mapValueTo: 'text',
@@ -55,19 +55,22 @@ export class PostComponent implements OnInit {
     {
       this.slug = params['slug'];
       this.isLoader = true;
-      this.service.get(this.slug).subscribe
-      (
-        res=>
-        {
+      this.service.get(this.slug).subscribe( res=>{
           this.isLoader = false;
           this.postData=res.data;
-          console.log(this.postData)
         }
       )
     });
   }
   postComment(slug:string)
   {
+    let ht;
+    var raw=this.commentt.split("[[")
+    ht=raw[0];
+    for (let i = 1; i < raw.length ; i++){
+      ht+='[[{"email":"'+JSON.parse(raw[i].split(']]')[0]).user.email+'","value":"'+JSON.parse(raw[i].split(']]')[0]).value+'"}]]'+' '+raw[i].split(']]')[1];
+    }
+    console.log(ht);
     if(this.btnText=='Comment')
     {
       this. commentService.postComment({body:this.commentt,post:slug}).subscribe(  res=>{
@@ -135,5 +138,9 @@ export class PostComponent implements OnInit {
   copyContent(slug:string) {
     this.clipboardService.copyFromContent('/post/'+slug)
     Toast.fire({text:'Copied To Clipboard',icon:'success'})
+  }
+  goToUserProfile()
+  {
+    console.log('chala')
   }
 }
