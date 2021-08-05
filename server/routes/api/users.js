@@ -128,11 +128,14 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
         limit: req.query.limit || 10
     };
     var query = {};
+    if(typeof req.query.query !== 'undefined' && req.query.query !== null){
+        query = {$or: [{email: new RegExp(req.query.query, 'i')}, {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')}]}; 
+    }
 
     if(typeof req.query.status !== 'undefined' && req.query.status !== null){
-        query = {status: req.query.status};
+        query.status = req.query.status;
     }else {
-        query = {status: {$ne: 0}};
+        query.status = {$ne: 0};
     }
 
     User.paginate(query, options, (err, users) => {

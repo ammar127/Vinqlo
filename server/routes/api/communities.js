@@ -183,10 +183,15 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
         query.name = new RegExp(req.query.name, 'i');
     }
 
-    const options = {
+    var options = {
         page: req.query.page || 1,
-        limit: req.query.limit || 10
+        limit: req.query.limit || 10,
+        sort: {time: -1}
     };
+
+    if(typeof req.query.type !== 'undefined' && +req.query.type === 1){
+        options.sort = {membersCount: -1};
+    }
 
     Community.paginate(query, options, (err, communities) => {
         if(!err && communities.length !== 0){

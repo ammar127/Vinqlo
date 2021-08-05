@@ -73,6 +73,11 @@ router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {
     };
     
     var query = {};
+
+    if(typeof req.query.type !== 'undefined' && +req.query.type === 1){
+        options.sort = {likeCount: -1};
+    }
+
     query.community = {$in : req.user.communities}
     query.status = 1;
 
@@ -241,6 +246,17 @@ router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, (r
     req.post.save((err, post) => {
         if(err) return next(err);
         next(new httpResponse.OkResponse({message: 'Successful'}));
+    });
+});
+
+router.get('/get/noComment', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    var options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10,
+    };
+    Post.paginate({comments : {$exists:true, $size:0}}, options, (err, posts) => {
+        if (err) return next(new httpResponse.InternalServerErrorResponse(err));
+        next(new httpResponse.OkResponse(posts));
     });
 });
 
