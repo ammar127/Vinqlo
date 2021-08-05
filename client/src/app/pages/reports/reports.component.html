@@ -6,7 +6,7 @@
 <div class="row mx-0 my-4">
   <div class="col-md-9">
     <div class="search-field">
-      <input type="text" class="form-control shadow-sm" placeholder="Search by Name" />
+      <input [(ngModel)]="searchQuery" type="text" class="form-control shadow-sm" placeholder="Search by Name" (ngModelChange)="get()"/>
       <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
     </div>
   </div>
@@ -47,7 +47,7 @@
             <div class="card-footer">
               <a href="javascript:void(0)" class="mr-4" (click)="deleteReport(report.slug)" ><img src="../../../assets/images/trash-alt-solid.svg" width="20px"  alt="" /> &nbsp; Delete report</a >
               <a href="javascript:void(0)" class="mr-4" (click)="deactivateReportedUser(report.by.email)"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> &nbsp; Deactivate user</a >
-              <a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.by.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>&nbsp; Add strike to user</a>
+              <a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.by.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>&nbsp;({{report.by.strikes}}) Add strike to user</a>
             </div>
           </div>
         </div>

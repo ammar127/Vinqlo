@@ -1,7 +1,9 @@
+import { Toast } from './../../../core/constants/Toast';
 import { PostService } from './../../../core/services/post.service';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Post } from 'src/app/core';
 import { HttpParams } from '@angular/common/http';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'post-list',
@@ -16,7 +18,7 @@ export class ListComponent implements OnInit,OnChanges {
   hasNextPage = true;
   isLoader = false;
   @Input() searchQuery:string='';
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService,private clipboardService: ClipboardService) { }
 
   ngOnChanges()
   {
@@ -49,8 +51,21 @@ export class ListComponent implements OnInit,OnChanges {
       })
 
   }
+  toggleSave(save:boolean,slug:string)
+  {
+    this.postService.toggleSave(save?0:1,slug).subscribe(res=> {
+      if(res.status==200){
+      Toast.fire({text:save?'Post Un-Saved':'Post Saved',icon:'success'})
+      var foundIndex = this.posts.findIndex(x => x.slug == slug);
+      this.posts[foundIndex].isSaved = !this.posts[foundIndex].isSaved;
+    }})
+  }
   onLoadMoreClick() {
     this.page++;
     this.get();
+  }
+  copyContent(slug:string) {
+    this.clipboardService.copyFromContent('/post/'+slug)
+    Toast.fire({text:'Copied To Clipboard',icon:'success'})
   }
 }

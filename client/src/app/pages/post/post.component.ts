@@ -9,6 +9,7 @@ import { Toast, UserService } from 'src/app/core';
 import { TagData, TagifySettings } from 'ngx-tagify';
 import { KeyValuePipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-post',
@@ -45,7 +46,7 @@ export class PostComponent implements OnInit {
     }
 };
 
-  constructor(private route: ActivatedRoute,private service:PostService,private userService: UserService,private commentService:CommentService) { }
+  constructor(private route: ActivatedRoute,private service:PostService,private clipboardService: ClipboardService,private userService: UserService,private commentService:CommentService) { }
   get by (){  return this.userService.getCurrentUser()}
   get btnText (){ return this.isEdit ? 'Edit':'Comment'}
   ngOnInit(): void
@@ -96,7 +97,7 @@ export class PostComponent implements OnInit {
       if(res.status==200)
       {
         this.slug=slug;
-        //Toast.fire({icon:'success', title:'Comment Updated successfully'});
+        Toast.fire({icon:'success', title:'Comment Updated successfully'});
         this.commentt=res.data.body;
       }
     }
@@ -122,5 +123,17 @@ export class PostComponent implements OnInit {
         this.postData.isLiked ? this.postData.likeCount++ : this.postData.likeCount--;
       })
 
+  }
+  toggleSave(save:boolean,slug:string)
+  {
+    this.service.toggleSave(save?0:1,slug).subscribe(res=> {
+      if(res.status==200){
+      Toast.fire({text:save?'Post Un-Saved':'Post Saved',icon:'success'})
+      this.postData.isSaved = !this.postData.isSaved;
+    }})
+  }
+  copyContent(slug:string) {
+    this.clipboardService.copyFromContent('/post/'+slug)
+    Toast.fire({text:'Copied To Clipboard',icon:'success'})
   }
 }
