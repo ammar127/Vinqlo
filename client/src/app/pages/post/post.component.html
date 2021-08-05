@@ -17,7 +17,7 @@
               <div>
                 <button class="btn btn-join">
                   <i class="fa fa-link icons-color" aria-hidden="true"></i>
-                  <span class="main-color"> Join</span>
+                  <span class="main-color" > Join</span>
                 </button>
               </div>
               <div ngbDropdown class="d-inline-block">
@@ -25,7 +25,7 @@
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem>Report</button>
+                  <button ngbDropdownItem (click)="report.open(2, postData.community.slug)">Report Community</button>
                 </div>
               </div>
             </div>
@@ -51,11 +51,11 @@
               </div>
 
               <div ngbDropdown class="d-inline-block">
-                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-                  <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                </button>
+                <button class="btn" id="dropdownBasic1" ngbDropdownToggle> <i class="fa fa-ellipsis-h" aria-hidden="true"></i> </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem>Report</button>
+                  <button ngbDropdownItem (click)="report.open(0, postData.slug)"> Report Post </button>
+                  <button ngbDropdownItem (click)="report.open(1, postData.by.email)"> Report User </button>
+                  <button ngbDropdownItem (click)="report.open(2, postData.community.slug)"> Report Community </button>
                 </div>
               </div>
             </div>
@@ -111,19 +111,9 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{ comment.by.firstName }} {{ comment.by.lastName }}</p>
-              <span
-                >{{ comment.body }}
-                <!-- <a href="javascript:void(0)">{{comment.by.email}}</a> -->
-              </span>
-              <div
-                align="right"
-                *ngIf="by.email == comment.by.email"
-                ngbDropdown
-                class="d-inline-block"
-              >
-                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-                  <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                </button>
+              <span [innerHtml]=" comment.body | comment"></span>
+              <div align="right" *ngIf="by.email == comment.by.email" ngbDropdown class="d-inline-block">
+                <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                   <button (click)="editComment(comment.slug)" ngbDropdownItem>
                     Edit
@@ -137,12 +127,10 @@
             </div>
             <div class="comment-input">
 
-              <tagify [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
-              <!-- <input  [(ngModel)]="commentt" type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="commentt" /> -->
+              <tagify appCommentFilter [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
               <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
 
             </div>
-            <p>{{commentt |  json}}</p>
           </div>
         </div>
       </div>
@@ -155,3 +143,4 @@
     </div>
   </div>
 </section>
+<app-create-report #report></app-create-report>

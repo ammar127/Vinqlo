@@ -28,7 +28,8 @@ import { CommunityListComponent } from './community/community-list/community-lis
 import { CommunityCreateComponent } from './community/community-create/community-create.component';
 import { CreateReportComponent } from './create-report/create-report.component';
 import { ShowImageComponent } from './show-image/show-image.component';
-
+import { CommentFilterComponent } from './Pipes/comment-filter.pipe';
+import { CreateDegreeComponent } from './create-degree/create-degree.component';
 @NgModule({
   declarations: [
     AlphaOnlyDirective,
@@ -40,6 +41,7 @@ import { ShowImageComponent } from './show-image/show-image.component';
     ShowAuthedDirective,
     ErrorsComponent,
     ImagePipe,
+    CommentFilterComponent,
     LoaderComponent,
     NoContentComponent,
     CreateComponent,
@@ -53,6 +55,8 @@ import { ShowImageComponent } from './show-image/show-image.component';
     CommunityCreateComponent,
     CreateReportComponent,
     ShowImageComponent,
+    CreateDegreeComponent,
+    CreateDegreeComponent
   ],
   imports: [
     CommonModule,
@@ -94,11 +98,13 @@ import { ShowImageComponent } from './show-image/show-image.component';
     ChangePasswordComponent,
     CreateReportComponent,
     ShowImageComponent,
+    CreateDegreeComponent,
 
     //Pipes
     ImagePipe,
     LoaderComponent,
-    NoContentComponent
+    NoContentComponent,
+    CommentFilterComponent
   ]
 })
 export class SharedModule { }

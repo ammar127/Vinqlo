@@ -10,7 +10,7 @@ export class ReportService {
   constructor(private api:ApiService) { }
   getAllReports(type:number,searchQuery:String,status:number)
   {
-    return this.api.get(`/reports/get/all?type=${type}${status !== -1 ? '&status='+status: ''}${searchQuery !== '' ? '&name='+searchQuery: ''}`)
+    return this.api.get(`/reports/get/all?type=${type}${status !== -1 ? '&status='+status: ''}${searchQuery !== '' ? '&query='+searchQuery: ''}`)
   }
   postReport(data:any):Observable<any>
   {

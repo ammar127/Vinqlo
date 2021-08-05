@@ -23,7 +23,7 @@ export class UsersComponent implements OnInit
   {
     this.isLoading = true;
 
-    this.userService.getAllUsers(`/users/get/all?page=${this.page}${this.status !== -1 ? '&status='+this.status: ''}${this.searchQuery !== '' ? '&name='+this.searchQuery: ''}`).subscribe
+    this.userService.getAllUsers(`/users/get/all?page=${this.page}${this.status !== -1 ? '&status='+this.status: ''}${this.searchQuery !== '' ? '&query='+this.searchQuery: ''}`).subscribe
     (
       res=>
       {
