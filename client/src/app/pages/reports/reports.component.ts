@@ -13,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
 export class ReportsComponent implements OnInit {
   public isCollapsed = true;
   isLoader = false;
+  searchQuery='';
   status = -1;
   statuses = [
     { name: 'All', id: -1 },
@@ -28,9 +29,8 @@ export class ReportsComponent implements OnInit {
   }
   get() {
     this.isLoader = true;
-    this.reportService
-      .getAllReports(report.findIndex((e) => e == this.reportType))
-      .subscribe((res) => {
+    console.log(report.findIndex((e) => e == this.reportType))
+    this.reportService.getAllReports(report.findIndex((e) => e == this.reportType),this.searchQuery,this.status).subscribe((res) => {
         this.isLoader = false;
         this.reports = res.data.reports.docs;
       });
@@ -74,20 +74,15 @@ export class ReportsComponent implements OnInit {
   }
   addStrike(email:string)
   {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'you wanna add a strike to this user.',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, Post Strike !',
-      cancelButtonText: 'No, cancel please!',
-    }).then(({ isConfirmed }) => {
+    Swal.fire({ title: 'Are you sure?',text: 'you wanna add a strike to this user.',showCancelButton: true,confirmButtonColor: '#DD6B55',confirmButtonText: 'Yes, Post Strike !', cancelButtonText: 'No, cancel please!',})
+    .then(({ isConfirmed }) => {
       if (isConfirmed) {
         this.userService.changeStatus(email, 0).subscribe((res) => {
           if (res.status == 200) {
             this.get();
             this.userService.updateStatus(2,email).subscribe( res=>{
               if(res.status==200){
+
                 Toast.fire({ text: 'Strike Posted Successfully', icon: 'success' })
               }
             })

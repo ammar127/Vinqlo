@@ -15,9 +15,7 @@ export class PostService {
   }
 
   getAll(path: string) {return this.api.get(path);}
- 
-  toggleLike(type:number,slug:string){
-    return this.api.get(`/posts/like/${type}/${slug}`)
-  }
+  toggleLike(type:number,slug:string){ return this.api.get(`/posts/like/${type}/${slug}`) }
+  toggleSave(type:number,slug:string){ return this.api.get(`/posts/save/${type}/${slug}`) }
   searchByName(word:string){  return this.api.get('/users/search/'+word)}
 }

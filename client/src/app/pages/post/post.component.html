@@ -82,8 +82,8 @@
                 <ul>
                   <li>
 
-                    <a href="javascript:void(0)">
-                      <i  class="fas icons-color fa-heart" [ngStyle]="{'color': postData.isLiked ? '#dc3545': 'black'}" ></i>
+                    <a href="javascript:void(0)" (click)="toggleLike(postData.isLiked, postData.slug)">
+                      <i  class="fas icons-color fa-heart" [ngStyle]="{'color': postData.isLiked ? '#dc3545': '#25eaef'}" ></i>
                       {{ postData.likeCount }}</a
                     >
 
@@ -95,12 +95,12 @@
                     >
                   </li>
                   <li>
-                    <a href="javascript:void(0)"
-                      ><i class="fas icons-color fa-bookmark"></i
+                    <a href="javascript:void(0)" (click)="toggleSave(postData.isSaved, postData.slug)"
+                      ><i class="fas icons-color fa-bookmark" [ngStyle]="{'color': postData.isSaved ? '#dc3545': '#25eaef'}"></i
                     ></a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" (click)="copyContent(postData.slug)">
                       <i class="fas icons-color fa-share"></i
                     ></a>
                   </li>
