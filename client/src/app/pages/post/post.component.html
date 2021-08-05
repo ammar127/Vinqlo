@@ -81,12 +81,18 @@
               <div>
                 <ul>
                   <li>
-
-                    <a href="javascript:void(0)" (click)="toggleLike(postData.isLiked, postData.slug)">
-                      <i  class="fas icons-color fa-heart" [ngStyle]="{'color': postData.isLiked ? '#dc3545': '#25eaef'}" ></i>
+                    <a
+                      href="javascript:void(0)"
+                      (click)="toggleLike(postData.isLiked, postData.slug)"
+                    >
+                      <i
+                        class="fas icons-color fa-heart"
+                        [ngStyle]="{
+                          color: postData.isLiked ? '#dc3545' : 'icons-color'
+                        }"
+                      ></i>
                       {{ postData.likeCount }}</a
                     >
-
                   </li>
                   <li>
                     <a href="javascript:void(0)"
@@ -95,12 +101,22 @@
                     >
                   </li>
                   <li>
-                    <a href="javascript:void(0)" (click)="toggleSave(postData.isSaved, postData.slug)"
-                      ><i class="fas icons-color fa-bookmark" [ngStyle]="{'color': postData.isSaved ? '#dc3545': '#25eaef'}"></i
+                    <a
+                      href="javascript:void(0)"
+                      (click)="toggleSave(postData.isSaved, postData.slug)"
+                      ><i
+                        class="fas icons-color fa-bookmark"
+                        [ngStyle]="{
+                          color: postData.isSaved ? '#dc3545' : '#25eaef'
+                        }"
+                      ></i
                     ></a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" (click)="copyContent(postData.slug)">
+                    <a
+                      href="javascript:void(0)"
+                      (click)="copyContent(postData.slug)"
+                    >
                       <i class="fas icons-color fa-share"></i
                     ></a>
                   </li>
@@ -127,14 +143,15 @@
             </div>
             <div class="comment-input">
 
-              <tagify appCommentFilter [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
+
+              <tagify  [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
               <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
 
             </div>
+
           </div>
         </div>
       </div>
-
     </div>
     <div class="row py-5 my-5 d-flex justify-content-center">
       <div class="col-md-3">
