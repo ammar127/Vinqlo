@@ -134,7 +134,8 @@ postSchema.methods.toJSONFor = function(user){
             slug: this.community.slug,
             name: this.community.name,
             category: this.community.category,
-            membersCount: this.community.membersCount
+            membersCount: this.community.membersCount,
+            isJoined: user.isJoined(this._id),
         },
         time: this.time,
         likeCount: this.likeCount,
