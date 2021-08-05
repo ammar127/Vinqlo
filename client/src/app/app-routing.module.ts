@@ -22,7 +22,7 @@ const routes: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: UserType.user.toString(),
+            except: UserType.user.toString(),
             redirectTo: '/access-denied'
           }
         },
@@ -46,7 +46,7 @@ const routes: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            except: [UserType.admin.toString(), UserType.superAdmin.toString()],
             redirectTo: '/access-denied'
           }
         },
@@ -58,7 +58,7 @@ const routes: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            except: [UserType.admin.toString(), UserType.superAdmin.toString()],
             redirectTo: '/access-denied'
           }
         },
@@ -74,7 +74,7 @@ const routes: Routes = [
         path: 'category', loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule), canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [UserType.user.toString(),],
+            except: [UserType.user.toString(),],
             redirectTo: '/access-denied'
           }
         },
@@ -83,7 +83,7 @@ const routes: Routes = [
         path: 'academic-category', loadChildren: () => import('./pages/academic-category/academic-category.module').then(m => m.AcademicCategoryModule), canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            except: [UserType.admin.toString(), UserType.superAdmin.toString()],
             redirectTo: '/access-denied'
           }
         },

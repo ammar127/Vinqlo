@@ -1,3 +1,4 @@
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { RouterModule } from '@angular/router';
 import { NgModule, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -96,7 +97,8 @@ import { CreateReportComponent } from './create-report/create-report.component';
     //Pipes
     ImagePipe,
     LoaderComponent,
-    NoContentComponent
+    NoContentComponent,
+    NgxPermissionsModule
   ]
 })
 export class SharedModule { }
