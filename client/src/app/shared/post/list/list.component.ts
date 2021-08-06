@@ -13,28 +13,47 @@ import { ClipboardService } from 'ngx-clipboard';
 export class ListComponent implements OnInit,OnChanges {
 
   @Input() url  = '';
-  posts !: Post[] ;
+  posts : Post[]=[] ;
   page = 1;
   hasNextPage = true;
   isLoader = false;
+  type:number=0;
   @Input() searchQuery:string='';
-  constructor(private postService: PostService,private clipboardService: ClipboardService) { }
-
+  constructor(private postService: PostService,private clipboardService: ClipboardService) {}
   ngOnChanges()
   {
-    this.get();
+    if(this.searchQuery!=''){
+    this.get();}
   }
   ngOnInit(): void {
     this.get();
   }
   get() {
     this.isLoader = true;
+    //let params= new HttpParams().set('page', this.page.toString()).set('title',this.searchQuery);
+    this.postService.getAll(this.url,this.page,this.type,this.searchQuery).subscribe(res => {
+      if(res.status === 200) {
+        this.isLoader = false;
+       if(this.searchQuery==''){
+        if(res.data.docs) {
+          this.posts.push(...res.data.docs as Post[]);
+          this.hasNextPage = res.data.hasNextPage;
+        } else {
+          this.hasNextPage = false;
+        }
+       }
+      }
+    })
+  }
+  getByQuery() {
+    this.isLoader = true;
     let params= new HttpParams().set('page', this.page.toString()).set('title',this.searchQuery);
-    this.postService.getAll(this.url+'?'+params.toString()).subscribe(res => {
+    this.postService.getAll(this.url,this.page,this.type,this.searchQuery).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;
         if(res.data.docs) {
-          this.posts=res.data.docs ;
+          this.posts=[];
+          this.posts.push(...res.data.docs as Post[]);
           this.hasNextPage = res.data.hasNextPage;
         } else {
           this.hasNextPage = false;
