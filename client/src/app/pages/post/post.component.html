@@ -15,9 +15,15 @@
                 <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
               </div>
               <div>
+<<<<<<< HEAD
                 <button class="btn btn-join" [disabled]="joinSlug === postData.community.slug" (click)="onJoinClick(postData.community.slug,postData.community.isJoined)">
                   <i class="fa fa-link icons-color" aria-hidden="true" ></i>
                   <span class="main-color"   >{{postData.community.isJoined?' leave':' join'}}</span>
+=======
+                <button class="btn btn-join">
+                  <i class="fa fa-link icons-color" aria-hidden="true"></i>
+                  <span class="main-color"> Join</span>
+>>>>>>> 1ce646749c6be41c5f90055f744606e61e1ae54c
                 </button>
               </div>
               <div ngbDropdown class="d-inline-block">
@@ -25,7 +31,12 @@
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem (click)="report.open(2, postData.community.slug)">Report Community</button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(2, postData.community.slug)"
+                  >
+                    Report Community
+                  </button>
                 </div>
               </div>
             </div>
@@ -51,11 +62,28 @@
               </div>
 
               <div ngbDropdown class="d-inline-block">
-                <button class="btn" id="dropdownBasic1" ngbDropdownToggle> <i class="fa fa-ellipsis-h" aria-hidden="true"></i> </button>
+                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem (click)="report.open(0, postData.slug)"> Report Post </button>
-                  <button ngbDropdownItem (click)="report.open(1, postData.by.email)"> Report User </button>
-                  <button ngbDropdownItem (click)="report.open(2, postData.community.slug)"> Report Community </button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(0, postData.slug)"
+                  >
+                    Report Post
+                  </button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(1, postData.by.email)"
+                  >
+                    Report User
+                  </button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(2, postData.community.slug)"
+                  >
+                    Report Community
+                  </button>
                 </div>
               </div>
             </div>
@@ -130,6 +158,7 @@
               <span (click)="routerlinkClicked($event)" [innerHtml]=" comment.body | comment"></span>
               <div align="right" *ngIf="by.email == comment.by.email" ngbDropdown class="d-inline-block">
                 <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                   <button (click)="editComment(comment.slug)" ngbDropdownItem>
                     Edit
@@ -142,13 +171,19 @@
               <hr />
             </div>
             <div class="comment-input">
-
-
-              <tagify  [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
-              <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
-
+              <tagify
+                [(ngModel)]="commentt"
+                [whitelist]="whiteList$"
+                [settings]="mixedSettings"
+              >
+              </tagify>
+              <button
+                class="btn btn-comment"
+                (click)="postComment(postData.slug)"
+              >
+                {{ btnText }}
+              </button>
             </div>
-
           </div>
         </div>
       </div>

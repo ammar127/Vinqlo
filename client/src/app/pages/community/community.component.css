@@ -22,3 +22,27 @@
   padding-bottom: 7px;
   padding-top: 6px;
 }
+
+.single-post-card {
+  border-radius: 20px;
+  padding: 15px;
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row !important;
+}
+.single-post-card .back {
+  width: 5%;
+  text-align: center;
+}
+.single-post-card .single-post {
+  width: 95%;
+}
+.client-card .client-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.client-header {
+  display: flex;
+  justify-content: space-between;
+}
