@@ -12,7 +12,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class UserProfileComponent implements OnInit {
   user!: User;
   isLoader=false;
-  postByUser='/posts/get/my'
+  postByUser='/posts/get/email/'
   email= null;
   isJoin = false;
   constructor(private userService: UserService, private profileService:ProfileService, private activatedRoute:ActivatedRoute) { }
