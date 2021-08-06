@@ -1,15 +1,71 @@
-import { Component, OnInit } from '@angular/core';
+import { Toast } from './../../../core/constants/Toast';
+import { PostService } from './../../../core/services/post.service';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Post } from 'src/app/core';
+import { HttpParams } from '@angular/common/http';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'post-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit,OnChanges {
 
-  constructor() { }
+  @Input() url  = '';
+  posts !: Post[] ;
+  page = 1;
+  hasNextPage = true;
+  isLoader = false;
+  @Input() searchQuery:string='';
+  constructor(private postService: PostService,private clipboardService: ClipboardService) { }
 
-  ngOnInit(): void {
+  ngOnChanges()
+  {
+    this.get();
   }
+  ngOnInit(): void {
+    this.get();
+  }
+  get() {
+    this.isLoader = true;
+    let params= new HttpParams().set('page', this.page.toString()).set('title',this.searchQuery);
+    this.postService.getAll(this.url+'?'+params.toString()).subscribe(res => {
+      if(res.status === 200) {
+        this.isLoader = false;
+        if(res.data.docs) {
+          this.posts=res.data.docs ;
+          this.hasNextPage = res.data.hasNextPage;
+        } else {
+          this.hasNextPage = false;
+        }
+      }
+    })
+  }
+  toggleLike(like:boolean,slug:string)
+  {
+      this.postService.toggleLike(like?0:1,slug).subscribe( res=> {
+        var foundIndex = this.posts.findIndex(x => x.slug == slug);
+        this.posts[foundIndex].isLiked = !this.posts[foundIndex].isLiked;
+        this.posts[foundIndex].isLiked ? this.posts[foundIndex].likeCount++ : this.posts[foundIndex].likeCount--;
+      })
 
+  }
+  toggleSave(save:boolean,slug:string)
+  {
+    this.postService.toggleSave(save?0:1,slug).subscribe(res=> {
+      if(res.status==200){
+      Toast.fire({text:save?'Post Un-Saved':'Post Saved',icon:'success'})
+      var foundIndex = this.posts.findIndex(x => x.slug == slug);
+      this.posts[foundIndex].isSaved = !this.posts[foundIndex].isSaved;
+    }})
+  }
+  onLoadMoreClick() {
+    this.page++;
+    this.get();
+  }
+  copyContent(slug:string) {
+    this.clipboardService.copyFromContent('/post/'+slug)
+    Toast.fire({text:'Copied To Clipboard',icon:'success'})
+  }
 }

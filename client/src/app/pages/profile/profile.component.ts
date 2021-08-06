@@ -1,6 +1,6 @@
 import { ProfileService } from './../../core/services/profile.service';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/core';
+import { User, UserService } from 'src/app/core';
 
 @Component({
   selector: 'app-profile',
@@ -9,15 +9,17 @@ import { User } from 'src/app/core';
 })
 export class ProfileComponent implements OnInit {
   active = 1;
-  user!:User;
-  constructor(private profileService:ProfileService) {}
+  communityUrl = '/communities/get/followed';
+  myCommunityUrl = '/communities/get/my';
+  savedPostUrl = '/posts/get/saved';
+  myPostUrl = '/posts/get/my';
+
+  isJoin = false;
+  constructor(private userService:UserService) {}
 
   ngOnInit(): void {
-    this.profileService.getUser('/users/admin@gmail.com').subscribe
-    (
-      res=>{
-       this.user=res.data.user;
-      }
-    )
+  }
+  get user() {
+    return this.userService.getCurrentUser();
   }
 }

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 
@@ -6,9 +7,13 @@ import { ApiService } from './api.service';
 })
 export class CommunityService {
 
-  constructor (
-    private apiService: ApiService,
-  ) {} 
-  getFollowed() {return this.apiService.get('/communities/followed')}
-}
 
+  constructor(private api:ApiService) { }
+  createCommunity(formData: any): Observable<any>{ return this.api.post('/communities',formData);}
+
+  getAll(path: string) {  return this.api.get(path); }
+  getSingleCommunity(slug:string) { return this.api.get('/communities/'+slug)}
+  getFollowed() {return this.api.get('/communities/get/followed')}
+  join(slug: string)  {return this.api.post(`/communities/${slug}`, {})}
+  unJoin(slug : string) {return this.api.post(`/communities/leave/${slug}`,{})}
+}

@@ -27,3 +27,8 @@
   padding: 10px 19px;
   margin: 20px 0px;
 }
+
+::ng-deep .ng-select.ng-select-single .ng-select-container {
+  border: none;
+  border-radius: 30px;
+}

@@ -11,4 +11,12 @@ export class ProfileService {
   {
     return this.api.get(path);
   }
+  editUser(data:any)
+  {
+    return this.api.put('/users',data)
+  }
+  getUserInfo(email:string)
+  {
+    return this.api.get('/users/'+email)
+  }
 }

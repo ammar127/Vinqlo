@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgModule, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -21,8 +22,14 @@ import { CardComponent } from './post/card/card.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { UploadImgComponent } from './upload-img/upload-img.component';
 import { FileUploadModule } from 'ng2-file-upload';
-
-
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CommunityListComponent } from './community/community-list/community-list.component';
+import { CommunityCreateComponent } from './community/community-create/community-create.component';
+import { CreateReportComponent } from './create-report/create-report.component';
+import { ShowImageComponent } from './show-image/show-image.component';
+import { CommentFilterComponent } from './Pipes/comment-filter.pipe';
+import { CreateDegreeComponent } from './create-degree/create-degree.component';
 @NgModule({
   declarations: [
     AlphaOnlyDirective,
@@ -34,6 +41,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     ShowAuthedDirective,
     ErrorsComponent,
     ImagePipe,
+    CommentFilterComponent,
     LoaderComponent,
     NoContentComponent,
     CreateComponent,
@@ -41,6 +49,14 @@ import { FileUploadModule } from 'ng2-file-upload';
     CardComponent,
     UploadFileComponent,
     UploadImgComponent,
+    EditProfileComponent,
+    ChangePasswordComponent,
+    CommunityListComponent,
+    CommunityCreateComponent,
+    CreateReportComponent,
+    ShowImageComponent,
+    CreateDegreeComponent,
+    CreateDegreeComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +65,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     ReactiveFormsModule,
     HttpClientModule,
     FileUploadModule,
+    RouterModule
   ],
   exports: [
     // shared modules
@@ -67,6 +84,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     DecimalOnlyDirective,
     ShowAuthedDirective,
 
+
     // components
     ErrorsComponent,
     LoaderComponent,
@@ -74,11 +92,19 @@ import { FileUploadModule } from 'ng2-file-upload';
     CreateComponent,
     ListComponent,
     CardComponent,
+    CommunityListComponent,
+    CommunityCreateComponent,
+    EditProfileComponent,
+    ChangePasswordComponent,
+    CreateReportComponent,
+    ShowImageComponent,
+    CreateDegreeComponent,
 
     //Pipes
     ImagePipe,
     LoaderComponent,
-    NoContentComponent
+    NoContentComponent,
+    CommentFilterComponent
   ]
 })
 export class SharedModule { }

@@ -1,42 +1,46 @@
-import { Campus } from './../../core/models/campus';
-import { campuses } from './../../core/constants/campuses';
-import { Component, OnInit } from '@angular/core';
-import { CommonService } from 'src/app/core';
-import { AcademicCategoryService } from 'src/app/core/services/academic-category.service';
+import { Category } from './../../core/models/category';
+import { ActivatedRoute } from '@angular/router';
+import { CommonService } from './../../core/services/common.service';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css']
+  styleUrls: ['./category.component.css'],
 })
-export class CategoryComponent implements OnInit {
-  campuses!:Campus[];
-  isLoader:boolean=true;
-  constructor(private service:AcademicCategoryService,private campusService:AcademicCategoryService) { }
+export class CategoryComponent implements OnInit, OnChanges {
+  public selectedCar: number | undefined;
 
+  cars = [
+    { id: 1, name: 'Trending' },
+    { id: 2, name: 'Newest' },
+  ];
+  academicesPath = '/communities/get/academics';
+  slug!: string;
+  searchQuery: string = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private commonService: CommonService
+  ) {}
+  isLoader = false;
+
+  ngOnChanges() {}
   ngOnInit(): void {
-    this.getCampus();
+    this.route.params.subscribe((res) => {
+      this.slug = res['slug'];
+    });
   }
-  getCampus()
-  {
-
-    this.campusService.getCampuses().subscribe
-    (
-      res=>{
-      this.campuses=res.data.campuses
-      this.isLoader=false;
-    }
-    )
+  get categories() {
+    return this.commonService.categories();
   }
-  createCampus(name:string)
-  {
-    if(name !== '') {
-       this.service.create(name).subscribe
-       (
-         res=>{console.log(res)}
-       )
-       this.getCampus();
-    }
+  get title() {
+    return this.categories.find((e) => e.slug == this.slug);
+  }
 
+  get() {
+    this.route.params.subscribe((res) => {
+      this.slug = res['slug'];
+    });
   }
 }

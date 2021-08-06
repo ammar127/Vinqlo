@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 
@@ -7,8 +8,14 @@ import { ApiService } from './api.service';
 export class PostService {
 
   constructor(private api:ApiService) { }
-  get(slug:string)
-  {
+
+  createPost(formData:any): Observable<any>{ return this.api.post('/posts',formData);}
+  get(slug:string)  {
     return this.api.get('/posts/'+slug);
   }
+
+  getAll(path: string) {return this.api.get(path);}
+  toggleLike(type:number,slug:string){ return this.api.get(`/posts/like/${type}/${slug}`) }
+  toggleSave(type:number,slug:string){ return this.api.get(`/posts/save/${type}/${slug}`) }
+  searchByName(word:string){  return this.api.get('/users/search/'+word)}
 }

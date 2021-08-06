@@ -3,7 +3,7 @@ import { User } from "./User";
 export interface Comment
 {
     body:string;
-    time:Date;
+    time?:Date;
     by:User;
-    slug:string;
+    slug?:string;
 }

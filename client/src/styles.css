@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
+@import "~@yaireo/tagify/dist/tagify.css";
 body {
   background-color: #dafdfe !important;
+  overflow-x: hidden;
 }
 .bg-dark {
   background-color: #021a68;
@@ -61,7 +63,7 @@ nav {
 }
 .accordian-main {
   position: absolute;
-  right: 1%;
+  right: 0%;
   background: rgb(255, 255, 255);
   padding: 19px;
   z-index: 1;
@@ -99,7 +101,6 @@ li.sidebar-list {
 .sidebar-list:hover a {
   color: #25eaef !important;
 }
-
 
 .o-footer {
   display: block;
@@ -144,16 +145,16 @@ li.sidebar-list {
   color: #fff;
   margin-right: 4px;
 }
-.h-1000{
+.h-1000 {
   height: 1000vh;
 }
-.user-img{
+.user-img {
   height: 40px;
   width: 40px;
   border-radius: 100px;
   border: 1px solid lightgray;
 }
-.user-img img{
+.user-img img {
   height: 100%;
   width: 100%;
   object-fit: contain;
@@ -161,6 +162,138 @@ li.sidebar-list {
   vertical-align: baseline;
 }
 .text-green {
-  color:#25eaef !important;
+  color: #25eaef !important;
 }
 
+::ng-deep .nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  align-items: center !important;
+  justify-content: space-around !important;
+  background: #fff;
+  border-top-left-radius: 25px !important;
+  border-top-right-radius: 25px !important;
+}
+
+.search-field {
+  position: relative;
+}
+.search-field input {
+  border: none;
+  border-radius: 30px;
+  padding-left: 50px;
+}
+.search-field img {
+  position: absolute;
+  top: 9px;
+  left: 13px;
+  width: 22px;
+}
+.community {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 30px;
+  padding: 4px 12px;
+  margin: 20px 0px;
+}
+.campus {
+  background: #fff;
+  border-radius: 15px;
+  padding: 12px;
+}
+::ng-deep .dropdown-toggle::after {
+  display: none !important;
+}
+.card {
+  border: none;
+  border-radius: 15px;
+  /* padding: 30px; */
+}
+.card .client-card {
+  border-radius: 20px;
+  padding: 15px;
+  margin: 10px 0px;
+}
+.card .client-card .client-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.btn-join {
+  background-color: #f6f6f6;
+}
+
+/* Modal */
+
+.custom-border {
+  border-left: 1px solid #1105c0 !important;
+  border-bottom: 1px solid #1105c0 !important;
+  border-top: 0px !important;
+  border-right: 0px !important;
+  border-radius: 0px !important;
+  color: #000e91;
+  margin-bottom: 30px;
+}
+::placeholder {
+  color: #000e91 !important;
+}
+.form-control:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+select {
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Safari, Chrome, Opera */
+  -webkit-appearance: none;
+}
+.input-field {
+  position: relative;
+}
+.input-field .select-arrow {
+  position: absolute;
+  top: 45px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+}
+.input-field label {
+  font-size: 16px;
+  color: #021a68;
+  font-weight: 600;
+}
+.card {
+  border-radius: 15px;
+  border: none;
+}
+.modal-header {
+  border-bottom: 0px !important;
+}
+.modal-header button span {
+  background: #021a68;
+  color: transparent;
+  border-radius: 50%;
+  padding: 0px 7px 7px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:focus {
+  outline: none !important;
+}
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: #25eaef transparent transparent;
+}
+.ng-select.ng-select-opened > .ng-select-container .ng-arrow {
+  border-color: transparent transparent #25eaef;
+}
+.ng-select .ng-arrow-wrapper:hover .ng-arrow {
+  border-top-color: #07fbff;
+}

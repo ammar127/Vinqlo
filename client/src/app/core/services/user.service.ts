@@ -6,7 +6,7 @@ import { Observable ,  BehaviorSubject ,  ReplaySubject, of } from 'rxjs';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User } from '../models';
-import { map ,  distinctUntilChanged } from 'rxjs/operators';
+import { map ,  distinctUntilChanged, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -33,22 +33,30 @@ export class UserService {
       return this.apiService.get('/users')
       .pipe(map(
         res => {
-          
-            //console.log('res', res)
+
+            console.log('res', res)
               this.setAuth(res.data.user);
               return res.data.user;
             }
-        
-      ))
+
+      ), catchError(e => of(null)))
     } else {
      return  of(null);
+    }
+  }
+  updateUserContext() {
+    // If JWT detected, attempt to get & store user's info
+    if (this.jwtService.getToken()) {
+        this.apiService.get('/users').subscribe(res => {
+              this.setAuth(res.data.user);
+            }, )
     }
   }
 
   setAuth(user: User) {
     console.log('in setAuth')
     // set permissions
-    this.permissionsService.loadPermissions([user.role.toString()]);
+
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(user.token);
     // Set current user data into observable
@@ -104,7 +112,10 @@ export class UserService {
       return data.user;
     }));
   }
-
+  updateStatus(type:number,email:string)
+  {
+    return this.apiService.put(`/users/status/${type}/${email}`)
+  }
   changeStatus(email:string, status: number)
   {
     return this.apiService.put(`/users/status/${status}/${email}`);

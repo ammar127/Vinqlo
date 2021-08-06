@@ -5,69 +5,90 @@
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
           <li [ngbNavItem]="1">
             <a ngbNavLink
-              ><img src="../../assets/images/home.svg" class="mr-2" width="20px" alt="" /> Feed</a>
+              ><img
+                src="../../assets/images/home.svg"
+                class="mr-2"
+                width="20px"
+                alt=""
+              />
+              Feed</a
+            >
             <ng-template ngbNavContent>
-              <div class="row">
+              <div class="row py-3">
                 <div class="col-md-9">
-                  <div class="search-field" >
-                    <input type="text" [(ngModel)]="searchQuery" class="form-control shadow-sm" placeholder="Search by name . . ."/>
-                    <img src="../../../assets/images/search-solid.svg" width="30px" alt=""  />
+                  <div class="search-field">
+                    <input
+                      type="text"
+                      [(ngModel)]="searchQuery"
+                      class="form-control shadow-sm"
+                      placeholder="Search by name . . ."
+                    />
+                    <img
+                      src="../../../assets/images/search-solid.svg"
+                      width="30px"
+                      alt=""
+                    />
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <button class="btn btn-light btn-block rounded-pill" (click)="create.open()"> <i class="fa fa-plus"></i> Create Post</button>
+                  <button
+                    class="
+                      btn btn-post
+                      shadow-sm
+                      main-color
+                      btn-block
+                      rounded-pill
+                      bg-white
+                    "
+                    (click)="create.open()"
+                  >
+                    <i class="fa icons-color fa-plus"></i> &nbsp; Create Post
+                  </button>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-12 my-3">
-                  <div class="card shadow-sm">
-                    <!-- <div *ngFor="let tmp of allPosts" class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">{{tmp.title}}</h6>
-                          <small class="text-muted">{{tmp.by.firstName}} {{tmp.by.lastName}} {{tmp.time | date : 'short'}}</small>
-                        </div>
-                        <div>
-                          <button class="btn btn-join">
-                            <i class="fa fa-link icons-color" aria-hidden="true" ></i>
-                            <span class="main-color">join</span>
-                          </button>
-                        </div>
-                        <div ngbDropdown class="d-inline-block">
-                          <button class="btn" id="dropdownBasic1" ngbDropdownToggle >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button (click)="onReport()" ngbDropdownItem>Report</button>
-                          </div>
-                        </div>
-                      </div>
-                      <span  class="clickable-region">
-                        <p class="my-4">{{tmp.body}}</p>
-                      <div class="client-post">
-                        <img [src]="tmp.image|image" class="img-fluid" alt=""/>
-                      </div>
-                      <span class="main-color"><i class="fa icons-color fa-users" aria-hidden="true" ></i> 1</span>
-
-                      </span>
-                    </div> -->
-                  </div>
+                  <post-list
+                    #postList
+                    [searchQuery]="searchQuery"
+                    [url]="feedpath"
+                  ></post-list>
                 </div>
               </div>
             </ng-template>
           </li>
           <li [ngbNavItem]="2">
-            <a ngbNavLink><img src="../../assets/images/explore.svg" class="mr-2" width="20px" alt="" />Academics</a>
+            <a ngbNavLink
+              ><img
+                src="../../assets/images/explore.svg"
+                class="mr-2"
+                width="20px"
+                alt=""
+              />Academics</a
+            >
             <ng-template ngbNavContent>
-              <div class="row">
+              <div class="row py-3">
                 <div class="col-md-12">
                   <div class="search-field">
-                    <input type="text" class="form-control shadow-sm" placeholder="Search by Tag" />
-                    <img src="../../../assets/images/search-solid.svg" width="30px" alt="" />
+                    <input
+                      type="text"
+                      [(ngModel)]="searchQuery"
+                      class="form-control shadow-sm"
+                      placeholder="Search by Tag"
+                    />
+                    <img
+                      src="../../../assets/images/search-solid.svg"
+                      width="30px"
+                      alt=""
+                    />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="community">
-                    <h5 class="text-purple">Create commuinty</h5>
-                    <a href=""
+                    <h5 class="text-purple">Create community</h5>
+                    <a
+                      href="javascript:void(0)"
+                      (click)="communityCreate.open()"
                       ><i
                         class="fa main-color fa-plus-circle"
                         aria-hidden="true"
@@ -77,104 +98,20 @@
                   <div class="campus">
                     <h5 class="text-purple">Campus</h5>
                     <div class="campus-list">
-                      <a class="mt-2" href="">Campus boekentoren</a>
+                      <a class="mt-2" href="javascript:void(0)">{{
+                        user.campus.name
+                      }}</a>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-9">
                   <div class="community">
-                    <h5 class="text-purple">Civil Engineering</h5>
+                    <h5 class="text-purple">{{ user.degree.name }}</h5>
                   </div>
-                  <div class="card shadow-sm">
-                    <div class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">Physics</h6>
-                          <small class="text-muted">Jaun jose</small>
-                        </div>
-                        <div>
-                          <button class="btn btn-join">
-                            <i
-                              class="fa fa-link icons-color"
-                              aria-hidden="true"
-                            ></i>
-                            <span class="main-color"> Join</span>
-                          </button>
-                        </div>
-                        <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="my-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Tenetur, veritatis.
-                      </p>
-                      <span class="main-color"
-                        ><i
-                          class="fa icons-color fa-users"
-                          aria-hidden="true"
-                        ></i>
-                        1</span
-                      >
-                    </div>
-                    <div class="client-card shadow-sm">
-                      <div class="client-header">
-                        <div>
-                          <h6 class="main-color mb-0">Physics</h6>
-                          <small class="text-muted">Jaun jose</small>
-                        </div>
-                        <div>
-                          <button class="btn btn-join">
-                            <i
-                              class="fa fa-link icons-color"
-                              aria-hidden="true"
-                            ></i>
-                            <span class="main-color"> Join</span>
-                          </button>
-                        </div>
-                        <div ngbDropdown class="d-inline-block">
-                          <button
-                            class="btn"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Action - 1</button>
-                            <button ngbDropdownItem>Another Action</button>
-                            <button ngbDropdownItem>
-                              Something else is here
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="my-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Tenetur, veritatis.
-                      </p>
-                      <span class="main-color"
-                        ><i
-                          class="fa icons-color fa-users"
-                          aria-hidden="true"
-                        ></i>
-                        1</span
-                      >
-                    </div>
-                  </div>
+                  <app-community-list
+                    [searchQuery]="searchQuery"
+                    [url]="academicesPath"
+                  ></app-community-list>
                 </div>
               </div>
             </ng-template>
@@ -186,5 +123,5 @@
     </div>
   </div>
 </section>
-
 <post-create #create></post-create>
+<app-community-create #communityCreate></app-community-create>
