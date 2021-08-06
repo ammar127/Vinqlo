@@ -56,6 +56,18 @@ const routes: Routes = [
         },
       },
       {
+        path: 'no-comment',
+        loadChildren: () =>
+          import('./pages/no-comment/no-comment.module').then((m) => m.NoCommentModule),
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            redirectTo: '/access-denied',
+          },
+        },
+      },
+      {
         path: 'reports',
         loadChildren: () =>
           import('./pages/reports/reports.module').then((m) => m.ReportsModule),
