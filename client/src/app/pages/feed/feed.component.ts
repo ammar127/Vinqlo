@@ -18,6 +18,8 @@ export class FeedComponent implements OnInit {
   searchQuery:string='';
   feedpath = '/posts/get/feed';
   academicesPath = '/communities/get/academics';
+  sortType: number=0;
+  sortTypes = [ { id: 0, name: 'Most Recent' }, { id: 1, name: 'Trending' }, ];
   constructor(private userService: UserService,private postService:PostService)
   {
 

@@ -13,7 +13,6 @@ export class PostService {
   getSinglePost(slug:string)  { return this.api.get('/posts/'+slug); }
   getAll(path: string,page:number,type:number,query:string,email:string) {return this.api.get(`${path}${email!==''?email:''}?page=${page}&type=${type}${query!==''?'&title='+query:''}`);}
   toggleLike(type:number,slug:string){ return this.api.get(`/posts/like/${type}/${slug}`) }
-  getByEmail(path:string,email:string){ return this.api.get(`${path}${email!==''?email:''}`)}
   toggleSave(type:number,slug:string){ return this.api.get(`/posts/save/${type}/${slug}`) }
   searchByName(word:string){  return this.api.get('/users/search/'+word)}
   getNoComment(page:number){ return this.api.get(`/posts/get/noComment?limit=3&page=${page}`)}

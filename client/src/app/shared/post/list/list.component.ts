@@ -18,13 +18,12 @@ export class ListComponent implements OnInit,OnChanges {
   page = 1;
   hasNextPage = true;
   isLoader = false;
-  type:number=0;
+  @Input() type:number=0;
   @Input() searchQuery:string='';
   constructor(private postService: PostService,private clipboardService: ClipboardService) {}
   ngOnChanges()
   {
-    if(this.searchQuery!=''){
-    this.get();}
+    this.get()
   }
   ngOnInit(): void {
     this.get();
@@ -33,15 +32,21 @@ export class ListComponent implements OnInit,OnChanges {
     this.isLoader = true;
     this.postService.getAll(this.url,this.page,this.type,this.searchQuery,this.email).subscribe(res => {
       if(res.status === 200) {
-        this.isLoader = false;
        if(this.searchQuery==''){
-        if(res.data.docs) {
+          this.posts=[];
           this.posts.push(...res.data.docs as Post[]);
           this.hasNextPage = res.data.hasNextPage;
-        } else {
-          this.hasNextPage = false;
+          this.isLoader = false;
         }
-       }
+        else {
+          this.posts=[];
+          this.posts.push(...res.data.docs as Post[]);
+          this.hasNextPage = res.data.hasNextPage;
+          this.isLoader = false;
+        }
+      }else {
+        this.isLoader = false;
+        this.hasNextPage = false;
       }
     })
 
