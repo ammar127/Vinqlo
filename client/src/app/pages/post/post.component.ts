@@ -4,8 +4,8 @@ import { CommentService } from './../../core/services/comment.service';
 import { Post } from 'src/app/core/models';
 import { PostService } from './../../core/services/post.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Toast, UserService } from 'src/app/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Toast, UserService, CommunityService } from 'src/app/core';
 import { TagData, TagifySettings } from 'ngx-tagify';
 import { KeyValuePipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
@@ -19,7 +19,7 @@ import { ClipboardService } from 'ngx-clipboard';
 export class PostComponent implements OnInit {
   slug!:string;
   postData!:Post;
-
+  joinSlug:any = null;
   isLoader = false;
   isEdit=false;
   commentt :string=' ';
@@ -46,7 +46,7 @@ export class PostComponent implements OnInit {
     }
 };
 
-  constructor(private route: ActivatedRoute,private service:PostService,private clipboardService: ClipboardService,private userService: UserService,private commentService:CommentService) { }
+  constructor(private route: ActivatedRoute, private router: Router,private service:PostService,private clipboardService: ClipboardService,private userService: UserService,private communityService:CommunityService,private commentService:CommentService) { }
   get by (){  return this.userService.getCurrentUser()}
   get btnText (){ return this.isEdit ? 'Edit':'Comment'}
   ngOnInit(): void
@@ -55,9 +55,10 @@ export class PostComponent implements OnInit {
     {
       this.slug = params['slug'];
       this.isLoader = true;
-      this.service.get(this.slug).subscribe( res=>{
+      this.service.getSinglePost(this.slug).subscribe( res=>{
           this.isLoader = false;
           this.postData=res.data;
+          console.log(this.postData)
         }
       )
     });
@@ -139,8 +140,24 @@ export class PostComponent implements OnInit {
     this.clipboardService.copyFromContent('/post/'+slug)
     Toast.fire({text:'Copied To Clipboard',icon:'success'})
   }
-  goToUserProfile()
-  {
-    console.log('chala')
+  onJoinClick(slug: string,isJoined:boolean) {
+    this.joinSlug = slug;
+    console.log(this.postData.community.isJoined)
+    if(this.postData.community.isJoined)
+    {
+      this.communityService.join(slug,isJoined).subscribe(res => {
+        if(res.status === 200 && isJoined) {
+          Toast.fire({icon:'success', title: 'you un-joined a Community '});
+          this.joinSlug = null;
+        }else if(res.status === 200 && !isJoined){
+          Toast.fire({icon:'success', title: 'you joined a Community '});
+          this.joinSlug = null;
+        }
+     } )
+    }
+  }
+  routerlinkClicked(element : HTMLElement|any) {
+    var abc:HTMLElement=element.path[0];
+    this.router.navigate([abc.getAttribute('routerlink')]);
   }
 }

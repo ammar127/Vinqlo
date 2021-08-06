@@ -15,9 +15,9 @@
                 <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
               </div>
               <div>
-                <button class="btn btn-join">
-                  <i class="fa fa-link icons-color" aria-hidden="true"></i>
-                  <span class="main-color" > Join</span>
+                <button class="btn btn-join" [disabled]="joinSlug === postData.community.slug" (click)="onJoinClick(postData.community.slug,postData.community.isJoined)">
+                  <i class="fa fa-link icons-color" aria-hidden="true" ></i>
+                  <span class="main-color"   >{{postData.community.isJoined?' leave':' join'}}</span>
                 </button>
               </div>
               <div ngbDropdown class="d-inline-block">
@@ -127,7 +127,7 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{ comment.by.firstName }} {{ comment.by.lastName }}</p>
-              <span [innerHtml]=" comment.body | comment"></span>
+              <span (click)="routerlinkClicked($event)" [innerHtml]=" comment.body | comment"></span>
               <div align="right" *ngIf="by.email == comment.by.email" ngbDropdown class="d-inline-block">
                 <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
