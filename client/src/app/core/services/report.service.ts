@@ -8,9 +8,9 @@ import { ApiService } from './api.service';
 export class ReportService {
 
   constructor(private api:ApiService) { }
-  getAllReports(type:number)
+  getAllReports(type:number,searchQuery:String,status:number)
   {
-    return this.api.get('/reports/get/all?type='+type)
+    return this.api.get(`/reports/get/all?type=${type}${status !== -1 ? '&status='+status: ''}${searchQuery !== '' ? '&query='+searchQuery: ''}`)
   }
   postReport(data:any):Observable<any>
   {

@@ -4,11 +4,12 @@ import { CommentService } from './../../core/services/comment.service';
 import { Post } from 'src/app/core/models';
 import { PostService } from './../../core/services/post.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Toast, UserService } from 'src/app/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Toast, UserService, CommunityService } from 'src/app/core';
 import { TagData, TagifySettings } from 'ngx-tagify';
 import { KeyValuePipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-post',
@@ -18,7 +19,7 @@ import { BehaviorSubject } from 'rxjs';
 export class PostComponent implements OnInit {
   slug!:string;
   postData!:Post;
-
+  joinSlug:any = null;
   isLoader = false;
   isEdit=false;
   commentt :string=' ';
@@ -37,7 +38,7 @@ export class PostComponent implements OnInit {
         }   ) },
     },
     dropdown: {
-      enabled:2,
+      enabled:1,
       maxItems:10,
       position: 'text',
       mapValueTo: 'text',
@@ -45,7 +46,7 @@ export class PostComponent implements OnInit {
     }
 };
 
-  constructor(private route: ActivatedRoute,private service:PostService,private userService: UserService,private commentService:CommentService) { }
+  constructor(private route: ActivatedRoute, private router: Router,private service:PostService,private clipboardService: ClipboardService,private userService: UserService,private communityService:CommunityService,private commentService:CommentService) { }
   get by (){  return this.userService.getCurrentUser()}
   get btnText (){ return this.isEdit ? 'Edit':'Comment'}
   ngOnInit(): void
@@ -54,10 +55,7 @@ export class PostComponent implements OnInit {
     {
       this.slug = params['slug'];
       this.isLoader = true;
-      this.service.get(this.slug).subscribe
-      (
-        res=>
-        {
+      this.service.getSinglePost(this.slug).subscribe( res=>{
           this.isLoader = false;
           this.postData=res.data;
           console.log(this.postData)
@@ -67,6 +65,13 @@ export class PostComponent implements OnInit {
   }
   postComment(slug:string)
   {
+    let ht;
+    var raw=this.commentt.split("[[")
+    ht=raw[0];
+    for (let i = 1; i < raw.length ; i++){
+      ht+='[[{"email":"'+JSON.parse(raw[i].split(']]')[0]).user.email+'","value":"'+JSON.parse(raw[i].split(']]')[0]).value+'"}]]'+' '+raw[i].split(']]')[1];
+    }
+    console.log(ht);
     if(this.btnText=='Comment')
     {
       this. commentService.postComment({body:this.commentt,post:slug}).subscribe(  res=>{
@@ -96,7 +101,7 @@ export class PostComponent implements OnInit {
       if(res.status==200)
       {
         this.slug=slug;
-        //Toast.fire({icon:'success', title:'Comment Updated successfully'});
+        Toast.fire({icon:'success', title:'Comment Updated successfully'});
         this.commentt=res.data.body;
       }
     }
@@ -122,5 +127,37 @@ export class PostComponent implements OnInit {
         this.postData.isLiked ? this.postData.likeCount++ : this.postData.likeCount--;
       })
 
+  }
+  toggleSave(save:boolean,slug:string)
+  {
+    this.service.toggleSave(save?0:1,slug).subscribe(res=> {
+      if(res.status==200){
+      Toast.fire({text:save?'Post Un-Saved':'Post Saved',icon:'success'})
+      this.postData.isSaved = !this.postData.isSaved;
+    }})
+  }
+  copyContent(slug:string) {
+    this.clipboardService.copyFromContent('/post/'+slug)
+    Toast.fire({text:'Copied To Clipboard',icon:'success'})
+  }
+  onJoinClick(slug: string,isJoined:boolean) {
+    this.joinSlug = slug;
+    console.log(this.postData.community.isJoined)
+    if(this.postData.community.isJoined)
+    {
+      this.communityService.join(slug,isJoined).subscribe(res => {
+        if(res.status === 200 && isJoined) {
+          Toast.fire({icon:'success', title: 'you un-joined a Community '});
+          this.joinSlug = null;
+        }else if(res.status === 200 && !isJoined){
+          Toast.fire({icon:'success', title: 'you joined a Community '});
+          this.joinSlug = null;
+        }
+     } )
+    }
+  }
+  routerlinkClicked(element : HTMLElement|any) {
+    var abc:HTMLElement=element.path[0];
+    this.router.navigate([abc.getAttribute('routerlink')]);
   }
 }

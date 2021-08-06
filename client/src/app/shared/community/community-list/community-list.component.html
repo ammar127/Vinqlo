@@ -1,5 +1,5 @@
 
-  <div *ngIf="!noCommunity" class="card shadow-sm p-3">
+  <div class="card shadow-sm p-3">
     <div class="client-card shadow-sm" *ngFor="let community of communities">
       <div class="client-header">
         <div>
@@ -8,12 +8,12 @@
         </div>
         <div *ngIf="isJoin">
           <div *ngIf="!community.isJoined">
-            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug)">
+            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug,community.isJoined)">
               <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> join</span>
             </button>
           </div>
           <div *ngIf="community.isJoined">
-            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onUnJoinClick(community.slug)">
+            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug,community.isJoined)">
               <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> leave</span>
             </button>
           </div>
@@ -32,22 +32,15 @@
           </div>
         </div>
       </div>
-      <p class="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Tenetur, veritatis.
+      <p class="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, veritatis.
       </p>
-      <span class="main-color"
-        ><i
-          class="fa icons-color fa-users"
-          aria-hidden="true"
-        ></i>
-        {{community.membersCount}}
-        </span
-      >
+      <span class="main-color" ><i class="fa icons-color fa-users" aria-hidden="true" ></i> {{community.membersCount}}  </span>
     </div>
     <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
     <loader *ngIf="isLoader"></loader>
   </div>
-  <div *ngIf="noCommunity" class="community">
-    <h5 class="text-purple">No communities created yet</h5>
-  </div>
+  <no-content
+    *ngIf="!isLoader && communities.length === 0"
+    [label]="'No communities created yet.'"
+  ></no-content>
 <app-create-report #report></app-create-report>

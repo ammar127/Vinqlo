@@ -11,6 +11,7 @@ export interface Post
     image:string;
     slug:string;
     isLiked:boolean;
+    isSaved:boolean;
     likeCount:number;
     by:User;
     comments:Comment[];

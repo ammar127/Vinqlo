@@ -8,7 +8,7 @@
   <div class="col-md-12 py-3">
     <div class="card shadow-sm py-3 card-table">
       <div class="row">
-  
+
         <div class="col-md-12 px-5">
           <div style="position: relative">
             <input
@@ -27,20 +27,17 @@
             </button>
           </div>
         </div>
-  
+
           <div  class=" px-5 shadow-sm">
             <div *ngIf="!isLoader" class="row">
               <div *ngFor="let camp of campuses" class="card-campus col-md-6">
-                <h4  class="main-color">{{camp.name}}</h4>
+                <a (click)="createDegree.open(camp)"><h4  class="main-color">{{camp.name}}</h4></a>
                 <p><i class="fas icons-color fa-users"></i> 1</p>
               </div>
             </div>
             <loader *ngIf="isLoader"></loader>
           </div>
-  
-  
       </div>
     </div>
   </div>
-  
-  
+<app-create-degree #createDegree></app-create-degree>

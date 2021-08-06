@@ -27,8 +27,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { CommunityListComponent } from './community/community-list/community-list.component';
 import { CommunityCreateComponent } from './community/community-create/community-create.component';
 import { CreateReportComponent } from './create-report/create-report.component';
-
-
+import { ShowImageComponent } from './show-image/show-image.component';
+import { CommentFilterComponent } from './Pipes/comment-filter.pipe';
+import { CreateDegreeComponent } from './create-degree/create-degree.component';
 @NgModule({
   declarations: [
     AlphaOnlyDirective,
@@ -40,6 +41,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
     ShowAuthedDirective,
     ErrorsComponent,
     ImagePipe,
+    CommentFilterComponent,
     LoaderComponent,
     NoContentComponent,
     CreateComponent,
@@ -52,6 +54,9 @@ import { CreateReportComponent } from './create-report/create-report.component';
     CommunityListComponent,
     CommunityCreateComponent,
     CreateReportComponent,
+    ShowImageComponent,
+    CreateDegreeComponent,
+    CreateDegreeComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +65,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
     ReactiveFormsModule,
     HttpClientModule,
     FileUploadModule,
-    RouterModule,
+    RouterModule
   ],
   exports: [
     // shared modules
@@ -92,11 +97,14 @@ import { CreateReportComponent } from './create-report/create-report.component';
     EditProfileComponent,
     ChangePasswordComponent,
     CreateReportComponent,
+    ShowImageComponent,
+    CreateDegreeComponent,
 
     //Pipes
     ImagePipe,
     LoaderComponent,
-    NoContentComponent
+    NoContentComponent,
+    CommentFilterComponent
   ]
 })
 export class SharedModule { }

@@ -1,5 +1,4 @@
-
-::ng-deep .nav-item {
+.nav-item {
   width: 50% !important;
   text-align: center;
 }
