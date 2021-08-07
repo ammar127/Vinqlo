@@ -100,7 +100,7 @@ import { CreateDegreeComponent } from './create-degree/create-degree.component';
     CreateReportComponent,
     ShowImageComponent,
     CreateDegreeComponent,
-    CommentFilterComponent
+    CommentFilterComponent,
 
     //Pipes
     ImagePipe,
