@@ -1,3 +1,4 @@
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { RouterModule } from '@angular/router';
 import { NgModule, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -99,12 +100,15 @@ import { CreateDegreeComponent } from './create-degree/create-degree.component';
     CreateReportComponent,
     ShowImageComponent,
     CreateDegreeComponent,
+    CommentFilterComponent
 
     //Pipes
     ImagePipe,
     LoaderComponent,
     NoContentComponent,
-    CommentFilterComponent
+    NgxPermissionsModule
+
+
   ]
 })
 export class SharedModule { }

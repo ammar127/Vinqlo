@@ -27,6 +27,7 @@
     "ng2-file-upload": "^1.4.0",
     "ngx-clipboard": "^14.0.1",
     "ngx-otp-input": "0.5.4",
+    "ngx-permission": "^0.2.1",
     "ngx-permissions": "^8.1.1",
     "ngx-tagify": "^0.6.1",
     "rxjs": "~6.6.0",
