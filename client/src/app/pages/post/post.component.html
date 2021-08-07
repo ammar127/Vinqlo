@@ -11,7 +11,7 @@
           <div class="single-post">
             <div class="client-header">
               <div>
-                <h6 class="main-color mb-0">{{ postData.community.name }}</h6>
+                <h6 class="main-color mb-0" [routerLink]="['/community',postData.community.slug]">{{ postData.community.name }}</h6>
                 <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
               </div>
               <div>
@@ -51,7 +51,7 @@
             <div class="client-header">
               <div>
                 <h6 class="main-color mb-0">{{ postData.title }}</h6>
-                <small class="text-muted"
+                <small class="text-muted" [routerLink]="['/user-profile', postData.by.email]"
                   >{{ postData.by.firstName }} {{ postData.by.lastName }}
                   {{ postData.time | date: "short" }}</small
                 >
