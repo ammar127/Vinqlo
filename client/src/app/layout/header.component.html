@@ -2,9 +2,7 @@
     <nav [ngClass]="isAdmin ? 'bg-dark' : 'bg-white'">
         <a class="nav-main" href="javascript:void(0)"><img src="../../assets/images/logo-01.png" alt="" /></a>
         <ul class="ml-auto mb-0 nav-list">
-            <li *ngIf="!isAdmin" class="nav-link">
-                <a href="javascript:void(0)"><i class="fas fa-bell"></i></a>
-            </li>
+            <app-notification *ngIf="!isAdmin"></app-notification>
             <li *ngIf="!isAdmin" class="nav-link">
                 <a [routerLink]="['/feed']" href="javascript:void(0)"><i class="fas fa-home"></i
         ></a>
@@ -36,8 +34,6 @@
               <div class="accordian-list" *ngFor="let category of categories" [routerLink]="['/category',category.slug]"   (click)="collapse.toggle()">
                 <span class="main-color" ><i [ngClass]="category.icon"></i> {{category.name}}</span>
               </div>
-
-
             </div>
           </div>
         </div>
