@@ -11,13 +11,15 @@
           <div class="single-post">
             <div class="client-header">
               <div>
-                <h6 class="main-color mb-0">{{ postData.community.name }}</h6>
+                <h6 class="main-color mb-0" [routerLink]="['/community',postData.community.slug]">{{ postData.community.name }}</h6>
                 <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
               </div>
               <div>
-                <button class="btn btn-join">
-                  <i class="fa fa-link icons-color" aria-hidden="true"></i>
-                  <span class="main-color"> Join</span>
+
+                <button class="btn btn-join" [disabled]="joinSlug === postData.community.slug" (click)="onJoinClick(postData.community.slug,postData.community.isJoined)">
+                  <i class="fa fa-link icons-color" aria-hidden="true" ></i>
+                  <span class="main-color"   >{{postData.community.isJoined?' leave':' join'}}</span>
+
                 </button>
               </div>
               <div ngbDropdown class="d-inline-block">
@@ -25,7 +27,12 @@
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem>Report</button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(2, postData.community.slug)"
+                  >
+                    Report Community
+                  </button>
                 </div>
               </div>
             </div>
@@ -44,7 +51,7 @@
             <div class="client-header">
               <div>
                 <h6 class="main-color mb-0">{{ postData.title }}</h6>
-                <small class="text-muted"
+                <small class="text-muted" [routerLink]="['/user-profile', postData.by.email]"
                   >{{ postData.by.firstName }} {{ postData.by.lastName }}
                   {{ postData.time | date: "short" }}</small
                 >
@@ -55,7 +62,24 @@
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem>Report</button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(0, postData.slug)"
+                  >
+                    Report Post
+                  </button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(1, postData.by.email)"
+                  >
+                    Report User
+                  </button>
+                  <button
+                    ngbDropdownItem
+                    (click)="report.open(2, postData.community.slug)"
+                  >
+                    Report Community
+                  </button>
                 </div>
               </div>
             </div>
@@ -81,12 +105,18 @@
               <div>
                 <ul>
                   <li>
-
-                    <a href="javascript:void(0)">
-                      <i  class="fas icons-color fa-heart" [ngStyle]="{'color': postData.isLiked ? '#dc3545': 'black'}" ></i>
+                    <a
+                      href="javascript:void(0)"
+                      (click)="toggleLike(postData.isLiked, postData.slug)"
+                    >
+                      <i
+                        class="fas icons-color fa-heart"
+                        [ngStyle]="{
+                          color: postData.isLiked ? '#dc3545' : 'icons-color'
+                        }"
+                      ></i>
                       {{ postData.likeCount }}</a
                     >
-
                   </li>
                   <li>
                     <a href="javascript:void(0)"
@@ -95,12 +125,22 @@
                     >
                   </li>
                   <li>
-                    <a href="javascript:void(0)"
-                      ><i class="fas icons-color fa-bookmark"></i
+                    <a
+                      href="javascript:void(0)"
+                      (click)="toggleSave(postData.isSaved, postData.slug)"
+                      ><i
+                        class="fas icons-color fa-bookmark"
+                        [ngStyle]="{
+                          color: postData.isSaved ? '#dc3545' : '#25eaef'
+                        }"
+                      ></i
                     ></a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)">
+                    <a
+                      href="javascript:void(0)"
+                      (click)="copyContent(postData.slug)"
+                    >
                       <i class="fas icons-color fa-share"></i
                     ></a>
                   </li>
@@ -111,19 +151,10 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{ comment.by.firstName }} {{ comment.by.lastName }}</p>
-              <span
-                >{{ comment.body }}
-                <!-- <a href="javascript:void(0)">{{comment.by.email}}</a> -->
-              </span>
-              <div
-                align="right"
-                *ngIf="by.email == comment.by.email"
-                ngbDropdown
-                class="d-inline-block"
-              >
-                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-                  <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                </button>
+              <span (click)="routerlinkClicked($event)" [innerHtml]=" comment.body | comment"></span>
+              <div align="right" *ngIf="by.email == comment.by.email" ngbDropdown class="d-inline-block">
+                <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                   <button (click)="editComment(comment.slug)" ngbDropdownItem>
                     Edit
@@ -136,17 +167,22 @@
               <hr />
             </div>
             <div class="comment-input">
-
-              <tagify [(ngModel)]="commentt" [whitelist]="whiteList$" [settings]="mixedSettings" > </tagify>
-              <!-- <input  [(ngModel)]="commentt" type="text" class="form-control shadow-sm" placeholder="Write a comment..." (keyup.enter)="postComment(postData.slug)" [(ngModel)]="commentt" /> -->
-              <button class="btn btn-primary" (click)="postComment(postData.slug)">{{btnText}}</button>
-
+              <tagify
+                [(ngModel)]="commentt"
+                [whitelist]="whiteList$"
+                [settings]="mixedSettings"
+              >
+              </tagify>
+              <button
+                class="btn btn-comment"
+                (click)="postComment(postData.slug)"
+              >
+                {{ btnText }}
+              </button>
             </div>
-            <p>{{commentt |  json}}</p>
           </div>
         </div>
       </div>
-
     </div>
     <div class="row py-5 my-5 d-flex justify-content-center">
       <div class="col-md-3">
@@ -155,3 +191,4 @@
     </div>
   </div>
 </section>
+<app-create-report #report></app-create-report>

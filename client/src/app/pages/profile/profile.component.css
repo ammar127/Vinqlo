@@ -36,7 +36,7 @@
   border-top-right-radius: 25px !important;
 }
 
-::ng-deep .nav-item {
+.nav-item {
   width: 25% !important;
   text-align: center;
 }

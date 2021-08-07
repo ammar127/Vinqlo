@@ -3,8 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard, UserType } from './core';
 import { LayoutComponent } from './layout/layout.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+  },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
@@ -14,7 +19,6 @@ const routes: Routes = [
     component: LayoutComponent,
     canActivate: [AuthGuard],
     children: [
-
       {
         path: 'feed',
         loadChildren: () =>
@@ -23,8 +27,8 @@ const routes: Routes = [
         data: {
           permissions: {
             only: UserType.user.toString(),
-            redirectTo: '/access-denied'
-          }
+            redirectTo: '/access-denied',
+          },
         },
       },
       {
@@ -47,8 +51,20 @@ const routes: Routes = [
         data: {
           permissions: {
             only: [UserType.admin.toString(), UserType.superAdmin.toString()],
-            redirectTo: '/access-denied'
-          }
+            redirectTo: '/access-denied',
+          },
+        },
+      },
+      {
+        path: 'no-comment',
+        loadChildren: () =>
+          import('./pages/no-comment/no-comment.module').then((m) => m.NoCommentModule),
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            redirectTo: '/access-denied',
+          },
         },
       },
       {
@@ -59,8 +75,8 @@ const routes: Routes = [
         data: {
           permissions: {
             only: [UserType.admin.toString(), UserType.superAdmin.toString()],
-            redirectTo: '/access-denied'
-          }
+            redirectTo: '/access-denied',
+          },
         },
       },
 
@@ -69,41 +85,59 @@ const routes: Routes = [
         loadChildren: () =>
           import('./pages/post/post.module').then((m) => m.PostModule),
       },
-      { path: 'access-denied', loadChildren: () => import('./pages/access-denied/access-denied.module').then(m => m.AccessDeniedModule) },
       {
-        path: 'category', loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule), canActivate: [NgxPermissionsGuard],
+        path: 'access-denied',
+        loadChildren: () =>
+          import('./pages/access-denied/access-denied.module').then(
+            (m) => m.AccessDeniedModule
+          ),
+      },
+      {
+        path: 'category',
+        loadChildren: () =>
+          import('./pages/category/category.module').then(
+            (m) => m.CategoryModule
+          ),
+        canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [UserType.user.toString(),],
-            redirectTo: '/access-denied'
-          }
+            only: [UserType.user.toString()],
+            redirectTo: '/access-denied',
+          },
         },
       },
       {
-        path: 'academic-category', loadChildren: () => import('./pages/academic-category/academic-category.module').then(m => m.AcademicCategoryModule), canActivate: [NgxPermissionsGuard],
+        path: 'academic-category',
+        loadChildren: () =>
+          import('./pages/academic-category/academic-category.module').then(
+            (m) => m.AcademicCategoryModule
+          ),
+        canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
             only: [UserType.admin.toString(), UserType.superAdmin.toString()],
-            redirectTo: '/access-denied'
-          }
+            redirectTo: '/access-denied',
+          },
         },
       },
       {
-        path: 'user-profile', loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
-
+        path: 'user-profile',
+        loadChildren: () =>
+          import('./pages/user-profile/user-profile.module').then(
+            (m) => m.UserProfileModule
+          ),
       },
       {
         path: '',
         redirectTo: 'feed',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
     ],
   },
-
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

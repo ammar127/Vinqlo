@@ -13,12 +13,36 @@
   border-top-left-radius: 25px !important;
   border-top-right-radius: 25px !important;
 }
-.campus-list ul {
+.campus-list {
   list-style: none;
   padding-left: 0px;
 }
-.campus-list ul li {
+.campus-list li {
   border-top: 1px solid lightgray;
   padding-bottom: 7px;
   padding-top: 6px;
+}
+
+.single-post-card {
+  border-radius: 20px;
+  padding: 15px;
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row !important;
+}
+.single-post-card .back {
+  width: 5%;
+  text-align: center;
+}
+.single-post-card .single-post {
+  width: 95%;
+}
+.client-card .client-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.client-header {
+  display: flex;
+  justify-content: space-between;
 }

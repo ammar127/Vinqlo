@@ -1,4 +1,5 @@
 <div class="card shadow-sm main-profile-card">
+
     <div class="client-card shadow-sm" *ngFor="let post of posts">
         <div class="client-header">
             <div>
@@ -6,24 +7,16 @@
                     {{ post.title }}
                 </h6>
                 <small class="text-muted" [routerLink]="['/user-profile', post.by.email]">{{  post.by.firstName + " " + post.by.lastName }}
-          {{ post.time | date: "long" }}</small
-        >
+          {{ post.time | date: "long" }}</small>
+
       </div>
 
       <div ngbDropdown class="d-inline-block">
-        <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-          <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-        </button>
+        <button class="btn" id="dropdownBasic1" ngbDropdownToggle> <i class="fa fa-ellipsis-h" aria-hidden="true"></i> </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem (click)="report.open(0, post.slug)">
-            Report Post
-          </button>
-          <button ngbDropdownItem (click)="report.open(1, post.by.email)">
-            Report User
-          </button>
-          <button ngbDropdownItem (click)="report.open(2, post.community.slug)">
-            Report Community
-          </button>
+          <button ngbDropdownItem (click)="report.open(0, post.slug)"> Report Post </button>
+          <button ngbDropdownItem (click)="report.open(1, post.by.email)"> Report User </button>
+          <button ngbDropdownItem (click)="report.open(2, post.community.slug)"> Report Community </button>
         </div>
       </div>
     </div>
@@ -45,46 +38,30 @@
       <div>
         <ul>
           <li>
-            <a
-              href="javascript:void(0)"
+            <a href="javascript:void(0)"
               (click)="toggleLike(post.isLiked, post.slug)"
-              ><i
-                class="fas fa-heart"
-                [ngStyle]="{ color: post.isLiked ? '#dc3545' : '#25eaef' }"
-              ></i>
-              {{ post.likeCount }}</a
-            >
+              ><i class="fas fa-heart" [ngStyle]="{ color: post.isLiked ? '#dc3545' : '#25eaef' }" ></i> {{ post.likeCount }}
+            </a >
+          </li>
+          <li>
+            <a href="javascript:void(0)" ><i class="fas icons-color fa-comments"></i> {{ post.comments.length }}</a >
           </li>
           <li>
             <a href="javascript:void(0)"
-              ><i class="fas icons-color fa-comments"></i>
-              {{ post.comments.length }}</a
-            >
-          </li>
-          <li>
-            <a href="javascript:void(0)"
-              ><i class="fas icons-color fa-bookmark"></i
+            (click)="toggleSave(post.isSaved, post.slug)"
+              ><i class="fas icons-color fa-bookmark"
+              [ngStyle]="{ color: post.isSaved ? '#dc3545' : '#25eaef' }"></i
             ></a>
           </li>
           <li>
-            <a href="javascript:void(0)">
-              <i class="fas icons-color fa-share"></i
-            ></a>
+            <a href="javascript:void(0)" (click)="copyContent(post.slug)"> <i class="fas icons-color fa-share"></i></a>
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <no-content
-    *ngIf="!isLoader && posts.length === 0"
-    [label]="'No Posts here'"
-  ></no-content>
-  <a
-    href="javascript:void(0)"
-    *ngIf="!isLoader && hasNextPage"
-    (click)="onLoadMoreClick()"
-  >
-    Load More <i class="fas fa-ellipsis-h"></i>
+  <no-content *ngIf="!isLoader && posts.length === 0" [label]="'No Posts here'" ></no-content>
+  <a href="javascript:void(0)" *ngIf="!isLoader&&hasNextPage" (click)="onLoadMoreClick()" > Load More <i class="fas fa-ellipsis-h"></i>
   </a>
   <loader *ngIf="isLoader"></loader>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { User, UserService } from 'src/app/core';
 import { Toast } from 'src/app/core';
 import Swal from 'sweetalert2';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 export class UsersComponent implements OnInit
 {
   result: any = null;
+  searchQuery:string='';
   page = 1;
   isLoading = false;
   status = -1;
@@ -22,7 +23,7 @@ export class UsersComponent implements OnInit
   {
     this.isLoading = true;
 
-    this.userService.getAllUsers(`/users/get/all?${this.status !== -1 ? 'status='+this.status: ''}&page=${this.page}`).subscribe
+    this.userService.getAllUsers(`/users/get/all?page=${this.page}${this.status !== -1 ? '&status='+this.status: ''}${this.searchQuery !== '' ? '&query='+this.searchQuery: ''}`).subscribe
     (
       res=>
       {
@@ -95,6 +96,6 @@ export class UsersComponent implements OnInit
       this.page = pageNo;
       this.get();
     }
- 
+
 
 }
