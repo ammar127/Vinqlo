@@ -14,22 +14,22 @@ async function seedCategory(){
 
         let category2 = new Category();
         category2.name = 'Culture';
-        category1.icon = 'fas icons-color d-block fa-university';
+        category2.icon = 'fas icons-color d-block fa-university';
         await category2.save();
 
         let category3 = new Category();
         category3.name = 'Tips & Tricks';
-        category1.icon = 'fas icons-color d-block fa-info';
+        category3.icon = 'fas icons-color d-block fa-info';
         await category3.save();
 
         let category4 = new Category();
         category4.name = 'Education';
-        category1.icon = 'fas icons-color d-block fa-file-invoice';
+        category4.icon = 'fas icons-color d-block fa-file-invoice';
         await category4.save();
 
         let category5 = new Category();
         category5.name = 'Events';
-        category1.icon = 'fas icons-color d-block fa-calendar-day';
+        category5.icon = 'fas icons-color d-block fa-calendar-day';
         await category5.save();
  
 

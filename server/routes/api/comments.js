@@ -7,7 +7,7 @@ var Post = require('../../models/post');
 var User = require('../../models/user');
 var Notification = require('../../models/notification');
 var auth = require('../auth');
-const { raw } = require('body-parser');
+var { sendNotification } = require('../../utilities/notification');
 
 router.param('slug', (req, res, next, slug) => {
     Comment.findOne({slug: slug}, (err, comment) => {
@@ -58,14 +58,26 @@ async (req, res, next) => {
                            
                             if(user !== null){
                                 let notification = new Notification();
-                                notification.body = `${req.user.firstName} ${req.user.lastName} tagged you in a post`;
-                                notification.by = req.user._id;
-                                notification.to = user._id;
-                                notification.post = post._id;
-                                await notification.save();   
+                                notification.title = `${req.user.firstName} ${req.user.lastName} tagged you in a post`;
+                                notification.type = 2;
+                                notification.user = req.user._id;
+                                notification.sentTo = user._id;
+                                notification.data = post.slug;
+                                await sendNotification(notification);
                             }
                         }
                     }
+
+                    let not = new Notification();
+                    not.title = `${req.user.firstName} ${req.user.lastName} commented on your post`;
+                    not.type = 2;
+                    not.user = req.user._id;
+                    not.sentTo = post.by._id;
+                    not.data = post.slug;
+                    
+                    console.log(not);
+                    
+                    await sendNotification(not);
 
                     next(new httpResponse.OkResponse(comment));
                 });

@@ -18,10 +18,13 @@ router.param('slug', (req, res, next, slug) => {
 router.get('/get/all' , auth.isToken, auth.isUser, (req, res, next) => {
     const options = {
         page: req.query.page || 1,
-        limit: req.query.limit || 10
+        limit: req.query.limit || 10,
+        useCustomCountFn: function () {
+            return Notification.count({sentTo: req.user._id,isRead: false});
+          },
     };
 
-    Notification.paginate({ to: req.user._id, isRead: false }, options, (err, notifications) => {
+    Notification.paginate({ sentTo: req.user._id, isRead: false }, options, (err, notifications) => {
         if(!err && notifications !== null){
             next(new httpResponse.OkResponse({notifications: notifications}));
         }
@@ -31,4 +34,26 @@ router.get('/get/all' , auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
+
+router.get('/mark-all',auth.isToken, auth.isUser, function(req, res, next){
+    Notification.updateMany({sentTo: req.user._id, isRead: false}, { $set: { isRead: true } }, function (err, result) {
+            if (err) { next(new BadRequestResponse("Server Error")) }
+            next(new OkResponse());
+        });
+  });
+  
+  router.get('/mark-as-read/:notificationId', auth.isToken, auth.isUser, function(req, res, next){
+    Notification.updateOne({sentTo: req.user._id, _id: req.params.notificationId}, { $set: { isRead: true } }, function (err, result) {
+            if (err) { next(new BadRequestResponse("Server Error")) }
+            next(new OkResponse());
+        });
+  });
+
+
+
 module.exports = router;
+
+
+
+
+

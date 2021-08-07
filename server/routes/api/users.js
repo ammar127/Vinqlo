@@ -8,8 +8,10 @@ var httpResponse = require('express-http-response');
 var User = require('../../models/user');
 var Campus = require('../../models/campus');
 var Degree = require('../../models/degree');
+var Notification = require('../../models/notification');
 var emailService = require('../../utilities/emailService')
 var auth = require('../auth');
+var {sendNotification} = require('../../utilities/notification');
 
 passport.use(localStrategy)
 router.use(passport.initialize())
@@ -104,6 +106,15 @@ router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
 
     emailService.sendEmailVerificationSuccess(req.user);
 
+    let notification = new Notification();
+    notification.title = 'Your email verified Successfully';
+    notification.type = 1;
+    notification.user = null;
+    notification.sentTo= req.user._id;
+    notification.data = req.user.email;
+
+    sendNotification(notification);
+
     req.user.save();
 
     next(new httpResponse.OkResponse('Email verified Successfully'));
@@ -117,11 +128,14 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
         limit: req.query.limit || 10
     };
     var query = {};
+    if(typeof req.query.query !== 'undefined' && req.query.query !== null){
+        query = {$or: [{email: new RegExp(req.query.query, 'i')}, {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')}]}; 
+    }
 
     if(typeof req.query.status !== 'undefined' && req.query.status !== null){
-        query = {status: req.query.status};
+        query.status = req.query.status;
     }else {
-        query = {status: {$ne: 0}};
+        query.status = {$ne: 0};
     }
 
     User.paginate(query, options, (err, users) => {
@@ -161,6 +175,15 @@ function sendOtp(req, res, next){
     emailService.sendEmailOTP(user);
 
     user.save();
+
+    let notification = new Notification();
+    notification.title = 'OTP sent to your registered email address';
+    notification.type = 1;
+    notification.user = null;
+    notification.sentTo= req.emailUser._id;
+    notification.data = req.emailUser.email;
+    sendNotification(notification);
+    
     next(new httpResponse.OkResponse({otp: user.otp}));
 }
 
@@ -218,6 +241,14 @@ router.put('/forgotPassword/:otp/:email', (req, res, next) => {
 
     emailService.sendEmailForgotPasswordSuccess(req.emailUser);
 
+    let notification = new Notification();
+    notification.title = 'Your Password Updated Successfully';
+    notification.type = 1;
+    notification.user = null;
+    notification.sentTo= req.emailUser._id;
+    notification.data = req.emailUser.email;
+    sendNotification(notification);
+
     req.emailUser.save();
 
     next(new httpResponse.OkResponse('Password changed successfully'));
@@ -270,6 +301,15 @@ router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res
             next(new httpResponse.BadRequestResponse(err));
             return;
         }
+
+        let notification = new Notification();
+        notification.title = 'Your account got strike by admin.';
+        notification.type = 1;
+        notification.user = null;
+        notification.sentTo= req.emailUser._id;
+        notification.data = req.emailUser.email;
+        sendNotification(notification);
+
         next(new httpResponse.OkResponse('Strike Added'));
     });
 });
