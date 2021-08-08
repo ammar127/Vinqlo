@@ -2,6 +2,7 @@ import { Campus, Degree } from "./campus";
 import { Community } from "./community";
 
 export interface User {
+    _id?: String;
     token:string;
     firstName:string;
     lastName:string;

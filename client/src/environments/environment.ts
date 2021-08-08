@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://165.22.228.6/api',
-  fileUploadUrl: 'http://165.22.228.6',
-  fileUrl: 'http://165.22.228.6',
+  api_url: 'http://localhost:3000/api',
+  fileUploadUrl: 'http://localhost:3000',
+  fileUrl: 'http://localhost:3000',
 };
 
 /*

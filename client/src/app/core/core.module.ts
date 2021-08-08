@@ -9,6 +9,8 @@ import {
   CommonService,
   CommunityService,
   JwtService,
+  NotificationService,
+  SocketService,
   UnlinkService,
   UserService
 } from './services';
@@ -25,7 +27,7 @@ import {
     UserService,
     CommonService,
     CommunityService,
-    UnlinkService
+    UnlinkService,SocketService, NotificationService
   ],
   declarations: []
 })
