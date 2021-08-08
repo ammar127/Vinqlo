@@ -30,12 +30,16 @@ export class PostComponent implements OnInit {
     tagTextProp: 'text',
     callbacks:{
       input : (e) => {
-        this.service.searchByName(e.detail.value).subscribe(
-          res=> {
-            let usernames=res.data.users.map((e:any)=> e.firstName+' '+e.lastName)
-            this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
-
-        }   ) },
+        if(e.detail.value) {
+          console.log('e.detail.value', e.detail.value)
+          this.service.searchByName(e.detail.value).subscribe(
+            res=> {
+              let usernames=res.data.users.map((e:any)=> e.firstName+' '+e.lastName)
+              this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
+  
+          }   )
+        }
+         },
     },
     dropdown: {
       enabled:1,

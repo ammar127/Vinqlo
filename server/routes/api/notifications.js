@@ -42,8 +42,9 @@ router.get('/mark-all',auth.isToken, auth.isUser, function(req, res, next){
         });
   });
   
-  router.get('/mark-as-read/:notificationId', auth.isToken, auth.isUser, function(req, res, next){
-    Notification.updateOne({sentTo: req.user._id, _id: req.params.notificationId}, { $set: { isRead: true } }, function (err, result) {
+  router.get('/mark-as-read/:slug', auth.isToken, auth.isUser, function(req, res, next){
+    req.notification.isRead =  true;
+    req.notification.save.exec().then( function (err, result) {
             if (err) { next(new BadRequestResponse("Server Error")) }
             next(new OkResponse());
         });
