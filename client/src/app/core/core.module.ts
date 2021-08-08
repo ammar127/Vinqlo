@@ -9,6 +9,7 @@ import {
   CommonService,
   CommunityService,
   JwtService,
+  NoAuthGuard,
   NotificationService,
   SocketService,
   UnlinkService,
@@ -27,7 +28,7 @@ import {
     UserService,
     CommonService,
     CommunityService,
-    UnlinkService,SocketService, NotificationService
+    UnlinkService,SocketService, NotificationService, NoAuthGuard
   ],
   declarations: []
 })

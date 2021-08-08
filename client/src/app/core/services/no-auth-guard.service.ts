@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { JwtService,  } from '../core';
+import { JwtService } from './jwt.service';
 
 @Injectable()
 export class NoAuthGuard implements CanActivate {

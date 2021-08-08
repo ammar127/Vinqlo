@@ -19,6 +19,6 @@ export class HeaderComponent {
     get user() {return this.userService.getCurrentUser()}
     onLogoutClick() {
         this.userService.purgeAuth();
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/']);
     }
 }

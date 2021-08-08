@@ -54,9 +54,6 @@ export class UserService {
   }
 
   setAuth(user: User) {
-    console.log('in setAuth')
-    // set permissions
-
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(user.token);
     // Set current user data into observable
