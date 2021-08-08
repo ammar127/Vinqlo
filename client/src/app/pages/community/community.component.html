@@ -67,7 +67,7 @@
         </div>
         <div class="search-field mb-4">
           <input
-            [ngModel]="searchQuery"
+            [(ngModel)]="searchQuery"
             type="text"
             class="form-control shadow-sm"
             placeholder="Search by name"
@@ -81,7 +81,7 @@
 
         <post-list
           [searchQuery]="searchQuery"
-          [url]="postbyComunity + slug"
+          [url]="postByCommunity + slug"
         ></post-list>
       </div>
     </div>

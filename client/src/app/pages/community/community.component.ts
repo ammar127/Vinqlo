@@ -19,7 +19,7 @@ export class CommunityComponent implements OnInit {
   community!: Community;
   searchQuery:string='';
   isLoader: boolean = false;
-  postbyComunity = '/posts/get/by/';
+  postByCommunity = '/posts/get/by/';
   constructor(private route: ActivatedRoute,
     private communityService: CommunityService,private commonService:CommonService) { }
 
