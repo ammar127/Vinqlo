@@ -210,14 +210,13 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
             next(new httpResponse.BadRequestResponse('You have already liked this post'));
             return;
         }
-
-        let notification = new Notification();
-        notification.title = `${req.user.firstName} ${req.user.lastName} liked your post`;
-        notification.type = 2;
-        notification.user = req.user.id;
-        notification.sentTo= req.post.by._id;
-        notification.data = req.post.slug;
-        sendNotification(notification);
+        sendNotification({
+            title : `${req.user.firstName} ${req.user.lastName} liked your post`,
+            type : 2,
+            user : req.user.id,
+            sentTo: req.post.by._id,
+            data : req.post.slug
+        })
 
         req.post.likeCount++;
         req.user.liked.push(req.post._id);

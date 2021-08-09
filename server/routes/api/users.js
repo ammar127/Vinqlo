@@ -106,14 +106,13 @@ router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
 
     emailService.sendEmailVerificationSuccess(req.user);
 
-    let notification = new Notification();
-    notification.title = 'Your email verified Successfully';
-    notification.type = 1;
-    notification.user = null;
-    notification.sentTo= req.user._id;
-    notification.data = req.user.email;
-
-    sendNotification(notification);
+    sendNotification({
+        title : 'Your email verified Successfully',
+        type : 1,
+        user : null,
+        sentTo: req.user._id,
+        data : {slug: req.user.email}
+    });
 
     req.user.save();
 
@@ -176,13 +175,13 @@ function sendOtp(req, res, next){
 
     user.save();
 
-    let notification = new Notification();
-    notification.title = 'OTP sent to your registered email address';
-    notification.type = 1;
-    notification.user = null;
-    notification.sentTo= req.emailUser._id;
-    notification.data = req.emailUser.email;
-    sendNotification(notification);
+    sendNotification({
+        title : 'OTP sent to your registered email address',
+        type : 1,
+        user : null,
+        sentTo: req.emailUser._id,
+        data : {slug: req.emailUser.email}
+    });
     
     next(new httpResponse.OkResponse({otp: user.otp}));
 }
@@ -241,13 +240,13 @@ router.put('/forgotPassword/:otp/:email', (req, res, next) => {
 
     emailService.sendEmailForgotPasswordSuccess(req.emailUser);
 
-    let notification = new Notification();
-    notification.title = 'Your Password Updated Successfully';
-    notification.type = 1;
-    notification.user = null;
-    notification.sentTo= req.emailUser._id;
-    notification.data = req.emailUser.email;
-    sendNotification(notification);
+    sendNotification({
+        title : 'OTP sent to your registered email address',
+        type : 1,
+        user : null,
+        sentTo: req.emailUser._id,
+        data : {slug: req.emailUser.email}
+    });
 
     req.emailUser.save();
 
@@ -302,13 +301,13 @@ router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res
             return;
         }
 
-        let notification = new Notification();
-        notification.title = 'Your account got strike by admin.';
-        notification.type = 1;
-        notification.user = null;
-        notification.sentTo= req.emailUser._id;
-        notification.data = req.emailUser.email;
-        sendNotification(notification);
+        sendNotification({
+            title : 'OTP sent to your registered email address',
+            type : 1,
+            user : null,
+            sentTo: req.emailUser._id,
+            data : {slug: req.emailUser.email}
+        });
 
         next(new httpResponse.OkResponse('Strike Added'));
     });
