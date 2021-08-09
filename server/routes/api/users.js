@@ -8,6 +8,7 @@ var httpResponse = require('express-http-response');
 var User = require('../../models/user');
 var Campus = require('../../models/campus');
 var Degree = require('../../models/degree');
+var Report = require('../../models/degree');
 var Notification = require('../../models/notification');
 var emailService = require('../../utilities/emailService')
 var auth = require('../auth');
@@ -148,6 +149,9 @@ router.get('/:email', (req, res, next) => {
 
 router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.emailUser.status = +req.params.status;
+    if(req.params.status === 1){
+        req.emailUser.strikes = 0;
+    }
     req.emailUser.save();
     next(new httpResponse.OkResponse('Updated Successfully'));
 })
@@ -288,7 +292,7 @@ router.get('/search/:name', auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
-router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+router.post('/strike/:report/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.emailUser.strikes++;
     
     if(req.emailUser.strikes > 2){
@@ -301,8 +305,10 @@ router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res
             return;
         }
 
+        Report.update({slug: req.params.report}, {$set : {status: 0}});
+
         sendNotification({
-            title : 'OTP sent to your registered email address',
+            title : 'You got Strike',
             type : 1,
             user : null,
             sentTo: req.emailUser._id,
