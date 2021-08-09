@@ -41,6 +41,7 @@ campusSchema.methods.toJSON = function(){
         slug: this.slug,
         name: this.name,
         degrees: this.degrees,
+        userCount: this.userCount
     }
 }
 

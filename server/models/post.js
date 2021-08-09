@@ -36,7 +36,7 @@ var postSchema = mongoose.Schema({
 
     comments:{
         type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Comment',
+        ref: 'Comment'
     },
 
     community:{
@@ -108,7 +108,8 @@ postSchema.methods.toJSON = function(){
         community: {
             slug: this.community.slug,
             name: this.community.name,
-            category: this.community.category
+            category: this.community.category,
+            membersCount: this.community.membersCount
         },
         time: this.time,
         likeCount: this.likeCount
@@ -132,7 +133,9 @@ postSchema.methods.toJSONFor = function(user){
         community: {
             slug: this.community.slug,
             name: this.community.name,
-            category: this.community.category
+            category: this.community.category,
+            membersCount: this.community.membersCount,
+            isJoined: user.isJoined(this._id),
         },
         time: this.time,
         likeCount: this.likeCount,

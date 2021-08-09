@@ -31,13 +31,13 @@ export class PostComponent implements OnInit {
     callbacks:{
       input : (e) => {
         if(e.detail.value) {
-          console.log('e.detail.value', e.detail.value)
           this.service.searchByName(e.detail.value).subscribe(
             res=> {
               this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
 
           }   )
         } },
+
     },
     dropdown: {
       enabled:1,

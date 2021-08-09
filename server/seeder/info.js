@@ -15,6 +15,7 @@ async function seedInfo(){
     user.campus = campuses[0]._id;
     user.degree = campuses[0].degrees[0]._id;
     user.verified = true;
+    user.image = faker.image.avatar();
 
     await user.save();
 
@@ -28,6 +29,7 @@ async function seedInfo(){
     user2.degree = campuses[2].degrees[1]._id;
     user2.role = 2;
     user2.verified = true;
+    user.image = faker.image.avatar();
     await user2.save();
 
     console.log('Your Info Seeded')

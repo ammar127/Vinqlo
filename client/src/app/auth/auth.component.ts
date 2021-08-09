@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Campus, CommonService, Errors, UserService, UserType } from '../core';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +21,8 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private fb: FormBuilder,
-    private commonService:CommonService
+    private commonService:CommonService,
+    private ps: NgxPermissionsService
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
@@ -81,6 +83,8 @@ export class AuthComponent implements OnInit {
             route = '/users';
           }
         }
+        this.ps.loadPermissions([res.data.user.role.toString()]);
+        console.log('res.data.user.role', res.data.user.role , route)
         this.router.navigate([route])
       },
       err => 
