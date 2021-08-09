@@ -168,8 +168,14 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
                 limit: req.query.limit || 10, 
                 sort: {time: -1}
             };
+
+            let query = {community: community, status:1};
+            
+            if(typeof req.query.title !== 'undefined' && req.query.title !== null){
+                query.title = new RegExp(req.query.title, 'i')
+            }
         
-            Post.paginate({community: community, status:1}, options, (err, posts) => {
+            Post.paginate(query, options, (err, posts) => {
                 if (err) return next(err);
                 posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
                 next(new httpResponse.OkResponse(posts));
