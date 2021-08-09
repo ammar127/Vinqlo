@@ -37,6 +37,10 @@ var communitySchema = mongoose.Schema({
     membersCount: {
         type: Number,
         default: 1
+    },
+    status:{
+        type: Number,
+        default: 1
     }
 
 });

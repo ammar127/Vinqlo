@@ -111,10 +111,28 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, async (req, res,
     });
 });
 
-router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.report.status = +req.params.status;
+router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, async (req, res, next) => {
+    req.report.status = 0;
     req.report.save((err, post) => {
         if(err) return next(err);
+        
+        if(report.type === 0) {
+            const post = await Post.findOne({_id: report.post});
+            post.status = req.params.status;
+            post.save();
+        }
+
+        if(report.type === 1) {
+            const user = await User.findOne({_id: report.user});
+            user.status = req.params.status;
+            user.save();
+        }
+
+        if(report.type === 2) {
+            const community = await Community.findOne({_id: report.community});
+            community.status = req.params.status;
+            community.save();
+        }
         next(new httpResponse.OkResponse({message: 'Successful'}));
     });
 });
