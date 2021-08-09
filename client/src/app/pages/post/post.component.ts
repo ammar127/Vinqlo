@@ -30,12 +30,14 @@ export class PostComponent implements OnInit {
     tagTextProp: 'text',
     callbacks:{
       input : (e) => {
-        this.service.searchByName(e.detail.value).subscribe(
-          res=> {
-            let usernames=res.data.users.map((e:any)=> e.firstName+' '+e.lastName)
-            this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
+        if(e.detail.value) {
+          console.log('e.detail.value', e.detail.value)
+          this.service.searchByName(e.detail.value).subscribe(
+            res=> {
+              this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
 
-        }   ) },
+          }   )
+        } },
     },
     dropdown: {
       enabled:1,
@@ -69,12 +71,12 @@ export class PostComponent implements OnInit {
     var raw=this.commentt.split("[[")
     ht=raw[0];
     for (let i = 1; i < raw.length ; i++){
-      ht+='[[{"email":"'+JSON.parse(raw[i].split(']]')[0]).user.email+'","value":"'+JSON.parse(raw[i].split(']]')[0]).value+'"}]]'+' '+raw[i].split(']]')[1];
+      ht+='[[{"value":{"email":"'+JSON.parse(raw[i].split(']]')[0]).user.email+'","name":"'+JSON.parse(raw[i].split(']]')[0]).value+'"}}]]'+' '+raw[i].split(']]')[1];
     }
     console.log(ht);
     if(this.btnText=='Comment')
     {
-      this. commentService.postComment({body:this.commentt,post:slug}).subscribe(  res=>{
+      this. commentService.postComment({body:ht,post:slug}).subscribe(  res=>{
           if(res.status === 200 ) {
             this.postData.comments.push({body: this.commentt, by: this.by })
             Toast.fire({icon:'success', title:'Comment Created successfully'});
