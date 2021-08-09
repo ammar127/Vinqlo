@@ -21,9 +21,9 @@ import { UserService } from '../core';
   `,
 })
 export class LayoutComponent {
-  
+
   constructor(private router: Router, private userService: UserService) {
-   
+
   }
  get isAdmin() {return +this.userService.getCurrentUser().role !== 3}
 

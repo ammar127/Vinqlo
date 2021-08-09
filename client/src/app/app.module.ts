@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { CommonService } from './core/services/common.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,17 +18,7 @@ import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
-
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    LayoutModule,
-    CoreModule,
-    NgbModule,
-    ClipboardModule,
-    NgxPermissionsModule.forRoot(),
-    TagifyModule.forRoot(),
-  ],
+  imports: [BrowserModule, AppRoutingModule, LayoutModule, CoreModule, NgbModule,AuthModule, NgxPermissionsModule.forRoot(),TagifyModule.forRoot()],
 
   providers: [
     {

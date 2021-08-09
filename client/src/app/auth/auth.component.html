@@ -42,17 +42,21 @@
                                 <input formControlName="confirmPassword" type="password" class="form-control custom-border" placeholder="Confirm Password" />
                                 <errors [control]="f.confirmPassword"></errors>
                             </div>
+                            <a [routerLink]="['/forgot']">Forgot Pasword</a>
                             <button class="btn mb-2 btn-main" [disabled]="!authForm.valid" type="submit">
-                {{ isLogin ? "Log In" : "Sign Up" }}
+
+                {{ isLogin ? "Log In" : "Sign Up"}}
               </button>
+
                             <span>Or </span>
                             <a href="javascript:void(0)" class="main-color" [routerLink]="['/auth', isLogin ? 'register' : 'login']">{{ isLogin ? "Sign Up" : "Log In" }}</a
               >
-            </form>
-            {{ selectedCampus }}
-          </div>
+
+                        </form>
+                        {{ selectedCampus }}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>

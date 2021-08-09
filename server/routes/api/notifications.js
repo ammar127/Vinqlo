@@ -45,6 +45,7 @@ router.get('/mark-all',auth.isToken, auth.isUser, function(req, res, next){
   router.get('/mark-as-read/:slug', auth.isToken, auth.isUser, function(req, res, next){
     req.notification.isRead = true;
     req.notification.save(function (err, result) {
+
             if (err) { next(new BadRequestResponse("Server Error")) }
             next(new OkResponse());
     });

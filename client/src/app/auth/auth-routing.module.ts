@@ -1,11 +1,10 @@
-import { AuthGuard } from './../core/services/auth-guard.service';
 import { AuthComponent } from './auth.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OtpComponent } from './OTP/otp.component';
-import { NoAuthGuard } from './no-auth-guard.service';
 import { ResetComponent } from './reset/reset.component';
 import { ForgotComponent } from './forgot/forgot.component';
+import { NoAuthGuard } from '../core';
 
 const routes: Routes = [
   {
@@ -22,7 +21,7 @@ const routes: Routes = [
     path: 'otp/:email/:type', component: OtpComponent
   },
   {
-    path: 'forgot', component: ForgotComponent, canActivate: [NoAuthGuard]
+    path: 'forgot', component: ForgotComponent
   },
   {
     path: 'reset', component: ResetComponent, canActivate: [NoAuthGuard]

@@ -56,7 +56,7 @@ async (req, res, next) => {
                             var tag = JSON.parse(rawData[i].split("]]")[0]);
                             const user = await User.findOne({email: tag.value.email});
                            
-                            if(user !== null){
+                            if(user){
                                 let notification = new Notification();
                                 notification.title = `${req.user.firstName} ${req.user.lastName} tagged you in a post`;
                                 notification.type = 2;
@@ -67,17 +67,17 @@ async (req, res, next) => {
                             }
                         }
                     }
-
+console.log('post.by', post.by._id)
                     let not = new Notification();
                     not.title = `${req.user.firstName} ${req.user.lastName} commented on your post`;
                     not.type = 2;
                     not.user = req.user._id;
-                    not.sentTo = post.by._id;
+                    not.sentTo = post.by;
                     not.data = post.slug;
                     
                     console.log(not);
                     
-                    await sendNotification(not);
+                    sendNotification(not);
 
                     next(new httpResponse.OkResponse(comment));
                 });

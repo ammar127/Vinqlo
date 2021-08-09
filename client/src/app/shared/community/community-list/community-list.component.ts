@@ -41,6 +41,7 @@ export class CommunityListComponent implements OnInit {
       if(res.status === 200) {
         this.isLoader = false;
         this.communities=res.data.docs;
+        console.log(this.communities)
         this.hasNextPage = res.data.hasNextPage;
       }
     })
@@ -61,27 +62,19 @@ export class CommunityListComponent implements OnInit {
     this.page++;
     this.get();
   }
-  onJoinClick(slug: string) {
+  onJoinClick(slug: string,isJoined:boolean) {
     this.joinSlug = slug;
-    this.communityService.join(slug).subscribe(res => {
-      if(res.status === 200) {
+    this.communityService.join(slug,isJoined).subscribe(res => {
+      if(res.status === 200 && !isJoined) {
         Toast.fire({icon:'success', title: 'you joined a Community '});
         this.communities = this.communities.filter(c => c.slug !== slug);
         this.joinSlug = null;
-
       }
-   } )
-  }
-  onUnJoinClick(slug:string)
-  {
-    this.communityService.unJoin(slug).subscribe(res => {
-      if(res.status === 200) {
-        Toast.fire({icon:'success', title: 'you joined a Community '});
+      else if(res.status === 200 && isJoined){
+        Toast.fire({icon:'success', title: 'you un-joined a Community '});
         this.communities = this.communities.filter(c => c.slug !== slug);
         this.joinSlug = null;
-
       }
    } )
   }
-
 }
