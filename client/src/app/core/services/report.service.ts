@@ -21,4 +21,5 @@ export class ReportService {
   {
     return this.api.delete('/reports/'+data)
   }
+  updateReport(slug:string , type:number){ return this.api.post(`/reports/status/${type}/${slug}`)}
 }
