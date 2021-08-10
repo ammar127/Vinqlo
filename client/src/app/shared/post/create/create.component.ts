@@ -15,7 +15,7 @@ export class CreateComponent implements OnInit {
   addPostForm!:FormGroup;
   tag = '';
   commuities: Community[] = [];
-  @Output() success = new EventEmitter();
+  @Output() success = new EventEmitter;
   @ViewChild('content') content! : TemplateRef<any>;
   constructor(private fb: FormBuilder,
     private postService: PostService,
@@ -66,9 +66,8 @@ export class CreateComponent implements OnInit {
   get f() {return this.addPostForm.controls;}
   onAddTag() {
     let t = this.tag.trim();
-    console.log(t)
     if (t && t !== "") {
-      const a = this.f.tags.value;
+      const a = this.f.tags.value? this.f.tags.value: [] ;
       this.f.tags.setValue([...a, t]);
       this.tag = '';
     }
