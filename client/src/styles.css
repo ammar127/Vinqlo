@@ -213,6 +213,9 @@ footer {
 ::ng-deep .dropdown-toggle::after {
   display: none !important;
 }
+.dropdown-toggle::after{
+  display: none !important;
+}
 .card {
   border: none;
   border-radius: 15px;

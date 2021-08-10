@@ -9,6 +9,18 @@
   <div class="card shadow-sm py-3 card-table">
     <div class="row">
       <div class="col-md-12 px-5">
+        <div class="card shadow-sm card-accordian">
+          <ng-select
+            [clearable]="false"
+            [(ngModel)]="reportType"
+            [items]="reportt"
+            bindValue="id"
+            bindLabel="name"
+            (change)="get()"
+          ></ng-select>
+        </div>
+      </div>
+      <div class="col-md-12 px-5">
         <div style="position: relative">
           <input
             #cName
@@ -26,13 +38,16 @@
           </button>
         </div>
       </div>
-      <div class="px-5 shadow-sm">
+      <div class="px-5">
         <div *ngIf="!isLoader" class="row">
-          <div *ngFor="let camp of campuses" class="card-campus col-md-6">
-            <a (click)="createDegree.open(camp)"
+          <div *ngFor="let camp of campuses" class=" col-md-6">
+            <div class="card-campus shadow-sm">
+              <a (click)="createDegree.open(camp)"
               ><h4 class="main-color">{{ camp.name }}</h4></a
             >
             <p><i class="fas icons-color fa-users"></i> 1</p>
+            </div>
+            
           </div>
         </div>
         <loader *ngIf="isLoader"></loader>
