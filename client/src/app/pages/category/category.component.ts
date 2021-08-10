@@ -9,7 +9,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit, OnChanges {
-  public sortType: number =1;
+  public sortType: number =0;
 
   sortTypes = [
     { id: 1, name: 'Trending' },

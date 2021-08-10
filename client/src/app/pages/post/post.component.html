@@ -151,7 +151,7 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{ comment.by.firstName }} {{ comment.by.lastName }}</p>
-              <span (click)="routerlinkClicked($event)" [innerHtml]=" comment.body | comment"></span>
+             <app-comment [body]="comment.body"></app-comment>
               <div align="right" *ngIf="by.email == comment.by.email" ngbDropdown class="d-inline-block">
                 <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
 

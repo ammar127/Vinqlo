@@ -301,3 +301,6 @@ button:focus {
 .ng-select .ng-arrow-wrapper:hover .ng-arrow {
   border-top-color: #07fbff;
 }
+.cursor-pointer{
+  cursor: pointer;
+}
