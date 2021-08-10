@@ -9,7 +9,7 @@ import { NotificationService, User, UserService } from 'src/app/core';
 })
 export class NotificationComponent implements OnInit {
 
- 
+
   result:any = null;
   constructor(private notificationService: NotificationService,
     private userService: UserService
@@ -28,7 +28,7 @@ export class NotificationComponent implements OnInit {
     this.notificationService.getNotification().subscribe((res : any) => {
 
       if(res.status === 200) {
-        this.result = res.data.result;
+        this.result = res.data.notifications;
       }
     }, (err : any)=> {
 
@@ -49,5 +49,5 @@ export class NotificationComponent implements OnInit {
       }
     })
   }
-  
+
 }

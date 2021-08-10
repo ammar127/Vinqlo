@@ -67,16 +67,9 @@ export class PostComponent implements OnInit {
   }
   postComment(slug:string)
   {
-    let ht;
-    var raw=this.commentt.split("[[")
-    ht=raw[0];
-    for (let i = 1; i < raw.length ; i++){
-      ht+='[[{"value":{"email":"'+JSON.parse(raw[i].split(']]')[0]).user.email+'","name":"'+JSON.parse(raw[i].split(']]')[0]).value+'"}}]]'+' '+raw[i].split(']]')[1];
-    }
-    console.log(ht);
     if(this.btnText=='Comment')
     {
-      this. commentService.postComment({body:ht,post:slug}).subscribe(  res=>{
+      this. commentService.postComment({body:this.commentt,post:slug}).subscribe(  res=>{
           if(res.status === 200 ) {
             this.postData.comments.push({body: this.commentt, by: this.by })
             Toast.fire({icon:'success', title:'Comment Created successfully'});
@@ -155,8 +148,5 @@ export class PostComponent implements OnInit {
         this.joinSlug = null;
      } )
   }
-  routerlinkClicked(element : HTMLElement|any) {
-    var abc:HTMLElement=element.path[0];
-    this.router.navigate([abc.getAttribute('routerlink')]);
-  }
+
 }
