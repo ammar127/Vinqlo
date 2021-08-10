@@ -113,7 +113,7 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, async (req, res,
 
 router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, async (req, res, next) => {
     req.report.status = 0;
-    req.report.save((err, post) => {
+    req.report.save( async (err, post) => {
         if(err) return next(err);
         
         if(report.type === 0) {
