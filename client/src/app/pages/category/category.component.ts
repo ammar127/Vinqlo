@@ -9,11 +9,11 @@ import { Component, OnInit, OnChanges } from '@angular/core';
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit, OnChanges {
-  public selectedCar: number | undefined;
+  public sortType: number =1;
 
-  cars = [
+  sortTypes = [
     { id: 1, name: 'Trending' },
-    { id: 2, name: 'Newest' },
+    { id: 0, name: 'Newest' },
   ];
   academicesPath = '/communities/get/academics';
   slug!: string;
@@ -27,9 +27,7 @@ export class CategoryComponent implements OnInit, OnChanges {
 
   ngOnChanges() {}
   ngOnInit(): void {
-    this.route.params.subscribe((res) => {
-      this.slug = res['slug'];
-    });
+    this.get();
   }
   get categories() {
     return this.commonService.categories();
