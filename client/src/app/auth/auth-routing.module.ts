@@ -1,3 +1,4 @@
+import { InitComunityComponent } from './init-comunity/init-comunity.component';
 import { AuthComponent } from './auth.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -22,6 +23,9 @@ const routes: Routes = [
   },
   {
     path: 'forgot', component: ForgotComponent
+  },
+  {
+    path: 'initial-community', component: InitComunityComponent
   },
   {
     path: 'reset', component: ResetComponent, canActivate: [NoAuthGuard]

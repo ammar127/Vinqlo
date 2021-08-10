@@ -145,18 +145,15 @@ export class PostComponent implements OnInit {
   onJoinClick(slug: string,isJoined:boolean) {
     this.joinSlug = slug;
     console.log(this.postData.community.isJoined)
-    if(this.postData.community.isJoined)
-    {
-      this.communityService.join(slug,isJoined).subscribe(res => {
-        if(res.status === 200 && isJoined) {
+    this.communityService.join(slug,isJoined).subscribe(res => {
+        if( isJoined) {
           Toast.fire({icon:'success', title: 'you un-joined a Community '});
-          this.joinSlug = null;
-        }else if(res.status === 200 && !isJoined){
+        }else if( !isJoined){
           Toast.fire({icon:'success', title: 'you joined a Community '});
-          this.joinSlug = null;
         }
+        this.postData.community.isJoined=!isJoined;
+        this.joinSlug = null;
      } )
-    }
   }
   routerlinkClicked(element : HTMLElement|any) {
     var abc:HTMLElement=element.path[0];
