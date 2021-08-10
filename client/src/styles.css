@@ -107,6 +107,7 @@ li.sidebar-list {
   position: static;
   background-color: #021a68;
   width: 100%;
+  margin-top: 61px;
 }
 
 .m-container {
@@ -130,7 +131,10 @@ li.sidebar-list {
 .a-footer-text {
   color: #fff;
 }
-
+footer {
+  position: fixed;
+  bottom: 0px;
+}
 .a-footer-text {
   font: 300 13px "Open Sans";
   margin-bottom: 10px;
@@ -146,7 +150,7 @@ li.sidebar-list {
   margin-right: 4px;
 }
 .h-1000 {
-  height: 1000vh;
+  height: 100%;
 }
 .user-img {
   height: 40px;
