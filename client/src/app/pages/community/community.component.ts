@@ -1,12 +1,8 @@
-import { PostService } from 'src/app/core/services/post.service';
-import { CommonService, Community, Post, } from 'src/app/core';
+import { CommonService, Community, Post, Toast } from 'src/app/core';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { CommunityService } from 'src/app/core/services/community.service';
-
-
-import { UserService } from './../../core/services/user.service';
 
 @Component({
   selector: 'app-community',
@@ -18,6 +14,7 @@ export class CommunityComponent implements OnInit {
   slug!: string;
   community!: Community;
   searchQuery:string='';
+  joinSlug:any=null;
   isLoader: boolean = false;
   postByCommunity = '/posts/get/by/';
   constructor(private route: ActivatedRoute,
@@ -32,5 +29,17 @@ export class CommunityComponent implements OnInit {
   getCurrentCommunity() {
     this.communityService.getSingleCommunity(this.slug).subscribe(res => this.community = res.data)
   }
+  onJoinClick(slug: string,isJoined:boolean) {
+    this.joinSlug = slug;
+    this.communityService.join(slug,isJoined).subscribe(res => {
+        if(res.status === 200 && isJoined) {
+          Toast.fire({icon:'success', title: 'you un-joined a Community '});
+        }else if(res.status === 200 && !isJoined){
+          Toast.fire({icon:'success', title: 'you joined a Community '});
+        }
+        this.community.isJoined=!isJoined;
+        this.joinSlug = null;
+     } )
 
+  }
 }
