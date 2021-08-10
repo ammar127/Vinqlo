@@ -178,13 +178,15 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
     var query = {};
     query.campus = req.user.campus;
     query.degree = req.user.degree;
-    query._id = { $nin: req.user.communities };
     query.by = { $ne: req.user._id }; 
     query.status = 1;
 
     if(typeof req.query.category !== 'undefined' && req.query.category !== null){
         const category = await Category.findOne({slug: req.query.category});
         query.category = category._id;
+    }
+    else{
+        query._id = { $nin: req.user.communities };
     }
 
     if(typeof req.query.name !== 'undefined' && req.query.name !== null){
