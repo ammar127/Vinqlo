@@ -15,7 +15,7 @@ export class ReportsComponent implements OnInit {
   searchQuery='';
   status = -1;
   strikeCount:number=0;
-  reportt=[{ name: 'Post', id: 0 },{ name: 'User', id: 1 },{ name: 'Community', id: 2 }];
+  reportTypes=[{ name: 'Post', id: 0 },{ name: 'User', id: 1 },{ name: 'Community', id: 2 }];
   statuses = [{ name: 'All', id: -1 },{ name: 'Active', id: 1 },{ name: 'In-Active', id: 0 }];
   reports!: Report[];
   reportType = 1;
@@ -32,7 +32,7 @@ export class ReportsComponent implements OnInit {
       });
   }
   onChange(type: number) {
-    this.reportType = this.reportt[type].id;
+    this.reportType = this.reportTypes[type].id;
     this.get();
   }
   deleteReport(slug:string)
