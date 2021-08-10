@@ -68,7 +68,7 @@ body('category').isLength({min: 4})
    
     let community = new Community();
     community.name = req.body.name;
-    community.by = req.user._id;
+    community.by = req.user;
     community.campus = req.user.campus;
     community.degree = req.user.degree;
 

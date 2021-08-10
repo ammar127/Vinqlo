@@ -101,7 +101,8 @@ postSchema.methods.toJSON = function(){
             firstName: this.by.firstName,
             lastName: this.by.lastName,
             email: this.by.email,
-            image: this.by.image
+            image: this.by.image,
+            strikes: this.by.strikes
         },
         tags: this.tags,
         comments: this.comments,

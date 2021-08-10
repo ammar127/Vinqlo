@@ -81,7 +81,8 @@ communitySchema.methods.toJSON = function(){
             firstName: this.by.firstName,
             lastName: this.by.lastName,
             email: this.by.email,
-            image: this.by.image
+            image: this.by.image,
+            strikes: this.by.strikes
         },
         category: this.category,
         membersCount: this.membersCount
