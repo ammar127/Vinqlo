@@ -87,21 +87,26 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, async (req, res,
 
     if(typeof req.query.query !== 'undefined' && req.query.query !== null){
 
-        if(+query.type === 0){
-            const posts = await Post.find({title: new RegExp(req.query.query, 'i')});
-            query.post = {$in : posts.map(post => post._id)};
-        }
-        else if(+query.type === 1){
-            const users = await User.find({$or : [ {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')} ] });
-            query.user = {$in : users.map(user => user._id)};
-        }
-        else if(+query.type === 2){
-            const communities = await Community.find({name: new RegExp(req.query.query, 'i')});
-            query.community = {$in : communities.map(community => community._id)};
-        }
+        const users = await User.find({$or : [ {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')} ] });
+        console.log(users.length);
+        console.log(users.map(u => u._id));
+        query.by = {$in : users.map(u => u._id)};
+
+        // if(+query.type === 0){
+        //     const posts = await Post.find({title: new RegExp(req.query.query, 'i')});
+        //     query.post = {$in : posts.map(post => post._id)};
+        // }
+        // else if(+query.type === 1){
+        //     const users = await User.find({$or : [ {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')} ] });
+        //     query.user = {$in : users.map(user => user._id)};
+        // }
+        // else if(+query.type === 2){
+        //     const communities = await Community.find({name: new RegExp(req.query.query, 'i')});
+        //     query.community = {$in : communities.map(community => community._id)};
+        // }
     }
 
-    await Report.paginate(query, options, (err, reports) => {
+    Report.paginate(query, options, (err, reports) => {
         if(err){
             next(new httpResponse.BadRequestResponse(err));
         }
