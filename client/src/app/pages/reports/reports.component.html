@@ -32,51 +32,14 @@
     <div class="row">
       <div class="col-md-12 px-5">
         <div class="card shadow-sm card-accordian">
-          <a
-            class="collapsed collapse-toggle"
-            data-toggle="collapse"
-            (click)="collapse.toggle()"
-          >
-            <h5 class="icons-color mb-0">{{ reportType }}</h5>
-            <span><i class="fas fa-caret-down"></i></span>
-          </a>
-          <div
-            #collapse="ngbCollapse"
-            [(ngbCollapse)]="isCollapsed"
-            class="collapse shadow-sm custom-width accordian-main"
-          >
-            <div class="accordian-menu">
-              <div class="accordian-list">
-                <h5
-                  (click)="onChange(1); collapse.toggle()"
-                  data-toggle="collapse"
-                  class="main-color"
-                >
-                  User
-                </h5>
-              </div>
-              <hr />
-              <a
-                ><div
-                  (click)="onChange(2); collapse.toggle()"
-                  data-toggle="collapse"
-                  class="accordian-list"
-                >
-                  <h5 class="main-color">Communities</h5>
-                </div></a
-              >
-              <hr />
-              <a
-                ><div
-                  (click)="onChange(0); collapse.toggle()"
-                  data-toggle="collapse"
-                  class="accordian-list"
-                >
-                  <h5 class="main-color">Posts</h5>
-                </div></a
-              >
-            </div>
-          </div>
+          <ng-select
+            [clearable]="false"
+            [(ngModel)]="reportType"
+            [items]="reportt"
+            bindValue="id"
+            bindLabel="name"
+            (change)="get()"
+          ></ng-select>
         </div>
       </div>
 
@@ -108,23 +71,50 @@
               <a
                 href="javascript:void(0)"
                 class="mr-4"
-                (click)="deactivateReportedUser(report.by.email)"
+                (click)="deactivateReport(report.slug)"
                 ><img
                   src="../../../assets/images/Path 82.svg"
                   width="20px"
                   alt=""
                 />
-                &nbsp; Deactivate user</a
+                &nbsp; {{ status == 0 ? "Activate" : "De-Activate" }}
+                {{ reportt[reportType].name }} Report</a
               >
-              <a
-                href="javascript:void(0)"
-                class="mr-4"
-                (click)="addStrike(report.by.email)"
-                ><img
-                  src="../../../assets/images/phone-square-alt-solid.svg"
-                  width="20px"
-                  alt=""
-                />&nbsp;({{ report.by.strikes }}) Add strike to user</a
+              <span *ngIf="reportType == 0"
+                ><a
+                  href="javascript:void(0)"
+                  class="mr-4"
+                  (click)="addStrike(report.post.by.email)"
+                  ><img
+                    src="../../../assets/images/phone-square-alt-solid.svg"
+                    width="20px"
+                    alt=""
+                  />({{ report.post.by.strikes }}) Add strike to user</a
+                ></span
+              >
+              <span *ngIf="reportType == 1"
+                ><a
+                  href="javascript:void(0)"
+                  class="mr-4"
+                  (click)="addStrike(report.user.email)"
+                  ><img
+                    src="../../../assets/images/phone-square-alt-solid.svg"
+                    width="20px"
+                    alt=""
+                  />({{ report.user.strikes }}) Add strike to user</a
+                ></span
+              >
+              <span *ngIf="reportType == 2"
+                ><a
+                  href="javascript:void(0)"
+                  class="mr-4"
+                  (click)="addStrike(report.community.by.email)"
+                  ><img
+                    src="../../../assets/images/phone-square-alt-solid.svg"
+                    width="20px"
+                    alt=""
+                  />({{ report.community.by.strikes }}) Add strike to user</a
+                ></span
               >
             </div>
           </div>

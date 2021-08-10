@@ -69,14 +69,13 @@ router.delete('/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next
 });
 
 
-router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, async (req, res, next) => {
     const options = {
         page: req.query.page || 1,
         limit: req.query.limit || 10
     };
 
     var query = {};
-    console.log(req.query.type);
 
     if(typeof req.query.type !== 'undefined' && req.query.type !== null){
         query.type = +req.query.type;
@@ -86,7 +85,23 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next)
         query.status = +req.query.status;
     }
 
-    Report.paginate(query, options, (err, reports) => {
+    if(typeof req.query.query !== 'undefined' && req.query.query !== null){
+
+        if(query.type === 0){
+            const posts = await Post.find({title: new RegExp(req.query.query, 'i')});
+            query.post = {$in : posts.map(post => post._id)};
+        }
+        else if(query.type === 1){
+            const users = await User.find({$or : [ {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')} ] });
+            query.user = {$in : users.map(user => user._id)};
+        }
+        else if(query.type === 2){
+            const communities = await Community.find({name: new RegExp(req.query.query, 'i')});
+            query.community = {$in : communities.map(community => community._id)};
+        }
+    }
+
+    await Report.paginate(query, options, (err, reports) => {
         if(err){
             next(new httpResponse.BadRequestResponse(err));
         }

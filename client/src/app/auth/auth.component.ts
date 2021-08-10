@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Campus, CommonService, Errors, UserService, UserType } from '../core';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +21,8 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private fb: FormBuilder,
-    private commonService:CommonService
+    private commonService:CommonService,
+    private ps: NgxPermissionsService
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
@@ -37,10 +39,10 @@ export class AuthComponent implements OnInit {
       this.isLogin = authType === 'login'
       this.onChangeType();
     });
-    
+
   }
   onChangeType() {
-    if (!this.isLogin) 
+    if (!this.isLogin)
     {
       this.authForm.addControl('firstName', new FormControl('', [Validators.required]));
       this.authForm.addControl('lastName', new FormControl('', [Validators.required]));
@@ -76,14 +78,16 @@ export class AuthComponent implements OnInit {
           if(res.data.user && !res.data.user.verified ) {
             route = '/auth/otp/'+res.data.user.email+'/1';
           } else if(res.data.user && res.data.user.role === UserType.user){
-            route = '/feed';
+            route = '/initial-community';
           } else if(res.data.user && res.data.user.role === UserType.admin || res.data.user.role === UserType.superAdmin  ){
             route = '/users';
           }
         }
+        this.ps.loadPermissions([res.data.user.role.toString()]);
+        console.log('res.data.user.role', res.data.user.role , route)
         this.router.navigate([route])
       },
-      err => 
+      err =>
       {
         if(err && err == 'Unauthorized') {
           this.errors = ['Invalid Email or Password'];
@@ -95,7 +99,7 @@ export class AuthComponent implements OnInit {
           this.errors = ['Email already exist'];
         } else if(err && err.code === 422) {
           this.errors = err.moreInfo.errors.map((e: any) => e.msg);
-        } 
+        }
       }
     );
   }

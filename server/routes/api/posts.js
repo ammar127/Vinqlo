@@ -4,9 +4,12 @@ var mongoose = require('mongoose');
 var httpResponse = require('express-http-response');
 var { body, validationResult } = require('express-validator');
 var Post = require('../../models/post');
+var User = require('../../models/user');
 var Community = require('../../models/community');
 var Category = require('../../models/category');
+var Notification = require('../../models/notification');
 var auth = require('../auth');
+var {sendNotification} = require('../../utilities/notification');
 
 
 router.param('slug', (req, res, next, slug) => {
@@ -70,6 +73,11 @@ router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {
     };
     
     var query = {};
+
+    if(typeof req.query.type !== 'undefined' && +req.query.type === 1){
+        options.sort = {likeCount: -1};
+    }
+
     query.community = {$in : req.user.communities}
     query.status = 1;
 
@@ -173,6 +181,28 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
     });
 })
 
+router.get('/get/email/:email', auth.isToken, auth.isUser, (req, res, next) => {
+
+    User.findOne({email: req.params.email}, (err, user) => {
+        if(!err && user !== null){
+            const options = {
+                page: req.query.page || 1,
+                limit: req.query.limit || 10, 
+                sort: {time: -1}
+            };
+        
+            Post.paginate({by: user._id, status:1}, options, (err, posts) => {
+                if (err) return next(err);
+                posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
+                next(new httpResponse.OkResponse(posts));
+            }); 
+        }
+        else{
+            next(new httpResponse.UnauthorizedResponse('User not found!'));
+        }
+    });
+})
+
 router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
     if(+req.params.status === 1){
 
@@ -180,6 +210,14 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
             next(new httpResponse.BadRequestResponse('You have already liked this post'));
             return;
         }
+
+        let notification = new Notification();
+        notification.title = `${req.user.firstName} ${req.user.lastName} liked your post`;
+        notification.type = 2;
+        notification.user = req.user.id;
+        notification.sentTo= req.post.by._id;
+        notification.data = req.post.slug;
+        sendNotification(notification);
 
         req.post.likeCount++;
         req.user.liked.push(req.post._id);
@@ -208,6 +246,17 @@ router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, (r
     req.post.save((err, post) => {
         if(err) return next(err);
         next(new httpResponse.OkResponse({message: 'Successful'}));
+    });
+});
+
+router.get('/get/noComment', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+    var options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10,
+    };
+    Post.paginate({comments : {$exists:true, $size:0}}, options, (err, posts) => {
+        if (err) return next(new httpResponse.InternalServerErrorResponse(err));
+        next(new httpResponse.OkResponse(posts));
     });
 });
 

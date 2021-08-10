@@ -169,17 +169,30 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) => {
-    var query = {campus: req.user.campus, degree: req.user.degree, members: {$nin: [req.user._id]}};
+    var query = {};
+    query.campus = req.user.campus;
+    query.degree = req.user.degree;
+    query._id = { $nin: req.user.communities };
+    query.by = { $ne: req.user._id }; 
 
     if(typeof req.query.category !== 'undefined' && req.query.category !== null){
         const category = await Category.findOne({slug: req.query.category});
-        query = {campus: req.user.campus, degree: req.user.degree, members: {$nin: [req.user._id]}, category: category._id};
+        query.category = category._id;
     }
 
-    const options = {
+    if(typeof req.query.name !== 'undefined' && req.query.name !== null){
+        query.name = new RegExp(req.query.name, 'i');
+    }
+
+    var options = {
         page: req.query.page || 1,
-        limit: req.query.limit || 10
+        limit: req.query.limit || 10,
+        sort: {time: -1}
     };
+
+    if(typeof req.query.type !== 'undefined' && +req.query.type === 1){
+        options.sort = {membersCount: -1};
+    }
 
     Community.paginate(query, options, (err, communities) => {
         if(!err && communities.length !== 0){

@@ -34,16 +34,16 @@
           <div class="single-post">
             <div class="client-header">
               <div>
-                <h6 class="main-color mb-0">{{ community.name }}</h6>
+                <h6 class="main-color mb-0">{{ community?.name }}</h6>
                 <small class="text-muted"
-                  >{{ community.by.firstName }}
-                  {{ community.by.lastName }}</small
+                  >{{ community?.by?.firstName }}
+                  {{ community?.by?.lastName }}</small
                 >
               </div>
               <div>
-                <button class="btn btn-join">
-                  <i class="fa fa-link icons-color" aria-hidden="true"></i>
-                  <span class="main-color"> Join</span>
+                <button class="btn btn-join" [disabled]="joinSlug === community?.slug" (click)="onJoinClick(community.slug,community.isJoined)">
+                  <i class="fa fa-link icons-color" aria-hidden="true" ></i>
+                  <span class="main-color"   >{{community?.isJoined?' leave':' join'}}</span>
                 </button>
               </div>
               <div ngbDropdown class="d-inline-block">
@@ -61,13 +61,13 @@
             </p>
             <span class="main-color"
               ><i class="fa icons-color fa-users" aria-hidden="true"></i
-              >{{ community.membersCount }}</span
+              >{{ community?.membersCount }}</span
             >
           </div>
         </div>
         <div class="search-field my-3">
           <input
-            [ngModel]="searchQuery"
+            [(ngModel)]="searchQuery"
             type="text"
             class="form-control shadow-sm"
             placeholder="Search by name"
@@ -81,7 +81,7 @@
 
         <post-list
           [searchQuery]="searchQuery"
-          [url]="postbyComunity + slug"
+          [url]="postByCommunity + slug"
         ></post-list>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import  Swal  from 'sweetalert2';
 import { UserService, Toast } from 'src/app/core';
-import { report } from './../../core/constants/report';
 import { Report } from './../../core/models/report';
 import { ReportService } from './../../core/services/report.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,13 +14,11 @@ export class ReportsComponent implements OnInit {
   isLoader = false;
   searchQuery='';
   status = -1;
-  statuses = [
-    { name: 'All', id: -1 },
-    { name: 'Active', id: 1 },
-    { name: 'Inactive', id: 2 },
-  ];
+  strikeCount:number=0;
+  reportt=[{ name: 'Post', id: 0 },{ name: 'User', id: 1 },{ name: 'Community', id: 2 }];
+  statuses = [{ name: 'All', id: -1 },{ name: 'Active', id: 1 },{ name: 'In-Active', id: 0 }];
   reports!: Report[];
-  reportType = 'Users';
+  reportType = 1;
   constructor(private reportService: ReportService,private userService:UserService) {}
 
   ngOnInit(): void {
@@ -29,23 +26,24 @@ export class ReportsComponent implements OnInit {
   }
   get() {
     this.isLoader = true;
-    console.log(report.findIndex((e) => e == this.reportType))
-    this.reportService.getAllReports(report.findIndex((e) => e == this.reportType),this.searchQuery,this.status).subscribe((res) => {
+    this.reportService.getAllReports(this.reportType,this.searchQuery,this.status).subscribe((res) => {
         this.isLoader = false;
         this.reports = res.data.reports.docs;
       });
   }
   onChange(type: number) {
-    this.reportType = report[type];
+    this.reportType = this.reportt[type].id;
     this.get();
   }
   deleteReport(slug:string)
   {
-    this.reportService.deleteReport(slug).subscribe(
-      res=> { console.log(res)}
+    this.reportService.deleteReport(slug).subscribe(res=> {
+      if(res.status==200){
+      Toast.fire({ text: 'Report Deleted Successfully', icon: 'success' })}
+    }
     )
   }
-  deactivateReportedUser(email:string)
+  deactivateReport(slug:string)
   {
     Swal.fire({
       title: 'Are you sure?',
@@ -56,23 +54,23 @@ export class ReportsComponent implements OnInit {
       cancelButtonText: 'No, cancel please!',
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
-        this.userService.changeStatus(email, 0).subscribe((res) => {
-          if (res.status == 200) {
-            this.get();
-            this.userService.updateStatus(2,email).subscribe( res=>{
-              if(res.status==200){
-                Toast.fire({ text: 'Deactivated User Successfully', icon: 'success' })
+        console.log(this.reportType)
+        this.reportService.updateReport(slug,this.status==0?1:0).subscribe(res=>
+          {
+            if(res.status==200){
+              Toast.fire({ text: 'Deactivated User Successfully', icon: 'success' })
+              this.reports=this.reports.filter(e=>e.slug!=slug)
+              console.log(res)
               }
-            })
-          }
-        });
+
+          })
       } else {
         Swal.fire('Cancelled', 'Your user is safe :)', 'error');
       }
     });
 
   }
-  addStrike(email:string)
+  addStrike(email:any)
   {
     Swal.fire({ title: 'Are you sure?',text: 'you wanna add a strike to this user.',showCancelButton: true,confirmButtonColor: '#DD6B55',confirmButtonText: 'Yes, Post Strike !', cancelButtonText: 'No, cancel please!',})
     .then(({ isConfirmed }) => {
@@ -80,15 +78,9 @@ export class ReportsComponent implements OnInit {
         this.userService.changeStatus(email, 0).subscribe((res) => {
           if (res.status == 200) {
             this.get();
-            this.userService.updateStatus(2,email).subscribe( res=>{
-              if(res.status==200){
-
                 Toast.fire({ text: 'Strike Posted Successfully', icon: 'success' })
-              }
-            })
-          }
-        });
-      } else {
+          }})}
+         else {
         Swal.fire('Cancelled', 'Your user is safe :)', 'error');
       }
     });

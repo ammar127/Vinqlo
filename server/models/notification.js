@@ -5,36 +5,40 @@ var mongoosePaginate = require('mongoose-paginate-v2');
 var slug = require('slug');
 
 var notificationSchema = mongoose.Schema({
+
     slug:{
         type: String,
-        unique: true
+        unique: true,
+        required: true,
     },
-
-    body:{
-        type: String,
+    
+    title: String,
+    type: {
+        type: Number,
+        // 1 user
+        // 2 post
+        // 3 comment
+        enum: [1, 2, 3],
         required: true
-    },
 
-    by:{
+    },
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
+        default: null
+    },
+    sentTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true
-    },
-
-    to:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-
-    post:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
     },
 
     isRead: {
         type: Boolean,
-        default: false
+        default: false,
     },
+
+    data: {},
 
     time:{
         type: Date,
@@ -44,16 +48,14 @@ var notificationSchema = mongoose.Schema({
 });
 
 notificationSchema.pre('findOne', function (next) {
-    this.populate('by');
-    this.populate('to');
-    this.populate('post');
+    this.populate('user');
+    this.populate('sentTo');
     next();
 });
 
 notificationSchema.pre('find', function (next) {
-    this.populate('by');
-    this.populate('to');
-    this.populate('post');
+    this.populate('user');
+    this.populate('sentTo');
     next();
 });
 
@@ -69,29 +71,26 @@ notificationSchema.pre('validate', function(next){
 })
 
 notificationSchema.methods.slugify = function(){
-    this.slug = slug('co') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
+    this.slug = slug('not') + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36)
 }
 
 notificationSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
-        body: this.body,
-        by: {
-            firstName: this.by.firstName,
-            lastName: this.by.lastName,
-            email: this.by.email,
-            image: this.by.image
+        title: this.title,
+        type: this.type,
+        user: {
+            firstName: this.user.firstName,
+            lastName: this.user.lastName,
+            email: this.user.email,
+            image: this.user.image
         },
-        to: {
-            firstName: this.to.firstName,
-            lastName: this.to.lastName,
-            email: this.to.email
+        sentTo: {
+            firstName: this.sentTo.firstName,
+            lastName: this.sentTo.lastName,
+            email: this.sentTo.email
         },
-        post: {
-            title: this.post.title,
-            slug: this.post.slug,
-        },
-
+        data: this.data,
         isRead: this.isRead,
         time: this.time
     }

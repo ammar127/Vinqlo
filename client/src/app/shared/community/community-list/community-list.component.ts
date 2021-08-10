@@ -7,11 +7,11 @@ import { Community, CommunityService, Toast } from 'src/app/core';
   templateUrl: './community-list.component.html',
   styleUrls: ['./community-list.component.css']
 })
-export class CommunityListComponent implements OnInit {
+export class CommunityListComponent implements OnInit,OnChanges {
   @Input() url  = '';
 
   @Input() slug ='';
-
+  @Input() type=0;
   @Input() isJoin = true;
   @Input() searchQuery:string='';
   communities!: Community[];
@@ -26,33 +26,17 @@ export class CommunityListComponent implements OnInit {
   {
     this.get();
   }
-  ngOnInit(): void {
+  ngOnInit()
+  {
     this.get();
   }
   get() {
     this.isLoader = true;
-    if(this.slug!='') {
-      this.params= new HttpParams().set('page', this.page.toString()).set('category',(this.slug!='')?this.slug:'').set('name',this.searchQuery);
-    }
-    else{
-      this.params= new HttpParams().set('page', this.page.toString()).set('name',this.searchQuery);
-    }
-    this.communityService.getAll(this.url+'?'+this.params.toString()).subscribe(res => {
+    this.communityService.getAll(this.url,this.page,this.slug,this.type,this.searchQuery).subscribe(res => {
       if(res.status === 200) {
         this.isLoader = false;
         this.communities=res.data.docs;
-        this.hasNextPage = res.data.hasNextPage;
-      }
-    })
-  }
-  getByCategory(slug:string)
-  {
-    this.isLoader = true;
-    let params= new HttpParams().set('category', this.page.toString());
-    this.communityService.getAll(this.url+'?'+params.toString()).subscribe(res => {
-      if(res.status === 200) {
-        this.isLoader = false;
-        this.communities.push(...res.data.docs as Community[]);
+        console.log(this.communities)
         this.hasNextPage = res.data.hasNextPage;
       }
     })
@@ -61,27 +45,19 @@ export class CommunityListComponent implements OnInit {
     this.page++;
     this.get();
   }
-  onJoinClick(slug: string) {
+  onJoinClick(slug: string,isJoined:boolean) {
     this.joinSlug = slug;
-    this.communityService.join(slug).subscribe(res => {
-      if(res.status === 200) {
+    this.communityService.join(slug,isJoined).subscribe(res => {
+      if(res.status === 200 && !isJoined) {
         Toast.fire({icon:'success', title: 'you joined a Community '});
         this.communities = this.communities.filter(c => c.slug !== slug);
         this.joinSlug = null;
-
       }
-   } )
-  }
-  onUnJoinClick(slug:string)
-  {
-    this.communityService.unJoin(slug).subscribe(res => {
-      if(res.status === 200) {
-        Toast.fire({icon:'success', title: 'you joined a Community '});
+      else if(res.status === 200 && isJoined){
+        Toast.fire({icon:'success', title: 'you un-joined a Community '});
         this.communities = this.communities.filter(c => c.slug !== slug);
         this.joinSlug = null;
-
       }
    } )
   }
-
 }

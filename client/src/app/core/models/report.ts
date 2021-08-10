@@ -1,11 +1,13 @@
-import { User } from "./User";
+import { User, Post } from 'src/app/core';
+import { Community } from './community';
 
 export interface Report
 {
     slug:string;
     body:string;
-    post:string;
-    user:string;
+    post:Post;
+    user:User;
     by:User;
+    community:Community;
     time:Date;
 }

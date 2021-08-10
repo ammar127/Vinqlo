@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, UserType } from './core';
+import { AuthGuard, NoAuthGuard, UserType } from './core';
 import { LayoutComponent } from './layout/layout.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { HomeComponent } from './home/home.component';
@@ -9,6 +9,7 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canActivate: [NoAuthGuard]
   },
   {
     path: 'auth',
@@ -26,7 +27,7 @@ const routes: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: UserType.user.toString(),
+            only: [UserType.user],
             redirectTo: '/access-denied',
           },
         },
@@ -47,6 +48,18 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () =>
           import('./pages/users/users.module').then((m) => m.UsersModule),
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            redirectTo: '/access-denied',
+          },
+        },
+      },
+      {
+        path: 'no-comment',
+        loadChildren: () =>
+          import('./pages/no-comment/no-comment.module').then((m) => m.NoCommentModule),
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {

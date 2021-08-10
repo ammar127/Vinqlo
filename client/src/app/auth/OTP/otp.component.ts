@@ -22,24 +22,27 @@ export class OtpComponent {
           }
       };
 
-
     email = '';
     type = 1;
     isResendDisable = false;
     constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
+        console.log(route)
         this.route.params.subscribe(params => {
             this.email = params['email'];
             this.type = +params['type'];
         })
     }
+    ngOnInit(): void {
+    }
     onOtpChange(e: any) {
-     
+
             this.userService.verifyOtp(e, this.email).subscribe
                 (
                     res => {
                         if (res.status === 200) {
+                          console.log(this.type)
                             if(this.type === 1) {
-                                this.router.navigate(['/feed']);
+                                this.router.navigate(['/reset']);
                             } else {
                                 this.router.navigate(['/auth/reset']);
                             }
@@ -52,10 +55,11 @@ export class OtpComponent {
                     },
                     err => {
                         Toast.fire({ text: 'OTP is Invalid', icon: 'error' })
+                        console.log(this.email)
 
                     }
                 )
-        
+
     }
     onResendEmail() {
         this.isResendDisable = true;

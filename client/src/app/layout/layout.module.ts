@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { SidebarComponent } from './sidebar.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { SidebarComponent } from './sidebar.component';
     FooterComponent,
     HeaderComponent,
     SidebarComponent,
+    NotificationComponent
   ],
   imports: [CommonModule, RouterModule, SharedModule, RouterModule],
   exports: [LayoutComponent],

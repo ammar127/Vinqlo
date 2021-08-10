@@ -8,8 +8,9 @@
     "client": "cd client && npm start",
     "build:client": "cd client && ng build --prod",
     "install:server": "npm install",
-    "devStart": "nodemon app.js",
-    "seed": "node server/seed.js"
+    "server": "nodemon --delay 500ms app.js",
+    "seed": "node server/seed.js",
+    "kill": "npx kill-port 3000"
   },
   "author": "",
   "license": "ISC",
@@ -52,13 +53,13 @@
     "request": "^2.88.2",
     "slug": "^0.9.4",
     "slugify": "^1.5.3",
-    "socket.io": "^3.1.1",
+    "socket.io": "^3.1.2",
     "sweetalert2": "^11.0.20",
     "uuidv4": "^6.2.10"
   },
   "devDependencies": {
     "newman": "^5.2.1",
-    "nodemon": "^1.19.4"
+    "nodemon": "2.0.12"
   },
   "repository": {
     "type": "git",

@@ -20,6 +20,7 @@ async function seedUser(){
         user.campus = campuses[n1]._id;
         user.degree = campuses[n1].degrees[n2]._id;
         user.verified = true;
+        user.image = faker.image.avatar();
 
         await user.save();
     }
