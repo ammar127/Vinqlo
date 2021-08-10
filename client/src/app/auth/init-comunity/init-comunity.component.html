@@ -1,35 +1,87 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-         <div class="card">
-           <div class="logo-img text-center">
-             <img src="../../../assets/images/logo-01.png" alt="">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+         <div class="card card-slider">
+          <div class="logo-img text-center">
+            <img class="logo" src="../../../assets/images/logo-01.png" alt="">
+          </div>
+          <div class="card-body">
+            
+            <div class="first-slide">
+             <span >interact, learn ask, find everything you need to live the Ghentian experience to the fullest</span>
            </div>
-            <ngb-carousel *ngIf="images">
-                <ng-template ngbSlide>
-                 <div class="first-slide">
-                   <a href="javascript:void(0)">interact, learn ask, find everything you need to live the Ghentian experience to the fullest</a>
-                 </div>
-                </ng-template>
-                <ng-template ngbSlide>
-                  <div class="picsum-img-wrapper">
-                    <img [src]="images[1]" alt="Random second slide">
-                  </div>
-                  <div class="carousel-caption">
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  </div>
-                </ng-template>
-                <ng-template ngbSlide>
-                  <div class="picsum-img-wrapper">
-                    <img [src]="images[2]" alt="Random third slide">
-                  </div>
-                  <div class="carousel-caption">
-                    <h3>Third slide label</h3>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                  </div>
-                </ng-template>
-              </ngb-carousel>
+           <div class="second-slide">
+            <h4 class="main-color">What are you interested in?</h4>
+            <div class="card">
+             
+            <div class="card py-2">
+              <div class="d-flex">
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+                  <li ngbNavItem="top">
+                    <a ngbNavLink>
+                      <i class="fas icons-color fa-calendar-day"></i> Events
+                    </a>
+                    <ng-template ngbNavContent>
+                     <ul class="nav-tab-list">
+                       <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                       <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                       <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                       <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                     </ul>
+                    </ng-template>
+                  </li>
+                  <li ngbNavItem="middle">
+                    <a ngbNavLink>
+                      <i class="fas icons-color fa-calendar-day"></i> Events
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ul class="nav-tab-list">
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                      </ul>
+                    </ng-template>
+                  </li>
+                  <li ngbNavItem="bottom">
+                    <a ngbNavLink>
+                      <i class="fas icons-color fa-calendar-day"></i> Events
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ul class="nav-tab-list">
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fas icons-color fa-link"></i> <span>Football</span></a></li>
+                      </ul>
+                    </ng-template>
+                  </li>
+                </ul>
+              
+                <div [ngbNavOutlet]="nav" class="ml-4"></div>
+              </div>
+            </div>
+            </div>
+             
+           </div>
+           <div class="third-slide">
+            <span>You are ready, go to your <a href="">feed</a> </span>
+           </div>
+           <div class="slider-indicators">
+             <div class="previous-slide">
+               <i class="fas fa-chevron-left"></i>
+             </div>
+             <ul>
+               <li class="active"><i class="fas fa-circle"></i></li>
+               <li><i class="fas fa-circle"></i></li>
+               <li><i class="fas fa-circle"></i></li>
+             </ul>
+            
+             <div class="next-slide">
+               <i class="fas fa-chevron-right"></i>
+             </div>
+           </div>
+          </div>
          </div>
         </div>
     </div>
