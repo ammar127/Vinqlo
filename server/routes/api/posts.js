@@ -168,8 +168,14 @@ router.get('/get/by/:community', auth.isToken, auth.isUser, (req, res, next) => 
                 limit: req.query.limit || 10, 
                 sort: {time: -1}
             };
+
+            let query = {community: community, status:1};
+            
+            if(typeof req.query.title !== 'undefined' && req.query.title !== null){
+                query.title = new RegExp(req.query.title, 'i')
+            }
         
-            Post.paginate({community: community, status:1}, options, (err, posts) => {
+            Post.paginate(query, options, (err, posts) => {
                 if (err) return next(err);
                 posts.docs = posts.docs.map(post => post.toJSONFor(req.user));
                 next(new httpResponse.OkResponse(posts));
@@ -210,14 +216,13 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
             next(new httpResponse.BadRequestResponse('You have already liked this post'));
             return;
         }
-
-        let notification = new Notification();
-        notification.title = `${req.user.firstName} ${req.user.lastName} liked your post`;
-        notification.type = 2;
-        notification.user = req.user.id;
-        notification.sentTo= req.post.by._id;
-        notification.data = req.post.slug;
-        sendNotification(notification);
+        sendNotification({
+            title : `${req.user.firstName} ${req.user.lastName} liked your post`,
+            type : 2,
+            user : req.user.id,
+            sentTo: req.post.by._id,
+            data : req.post.slug
+        })
 
         req.post.likeCount++;
         req.user.liked.push(req.post._id);
@@ -259,5 +264,6 @@ router.get('/get/noComment', auth.isToken, auth.isUser, auth.isAdmin, (req, res,
         next(new httpResponse.OkResponse(posts));
     });
 });
+
 
 module.exports = router;

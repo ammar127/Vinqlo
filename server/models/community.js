@@ -37,6 +37,10 @@ var communitySchema = mongoose.Schema({
     membersCount: {
         type: Number,
         default: 1
+    },
+    status:{
+        type: Number,
+        default: 1
     }
 
 });
@@ -77,10 +81,12 @@ communitySchema.methods.toJSON = function(){
             firstName: this.by.firstName,
             lastName: this.by.lastName,
             email: this.by.email,
-            image: this.by.image
+            image: this.by.image,
+            strikes: this.by.strikes
         },
         category: this.category,
-        membersCount: this.membersCount
+        membersCount: this.membersCount,
+        status: this.status
     }
 }
 
@@ -96,7 +102,8 @@ communitySchema.methods.toJSONFor = function(user){
         },
         category: this.category,
         membersCount: this.membersCount,
-        isJoined: user.isJoined(this._id)
+        isJoined: user.isJoined(this._id),
+        status: this.status
     }
 }
 

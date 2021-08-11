@@ -15,7 +15,12 @@ var degreeSchema = mongoose.Schema({
 });
 
 
-
+const prePopulate = function () {
+    //this.populate('members');
+}
+degreeSchema.pre('find', prePopulate);
+degreeSchema.pre('findOne', prePopulate);
+degreeSchema.pre('findById',prePopulate);
 
 degreeSchema.pre('validate', function(next){
     if(!this.slug)
@@ -31,6 +36,7 @@ degreeSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         name: this.name,
+        members: this.members
     }
 }
 

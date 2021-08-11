@@ -5,7 +5,7 @@ var Campus = require('../../models/campus');
 var Category = require('../../models/category');
 
 router.get('/' , async (req, res, next) => {
-    const campuses = await Campus.find();
+    var campuses = await Campus.find();
     const categories = await Category.find();
     next(new httpResponse.OkResponse({campuses: campuses, categories: categories}));
 });

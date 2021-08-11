@@ -87,21 +87,26 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, async (req, res,
 
     if(typeof req.query.query !== 'undefined' && req.query.query !== null){
 
-        if(query.type === 0){
-            const posts = await Post.find({title: new RegExp(req.query.query, 'i')});
-            query.post = {$in : posts.map(post => post._id)};
-        }
-        else if(query.type === 1){
-            const users = await User.find({$or : [ {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')} ] });
-            query.user = {$in : users.map(user => user._id)};
-        }
-        else if(query.type === 2){
-            const communities = await Community.find({name: new RegExp(req.query.query, 'i')});
-            query.community = {$in : communities.map(community => community._id)};
-        }
+        const users = await User.find({$or : [ {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')} ] });
+        console.log(users.length);
+        console.log(users.map(u => u._id));
+        query.by = {$in : users.map(u => u._id)};
+
+        // if(+query.type === 0){
+        //     const posts = await Post.find({title: new RegExp(req.query.query, 'i')});
+        //     query.post = {$in : posts.map(post => post._id)};
+        // }
+        // else if(+query.type === 1){
+        //     const users = await User.find({$or : [ {firstName: new RegExp(req.query.query, 'i')}, {lastName: new RegExp(req.query.query, 'i')} ] });
+        //     query.user = {$in : users.map(user => user._id)};
+        // }
+        // else if(+query.type === 2){
+        //     const communities = await Community.find({name: new RegExp(req.query.query, 'i')});
+        //     query.community = {$in : communities.map(community => community._id)};
+        // }
     }
 
-    await Report.paginate(query, options, (err, reports) => {
+    Report.paginate(query, options, (err, reports) => {
         if(err){
             next(new httpResponse.BadRequestResponse(err));
         }
@@ -111,10 +116,28 @@ router.get('/get/all', auth.isToken, auth.isUser, auth.isAdmin, async (req, res,
     });
 });
 
-router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
-    req.report.status = +req.params.status;
-    req.report.save((err, post) => {
+router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, async (req, res, next) => {
+    req.report.status = 0;
+    req.report.save( async (err, post) => {
         if(err) return next(err);
+        
+        if(report.type === 0) {
+            const post = await Post.findOne({_id: report.post});
+            post.status = req.params.status;
+            post.save();
+        }
+
+        if(report.type === 1) {
+            const user = await User.findOne({_id: report.user});
+            user.status = req.params.status;
+            user.save();
+        }
+
+        if(report.type === 2) {
+            const community = await Community.findOne({_id: report.community});
+            community.status = req.params.status;
+            community.save();
+        }
         next(new httpResponse.OkResponse({message: 'Successful'}));
     });
 });
