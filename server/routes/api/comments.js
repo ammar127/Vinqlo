@@ -73,7 +73,7 @@ console.log('post.by', post.by._id)
                         type : 2,
                         user : req.user._id,
                         sentTo : post.by,
-                        data : post.slug
+                        data : {slug: post.slug}
                     });
 
                     next(new httpResponse.OkResponse(comment));
