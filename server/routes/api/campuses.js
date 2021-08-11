@@ -69,10 +69,13 @@ router.delete('/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next
 
 router.get('/get/all', auth.isToken, auth.isUser, async(req, res, next) =>{
     var campuses = await Campus.find({});
-    
-    for(var i=0; i<campuses.length ; i++){
-       campuses[i].userCount = await User.countDocuments({campus: campuses[i]._id});
+
+    for(var i=0; i<campuses.length; i++){
+        for(var j=0; j<campuses[i].degrees.length; j++){
+            campuses[i].degrees[j].members = await User.find({degree:campuses[i].degrees[j]._id}).select("firstName lastName email image");
+        }
     }
+
 
     next(new httpResponse.OkResponse({campuses:campuses}));
 });

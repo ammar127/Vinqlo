@@ -12,18 +12,6 @@ var degreeSchema = mongoose.Schema({
         required: true
     },
 
-    membersCount: {
-        type: Number,
-        default: 0
-    },
-    
-    members: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ]
-
 });
 
 
@@ -48,7 +36,6 @@ degreeSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         name: this.name,
-        membersCount: this.membersCount,
         members: this.members
     }
 }

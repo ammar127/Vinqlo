@@ -19,12 +19,6 @@ async function seedUser(){
         user.bio = faker.lorem.sentence(); 
         user.campus = campuses[n1]._id;
         user.degree = campuses[n1].degrees[n2]._id;
-        campuses[n1].membersCount++;
-        campuses[n1].members.push(user._id);
-        await campuses[n1].save();
-        campuses[n1].degrees[n2].membersCount++;
-        campuses[n1].degrees[n2].members.push(user._id);
-        await campuses[n1].degrees[n2].save();
         user.verified = true;
         user.image = faker.image.avatar();
 

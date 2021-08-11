@@ -70,13 +70,6 @@ async (req, res, next) => {
     user.campus = campus._id;
     user.degree = degree._id;
 
-    campus.members.push(user._id);
-    degree.members.push(user._id);
-    campus.membersCount++;
-    degree.membersCount++;
-
-    await campus.save();
-    await degree.save();
 
     //OTP
     var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
