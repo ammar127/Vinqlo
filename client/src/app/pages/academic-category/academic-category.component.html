@@ -9,25 +9,13 @@
   <div class="card shadow-sm py-3 card-table">
     <div class="row">
       <div class="col-md-12 px-5">
-        <div class="card shadow-sm card-accordian">
-          <ng-select
-            [clearable]="false"
-            [(ngModel)]="reportType"
-            [items]="reportt"
-            bindValue="id"
-            bindLabel="name"
-            (change)="get()"
-          ></ng-select>
-        </div>
-      </div>
-      <div class="col-md-12 px-5">
         <div style="position: relative">
           <input
             #cName
             type="text"
             class="form-control custom-border"
-            placeholder="Enter Campus Name "
-            (keyup.enter)="createCampus(cName.value)"
+            placeholder="Enter New Campus Name "
+            (keyup.enter)="createCampus(cName.value);cName.value=''"
           />
           <button
             class="btn btn-plus"
@@ -42,17 +30,15 @@
         <div *ngIf="!isLoader" class="row">
           <div *ngFor="let camp of campuses" class=" col-md-6">
             <div class="card-campus shadow-sm">
-              <a (click)="createDegree.open(camp)"
-              ><h4 class="main-color">{{ camp.name }}</h4></a
-            >
-            <p><i class="fas icons-color fa-users"></i> 1</p>
+              <a style="cursor:pointer;" (click)="createDegree.open(camp)"><h4 class="main-color">{{ camp.name }}</h4></a>
+              <a style="cursor:pointer;" (click)="listOfUser.open(camp.name,camp.degrees)"><p><i class="fas icons-color fa-users"></i> {{countMembers(camp.degrees)}}</p></a>
             </div>
-            
           </div>
         </div>
-        <loader *ngIf="isLoader"></loader>
       </div>
     </div>
   </div>
+  <loader *ngIf="isLoader"></loader>
 </div>
 <app-create-degree #createDegree></app-create-degree>
+<app-user-listing #listOfUser></app-user-listing>

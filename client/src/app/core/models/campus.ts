@@ -1,3 +1,4 @@
+import { User } from './User';
 export interface Campus
 {
     name:string;
@@ -8,5 +9,6 @@ export interface Campus
 export interface Degree
 {
     name:string;
+    members:User[];
     slug:string;
 }
