@@ -85,7 +85,8 @@ communitySchema.methods.toJSON = function(){
             strikes: this.by.strikes
         },
         category: this.category,
-        membersCount: this.membersCount
+        membersCount: this.membersCount,
+        status: this.status
     }
 }
 
@@ -101,7 +102,8 @@ communitySchema.methods.toJSONFor = function(user){
         },
         category: this.category,
         membersCount: this.membersCount,
-        isJoined: user.isJoined(this._id)
+        isJoined: user.isJoined(this._id),
+        status: this.status
     }
 }
 

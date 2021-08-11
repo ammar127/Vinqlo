@@ -113,7 +113,8 @@ postSchema.methods.toJSON = function(){
             membersCount: this.community.membersCount
         },
         time: this.time,
-        likeCount: this.likeCount
+        likeCount: this.likeCount,
+        status: this.status
     }
 }
 
@@ -141,7 +142,8 @@ postSchema.methods.toJSONFor = function(user){
         time: this.time,
         likeCount: this.likeCount,
         isLiked: user.isLiked(this._id),
-        isSaved: user.isSaved(this._id)
+        isSaved: user.isSaved(this._id),
+        status: this.status
     }
 }
 

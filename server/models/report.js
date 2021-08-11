@@ -91,7 +91,8 @@ reportSchema.methods.toJSON = function(){
         user: this.user,
         community: this.community,
         by: this.by,
-        time: this.time
+        time: this.time,
+        status: this.status
     }
 }
 

@@ -152,7 +152,8 @@ userSchema.methods.toAuthJSON = function(){
         role: this.role,
         otp: this.otp,
         verified: this.verified,
-        image: this.image
+        image: this.image,
+        status: this.status
     }
 }
 
