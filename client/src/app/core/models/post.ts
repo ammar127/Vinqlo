@@ -10,6 +10,7 @@ export interface Post
     tags:string[];
     image:string;
     slug:string;
+    status:number;
     isLiked:boolean;
     isSaved:boolean;
     likeCount:number;
