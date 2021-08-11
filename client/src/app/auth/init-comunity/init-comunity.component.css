@@ -67,6 +67,9 @@
 .nav-tab-list li{
     padding: 20px 0px;
 }
+.nav-tab-list li.active{
+  background-color: #25EAEF;
+}
 .nav-tab-list li i{
     margin-right: 10px;
     font-size: 18px;
@@ -93,3 +96,4 @@
     color: #91009B !important;
     border-bottom: 1px solid #91009B;
 }
+
