@@ -2,7 +2,7 @@
   display: flex;
   padding: 0.5rem;
   color: #fff;
-  background: #0a3468;
+  background: #021A68;
   /* position: fixed;
   width: 20rem; */
 }
@@ -13,7 +13,7 @@
 }
 
 .navbar-nav .active>.nav-link {
-  color: #ff8c00;
+  color: #021A68;
 }
 
 .foot {
@@ -21,18 +21,17 @@
 
 }
 .read{
-  background: #3d3d3d;
+  background: rgba(220, 253, 254, 0.8);
 }
 .read:hover{
-  background-color: #3d3d3d !important;
+  background-color: rgb(186, 248, 250) !important;
 }
 .read .media p{
 
-  color: #ff9933 !important;
+  color: #021A68 !important;
 }
 .head span {
-  font-family: "RIFT";
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: 1.25rem;
 }
 .head a {
@@ -47,8 +46,9 @@
   padding-bottom: 0;
   width: 20rem;
   height: 300px;
-  background-color:#dafdfe!important
-
+  background-color:#fff !important;
+  border: none;
+  box-shadow: rgb(0 0 0) 3px 5px 25px -10px !important;
 }
 .media{
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
@@ -64,7 +64,7 @@
 }
 .media p{
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: #021A68;
 }
 .dropdown-item{
   padding: 0.5rem;
@@ -72,13 +72,13 @@
   cursor: pointer;
 }
 .dropdown-item:hover{
-  background-color: #2a2a2a;
+  background-color: rgb(186, 248, 250) !important;
 }
 .w-17{
   /* width: 20rem; */
-  background-color: #2a2a2a!important;
-  height: 300px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background-color: transparent;
+  height: 250px;
+  border: none;
   overflow-y: auto;
   padding-left: 0px;
 

@@ -8,9 +8,10 @@
         ></a>
             </li>
             <li class="nav-link" *ngIf="user" ngbDropdown>
-                <a href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active"><i class="fas fa-user-circle"></i
-        ></a>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a class="user-dropdown" href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active">
+                  <img [src]="user.image | image" alt="" />
+                </a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="margin-top: 8px !important">
           <button ngbDropdownItem routerLink="/profile">
             <div class="d-flex align-items-center">
               <div class="user-img">
@@ -26,7 +27,7 @@
           </button>
         </div>
       </li>
-      <li *ngIf="!isAdmin" >
+      <li class="nav-link" *ngIf="!isAdmin" >
         <a class="accordion-toggle collapsed" (click)="collapse.toggle()" href="javascript:void(0)"></a>
         <div style="position: absolute" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapse custom-align accordian-main">
           <div >
