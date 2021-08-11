@@ -14,6 +14,12 @@ async function seedInfo(){
     user.bio = faker.lorem.sentence(); 
     user.campus = campuses[0]._id;
     user.degree = campuses[0].degrees[0]._id;
+    campuses[0].membersCount++;
+    campuses[0].members.push(user._id);
+    await campuses[0].save();
+    campuses[0].degrees[0].membersCount++;
+    campuses[0].degrees[0].members.push(user._id);
+    await campuses[0].degrees[0].save();
     user.verified = true;
     user.image = faker.image.avatar();
 
@@ -27,6 +33,14 @@ async function seedInfo(){
     user2.bio = faker.lorem.sentence(); 
     user2.campus = campuses[2]._id;
     user2.degree = campuses[2].degrees[1]._id;
+    
+    campuses[2].membersCount++;
+    campuses[2].members.push(user2._id);
+    await campuses[2].save();
+    campuses[2].degrees[1].membersCount++;
+    campuses[2].degrees[1].members.push(user2._id);
+    await campuses[2].degrees[1].save();
+
     user2.role = 2;
     user2.verified = true;
     user.image = faker.image.avatar();

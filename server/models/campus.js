@@ -12,6 +12,18 @@ var campusSchema = mongoose.Schema({
         required: true
     },
 
+    membersCount: {
+        type: Number,
+        default: 0
+    },
+
+    members: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+
     degrees:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Degree',}]
@@ -19,7 +31,8 @@ var campusSchema = mongoose.Schema({
 });
 
 const prePopulate = function () {
-        this.populate('degrees');
+    this.populate('degrees');
+    //this.populate('members');
 }
 campusSchema.pre('find', prePopulate);
 campusSchema.pre('findOne', prePopulate);
@@ -41,7 +54,8 @@ campusSchema.methods.toJSON = function(){
         slug: this.slug,
         name: this.name,
         degrees: this.degrees,
-        userCount: this.userCount
+        membersCount: this.membersCount,
+        members: this.members
     }
 }
 

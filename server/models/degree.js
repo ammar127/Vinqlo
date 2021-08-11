@@ -12,10 +12,27 @@ var degreeSchema = mongoose.Schema({
         required: true
     },
 
+    membersCount: {
+        type: Number,
+        default: 0
+    },
+    
+    members: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
+
 });
 
 
-
+const prePopulate = function () {
+    //this.populate('members');
+}
+degreeSchema.pre('find', prePopulate);
+degreeSchema.pre('findOne', prePopulate);
+degreeSchema.pre('findById',prePopulate);
 
 degreeSchema.pre('validate', function(next){
     if(!this.slug)
@@ -31,6 +48,8 @@ degreeSchema.methods.toJSON = function(){
     return{
         slug: this.slug,
         name: this.name,
+        membersCount: this.membersCount,
+        members: this.members
     }
 }
 

@@ -70,6 +70,14 @@ async (req, res, next) => {
     user.campus = campus._id;
     user.degree = degree._id;
 
+    campus.members.push(user._id);
+    degree.members.push(user._id);
+    campus.membersCount++;
+    degree.membersCount++;
+
+    await campus.save();
+    await degree.save();
+
     //OTP
     var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
     user.otp = otp;
@@ -305,7 +313,10 @@ router.post('/strike/:report/:email', auth.isToken, auth.isUser, auth.isAdmin, (
             return;
         }
 
-        Report.update({slug: req.params.report}, {$set : {status: 0}});
+        Report.findOne({slug: req.params.report}, async (err, report) => {
+            report.status = 0;
+            await report.save();
+        });
 
         sendNotification({
             title : 'You got Strike',
