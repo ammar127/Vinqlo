@@ -11,16 +11,11 @@ export class NotificationService {
     private apiService: ApiService,
     ) {}
 
-  getEvent(userId: string){
-    return this.socketService.onEvent('notification'+userId);
+  getEvent(userEmail: string){
+    return this.socketService.onEvent('notification'+userEmail);
   }
-  TournamentInviteEvent(userId: string){
-    return this.socketService.onEvent('TournamentInvite'+userId);
-  }
-  FiveV5InviteEvent(userId: string){
-    return this.socketService.onEvent('5V5Invite'+userId);
-  }
-  getNotification() { return this.apiService.get(`/notification`,);  }
-  markAll(){ return this.apiService.get(`/notification/mark-all`,);  }
-  markAsRead(notificationId: string){ return this.apiService.get(`/notification/mark-as-read/${notificationId}`,);  }
+
+  getNotification() { return this.apiService.get(`/notifications/get/all`,);  }
+  markAll(){ return this.apiService.get(`/notifications/mark-all`,);  }
+  markAsRead(notificationSlug: string){ return this.apiService.get(`/notifications/mark-as-read/${notificationSlug}`,);  }
 }

@@ -24,8 +24,14 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9 mt-4">
+      <div class="col-md-9">
         <div class="row">
+          <div class="col-md-12">
+            <div class="community">
+              <h4 class="text-purple">Sports</h4>
+             
+            </div>
+          </div>
           <div class="col-md-9">
             <div class="search-field mb-4">
               <input
@@ -43,10 +49,10 @@
           </div>
           <div class="col-md-3">
             <ng-select
-              [items]="cars"
+              [items]="sortTypes"
               bindLabel="name"
               bindValue="id"
-              [(ngModel)]="selectedCar"
+              [(ngModel)]="sortType"
               class="rounded-pill shadow-sm"
             >
             </ng-select>
@@ -56,6 +62,7 @@
         <div class="row">
           <div class="col-md-12 my-3">
             <app-community-list
+              [type]="sortType"
               [slug]="slug"
               [searchQuery]="searchQuery"
               [url]="academicesPath"

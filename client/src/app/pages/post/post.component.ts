@@ -31,15 +31,13 @@ export class PostComponent implements OnInit {
     callbacks:{
       input : (e) => {
         if(e.detail.value) {
-          console.log('e.detail.value', e.detail.value)
           this.service.searchByName(e.detail.value).subscribe(
             res=> {
-              let usernames=res.data.users.map((e:any)=> e.firstName+' '+e.lastName)
               this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
-  
+
           }   )
-        }
-         },
+        } },
+
     },
     dropdown: {
       enabled:1,
@@ -69,13 +67,6 @@ export class PostComponent implements OnInit {
   }
   postComment(slug:string)
   {
-    let ht;
-    var raw=this.commentt.split("[[")
-    ht=raw[0];
-    for (let i = 1; i < raw.length ; i++){
-      ht+='[[{"email":"'+JSON.parse(raw[i].split(']]')[0]).user.email+'","value":"'+JSON.parse(raw[i].split(']]')[0]).value+'"}]]'+' '+raw[i].split(']]')[1];
-    }
-    console.log(ht);
     if(this.btnText=='Comment')
     {
       this. commentService.postComment({body:this.commentt,post:slug}).subscribe(  res=>{
@@ -147,21 +138,15 @@ export class PostComponent implements OnInit {
   onJoinClick(slug: string,isJoined:boolean) {
     this.joinSlug = slug;
     console.log(this.postData.community.isJoined)
-    if(this.postData.community.isJoined)
-    {
-      this.communityService.join(slug,isJoined).subscribe(res => {
-        if(res.status === 200 && isJoined) {
+    this.communityService.join(slug,isJoined).subscribe(res => {
+        if( isJoined) {
           Toast.fire({icon:'success', title: 'you un-joined a Community '});
-          this.joinSlug = null;
-        }else if(res.status === 200 && !isJoined){
+        }else if( !isJoined){
           Toast.fire({icon:'success', title: 'you joined a Community '});
-          this.joinSlug = null;
         }
+        this.postData.community.isJoined=!isJoined;
+        this.joinSlug = null;
      } )
-    }
   }
-  routerlinkClicked(element : HTMLElement|any) {
-    var abc:HTMLElement=element.path[0];
-    this.router.navigate([abc.getAttribute('routerlink')]);
-  }
+
 }

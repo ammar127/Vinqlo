@@ -1,6 +1,6 @@
 import { Community } from './../../../core/models/community';
 import { CommunityService } from './../../../core/services/community.service';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Toast, UserService } from 'src/app/core';
@@ -15,6 +15,7 @@ export class CreateComponent implements OnInit {
   addPostForm!:FormGroup;
   tag = '';
   commuities: Community[] = [];
+  @Output() success = new EventEmitter();
   @ViewChild('content') content! : TemplateRef<any>;
   constructor(private fb: FormBuilder,
     private postService: PostService,
@@ -35,12 +36,14 @@ export class CreateComponent implements OnInit {
   }
   onPost()
   {
-   
+
     this.postService.createPost(this.addPostForm.value)
     .subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Post Created successfully'});
         this.close();
+        this.addPostForm.reset();
+        this.success.emit();
       }
     });
   }
@@ -69,7 +72,7 @@ export class CreateComponent implements OnInit {
       this.f.tags.setValue([...a, t]);
       this.tag = '';
     }
-    
+
   }
   onRemoveTag(index: number) {
     const a = this.f.tags.value;

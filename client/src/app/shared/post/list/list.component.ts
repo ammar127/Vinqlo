@@ -23,33 +23,21 @@ export class ListComponent implements OnInit,OnChanges {
   constructor(private postService: PostService,private clipboardService: ClipboardService) {}
   ngOnChanges()
   {
+    this.posts=[];
+    this.page=1;
     this.get()
   }
   ngOnInit(): void {
-    this.get();
   }
   get() {
     this.isLoader = true;
     this.postService.getAll(this.url,this.page,this.type,this.searchQuery,this.email).subscribe(res => {
       if(res.status === 200) {
-       if(this.searchQuery==''){
-          this.posts=[];
-          this.posts.push(...res.data.docs as Post[]);
-          this.hasNextPage = res.data.hasNextPage;
-          this.isLoader = false;
-        }
-        else {
-          this.posts=[];
-          this.posts.push(...res.data.docs as Post[]);
-          this.hasNextPage = res.data.hasNextPage;
-          this.isLoader = false;
-        }
-      }else {
-        this.isLoader = false;
-        this.hasNextPage = false;
+        this.posts.push(...res.data.docs as Post[]) ;
+        this.hasNextPage = res.data.hasNextPage;
+        this.isLoader=false;
       }
     })
-
   }
   toggleLike(like:boolean,slug:string)
   {

@@ -61,7 +61,7 @@
     </div>
   </div>
   <no-content *ngIf="!isLoader && posts.length === 0" [label]="'No Posts here'" ></no-content>
-  <a href="javascript:void(0)" *ngIf="!isLoader&&hasNextPage" (click)="onLoadMoreClick()" > Load More <i class="fas fa-ellipsis-h"></i>
+  <a align="center" style="margin-top: 10px;" href="javascript:void(0)" *ngIf="!isLoader&&hasNextPage" (click)="onLoadMoreClick()" ><h5> Load More <i class="fas fa-ellipsis-h"></i></h5>
   </a>
   <loader *ngIf="isLoader"></loader>
 </div>
