@@ -70,12 +70,12 @@ export class ReportsComponent implements OnInit {
     });
 
   }
-  addStrike(email:any)
+  addStrike(slug:string,email:string)
   {
     Swal.fire({ title: 'Are you sure?',text: 'you wanna add a strike to this user.',showCancelButton: true,confirmButtonColor: '#DD6B55',confirmButtonText: 'Yes, Post Strike !', cancelButtonText: 'No, cancel please!',})
     .then(({ isConfirmed }) => {
       if (isConfirmed) {
-        this.userService.changeStatus(email, 0).subscribe((res) => {
+        this.userService.addStrike(slug,email).subscribe((res) => {
           if (res.status == 200) {
             this.get();
                 Toast.fire({ text: 'Strike Posted Successfully', icon: 'success' })

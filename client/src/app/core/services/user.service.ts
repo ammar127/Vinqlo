@@ -88,6 +88,10 @@ export class UserService {
   {
     return this.apiService.get(`/users/verifyOtp/${otp}/${email}`)
   }
+  addStrike(slug:string,email:string)
+  {
+    return this.apiService.post(`/users/strike/${slug}/${email}`)
+  }
   resendOtp(email:string)
   {
     return this.apiService.get(`/users/resendOtp/${email}`)
