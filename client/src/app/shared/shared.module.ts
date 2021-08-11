@@ -31,6 +31,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
 import { ShowImageComponent } from './show-image/show-image.component';
 import { CommentFilterComponent } from './Pipes/comment-filter.pipe';
 import { CreateDegreeComponent } from './create-degree/create-degree.component';
+import { UserListingComponent } from './user-listing/user-listing.component';
 @NgModule({
   declarations: [
     AlphaOnlyDirective,
@@ -57,7 +58,8 @@ import { CreateDegreeComponent } from './create-degree/create-degree.component';
     CreateReportComponent,
     ShowImageComponent,
     CreateDegreeComponent,
-    CreateDegreeComponent
+    CreateDegreeComponent,
+    UserListingComponent
   ],
   imports: [
     CommonModule,
@@ -101,6 +103,7 @@ import { CreateDegreeComponent } from './create-degree/create-degree.component';
     ShowImageComponent,
     CreateDegreeComponent,
     CommentFilterComponent,
+    UserListingComponent,
 
     //Pipes
     ImagePipe,

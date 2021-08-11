@@ -1,0 +1,28 @@
+<ng-template #content >
+  <div class="modal-header">
+    <h4 class="modal-title text-purple" align="center" id="modal-basic-title">{{title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()" >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div  class=" px-5 shadow-sm">
+    <div *ngIf="!isLoader" class="row">
+      <div *ngIf="degrees.length>0" >
+        <div *ngFor="let degree of degrees" class="card-campus col-md-6">
+          <span *ngFor="let member of degree.members">
+            <a [routerLink]="['/user-profile/'+member.email]" (click)="close()"><h4  class="main-color">{{member.firstName+' '+member.lastName}}</h4></a>
+          </span>
+        </div>
+        <no-content *ngIf="!isLoader && countMembers() " [label]="'No Users here'" ></no-content>
+      </div>
+      <div *ngIf="degree">
+        <span *ngFor="let member of degree.members">
+          <a [routerLink]="['/user-profile/'+member.email]" (click)="close()"><h4  class="main-color">{{member.firstName+' '+member.lastName}}</h4></a>
+          </span>
+          <no-content *ngIf="!isLoader && degree " [label]="'No Users here'" ></no-content>
+      </div>
+    </div>
+
+    <loader *ngIf="isLoader"></loader>
+  </div>
+</ng-template>

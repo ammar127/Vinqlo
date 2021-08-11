@@ -1,3 +1,4 @@
+import { Toast } from './../../core/constants/Toast';
 import { Component, OnInit } from '@angular/core';
 import { Campus } from 'src/app/core';
 import { AcademicCategoryService } from 'src/app/core/services/academic-category.service';
@@ -12,15 +13,14 @@ export class AcademicCategoryComponent implements OnInit {
   campuses!:Campus[];
   isLoader:boolean=true;
   constructor(private reportService: ReportService, private service:AcademicCategoryService,private campusService:AcademicCategoryService) { }
-  reportt=[{ name: 'Post', id: 0 },{ name: 'User', id: 1 },{ name: 'Community', id: 2 }];
   ngOnInit(): void {
     this.getCampus();
     this.get();
   }
-  
+
   get() {
     this.isLoader = true;
-    
+
   }
   getCampus()
   {
@@ -28,6 +28,7 @@ export class AcademicCategoryComponent implements OnInit {
     this.campusService.getCampuses().subscribe
     (
       res=>{
+        console.log(res.data.campuses)
       this.campuses=res.data.campuses
       this.isLoader=false;
     }
@@ -35,14 +36,23 @@ export class AcademicCategoryComponent implements OnInit {
   }
   createCampus(name:string)
   {
+    this.isLoader=true;
     if(name !== '') {
-       this.service.create(name).subscribe
-       (
-         res=>{console.log(res)}
+       this.service.create(name).subscribe(res=>{
+         if(res.status==200){
+          Toast.fire({ text: 'Community Created', icon: 'success' })
+        this.isLoader=false}
+      }
        )
        this.getCampus();
     }
-
   }
-
+  countMembers(degrees:any)
+  {
+    let count=0;
+    degrees.forEach((e:any) => {
+      count+=e.members.length
+    });
+    return count
+  }
 }

@@ -16,6 +16,7 @@ export class ListComponent implements OnInit,OnChanges {
   posts : Post[]=[] ;
   @Input() email='';
   page = 1;
+  @Input() isNewPost=false;
   hasNextPage = true;
   isLoader = false;
   @Input() type:number=0;

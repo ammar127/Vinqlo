@@ -2,7 +2,7 @@ import { PostService } from './../../core/services/post.service';
 import { UserService } from './../../core/services/user.service';
 import { Community } from './../../core/models/community';
 import { CommunityService } from './../../core/services/community.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +21,7 @@ export class FeedComponent implements OnInit {
   academicesPath = '/communities/get/academics';
   sortType: number=0;
   sortTypes = [ { id: 0, name: 'Most Recent' }, { id: 1, name: 'Trending' }, ];
+  isNewPost=false;
   @ViewChild('postList') listComponent!: ListComponent;
   constructor(private userService: UserService,private postService:PostService)
   {
@@ -31,6 +32,7 @@ export class FeedComponent implements OnInit {
   get user() {return this.userService.getCurrentUser()  }
 
   onSuccessPost() {
+    this.isNewPost=!this.isNewPost
     this.listComponent.get();
   }
 }

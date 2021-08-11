@@ -13,6 +13,6 @@ export class AcademicCategoryService {
   }
   getCampuses()
   {
-    return this.api.get('/common');
+    return this.api.get('/campuses/get/all');
   }
 }
