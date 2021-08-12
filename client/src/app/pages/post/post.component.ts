@@ -1,5 +1,5 @@
 import { UserType } from './../../core/constants/UserType';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { User } from './../../core/models/User';
 import { CommentService } from './../../core/services/comment.service';
 import { Post } from 'src/app/core/models';
@@ -26,6 +26,7 @@ export class PostComponent implements OnInit {
   isEdit=false;
   commentt :string=' ';
   whiteList$ = new BehaviorSubject<any[]>([]);
+  whiteList = this.whiteList$.asObservable().pipe(distinctUntilChanged());
   mixedSettings :TagifySettings={
     mode: 'mix',
     pattern: /@/,
@@ -36,7 +37,7 @@ export class PostComponent implements OnInit {
           this.service.searchByName(e.detail.value).subscribe(
             res=> {
               this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
-
+              console.log('this.whiteList$.value',this.whiteList$.value)
           }   )
         } },
 

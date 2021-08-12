@@ -42,7 +42,7 @@ export class OtpComponent {
                         if (res.status === 200) {
                           console.log(this.type)
                             if(this.type === 1) {
-                                this.router.navigate(['/reset']);
+                                this.router.navigate(['/initial-community']);
                             } else {
                                 this.router.navigate(['/auth/reset']);
                             }

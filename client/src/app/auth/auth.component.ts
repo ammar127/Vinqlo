@@ -28,7 +28,7 @@ export class AuthComponent implements OnInit {
     this.authForm = this.fb.group({
       'email': ['', [Validators.required, Validators.email]],
       'password': ['', Validators.required]
-    }, {updateOn: 'blur'} );
+    });
   }
 
   ngOnInit()
@@ -77,8 +77,6 @@ export class AuthComponent implements OnInit {
         if(res.status === 200) {
           if(res.data.user && !res.data.user.verified ) {
             route = '/auth/otp/'+res.data.user.email+'/1';
-          } else if(res.data.user && res.data.user.verified ){
-            route = '/initial-community';
           } else if(res.data.user && res.data.user.role === UserType.user){
             route = '/feed';
           } else if(res.data.user && res.data.user.role === UserType.admin || res.data.user.role === UserType.superAdmin  ){
