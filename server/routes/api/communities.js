@@ -18,7 +18,8 @@ router.param('slug', (req, res, next, slug) => {
         }
     })
 })
-router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+router.get('/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+    req.community.members = await User.find({communities: req.community._id} ).select("firstName lastName email image");
     next(new httpResponse.OkResponse(req.community.toJSONFor(req.user)));
 })
 
