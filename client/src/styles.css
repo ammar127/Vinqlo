@@ -5,6 +5,7 @@
 body {
   background-color: #dafdfe !important;
   overflow-x: hidden;
+  font-family: 'Raleway', sans-serif;
 }
 .bg-dark {
   background-color: #021a68;
@@ -14,6 +15,7 @@ body {
 }
 .icons-color {
   color: #25eaef;
+  margin-right: 5px;
 }
 .text-purple {
   color: #91009b;
@@ -36,6 +38,18 @@ a {
   font-size: 26px;
   transition: all 0.3s;
 }
+.user-dropdown{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.user-dropdown img{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: contain;
+  text-align: center;
+}
 .accordion-toggle.collapsed:after {
   /* symbol for "collapsed" panels */
   content: "\f0c9"; /* adjust as needed, taken from font-awesome.css */
@@ -53,6 +67,7 @@ nav {
 .nav-list {
   display: flex;
   list-style: none;
+  align-items: center;
 }
 .nav-link a i {
   color: #021a68;
@@ -202,13 +217,14 @@ footer {
   justify-content: space-between;
   background: #fff;
   border-radius: 30px;
-  padding: 4px 12px;
+  padding: 6px 16px 2px 16px;
   margin: 20px 0px;
+  height: 40px;
 }
 .campus {
   background: #fff;
   border-radius: 15px;
-  padding: 12px;
+  padding: 20px;
 }
 ::ng-deep .dropdown-toggle::after {
   display: none !important;
@@ -234,6 +250,9 @@ footer {
 
 .btn-join {
   background-color: #f6f6f6;
+}
+.shadow-sm{
+  box-shadow: 3px 5px 18px -10px #000000 !important;
 }
 
 /* Modal */
@@ -290,6 +309,9 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 26px;
+  height: 26px;
+  font-size: 28px;
 }
 
 button:focus {

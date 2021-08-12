@@ -101,7 +101,8 @@ postSchema.methods.toJSON = function(){
             firstName: this.by.firstName,
             lastName: this.by.lastName,
             email: this.by.email,
-            image: this.by.image
+            image: this.by.image,
+            strikes: this.by.strikes
         },
         tags: this.tags,
         comments: this.comments,
@@ -112,7 +113,8 @@ postSchema.methods.toJSON = function(){
             membersCount: this.community.membersCount
         },
         time: this.time,
-        likeCount: this.likeCount
+        likeCount: this.likeCount,
+        status: this.status
     }
 }
 
@@ -135,12 +137,13 @@ postSchema.methods.toJSONFor = function(user){
             name: this.community.name,
             category: this.community.category,
             membersCount: this.community.membersCount,
-            isJoined: user.isJoined(this._id),
+            isJoined: user.isJoined(this.community._id),
         },
         time: this.time,
         likeCount: this.likeCount,
         isLiked: user.isLiked(this._id),
-        isSaved: user.isSaved(this._id)
+        isSaved: user.isSaved(this._id),
+        status: this.status
     }
 }
 

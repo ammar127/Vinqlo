@@ -8,6 +8,7 @@ var httpResponse = require('express-http-response');
 var User = require('../../models/user');
 var Campus = require('../../models/campus');
 var Degree = require('../../models/degree');
+var Report = require('../../models/degree');
 var Notification = require('../../models/notification');
 var emailService = require('../../utilities/emailService')
 var auth = require('../auth');
@@ -69,6 +70,7 @@ async (req, res, next) => {
     user.campus = campus._id;
     user.degree = degree._id;
 
+
     //OTP
     var otp = otpGenerator.generate(6, {alphabets: false, upperCase: false, specialChars: false});
     user.otp = otp;
@@ -106,14 +108,13 @@ router.get('/verify/:otp', auth.isToken, auth.isUser, (req, res, next) => {
 
     emailService.sendEmailVerificationSuccess(req.user);
 
-    let notification = new Notification();
-    notification.title = 'Your email verified Successfully';
-    notification.type = 1;
-    notification.user = null;
-    notification.sentTo= req.user._id;
-    notification.data = req.user.email;
-
-    sendNotification(notification);
+    sendNotification({
+        title : 'Your email verified Successfully',
+        type : 1,
+        user : null,
+        sentTo: req.user._id,
+        data : {slug: req.user.email}
+    });
 
     req.user.save();
 
@@ -149,6 +150,9 @@ router.get('/:email', (req, res, next) => {
 
 router.put('/status/:status/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.emailUser.status = +req.params.status;
+    if(req.params.status === 1){
+        req.emailUser.strikes = 0;
+    }
     req.emailUser.save();
     next(new httpResponse.OkResponse('Updated Successfully'));
 })
@@ -176,13 +180,13 @@ function sendOtp(req, res, next){
 
     user.save();
 
-    let notification = new Notification();
-    notification.title = 'OTP sent to your registered email address';
-    notification.type = 1;
-    notification.user = null;
-    notification.sentTo= req.emailUser._id;
-    notification.data = req.emailUser.email;
-    sendNotification(notification);
+    sendNotification({
+        title : 'OTP sent to your registered email address',
+        type : 1,
+        user : null,
+        sentTo: req.emailUser._id,
+        data : {slug: req.emailUser.email}
+    });
     
     next(new httpResponse.OkResponse({otp: user.otp}));
 }
@@ -241,13 +245,13 @@ router.put('/forgotPassword/:otp/:email', (req, res, next) => {
 
     emailService.sendEmailForgotPasswordSuccess(req.emailUser);
 
-    let notification = new Notification();
-    notification.title = 'Your Password Updated Successfully';
-    notification.type = 1;
-    notification.user = null;
-    notification.sentTo= req.emailUser._id;
-    notification.data = req.emailUser.email;
-    sendNotification(notification);
+    sendNotification({
+        title : 'OTP sent to your registered email address',
+        type : 1,
+        user : null,
+        sentTo: req.emailUser._id,
+        data : {slug: req.emailUser.email}
+    });
 
     req.emailUser.save();
 
@@ -289,7 +293,7 @@ router.get('/search/:name', auth.isToken, auth.isUser, (req, res, next) => {
     });
 });
 
-router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
+router.post('/strike/:report/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) => {
     req.emailUser.strikes++;
     
     if(req.emailUser.strikes > 2){
@@ -302,13 +306,18 @@ router.post('/strike/:email', auth.isToken, auth.isUser, auth.isAdmin, (req, res
             return;
         }
 
-        let notification = new Notification();
-        notification.title = 'Your account got strike by admin.';
-        notification.type = 1;
-        notification.user = null;
-        notification.sentTo= req.emailUser._id;
-        notification.data = req.emailUser.email;
-        sendNotification(notification);
+        Report.findOne({slug: req.params.report}, async (err, report) => {
+            report.status = 0;
+            await report.save();
+        });
+
+        sendNotification({
+            title : 'You got Strike',
+            type : 1,
+            user : null,
+            sentTo: req.emailUser._id,
+            data : {slug: req.emailUser.email}
+        });
 
         next(new httpResponse.OkResponse('Strike Added'));
     });

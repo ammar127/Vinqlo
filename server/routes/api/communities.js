@@ -68,7 +68,7 @@ body('category').isLength({min: 4})
    
     let community = new Community();
     community.name = req.body.name;
-    community.by = req.user._id;
+    community.by = req.user;
     community.campus = req.user.campus;
     community.degree = req.user.degree;
 
@@ -79,8 +79,11 @@ body('category').isLength({min: 4})
             req.user.communities.push(community._id);
             req.user.save((err, user) => {
                 community.save((err, savedCommunity) => {
-                    console.log(err);
-                    next(new httpResponse.OkResponse(savedCommunity));
+                    req.user.communities.push(savedCommunity._id);
+                    req.user.save((err, user) => {
+                        console.log(err);
+                        next(new httpResponse.OkResponse(savedCommunity));
+                    })
                 });
             });
         }
@@ -123,7 +126,13 @@ router.get('/get/all', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({}, options, (err, communities) => {
+    let query = {}
+
+    if(typeof req.query.status !== 'undefined' && req.query.status !== null){
+        query.status = req.query.status;
+    }
+
+    Community.paginate(query, options, (err, communities) => {
         if(!err && communities !== null){
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
@@ -140,7 +149,7 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({_id: { $in: req.user.communities }, by: { $ne: req.user._id }}, options, (err, communities) => {
+    Community.paginate({_id: { $in: req.user.communities }, status: 1, by: { $ne: req.user._id }}, options, (err, communities) => {
         if(!err && communities !== null){
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
@@ -157,7 +166,7 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({by: req.user._id}, options, (err, communities) => {
+    Community.paginate({by: req.user._id, status: 1}, options, (err, communities) => {
         if(!err && communities !== null){
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
@@ -172,12 +181,15 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
     var query = {};
     query.campus = req.user.campus;
     query.degree = req.user.degree;
-    query._id = { $nin: req.user.communities };
     query.by = { $ne: req.user._id }; 
+    query.status = 1;
 
     if(typeof req.query.category !== 'undefined' && req.query.category !== null){
         const category = await Category.findOne({slug: req.query.category});
         query.category = category._id;
+    }
+    else{
+        query._id = { $nin: req.user.communities };
     }
 
     if(typeof req.query.name !== 'undefined' && req.query.name !== null){
@@ -194,8 +206,11 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
         options.sort = {membersCount: -1};
     }
 
-    Community.paginate(query, options, (err, communities) => {
+    Community.paginate(query, options, async (err, communities) => {
         if(!err && communities.length !== 0){
+            for(var i=0; i<communities.docs.length; i++){
+                communities.docs[i].members = await User.find({communities: communities.docs[i]._id} ).select("firstName lastName email image");
+            }
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }

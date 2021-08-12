@@ -27,6 +27,7 @@ async function seedInfo(){
     user2.bio = faker.lorem.sentence(); 
     user2.campus = campuses[2]._id;
     user2.degree = campuses[2].degrees[1]._id;
+    
     user2.role = 2;
     user2.verified = true;
     user.image = faker.image.avatar();

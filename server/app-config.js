@@ -15,6 +15,7 @@ module.exports = (app) => {
     "http://localhost:4200",
     "http://localhost:4300",
     "http://localhost:3000",
+    "http://165.22.228.6"
   ];
   app.use(
     cors({

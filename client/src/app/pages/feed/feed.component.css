@@ -21,3 +21,14 @@
   border-radius: 0px 30px 0px 0px;
   background-color: #fff;
 }
+::ng-deep .ng-select .ng-select-container{
+  color: #021a68 !important;
+}
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: #f5faff;
+  color: #021a68 !important;
+}
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  color: #021a68 !important;
+  background-color: #ebf5ff;
+}
