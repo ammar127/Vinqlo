@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require('cors');
 require("dotenv").config();
 
 // Create global app object
@@ -13,15 +12,7 @@ var allowedOrigins = [
   "http://165.22.228.6"
 ];
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (allowedOrigins.indexOf(origin) > -1) {
-      callback(null, true);
-    } else {
-      callback(null, false);
-    }
-  }
-}));
+
 
 require("./server/app-config")(app);
 
