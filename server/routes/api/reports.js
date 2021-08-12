@@ -121,20 +121,20 @@ router.post('/status/:status/:slug', auth.isToken, auth.isUser, auth.isAdmin, as
     req.report.save( async (err, post) => {
         if(err) return next(err);
         
-        if(report.type === 0) {
-            const post = await Post.findOne({_id: report.post});
+        if(req.report.type === 0) {
+            const post = await Post.findOne({_id: req.report.post});
             post.status = req.params.status;
             post.save();
         }
 
-        if(report.type === 1) {
-            const user = await User.findOne({_id: report.user});
+        if(req.report.type === 1) {
+            const user = await User.findOne({_id: req.report.user});
             user.status = req.params.status;
             user.save();
         }
 
-        if(report.type === 2) {
-            const community = await Community.findOne({_id: report.community});
+        if(req.report.type === 2) {
+            const community = await Community.findOne({_id: req.report.community});
             community.status = req.params.status;
             community.save();
         }
