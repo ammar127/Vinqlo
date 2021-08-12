@@ -54,7 +54,7 @@ async (req, res, next) => {
                         for(var i=1; i<rawData.length; i++) {
                            
                             var tag = JSON.parse(rawData[i].split("]]")[0]);
-                            const user = await User.findOne({email: tag.value.email});
+                            const user = await User.findOne({email: tag.user.email});
                            
                             if(user){                                
                                 sendNotification({
