@@ -4,7 +4,7 @@
       <div class="client-header">
         <div>
           <a [routerLink]="['/community',community.slug]" ><h6 class="main-color mb-0">{{community.name}}</h6></a>
-          <small class="text-muted">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
+          <small class="text-muted" style="cursor: pointer;" [routerLink]="['/user-profile/'+community.by.email]">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
         </div>
         <div *ngIf="isJoin">
           <div *ngIf="!community.isJoined">
@@ -34,7 +34,7 @@
       </div>
       <p class="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, veritatis.
       </p>
-      <span class="main-color" ><i class="fa icons-color fa-users" aria-hidden="true" ></i> {{community.membersCount}}  </span>
+      <span class="main-color" style="cursor: pointer;" (click)="usersListing.openEntity(community)" ><i class="fa icons-color fa-users" aria-hidden="true" ></i> {{community.membersCount}}  </span>
     </div>
     <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
     <loader *ngIf="isLoader"></loader>
@@ -44,3 +44,4 @@
     [label]="'No communities created yet.'"
   ></no-content>
 <app-create-report #report></app-create-report>
+<app-user-listing #usersListing></app-user-listing>

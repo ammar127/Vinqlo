@@ -4,6 +4,7 @@ import { AuthGuard, NoAuthGuard, UserType } from './core';
 import { LayoutComponent } from './layout/layout.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { HomeComponent } from './home/home.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
@@ -116,7 +117,7 @@ const routes: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [UserType.admin.toString(), UserType.superAdmin.toString()],
+            only: [UserType.admin, UserType.superAdmin],
             redirectTo: '/access-denied',
           },
         },
@@ -128,11 +129,7 @@ const routes: Routes = [
             (m) => m.UserProfileModule
           ),
       },
-      {
-        path: '',
-        redirectTo: 'feed',
-        pathMatch: 'full',
-      },
+
     ],
   },
 ];

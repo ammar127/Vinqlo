@@ -36,7 +36,6 @@ export class CommunityListComponent implements OnInit,OnChanges {
       if(res.status === 200) {
         this.isLoader = false;
         this.communities=res.data.docs;
-        console.log(this.communities)
         this.hasNextPage = res.data.hasNextPage;
       }
     })
@@ -50,12 +49,22 @@ export class CommunityListComponent implements OnInit,OnChanges {
     this.communityService.join(slug,isJoined).subscribe(res => {
       if(res.status === 200 && !isJoined) {
         Toast.fire({icon:'success', title: 'you joined a Community '});
-        this.communities = this.communities.filter(c => c.slug !== slug);
+        if(this.slug==''){this.communities = this.communities.filter(c => c.slug !== slug);}
+        else{ let index=this.communities.findIndex(e=>e.slug==slug)
+          this.communityService.getAll(this.url,this.page,this.slug,this.type,this.searchQuery).subscribe(res => {
+            this.communities[index]=res.data.docs[index];
+          })}
         this.joinSlug = null;
       }
       else if(res.status === 200 && isJoined){
         Toast.fire({icon:'success', title: 'you un-joined a Community '});
-        this.communities = this.communities.filter(c => c.slug !== slug);
+        if(this.slug==''){this.communities = this.communities.filter(c => c.slug !== slug);}
+        else{
+          let index=this.communities.findIndex(e=>e.slug==slug)
+          this.communityService.getAll(this.url,this.page,this.slug,this.type,this.searchQuery).subscribe(res => {
+            this.communities[index]=res.data.docs[index];
+          })
+        }
         this.joinSlug = null;
       }
    } )

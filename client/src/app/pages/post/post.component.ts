@@ -1,4 +1,5 @@
-import { map } from 'rxjs/operators';
+import { UserType } from './../../core/constants/UserType';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { User } from './../../core/models/User';
 import { CommentService } from './../../core/services/comment.service';
 import { Post } from 'src/app/core/models';
@@ -17,6 +18,7 @@ import { ClipboardService } from 'ngx-clipboard';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
+  userType= UserType;
   slug!:string;
   postData!:Post;
   joinSlug:any = null;
@@ -24,6 +26,7 @@ export class PostComponent implements OnInit {
   isEdit=false;
   commentt :string=' ';
   whiteList$ = new BehaviorSubject<any[]>([]);
+  whiteList = this.whiteList$.asObservable().pipe(distinctUntilChanged());
   mixedSettings :TagifySettings={
     mode: 'mix',
     pattern: /@/,
@@ -34,7 +37,6 @@ export class PostComponent implements OnInit {
           this.service.searchByName(e.detail.value).subscribe(
             res=> {
               this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
-
           }   )
         } },
 
@@ -60,7 +62,6 @@ export class PostComponent implements OnInit {
       this.service.getSinglePost(this.slug).subscribe( res=>{
           this.isLoader = false;
           this.postData=res.data;
-          console.log(this.postData)
         }
       )
     });
@@ -137,7 +138,6 @@ export class PostComponent implements OnInit {
   }
   onJoinClick(slug: string,isJoined:boolean) {
     this.joinSlug = slug;
-    console.log(this.postData.community.isJoined)
     this.communityService.join(slug,isJoined).subscribe(res => {
         if( isJoined) {
           Toast.fire({icon:'success', title: 'you un-joined a Community '});

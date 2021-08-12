@@ -14,7 +14,7 @@
     <div *ngIf="!isLoader" class="row">
       <div *ngFor="let degree of campus.degrees" class="card-campus col-md-6">
         <a ><h4  class="main-color">{{degree.name}}</h4></a>
-        <a style="cursor:pointer;" (click)="listOfUser.openSingleDegree(degree.name,degree)"><p><i class="fas icons-color fa-users"></i> {{degree.members.length}}</p></a>
+        <a style="cursor:pointer;" (click)="listOfUser.openEntity(degree)"><p><i class="fas icons-color fa-users"></i> {{degree.members.length}}</p></a>
       </div>
     </div>
     <loader *ngIf="isLoader"></loader>

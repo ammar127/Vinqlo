@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8">
+      <div *ngxPermissionsOnly="[userType.user]" class="col-md-8">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mt-4">
           <li [ngbNavItem]="1">
             <a ngbNavLink> Saved Posts</a>

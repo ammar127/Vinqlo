@@ -34,8 +34,10 @@ export class CommunityComponent implements OnInit {
     this.communityService.join(slug,isJoined).subscribe(res => {
         if(res.status === 200 && isJoined) {
           Toast.fire({icon:'success', title: 'you un-joined a Community '});
+          this.getCurrentCommunity();
         }else if(res.status === 200 && !isJoined){
           Toast.fire({icon:'success', title: 'you joined a Community '});
+          this.getCurrentCommunity();
         }
         this.community.isJoined=!isJoined;
         this.joinSlug = null;

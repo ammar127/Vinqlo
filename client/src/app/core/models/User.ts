@@ -13,6 +13,7 @@ export interface User {
     degree:Degree;
     campus:Campus;
     phone:string;
+    status:number;
     communities: Community[];
     saved:string;
     role:number;

@@ -12,22 +12,13 @@ export class CategoryService {
   constructor(private api:ApiService,private route:ActivatedRoute) {
     this.route.queryParams.subscribe(res=>{
       this.slug=res['slug'];
-      console.log(route)
-      console.log(res)
     })
    }
 
   getCommunityByCategory()
   {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'slug':this.slug
-    //   })
-    // };
     const params = new HttpParams()
     .set('slug', this.slug)
-    console.log(this.slug)
-    console.log(params)
     return this.api.get('/communities/get/academics',params)
   }
 }

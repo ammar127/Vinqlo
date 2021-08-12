@@ -52,10 +52,13 @@
             <div class="card-footer">
 
               <a href="javascript:void(0)" class="mr-4" (click)="deleteReport(report.slug)" ><img src="../../../assets/images/trash-alt-solid.svg" width="20px"  alt="" /> &nbsp; Delete report</a >
-              <span ><a href="javascript:void(0)" class="mr-4" (click)="deactivateReport(report.slug)"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> &nbsp; {{status==1?'De-Activate':'Activate'}} {{reportTypes[reportType].name}} </a ></span>
-              <span *ngIf="reportType==0"><a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.slug,report.post.by.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>({{report.post.by.strikes}}) Add strike to user</a></span>
-              <span *ngIf="reportType==1"><a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.slug,report.user.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>({{report.user.strikes}}) Add strike to user</a></span>
-              <span *ngIf="reportType==2"><a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.slug,report.community.by.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>({{report.community.by.strikes}}) Add strike to user</a></span>
+              <span *ngIf="reportType==0"><a href="javascript:void(0)" class="mr-4" (click)="deactivateReport(report.slug,report.post.status)"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> &nbsp; {{report.post.status==1?'De-Activate':'Activate'}} {{reportTypes[reportType].name}} </a ></span>
+              <span *ngIf="reportType==1"><a href="javascript:void(0)" class="mr-4" (click)="deactivateReport(report.slug,report.user.status)"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> &nbsp; {{report.user.status==1?'De-Activate':'Activate'}} {{reportTypes[reportType].name}} </a ></span>
+              <span *ngIf="reportType==2"><a href="javascript:void(0)" class="mr-4" (click)="deactivateReport(report.slug,report.community.status)"><img src="../../../assets/images/Path 82.svg" width="20px" alt="" /> &nbsp; {{report.community.status==1?'De-Activate':'Activate'}} {{reportTypes[reportType].name}} </a ></span>
+
+              <span *ngIf="reportType==0"><a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.post.by.strikes,report.slug,report.post.by.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>({{report.post.by.strikes}}) Add strike to user</a></span>
+              <span *ngIf="reportType==1"><a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.user.strikes,report.slug,report.user.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>({{report.user.strikes}}) Add strike to user</a></span>
+              <span *ngIf="reportType==2"><a href="javascript:void(0)" class="mr-4" (click)="addStrike(report.community.by.strikes,report.slug,report.community.by.email)"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt=""/>({{report.community.by.strikes}}) Add strike to user</a></span>
             </div>
           </div>
         </div>

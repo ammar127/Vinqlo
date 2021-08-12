@@ -15,6 +15,10 @@ export class ProfileService {
   {
     return this.api.put('/users',data)
   }
+  resetPassword(email:string,otp:number,data:any)
+  {
+    return this.api.put(`/users/forgotPassword/${otp}/${email}`,data)
+  }
   getUserInfo(email:string)
   {
     return this.api.get('/users/'+email)

@@ -23,7 +23,6 @@ export class CommentComponent implements OnInit {
 
       // Solution for catching click events on anchors using querySelectorAll:
       this.anchors = this.elementRef.nativeElement.getElementsByClassName('badge');
-      // console.log('this.anchors', this.anchors)
 
       for (let anchor of this.anchors) {
         anchor.addEventListener('click', this.handleAnchorClick)
@@ -34,7 +33,6 @@ export class CommentComponent implements OnInit {
     // Prevent opening anchors the default way
     event.preventDefault();
     const anchor = event.target as HTMLAnchorElement;
-    console.log('anchor', anchor.dataset.link)
     this.router.navigate([anchor.dataset.link]);
   }
 }

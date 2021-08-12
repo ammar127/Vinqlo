@@ -1,3 +1,4 @@
+import { UserType } from './../../core/constants/UserType';
 import { ProfileService } from './../../core/services/profile.service';
 import { Component, OnInit } from '@angular/core';
 import { User, UserService } from 'src/app/core';
@@ -8,6 +9,7 @@ import { User, UserService } from 'src/app/core';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
+  userType=UserType;
   active = 1;
   communityUrl = '/communities/get/followed';
   myCommunityUrl = '/communities/get/my';
