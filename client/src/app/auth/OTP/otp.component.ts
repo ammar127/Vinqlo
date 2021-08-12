@@ -44,7 +44,7 @@ export class OtpComponent {
                             if(this.type === 1) {
                                 this.router.navigate(['/initial-community']);
                             } else {
-                                this.router.navigate(['/auth/reset']);
+                                this.router.navigate(['/auth/reset'],{queryParams:{email:this.email , otp:e} });
                             }
                             Toast.fire({ text: 'OTP Verified Successfully', icon: 'success' })
 

@@ -64,7 +64,6 @@ export class CommunityListComponent implements OnInit,OnChanges {
           let index=this.communities.findIndex(e=>e.slug==slug)
           this.communityService.getAll(this.url,this.page,this.slug,this.type,this.searchQuery).subscribe(res => {
             this.communities[index]=res.data.docs[index];
-            console.log(this.communities[index])
           })
         }
         this.joinSlug = null;
