@@ -149,8 +149,13 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({_id: { $in: req.user.communities }, status: 1, by: { $ne: req.user._id }}, options, (err, communities) => {
+    Community.paginate({_id: { $in: req.user.communities }, status: 1, by: { $ne: req.user._id }}, options, async (err, communities) => {
         if(!err && communities !== null){
+
+            for(var i=0; i<communities.docs.length; i++){
+                communities.docs[i].members = await User.find({communities: communities.docs[i]._id} ).select("firstName lastName email image");
+            }
+
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
@@ -166,8 +171,13 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({by: req.user._id, status: 1}, options, (err, communities) => {
+    Community.paginate({by: req.user._id, status: 1}, options, async (err, communities) => {
         if(!err && communities !== null){
+
+            for(var i=0; i<communities.docs.length; i++){
+                communities.docs[i].members = await User.find({communities: communities.docs[i]._id} ).select("firstName lastName email image");
+            }
+
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
