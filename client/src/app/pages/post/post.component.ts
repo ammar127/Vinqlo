@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { UserType } from './../../core/constants/UserType';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { User } from './../../core/models/User';
@@ -133,7 +134,7 @@ export class PostComponent implements OnInit {
     }})
   }
   copyContent(slug:string) {
-    this.clipboardService.copyFromContent('/post/'+slug)
+    this.clipboardService.copyFromContent(environment.api_url+'/post/'+slug)
     Toast.fire({text:'Copied To Clipboard',icon:'success'})
   }
   onJoinClick(slug: string,isJoined:boolean) {

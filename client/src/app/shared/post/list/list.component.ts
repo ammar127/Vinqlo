@@ -4,6 +4,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { Post } from 'src/app/core';
 import { HttpParams } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'post-list',
@@ -63,7 +64,7 @@ export class ListComponent implements OnInit,OnChanges {
     this.get();
   }
   copyContent(slug:string) {
-    this.clipboardService.copyFromContent('/post/'+slug)
+    this.clipboardService.copyFromContent(environment.api_url+'/post/'+slug)
     Toast.fire({text:'Copied To Clipboard',icon:'success'})
   }
 }
