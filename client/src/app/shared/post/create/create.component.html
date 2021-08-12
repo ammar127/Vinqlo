@@ -13,6 +13,8 @@
           <ng-select
             formControlName="community"
             [items]="commuities"
+            [clearable]="false" 
+            placeholder="Community"
             bindValue="slug"
             bindLabel="name"
           ></ng-select>
@@ -70,10 +72,10 @@
         </div>
         <button
           class="btn mb-2 btn-main"
-          [disabled]="!addPostForm.valid"
+          [disabled]="!addPostForm.valid || isLoader"
           (click)="onPost()"
         >
-          Post
+          {{isLoader ? 'Posting': 'Post'}}
         </button>
       </div>
     </div>

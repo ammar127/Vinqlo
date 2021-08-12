@@ -25,12 +25,12 @@
                                 <errors [control]="f.email"></errors>
                             </div>
                             <div class="input-field" *ngIf="f.campus">
-                                <ng-select formControlName="campus" (change)="onCampusChange()" [items]="campuses" bindValue="slug" bindLabel="name" placeholder="Campus" class="selectpicker custom-border">
+                                <ng-select formControlName="campus" (change)="onCampusChange()" [clearable]="false" [items]="campuses" bindValue="slug" bindLabel="name" placeholder="Campus" class="selectpicker custom-border">
                                 </ng-select>
                                 <errors [control]="f.campus"></errors>
                             </div>
                             <div class="input-field" *ngIf="f.degree">
-                                <ng-select formControlName="degree" [items]="degrees" bindValue="slug" bindLabel="name" placeholder="Degree" class="selectpicker custom-border">
+                                <ng-select formControlName="degree" [clearable]="false" [items]="degrees" bindValue="slug" bindLabel="name" placeholder="Degree" class="selectpicker custom-border">
                                 </ng-select>
                                 <errors [control]="f.degree"></errors>
                             </div>

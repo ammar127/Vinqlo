@@ -46,7 +46,7 @@ export class AuthComponent implements OnInit {
     {
       this.authForm.addControl('firstName', new FormControl('', [Validators.required]));
       this.authForm.addControl('lastName', new FormControl('', [Validators.required]));
-      this.authForm.addControl('degree', new FormControl('', [Validators.required]));
+      this.authForm.addControl('degree', new FormControl(null, [Validators.required]));
       this.authForm.addControl('campus', new FormControl(null, [Validators.required]));
       this.authForm.addControl('confirmPassword', new FormControl('', [Validators.required]));
 
@@ -61,6 +61,7 @@ export class AuthComponent implements OnInit {
   }
   get campuses()  {return this.commonService.campuses()}
   onCampusChange() {
+    this.f.degree.reset();
     this.f.degree.enable();
   }
   get f() {return this.authForm.controls}

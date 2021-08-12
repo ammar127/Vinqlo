@@ -10,7 +10,8 @@ import { JwtService } from './jwt.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private userService: UserService
   ) {}
 
   canActivate(
@@ -22,6 +23,11 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['/auth']);
       return false;
     }
-    return true;
+    else if(!this.userService.getCurrentUser().verified) {
+      this.router.navigate([`/auth/otp/${this.userService.getCurrentUser().email}/1`]);
+      return false;
+    } else {
+      return true;
+    }
   }
 }
