@@ -79,8 +79,11 @@ body('category').isLength({min: 4})
             req.user.communities.push(community._id);
             req.user.save((err, user) => {
                 community.save((err, savedCommunity) => {
-                    console.log(err);
-                    next(new httpResponse.OkResponse(savedCommunity));
+                    req.user.communities.push(savedCommunity._id);
+                    req.user.save((err, user) => {
+                        console.log(err);
+                        next(new httpResponse.OkResponse(savedCommunity));
+                    })
                 });
             });
         }
@@ -203,8 +206,11 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
         options.sort = {membersCount: -1};
     }
 
-    Community.paginate(query, options, (err, communities) => {
+    Community.paginate(query, options, async (err, communities) => {
         if(!err && communities.length !== 0){
+            for(var i=0; i<communities.docs.length; i++){
+                communities.docs[i].members = await User.find({communities: communities.docs[i]._id} ).select("firstName lastName email image");
+            }
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }

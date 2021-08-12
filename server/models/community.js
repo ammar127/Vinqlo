@@ -102,6 +102,7 @@ communitySchema.methods.toJSONFor = function(user){
         },
         category: this.category,
         membersCount: this.membersCount,
+        members: this.members,
         isJoined: user.isJoined(this._id),
         status: this.status
     }
