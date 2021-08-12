@@ -9,6 +9,7 @@ var allowedOrigins = [
   "http://localhost:4200",
   "http://localhost:4300",
   "http://localhost:3000",
+  "http://165.22.228.6"
 ];
 
 require("./server/app-config")(app);
