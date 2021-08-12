@@ -1,3 +1,4 @@
+import { UserType } from './../../core/constants/UserType';
 import { map } from 'rxjs/operators';
 import { User } from './../../core/models/User';
 import { CommentService } from './../../core/services/comment.service';
@@ -17,6 +18,7 @@ import { ClipboardService } from 'ngx-clipboard';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
+  userType= UserType;
   slug!:string;
   postData!:Post;
   joinSlug:any = null;

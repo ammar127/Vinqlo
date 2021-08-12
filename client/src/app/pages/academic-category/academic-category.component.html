@@ -31,7 +31,7 @@
           <div *ngFor="let camp of campuses" class=" col-md-6">
             <div class="card-campus shadow-sm">
               <a style="cursor:pointer;" (click)="createDegree.open(camp)"><h4 class="main-color">{{ camp.name }}</h4></a>
-              <a style="cursor:pointer;" (click)="listOfUser.open(camp.name,camp.degrees)"><p><i class="fas icons-color fa-users"></i> {{countMembers(camp.degrees)}}</p></a>
+              <a style="cursor:pointer;" (click)="listOfUser.openCampus(camp.name,camp.degrees)"><p><i class="fas icons-color fa-users"></i> {{countMembers(camp.degrees)}}</p></a>
             </div>
           </div>
         </div>

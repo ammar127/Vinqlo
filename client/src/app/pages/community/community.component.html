@@ -59,10 +59,7 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
               veritatis.
             </p>
-            <span class="main-color"
-              ><i class="fa icons-color fa-users" aria-hidden="true"></i
-              >{{ community?.membersCount }}</span
-            >
+            <span class="main-color" (click)="usersListing.openEntity(community)"><i class="fa icons-color fa-users" aria-hidden="true"></i>{{ community?.membersCount }}</span>
           </div>
         </div>
         <div class="search-field my-3">
@@ -88,3 +85,4 @@
   </div>
 </section>
 <app-community-create #communityCreate></app-community-create>
+<app-user-listing #usersListing></app-user-listing>

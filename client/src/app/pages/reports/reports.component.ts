@@ -43,7 +43,7 @@ export class ReportsComponent implements OnInit {
     }
     )
   }
-  deactivateReport(slug:string)
+  deactivateReport(slug:string,status:number)
   {
     Swal.fire({
       title: 'Are you sure?',
@@ -54,8 +54,8 @@ export class ReportsComponent implements OnInit {
       cancelButtonText: 'No, cancel please!',
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
-        console.log(this.reportType)
-        this.reportService.updateReport(slug,this.status==0?1:0).subscribe(res=>
+        console.log(status)
+        this.reportService.updateReport(slug,status==1?0:1).subscribe(res=>
           {
             if(res.status==200){
               Toast.fire({ text: 'Deactivated User Successfully', icon: 'success' })
@@ -77,8 +77,10 @@ export class ReportsComponent implements OnInit {
       if (isConfirmed) {
         this.userService.addStrike(slug,email).subscribe((res) => {
           if (res.status == 200) {
-            this.get();
-                Toast.fire({ text: 'Strike Posted Successfully', icon: 'success' })
+            if(this.reportType==0){ this.reports[this.reports.findIndex(e=>e.slug==slug)].post.by.strikes+=1; }
+            else if(this.reportType==1){  this.reports[this.reports.findIndex(e=>e.slug==slug)].user.strikes+=1;  }
+            else if(this.reportType==2) { this.reports[this.reports.findIndex(e=>e.slug==slug)].community.by.strikes+=1;  }
+            Toast.fire({ text: 'Strike Posted Successfully', icon: 'success' })
           }})}
          else {
         Swal.fire('Cancelled', 'Your user is safe :)', 'error');

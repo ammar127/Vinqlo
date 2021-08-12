@@ -2,13 +2,13 @@
   <div class="container">
     <div class="row">
       <div *ngIf="!isLoader" class="col-md-12">
-        <div class="single-post-card card shadow-sm">
+        <div *ngxPermissionsOnly="[userType.user]" class="single-post-card card shadow-sm">
           <div class="back">
             <a href="javascript:void(0)">
               <i class="fas text-purple fa-chevron-left"></i
             ></a>
           </div>
-          <div class="single-post">
+          <div *ngxPermissionsOnly="[userType.user]" class="single-post">
             <div class="client-header">
               <div>
                 <h6 class="main-color mb-0" [routerLink]="['/community',postData.community.slug]">{{ postData.community.name }}</h6>
@@ -40,10 +40,8 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
               veritatis.
             </p>
-            <span class="main-color"
-              ><i class="fa icons-color fa-users" aria-hidden="true"></i
-              >{{ postData.community.membersCount }}</span
-            >
+            <span class="main-color" (click)="listOfUser.openEntity(postData.community)"><i class="fa icons-color fa-users" aria-hidden="true"></i
+              >{{ postData.community.membersCount }}</span>
           </div>
         </div>
         <div class="meriDiv">
@@ -192,3 +190,4 @@
   </div>
 </section>
 <app-create-report #report></app-create-report>
+<app-user-listing #listOfUser></app-user-listing>

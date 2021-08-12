@@ -11,14 +11,14 @@ import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core'
 export class UserListingComponent implements OnInit {
 
   degrees:Degree[]=[];
-  degree!:Degree;
+  entity!:any;
   title!:string;
   isLoader:boolean=false;
   constructor(private modalService: NgbModal,private degreeService:DegreeService) { }
   @ViewChild('content') content! : TemplateRef<any>;
   ngOnInit(): void {
   }
-  open(title:string,array:any)
+  openCampus(title:string,array:any)
   {
     this.degrees=array;
     this.title=title;
@@ -32,10 +32,11 @@ export class UserListingComponent implements OnInit {
     });
     return count==0
   }
-  openSingleDegree(title:string,degree:Degree)
+  openEntity(entity:any)
   {
-    this.degree=degree;
-    this.title=title;
+    this.entity=entity;
+    console.log(this.entity)
+    this.title=entity.name;
     this.modalService.open(this.content);
   }
   close() {

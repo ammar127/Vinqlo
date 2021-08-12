@@ -8,18 +8,18 @@
   <div  class=" px-5 shadow-sm">
     <div *ngIf="!isLoader" class="row">
       <div *ngIf="degrees.length>0" >
-        <div *ngFor="let degree of degrees" class="card-campus col-md-6">
+        <div *ngFor="let degree of degrees" >
           <span *ngFor="let member of degree.members">
             <a [routerLink]="['/user-profile/'+member.email]" (click)="close()"><h4  class="main-color">{{member.firstName+' '+member.lastName}}</h4></a>
           </span>
         </div>
         <no-content *ngIf="!isLoader && countMembers() " [label]="'No Users here'" ></no-content>
       </div>
-      <div *ngIf="degree">
-        <span *ngFor="let member of degree.members">
+      <div *ngIf="entity">
+        <span *ngFor="let member of entity.members">
           <a [routerLink]="['/user-profile/'+member.email]" (click)="close()"><h4  class="main-color">{{member.firstName+' '+member.lastName}}</h4></a>
           </span>
-          <no-content *ngIf="!isLoader && degree " [label]="'No Users here'" ></no-content>
+          <no-content *ngIf="!isLoader && entity.members.length==0 " [label]="'No Users here'" ></no-content>
       </div>
     </div>
 
