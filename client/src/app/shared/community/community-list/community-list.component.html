@@ -36,7 +36,7 @@
       </p>
       <span class="main-color" style="cursor: pointer;" (click)="usersListing.openEntity(community)" ><i class="fa icons-color fa-users" aria-hidden="true" ></i> {{community.membersCount}}  </span>
     </div>
-    <a href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
+    <a align="center" style="margin-top: 10px;" href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
     <loader *ngIf="isLoader"></loader>
   </div>
   <no-content
