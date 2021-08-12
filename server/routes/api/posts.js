@@ -221,7 +221,7 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
             type : 2,
             user : req.user.id,
             sentTo: req.post.by._id,
-            data : req.post.slug
+            data : {slug: req.post.slug}
         })
 
         req.post.likeCount++;
