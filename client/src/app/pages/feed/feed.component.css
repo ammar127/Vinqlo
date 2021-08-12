@@ -32,3 +32,17 @@
   color: #021a68 !important;
   background-color: #ebf5ff;
 }
+::ng-deep .ng-select .ng-select-container{
+  min-height: 23px !important;
+ 
+}
+::ng-deep .ng-select.ng-select-single .ng-select-container {
+  height: 23px;
+}
+@media only screen and (max-width: 768px){
+  .btn-post{
+  margin: 12px 0px;
+  text-align: left;
+}
+
+}

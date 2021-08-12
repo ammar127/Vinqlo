@@ -30,3 +30,26 @@
     border-radius: 10px;
     margin-bottom: 20px;
   }
+  @media only screen and (max-width: 768px){
+    .client-footer{
+      display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    }
+    .client-footer div ul {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 0px;
+  }
+  .client-footer div ul li {
+    margin-right: 15px;
+    margin-top: 10px;
+    margin-left: 0px;
+}
+.card .client-card p{
+  font-size: 14px;
+}
+}
