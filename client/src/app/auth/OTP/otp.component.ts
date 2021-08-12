@@ -26,7 +26,6 @@ export class OtpComponent {
     type = 1;
     isResendDisable = false;
     constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
-        console.log(route)
         this.route.params.subscribe(params => {
             this.email = params['email'];
             this.type = +params['type'];
@@ -40,7 +39,6 @@ export class OtpComponent {
                 (
                     res => {
                         if (res.status === 200) {
-                          console.log(this.type)
                             if(this.type === 1) {
                                 this.router.navigate(['/initial-community']);
                             } else {
@@ -55,7 +53,6 @@ export class OtpComponent {
                     },
                     err => {
                         Toast.fire({ text: 'OTP is Invalid', icon: 'error' })
-                        console.log(this.email)
 
                     }
                 )

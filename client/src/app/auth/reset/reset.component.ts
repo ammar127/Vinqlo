@@ -44,8 +44,6 @@ export class ResetComponent implements OnInit {
     if(this.f.password.value===this.f.confirmPassword.value)
     {
       this.profileService.resetPassword(this.email,this.otp,{password: this.f.password.value}).subscribe(res=> {
-        let route=''
-        console.log(res)
         if(res.status === 200) {
           this.router.navigate(['auth/login'])
         }

@@ -45,7 +45,6 @@ export class ChangePasswordComponent implements OnInit {
   }
   onPost()
   {
-    console.log(this.f.password.value)
     if(this.f.password.value===this.f.confirmPassword.value)
     {
 

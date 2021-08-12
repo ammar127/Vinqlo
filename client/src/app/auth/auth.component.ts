@@ -84,7 +84,7 @@ export class AuthComponent implements OnInit {
           }
         }
         this.ps.loadPermissions([res.data.user.role.toString()]);
-        console.log('res.data.user.role', res.data.user.role , route)
+        //console.log('res.data.user.role', res.data.user.role , route)
         this.router.navigate([route])
       },
       err =>

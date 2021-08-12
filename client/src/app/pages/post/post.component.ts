@@ -37,7 +37,6 @@ export class PostComponent implements OnInit {
           this.service.searchByName(e.detail.value).subscribe(
             res=> {
               this.whiteList$.next(res.data.users.map((e: any) => {return {value: e.firstName+' '+e.lastName, user: e} as TagData}))
-              console.log('this.whiteList$.value',this.whiteList$.value)
           }   )
         } },
 
@@ -63,7 +62,6 @@ export class PostComponent implements OnInit {
       this.service.getSinglePost(this.slug).subscribe( res=>{
           this.isLoader = false;
           this.postData=res.data;
-          console.log(this.postData)
         }
       )
     });
@@ -140,7 +138,6 @@ export class PostComponent implements OnInit {
   }
   onJoinClick(slug: string,isJoined:boolean) {
     this.joinSlug = slug;
-    console.log(this.postData.community.isJoined)
     this.communityService.join(slug,isJoined).subscribe(res => {
         if( isJoined) {
           Toast.fire({icon:'success', title: 'you un-joined a Community '});

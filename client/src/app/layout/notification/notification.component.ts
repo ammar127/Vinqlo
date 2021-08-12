@@ -28,7 +28,6 @@ export class NotificationComponent implements OnInit {
 
       if(res.status === 200) {
         this.result = res.data.notifications;
-        console.log('------',this.result)
       }
     }, (err : any)=> {
 

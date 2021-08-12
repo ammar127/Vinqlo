@@ -36,7 +36,6 @@ export class CommunityListComponent implements OnInit,OnChanges {
       if(res.status === 200) {
         this.isLoader = false;
         this.communities=res.data.docs;
-        console.log(this.communities)
         this.hasNextPage = res.data.hasNextPage;
       }
     })

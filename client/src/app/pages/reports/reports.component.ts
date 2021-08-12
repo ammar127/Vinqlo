@@ -54,13 +54,11 @@ export class ReportsComponent implements OnInit {
       cancelButtonText: 'No, cancel please!',
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
-        console.log(status)
         this.reportService.updateReport(slug,status==1?0:1).subscribe(res=>
           {
             if(res.status==200){
               Toast.fire({ text: 'Deactivated User Successfully', icon: 'success' })
               this.reports=this.reports.filter(e=>e.slug!=slug)
-              console.log(res)
               }
 
           })

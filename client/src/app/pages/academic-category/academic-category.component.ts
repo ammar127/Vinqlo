@@ -28,7 +28,6 @@ export class AcademicCategoryComponent implements OnInit {
     this.campusService.getCampuses().subscribe
     (
       res=>{
-        console.log(res.data.campuses)
       this.campuses=res.data.campuses
       this.isLoader=false;
     }
