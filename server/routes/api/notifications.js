@@ -22,6 +22,7 @@ router.get('/get/all' , auth.isToken, auth.isUser, (req, res, next) => {
         useCustomCountFn: function () {
             return Notification.count({sentTo: req.user._id,isRead: false});
           },
+          sort: { time: -1 },
     };
 
     Notification.paginate({ sentTo: req.user._id}, options, (err, notifications) => {
