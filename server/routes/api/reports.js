@@ -25,9 +25,9 @@ router.get('/:slug', auth.isToken, auth.isUser, auth.isAdmin, (req, res, next) =
 
 router.post('/', auth.isToken, auth.isUser,
 
-body('body').isLength({min: 4}),
-body('type').isLength({min: 1}),
-body('key').isLength({min: 4}),
+body('body').not().isEmpty(),
+body('type').not().isEmpty(),
+body('key').not().isEmpty(),
 
 async (req, res, next) => {
     const errors = validationResult(req);

@@ -57,8 +57,8 @@ router.post('/leave/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 router.post('/', auth.isToken, auth.isUser, 
-body('name').isLength({min: 4}),
-body('category').isLength({min: 4})
+body('name').not().isEmpty(),
+body('category').not().isEmpty()
 ,(req, res, next) => {
 
     const errors = validationResult(req);

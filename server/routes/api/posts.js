@@ -32,9 +32,9 @@ router.get('/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
 
 router.post('/', auth.isToken, auth.isUser, 
 
-body('title').isLength({min: 5}),
-body('body').isLength({min: 5}),
-body('community').isLength({min: 5}),
+body('title').not().isEmpty(),
+body('body').not().isEmpty(),
+body('community').not().isEmpty(),
 
 (req, res, next) => {
     const errors = validationResult(req);
