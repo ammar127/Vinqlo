@@ -19,7 +19,6 @@ var userSchema = mongoose.Schema({
     email:{
         type: String,
         required: true,
-        unique: true
     },
 
     password:{
@@ -89,7 +88,24 @@ var userSchema = mongoose.Schema({
     
     image:{
         type: String,
+    },
+
+    socialLinks:{
+
+        tikTok: {
+            type: String
+        },
+
+        facebook: {
+            type: String
+        },
+
+        twitter: {
+            type: String
+        }
+
     }
+
 
 });
 
@@ -153,7 +169,8 @@ userSchema.methods.toAuthJSON = function(){
         otp: this.otp,
         verified: this.verified,
         image: this.image,
-        status: this.status
+        status: this.status,
+        socialLinks: this.socialLinks
     }
 }
 
@@ -172,7 +189,8 @@ userSchema.methods.toJSON = function(){
         role: this.role,
         status: this.status,
         strikes: this.strikes,
-        image: this.image
+        image: this.image,
+        socialLinks: this.socialLinks
     }
 }
 

@@ -259,6 +259,7 @@ router.put('/forgotPassword/:otp/:email', (req, res, next) => {
 });
 
 router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
+    
     if(typeof req.body.firstName !== 'undefined' && req.body.firstName !== null){
         req.user.firstName = req.body.firstName;
     }
@@ -273,6 +274,9 @@ router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
     }
     if(typeof req.body.bio !== 'undefined' && req.body.bio !== null){
         req.user.bio = req.body.bio;
+    }
+    if(typeof req.body.socialLinks !== 'undefined' && req.body.socialLinks !== null){
+        req.user.socialLinks = req.body.socialLinks;
     }
 
     req.user.save((err, user) => {
