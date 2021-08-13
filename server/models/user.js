@@ -139,7 +139,9 @@ userSchema.methods.comparePassword = function(pass){
 }
 
 userSchema.methods.generateToken = function(){
-    this.token = jsonwebtoken.sign({user: this.email}, 'shhhhh')
+    this.token = jsonwebtoken.sign({user: this.email}, 'shhhhh', {
+        expiresIn: '1d'
+    })
 }
 
 userSchema.methods.isJoined = function(id){
