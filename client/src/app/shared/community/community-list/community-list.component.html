@@ -38,10 +38,7 @@
     </div>
     <a align="center" style="margin-top: 10px;" href="javascript:void(0)" *ngIf="!isLoader && hasNextPage" (click)="onLoadMoreClick()"> Load More <i class="fas fa-ellipsis-h"></i> </a>
     <loader *ngIf="isLoader"></loader>
+    <no-content *ngIf="!isLoader && communities.length === 0" [label]="'No communities created yet.'"></no-content>
   </div>
-  <no-content
-    *ngIf="!isLoader && communities.length === 0"
-    [label]="'No communities created yet.'"
-  ></no-content>
 <app-create-report #report></app-create-report>
 <app-user-listing #usersListing></app-user-listing>
