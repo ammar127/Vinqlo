@@ -65,6 +65,16 @@
           ></textarea>
           <errors [control]="f.bio"></errors>
         </div>
+        <div class="input-field mt-4">
+          <label for=""> Phone</label>
+          <input
+            type="text"
+            formControlName="phone"
+            class="form-control custom-border"
+            placeholder="Phone Number"
+          />
+          <errors [control]="f.phone"></errors>
+        </div>
         <br>
         <h5 class="modal-title text-purple" id="modal-basic-title">Contact Information</h5>
         <form [formGroup]="socialLinks">
@@ -77,7 +87,6 @@
                 class="form-control custom-border"
                 placeholder="@Instagram username"
               />
-              <!-- <errors [control]="fu.invalidusername"></errors> -->
             </div>
             <div class="input-field mt-4">
               <label for=""> Facebook</label>
@@ -87,27 +96,14 @@
                 class="form-control custom-border"
                 placeholder="facebook username"
               />
-              <!-- <errors [control]="fu.invalidusername"></errors> -->
             </div>
             <div class="input-field mt-4">
               <label for=""> Twitter</label>
-              <input
-                type="text"
-                formControlName="twitter"
-                class="form-control custom-border"
-                placeholder="@Twitter id"
-              />
-              <!-- <errors [control]="fu.invalidusername"></errors> -->
+              <input type="text" formControlName="twitter" class="form-control custom-border" placeholder="@Twitter id" />
             </div>
             <div class="input-field mt-4">
-              <label for=""> Phone</label>
-              <input
-                type="text"
-                formControlName="phone"
-                class="form-control custom-border"
-                placeholder="Phone Number"
-              />
-              <!-- <errors [control]="fu.phone"></errors> -->
+              <label for=""> Tiktok</label>
+              <input type="text" formControlName="tiktok" class="form-control custom-border" placeholder="Tiktok username" />
             </div>
           </div>
         </form>

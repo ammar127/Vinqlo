@@ -45,7 +45,7 @@ export class EditProfileComponent implements OnInit {
         instagram: [this.user.socialLinks.instagram, Validators.required],
         facebook: [this.user.socialLinks.facebook, Validators.required],
         twitter: [this.user.socialLinks.twitter, Validators.required],
-        tiktok: [this.user.phone, Validators.required]
+        tiktok: [this.user.socialLinks.tiktok, Validators.required]
       }),
       image: [this.user.image]
     });
@@ -60,6 +60,7 @@ export class EditProfileComponent implements OnInit {
   }
   onPost()
   {
+    console.log(this.editForm.value)
     this.profileService.editUser(this.editForm.value).subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Profile updated successfully'})
