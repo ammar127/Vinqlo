@@ -12,9 +12,9 @@ export class UploadFileComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({ url: `${environment.fileUploadUrl}/api/upload` });
 
   @ViewChild('input') input!: ElementRef;
-
+  @Output() isLoader= new EventEmitter<boolean>();
   @Output() upload = new EventEmitter<string>();
-
+  iisLoader:boolean=false;
   @Output() remove = new EventEmitter<string>();
 
   @Input() accept = "image/*";
@@ -26,7 +26,8 @@ export class UploadFileComponent implements OnInit {
   }
   setUploader() {
     this.uploader.onAfterAddingFile = (file) => {
-      file.onSuccess = (res: any) => {
+      this.isLoader.emit(true);
+      file.onSuccess = (res: any) => { this.isLoader.emit(false);
         this.upload.emit(JSON.parse(res).url);
       };
     };

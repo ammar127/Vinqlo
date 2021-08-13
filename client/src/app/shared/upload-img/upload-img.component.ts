@@ -10,7 +10,7 @@ import { UploadFileComponent } from './../upload-file/upload-file.component';
 export class UploadImgComponent implements OnInit {
 
   @ViewChild(UploadFileComponent) uploadFileComponent!: UploadFileComponent;
-
+  @Input() isLoader:boolean=false;
   @Input() control!: AbstractControl;
   @Input() height = 200;
   @Input() width = 200;
@@ -27,5 +27,9 @@ export class UploadImgComponent implements OnInit {
   onRemove() {
     this.uploadFileComponent.removeImage(this.control.value);
     this.control.setValue(null);
+  }
+  loader(load:any)
+  {
+    this.isLoader=load;
   }
 }
