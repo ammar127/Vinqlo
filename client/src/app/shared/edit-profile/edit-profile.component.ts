@@ -60,8 +60,6 @@ export class EditProfileComponent implements OnInit {
   }
   onPost()
   {
-    //this.f.socialLinks.setValue(this.socialLink.value) ;
-    console.log(this.editForm.value)
     this.profileService.editUser(this.editForm.value).subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Profile updated successfully'})

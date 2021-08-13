@@ -1,9 +1,9 @@
 import { Community } from './../../../core/models/community';
 import { CommunityService } from './../../../core/services/community.service';
-import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Toast, UserService } from 'src/app/core';
+import { Toast, UserService, Post } from 'src/app/core';
 import { PostService } from 'src/app/core/services/post.service';
 
 @Component({
@@ -14,6 +14,7 @@ import { PostService } from 'src/app/core/services/post.service';
 export class CreateComponent implements OnInit {
   addPostForm!:FormGroup;
   tag = '';
+  post!:Post;
   commuities: Community[] = [];
   @Output() success = new EventEmitter;
   @ViewChild('content') content! : TemplateRef<any>;
@@ -21,7 +22,6 @@ export class CreateComponent implements OnInit {
     private postService: PostService,
     private communityService: CommunityService,
     private modalService: NgbModal) {
-    this.create();
     this.getCommunities();
    }
 
@@ -36,9 +36,9 @@ export class CreateComponent implements OnInit {
   }
   onPost()
   {
-
-    this.postService.createPost(this.addPostForm.value)
-    .subscribe(res=> {
+    if(this.post)
+    {
+      this.postService.editPost(this.addPostForm.value).subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Post Created successfully'});
         this.close();
@@ -46,9 +46,35 @@ export class CreateComponent implements OnInit {
         this.success.emit();
       }
     });
+    }else{
+      this.postService.createPost(this.addPostForm.value).subscribe(res=> {
+      if(res.status === 200) {
+        Toast.fire({icon:'success', title:'Post Created successfully'});
+        this.close();
+        this.addPostForm.reset();
+        this.success.emit();
+      }
+    });
+    }
   }
   open() {
+    this.create();
     this.modalService.open(this.content)
+  }
+  editPost(post:Post){
+    this.post=post;
+    this.edit();
+    this.modalService.open(this.content);
+  }
+  edit(){
+    this.addPostForm = this.fb.group({
+      community: [this.post.community, Validators.required],
+      title: [this.post.title,[ Validators.required, Validators.minLength(10)]],
+      body: [this.post.body, [ Validators.required, Validators.minLength(10)]],
+      tags:[this.post.tags],
+      image: [this.post.image]
+    });
+
   }
   close() {
     this.modalService.dismissAll();
