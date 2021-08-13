@@ -13,7 +13,7 @@ var {sendNotification} = require('../../utilities/notification');
 
 
 router.param('slug', (req, res, next, slug) => {
-    Post.findOne({slug: slug}, (err, post) => {
+    Post.findOne({slug: slug, status: 1}, (err, post) => {
         if(!err && post !==null){
             req.post = post;
             next();
@@ -266,5 +266,18 @@ router.get('/get/noComment', auth.isToken, auth.isUser, auth.isAdmin, (req, res,
     });
 });
 
+
+router.delete('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    if(req.post.by._id.equals(req.user._id)){
+        req.post.status = 0;
+        req.post.save((err, post) => {
+            if(err) return next(err);
+            next(new httpResponse.OkResponse({message: 'Successful'}));
+        });
+    }
+    else{
+        next(new httpResponse.UnauthorizedResponse('You are not allowed to delete this post'));
+    }
+});
 
 module.exports = router;
