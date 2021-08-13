@@ -32,6 +32,7 @@ import { ShowImageComponent } from './show-image/show-image.component';
 import { CommentFilterComponent } from './Pipes/comment-filter.pipe';
 import { CreateDegreeComponent } from './create-degree/create-degree.component';
 import { UserListingComponent } from './user-listing/user-listing.component';
+import { BackButtonDirective } from './Directives/back-button.directive';
 @NgModule({
   declarations: [
     AlphaOnlyDirective,
@@ -59,7 +60,8 @@ import { UserListingComponent } from './user-listing/user-listing.component';
     ShowImageComponent,
     CreateDegreeComponent,
     CreateDegreeComponent,
-    UserListingComponent
+    UserListingComponent,
+    BackButtonDirective
   ],
   imports: [
     CommonModule,
@@ -86,6 +88,7 @@ import { UserListingComponent } from './user-listing/user-listing.component';
     UsernameDirective,
     DecimalOnlyDirective,
     ShowAuthedDirective,
+    BackButtonDirective,
 
 
     // components

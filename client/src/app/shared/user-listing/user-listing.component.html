@@ -10,15 +10,19 @@
       <div *ngIf="degrees.length>0" >
         <div *ngFor="let degree of degrees" >
           <span *ngFor="let member of degree.members">
+            <a (click)="showImage.open()"><img [src]="member.image| image" alt="Generic placeholder image" ></a>
             <a [routerLink]="['/user-profile/'+member.email]" (click)="close()"><h4  class="main-color">{{member.firstName+' '+member.lastName}}</h4></a>
+            <app-show-image #showImage [imageUrl]="member.image"></app-show-image>
           </span>
         </div>
         <no-content *ngIf="!isLoader && countMembers() " [label]="'No Users here'" ></no-content>
       </div>
       <div *ngIf="entity">
-        <span *ngFor="let member of entity.members">
+        <span class="row" *ngFor="let member of entity.members">
+          <a (click)="showImage.open()"><img [src]="member.image| image" alt="Generic placeholder image"></a>
           <a [routerLink]="['/user-profile/'+member.email]" (click)="close()"><h4  class="main-color">{{member.firstName+' '+member.lastName}}</h4></a>
-          </span>
+          <app-show-image #showImage [imageUrl]="member.image"></app-show-image>
+        </span>
           <no-content *ngIf="!isLoader && entity.members.length==0 " [label]="'No Users here'" ></no-content>
       </div>
     </div>
