@@ -93,7 +93,7 @@ var userSchema = mongoose.Schema({
 
     socialLinks:{
 
-        tikTok: {
+        instagram: {
             type: String
         },
 
