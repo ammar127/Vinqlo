@@ -103,6 +103,10 @@ var userSchema = mongoose.Schema({
 
         twitter: {
             type: String
+        },
+
+        phone:{
+            type: String
         }
 
     }
