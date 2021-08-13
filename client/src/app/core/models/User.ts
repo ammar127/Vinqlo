@@ -13,10 +13,16 @@ export interface User {
     degree:Degree;
     campus:Campus;
     phone:string;
+    socialLinks:SocialLinks;
     status:number;
     communities: Community[];
     saved:string;
     role:number;
     strikes:number;
     verified:string;
+}
+export interface SocialLinks{
+  instagram:string;
+  twitter:string;
+  facebook:string;
 }

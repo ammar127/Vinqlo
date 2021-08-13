@@ -13,6 +13,7 @@
           </div>
           <div class="profile-detail">
             <p>{{user.degree.name}} at {{user.campus.name}}</p>
+            <a href="javascript:void(0)" *ngIf="user.socialLinks.facebook!=null"><i class="fab fa-facebook-f"></i>{{user.socialLinks.facebook}}</a>
             <a href="javascript:void(0)" ><img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" />{{user.phone}}</a>
             <a #email href="{{'mailto:'+user.email}}"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" />{{user.email}}</a>
             <a href="javascript:void(0)" (click)="edit.open()"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Edit personal information</a>

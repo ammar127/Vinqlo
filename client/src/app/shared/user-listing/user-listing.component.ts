@@ -35,6 +35,7 @@ export class UserListingComponent implements OnInit {
   openEntity(entity:any)
   {
     this.entity=entity;
+    console.log(this.entity)
     this.title=entity.name;
     this.modalService.open(this.content);
   }

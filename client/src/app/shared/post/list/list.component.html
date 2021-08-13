@@ -17,6 +17,7 @@
           <button ngbDropdownItem (click)="report.open(0, post.slug)"> Report Post </button>
           <button ngbDropdownItem (click)="report.open(1, post.by.email)"> Report User </button>
           <button ngbDropdownItem (click)="report.open(2, post.community.slug)"> Report Community </button>
+          <button *ngIf="currentUser.email==post.by.email" ngbDropdownItem (click)="deletePost(post.slug)"> Delete Post </button>
         </div>
       </div>
     </div>
