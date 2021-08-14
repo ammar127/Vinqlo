@@ -72,10 +72,12 @@
     list-style: none;
 }
 .nav-tab-list li{
-    padding: 20px 0px;
+    padding: 20px 5px;
+    text-align: left;
 }
 .nav-tab-list li.active{
   background-color: #DAFDFE;
+  text-align: left;
 }
 .nav-tab-list li i{
     margin-right: 10px;
@@ -109,7 +111,12 @@
     border-bottom: 1px solid #91009B;
 }
 .tab-content-custom{
-    margin-left: 1.5rem;
+    height: 350px;
+    overflow-y: auto;
+    width: 68%;
+}
+.nav-tab-list{
+    padding-left: 10px;
 }
 
 @media only screen and (max-width: 768px){
