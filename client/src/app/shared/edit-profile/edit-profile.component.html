@@ -13,11 +13,10 @@
           <input
             type="text"
             formControlName="firstName"
-            formControlName="firstName"
             class="form-control custom-border"
             placeholder="First Name"
           />
-          <errors [control]="f.phone"></errors>
+          <errors [control]="f.firstName"></errors>
         </div>
         <div class="input-field">
           <label for=""> Last Name</label>
@@ -28,13 +27,14 @@
             class="form-control custom-border"
             placeholder="Last Name"
           />
-          <errors [control]="f.phone"></errors>
+          <errors [control]="f.lastName"></errors>
         </div>
         <div class="input-field mt-4">
           <label for="">Select Campus </label>
           <ng-select
             formControlName="campus"
             (change)="nullDegree()"
+            [clearable]="false"
             [items]="campuses"
             bindValue="slug"
             bindLabel="name"
@@ -46,6 +46,7 @@
           <ng-select
             formControlName="degree"
             [items]="degrees"
+            [clearable]="false"
             bindValue="slug"
             bindLabel="name"
           ></ng-select>

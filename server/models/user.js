@@ -18,8 +18,8 @@ var userSchema = mongoose.Schema({
 
     email:{
         type: String,
+        unique: true,
         required: true,
-        unique: true
     },
 
     password:{
@@ -89,7 +89,28 @@ var userSchema = mongoose.Schema({
     
     image:{
         type: String,
+    },
+
+    socialLinks:{
+
+        instagram: {
+            type: String
+        },
+
+        facebook: {
+            type: String
+        },
+
+        twitter: {
+            type: String
+        },
+
+        phone:{
+            type: String
+        }
+
     }
+
 
 });
 
@@ -118,7 +139,9 @@ userSchema.methods.comparePassword = function(pass){
 }
 
 userSchema.methods.generateToken = function(){
-    this.token = jsonwebtoken.sign({user: this.email}, 'shhhhh')
+    this.token = jsonwebtoken.sign({user: this.email}, 'shhhhh', {
+        expiresIn: '1d'
+    })
 }
 
 userSchema.methods.isJoined = function(id){
@@ -153,7 +176,8 @@ userSchema.methods.toAuthJSON = function(){
         otp: this.otp,
         verified: this.verified,
         image: this.image,
-        status: this.status
+        status: this.status,
+        socialLinks: this.socialLinks
     }
 }
 
@@ -172,7 +196,8 @@ userSchema.methods.toJSON = function(){
         role: this.role,
         status: this.status,
         strikes: this.strikes,
-        image: this.image
+        image: this.image,
+        socialLinks: this.socialLinks
     }
 }
 

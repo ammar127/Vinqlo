@@ -12,66 +12,73 @@ import { PostService } from 'src/app/core/services/post.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-  addPostForm!:FormGroup;
+  addPostForm!: FormGroup;
   tag = '';
-  post!:Post;
+  post!: Post;
   commuities: Community[] = [];
+  isLoader = false;
   @Output() success = new EventEmitter;
-  @ViewChild('content') content! : TemplateRef<any>;
+  @ViewChild('content') content!: TemplateRef<any>;
   constructor(private fb: FormBuilder,
     private postService: PostService,
     private communityService: CommunityService,
     private modalService: NgbModal) {
     this.getCommunities();
-   }
+  }
 
   ngOnInit(): void {
   }
   getCommunities() {
     this.communityService.getFollowed().subscribe(res => {
-      if(res.status === 200) {
+      if (res.status === 200) {
         this.commuities = res.data.docs;
       }
     })
   }
-  onPost()
-  {
-    if(this.post)
-    {
-      this.postService.editPost(this.addPostForm.value).subscribe(res=> {
-      if(res.status === 200) {
-        Toast.fire({icon:'success', title:'Post Created successfully'});
-        this.close();
-        this.addPostForm.reset();
-        this.success.emit();
-      }
-    });
-    }else{
-      this.postService.createPost(this.addPostForm.value).subscribe(res=> {
-      if(res.status === 200) {
-        Toast.fire({icon:'success', title:'Post Created successfully'});
-        this.close();
-        this.addPostForm.reset();
-        this.success.emit();
-      }
-    });
+  onPost() {
+    this.isLoader = true;
+    if (this.post) {
+      this.postService.editPost(this.addPostForm.value).subscribe(res => {
+        if (res.status === 200) {
+          Toast.fire({ icon: 'success', title: 'Post Updated successfully' });
+          this.close();
+          this.addPostForm.reset();
+          this.success.emit();
+        }
+      }, err => this.isLoader = false);
+    } else {
+      this.postService.createPost(this.addPostForm.value)
+        .subscribe(res => {
+
+          if (res.status === 200) {
+            Toast.fire({ icon: 'success', title: 'Post Created successfully' });
+            this.close();
+            this.addPostForm.reset();
+            this.success.emit();
+          }
+          this.isLoader = false;
+        }, err => this.isLoader = false);
     }
+
+
+
+
   }
   open() {
     this.create();
     this.modalService.open(this.content)
   }
-  editPost(post:Post){
-    this.post=post;
+  editPost(post: Post) {
+    this.post = post;
     this.edit();
     this.modalService.open(this.content);
   }
-  edit(){
+  edit() {
     this.addPostForm = this.fb.group({
       community: [this.post.community, Validators.required],
-      title: [this.post.title,[ Validators.required, Validators.minLength(10)]],
-      body: [this.post.body, [ Validators.required, Validators.minLength(10)]],
-      tags:[this.post.tags],
+      title: [this.post.title, [Validators.required, Validators.minLength(10)]],
+      body: [this.post.body, [Validators.required, Validators.minLength(10)]],
+      tags: [this.post.tags],
       image: [this.post.image]
     });
 
@@ -81,19 +88,19 @@ export class CreateComponent implements OnInit {
   }
   create() {
     this.addPostForm = this.fb.group({
-      community: ['', Validators.required],
-      title: ['',[ Validators.required, Validators.minLength(10)]],
-      body: ['', [ Validators.required, Validators.minLength(10)]],
-      tags:[[]],
+      community: [null, Validators.required],
+      title: ['', [Validators.required, Validators.minLength(10)]],
+      body: ['', [Validators.required, Validators.minLength(10)]],
+      tags: [[]],
       image: ['']
     });
 
   }
-  get f() {return this.addPostForm.controls;}
+  get f() { return this.addPostForm.controls; }
   onAddTag() {
     let t = this.tag.trim();
     if (t && t !== "") {
-      const a = this.f.tags.value? this.f.tags.value: [] ;
+      const a = this.f.tags.value ? this.f.tags.value : [];
       this.f.tags.setValue([...a, t]);
       this.tag = '';
     }

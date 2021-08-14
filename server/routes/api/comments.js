@@ -26,8 +26,8 @@ router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 
 router.post('/', auth.isToken, auth.isUser, 
 
-body('body').isLength({min: 4}),
-body('post').isLength({min: 4}),
+body('body').not().isEmpty(),
+body('post').not().isEmpty(),
 async (req, res, next) => {
 
     const errors = validationResult(req);
@@ -54,7 +54,7 @@ async (req, res, next) => {
                         for(var i=1; i<rawData.length; i++) {
                            
                             var tag = JSON.parse(rawData[i].split("]]")[0]);
-                            const user = await User.findOne({email: tag.value.email});
+                            const user = await User.findOne({email: tag.user.email});
                            
                             if(user){                                
                                 sendNotification({

@@ -1,6 +1,6 @@
 <header>
     <nav [ngClass]="isAdmin ? 'bg-dark' : 'bg-white'">
-        <a class="nav-main" href="javascript:void(0)"><img src="../../assets/images/logo-01.png" alt="" /></a>
+        <a class="nav-main" [routerLink]="['/']"   href="javascript:void(0)"><img src="../../assets/images/logo-01.png" alt="" /></a>
         <ul class="ml-auto mb-0 nav-list">
             <app-notification *ngIf="!isAdmin"></app-notification>
             <li *ngIf="!isAdmin" class="nav-link">
@@ -8,7 +8,7 @@
         ></a>
             </li>
             <li class="nav-link" *ngIf="user" ngbDropdown>
-                <a class="user-dropdown" href="javascript:void(0)" ngbDropdownToggle routerLinkActive="active">
+                <a class="user-dropdown" href="javascript:void(0)" ngbDropdownToggle>
                   <img [src]="user.image | image" alt="" />
                 </a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="margin-top: 8px !important">
@@ -33,7 +33,7 @@
           <div >
             <div class="accordian-menu" >
               <div class="accordian-list" *ngFor="let category of categories" [routerLink]="['/category',category.slug]"   (click)="collapse.toggle()">
-                <span class="main-color" ><i [ngClass]="category.icon"></i> {{category.name}}</span>
+                <span style="cursor: pointer;" class="main-color" ><i [ngClass]="category.icon"></i> {{category.name}}</span>
               </div>
             </div>
           </div>

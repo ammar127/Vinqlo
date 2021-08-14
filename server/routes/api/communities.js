@@ -18,7 +18,8 @@ router.param('slug', (req, res, next, slug) => {
         }
     })
 })
-router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+router.get('/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+    req.community.members = await User.find({communities: req.community._id} ).select("firstName lastName email image");
     next(new httpResponse.OkResponse(req.community.toJSONFor(req.user)));
 })
 
@@ -56,8 +57,8 @@ router.post('/leave/:slug', auth.isToken, auth.isUser, (req, res, next) => {
 })
 
 router.post('/', auth.isToken, auth.isUser, 
-body('name').isLength({min: 4}),
-body('category').isLength({min: 4})
+body('name').not().isEmpty(),
+body('category').not().isEmpty()
 ,(req, res, next) => {
 
     const errors = validationResult(req);
@@ -149,8 +150,13 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({_id: { $in: req.user.communities }, status: 1, by: { $ne: req.user._id }}, options, (err, communities) => {
+    Community.paginate({_id: { $in: req.user.communities }, status: 1, by: { $ne: req.user._id }}, options, async (err, communities) => {
         if(!err && communities !== null){
+
+            for(var i=0; i<communities.docs.length; i++){
+                communities.docs[i].members = await User.find({communities: communities.docs[i]._id} ).select("firstName lastName email image");
+            }
+
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
@@ -166,8 +172,13 @@ router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
         limit: req.query.limit || 10
     };
 
-    Community.paginate({by: req.user._id, status: 1}, options, (err, communities) => {
+    Community.paginate({by: req.user._id, status: 1}, options, async (err, communities) => {
         if(!err && communities !== null){
+
+            for(var i=0; i<communities.docs.length; i++){
+                communities.docs[i].members = await User.find({communities: communities.docs[i]._id} ).select("firstName lastName email image");
+            }
+
             communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
             next(new httpResponse.OkResponse(communities));
         }
@@ -181,15 +192,11 @@ router.get('/get/academics', auth.isToken, auth.isUser, async (req, res, next) =
     var query = {};
     query.campus = req.user.campus;
     query.degree = req.user.degree;
-    query.by = { $ne: req.user._id }; 
     query.status = 1;
 
     if(typeof req.query.category !== 'undefined' && req.query.category !== null){
         const category = await Category.findOne({slug: req.query.category});
         query.category = category._id;
-    }
-    else{
-        query._id = { $nin: req.user.communities };
     }
 
     if(typeof req.query.name !== 'undefined' && req.query.name !== null){

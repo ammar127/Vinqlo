@@ -22,9 +22,10 @@ router.get('/get/all' , auth.isToken, auth.isUser, (req, res, next) => {
         useCustomCountFn: function () {
             return Notification.count({sentTo: req.user._id,isRead: false});
           },
+          sort: { time: -1 },
     };
 
-    Notification.paginate({ sentTo: req.user._id, isRead: false }, options, (err, notifications) => {
+    Notification.paginate({ sentTo: req.user._id}, options, (err, notifications) => {
         if(!err && notifications !== null){
             next(new httpResponse.OkResponse({notifications: notifications}));
         }
@@ -37,7 +38,7 @@ router.get('/get/all' , auth.isToken, auth.isUser, (req, res, next) => {
 
 router.get('/mark-all',auth.isToken, auth.isUser, function(req, res, next){
     Notification.updateMany({sentTo: req.user._id, isRead: false}, { $set: { isRead: true } }, function (err, result) {
-            if (err) { next(new BadRequestResponse("Server Error")) }
+            if (err) { next(new httpResponse.BadRequestResponse("Server Error")) }
             next(new OkResponse());
         });
   });
@@ -47,7 +48,7 @@ router.get('/mark-all',auth.isToken, auth.isUser, function(req, res, next){
     req.notification.save(function (err, result) {
 
             if (err) { next(new BadRequestResponse("Server Error")) }
-            next(new OkResponse());
+            next(new httpResponse.OkResponse());
     });
   });
 

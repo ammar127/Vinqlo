@@ -23,7 +23,8 @@
     display: flex;
     justify-content: space-between;
     width: 80%;
-    margin: 10px auto;
+    margin: 34px auto;
+    align-items: center;
 }
 .slider-indicators .previous-slide{
     color: #91009B;
@@ -41,6 +42,8 @@
     width: 100%;
     text-align: center;
     justify-content: center;
+    margin-bottom: 0px;
+    padding-left: 10px;
 }
 .slider-indicators ul li{
     color: #91009B;
@@ -57,9 +60,13 @@
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fff;
     background-color: #E8E8E8;
-    border-radius: 0px;
     padding: 15px 4px;
-    font-size: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 16px;
+
 }
 .nav-tab-list{
     list-style: none;
@@ -68,23 +75,28 @@
     padding: 20px 0px;
 }
 .nav-tab-list li.active{
-  background-color: #25EAEF;
+  background-color: #DAFDFE;
 }
 .nav-tab-list li i{
     margin-right: 10px;
     font-size: 18px;
 }
 .nav-tab-list li span{
-    color: #3e4352;
-    font-size: 18px;
+    color: #021a68 ;
+    font-size: 16px;
     font-weight: 600;
 }
 .nav-pills .nav-link{
     padding: 15px 4px;
-    font-size: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 16px;
 }
 .nav-pills .nav-link i{
     margin-right: 10px;
+    width: 20px;
 }
 .third-slide span{
     font-size: 30px;
@@ -96,4 +108,51 @@
     color: #91009B !important;
     border-bottom: 1px solid #91009B;
 }
+.tab-content-custom{
+    margin-left: 1.5rem;
+}
 
+@media only screen and (max-width: 768px){
+    .nav {
+        border-right: 1px solid #021a68;
+        width: 50%;
+    }
+    .nav-pills .nav-link {
+        padding: 11px 4px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding-left: 5px;
+    }
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: #E8E8E8;
+        padding: 11px 4px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding-left: 5px;
+        margin-right: 1px;
+    }
+    .tab-content-custom{
+        margin-left: 0px;
+    }
+    .nav-tab-list {
+        list-style: none;
+        padding-left: 0px;
+    }
+    .nav-tab-list li {
+        padding: 6px 0px;
+    }
+    .nav-tab-list li i {
+        margin-right: 5px;
+        font-size: 12px;
+    }
+    .nav-tab-list li span {
+        color: #021a68;
+        font-size: 12px;
+        font-weight: 600;
+    }
+}

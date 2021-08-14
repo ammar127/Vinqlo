@@ -44,12 +44,12 @@ router.post('/login', passport.authenticate('local', {session:false}), (req, res
 
 router.post('/signup',
 
-body('firstName').isLength({min: 4}).withMessage('First name is too short'),
-body('lastName').isLength({min: 4}).withMessage('Last name is too short'),
-body('email').isEmail().withMessage('Invalid Email'),
-body('password').isLength({min: 4}).withMessage('Password is too short'),
-body('campus').isLength({min: 4}).withMessage('Campus Required'),
-body('degree').isLength({min: 4}).withMessage('Degree Required'),
+body('firstName').not().isEmpty(),
+body('lastName').not().isEmpty(),
+body('email').not().isEmpty(),
+body('password').not().isEmpty(),
+body('campus').not().isEmpty(),
+body('degree').not().isEmpty(),
 
 async (req, res, next) => {
     const errors = validationResult(req);
@@ -259,6 +259,7 @@ router.put('/forgotPassword/:otp/:email', (req, res, next) => {
 });
 
 router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
+    
     if(typeof req.body.firstName !== 'undefined' && req.body.firstName !== null){
         req.user.firstName = req.body.firstName;
     }
@@ -273,6 +274,9 @@ router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
     }
     if(typeof req.body.bio !== 'undefined' && req.body.bio !== null){
         req.user.bio = req.body.bio;
+    }
+    if(typeof req.body.socialLinks !== 'undefined' && req.body.socialLinks !== null){
+        req.user.socialLinks = req.body.socialLinks;
     }
 
     req.user.save((err, user) => {

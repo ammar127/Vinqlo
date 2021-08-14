@@ -14,6 +14,7 @@ export class CommunityCreateComponent implements OnInit {
   addCommunityForm!:FormGroup;
   tag = '';
   commuities!: Community[];
+  isLoader = false;
   @ViewChild('content') content! : TemplateRef<any>;
   constructor(private fb: FormBuilder,
     private commonService: CommonService,
@@ -28,14 +29,17 @@ export class CommunityCreateComponent implements OnInit {
   get categories () {return this.commonService.categories()}
   onPost()
   {
-   
+   this.isLoader = true;
     this.communityService.createCommunity(this.addCommunityForm.value)
     .subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Community Created'})
         this.close();
       }
-    });
+     this.isLoader = true;
+
+   
+  }, err => this.isLoader = true);
   }
   open() {
     this.modalService.open(this.content)
@@ -45,7 +49,7 @@ export class CommunityCreateComponent implements OnInit {
   }
   create() {
     this.addCommunityForm = this.fb.group({
-      category: ['', Validators.required],
+      category: [null, Validators.required],
       name: ['', Validators.required],
     });
 
