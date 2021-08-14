@@ -13,7 +13,10 @@
           </div>
           <div class="profile-detail">
             <p>{{user.degree.name}} at {{user.campus.name}}</p>
-            <a href="javascript:void(0)" ><img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" />{{user.phone}}</a>
+            <a href="javascript:void(0)" *ngIf="user.socialLinks.facebook!=null"><i class="fab fa-facebook-f" width="30px" alt=""></i> {{user.socialLinks.facebook}}</a>
+            <a href="javascript:void(0)" *ngIf="user.socialLinks.instagram!=null"><img src="../../../assets/images/instagram-brands.svg" width="20px" alt="" />{{user.socialLinks.instagram}}</a>
+            <a href="javascript:void(0)" *ngIf="user.socialLinks.twitter!=null"><i class="fab fa-twitter" width="30px" alt=""></i> {{user.socialLinks.twitter}}</a>
+            <a href="javascript:void(0)" *ngIf="user.socialLinks.tiktok!=null"><i class="fab fa-tiktok" width="30px" alt=""></i>{{user.socialLinks.tiktok}}</a>
             <a #email href="{{'mailto:'+user.email}}"><img src="../../../assets/images/phone-square-alt-solid.svg" width="20px" alt="" />{{user.email}}</a>
             <a href="javascript:void(0)" (click)="edit.open()"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Edit personal information</a>
             <a href="javascript:void(0)" (click)="changePassword.open()"><img src="../../../assets/images/pen-solid.svg" width="20px" alt="" />Change password</a>

@@ -37,11 +37,28 @@ export class ReportsComponent implements OnInit {
   }
   deleteReport(slug:string)
   {
-    this.reportService.deleteReport(slug).subscribe(res=> {
-      if(res.status==200){
-      Toast.fire({ text: 'Report Deleted Successfully', icon: 'success' })}
-    }
-    )
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'you wanna delete this report.',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, Delete it!',
+      cancelButtonText: 'No, cancel please!',
+    }).then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        this.reportService.deleteReport(slug).subscribe(res=>
+          {
+            if(res.status==200){
+              Toast.fire({ text: 'Deleted report Successfully', icon: 'success' })
+              this.reports=this.reports.filter(e=>e.slug!=slug)
+              }
+
+          })
+      } else {
+        Swal.fire('Cancelled', 'Your report is safe :)', 'error');
+      }
+    });
+
   }
   deactivateReport(slug:string,status:number)
   {

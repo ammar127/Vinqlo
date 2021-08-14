@@ -27,18 +27,14 @@
       <div class="col-md-9">
         <div class="single-post-card p-4 card shadow-sm">
           <div class="back">
-            <a href="javascript:void(0)"
-              ><i class="fas text-purple fa-chevron-left"></i
+            <a href="javascript:void(0)" appBackButton><i class="fas text-purple fa-chevron-left"></i
             ></a>
           </div>
           <div class="single-post">
             <div class="client-header">
               <div>
                 <h6 class="main-color mb-0">{{ community?.name }}</h6>
-                <small class="text-muted"
-                  >{{ community?.by?.firstName }}
-                  {{ community?.by?.lastName }}</small
-                >
+                <small class="text-muted" [routerLink]="['/user-profile/'+community.by.email]">{{ community?.by?.firstName }} {{ community?.by?.lastName }}</small>
               </div>
               <div>
                 <button class="btn btn-join" [disabled]="joinSlug === community?.slug" (click)="onJoinClick(community.slug,community.isJoined)">

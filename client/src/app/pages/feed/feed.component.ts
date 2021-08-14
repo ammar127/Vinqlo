@@ -22,7 +22,7 @@ export class FeedComponent implements OnInit {
   sortType: number=0;
   sortTypes = [ { id: 0, name: 'Most Recent' }, { id: 1, name: 'Trending' }, ];
   isNewPost=false;
-  @ViewChild('postList') listComponent!: ListComponent;
+  //@ViewChild('postList') listComponent!: ListComponent;
   constructor(private userService: UserService,private postService:PostService)
   {
 
@@ -33,6 +33,6 @@ export class FeedComponent implements OnInit {
 
   onSuccessPost() {
     this.isNewPost=!this.isNewPost
-    this.listComponent.get();
+    //this.listComponent.get();
   }
 }

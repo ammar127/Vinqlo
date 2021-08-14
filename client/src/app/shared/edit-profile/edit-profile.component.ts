@@ -1,5 +1,5 @@
 import { UserService } from './../../core/services/user.service';
-import { User } from './../../core/models/User';
+import { User, SocialLinks } from './../../core/models/User';
 import { ProfileService } from './../../core/services/profile.service';
 import { Campus } from './../../core/models/campus';
 import { CommonService } from './../../core/services/common.service';
@@ -38,11 +38,18 @@ export class EditProfileComponent implements OnInit {
       firstName:[this.user.firstName,Validators.required],
       lastName:[this.user.lastName,Validators.required],
       bio: [this.user.bio, Validators.required],
-      phone: ['',],
       degree: [this.user.degree.slug? this.user.degree.slug: null, Validators.required],
       campus:[this.user.campus.slug?this.user.campus.slug: null,Validators.required],
+      phone: [this.user.phone],
+      socialLinks: this.fb.group({
+        instagram: [this.user.socialLinks.instagram, Validators.required],
+        facebook: [this.user.socialLinks.facebook, Validators.required],
+        twitter: [this.user.socialLinks.twitter, Validators.required],
+        tiktok: [this.user.socialLinks.tiktok, Validators.required]
+      }),
       image: [this.user.image]
     });
+
   }
   nullDegree()
   {
@@ -53,6 +60,7 @@ export class EditProfileComponent implements OnInit {
   }
   onPost()
   {
+    console.log(this.editForm.value)
     this.profileService.editUser(this.editForm.value).subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Profile updated successfully'})
@@ -61,6 +69,8 @@ export class EditProfileComponent implements OnInit {
       }
     });
   }
+  get socialLinks (){return (this.editForm.controls.socialLinks as FormGroup)}
+  get fu() {return (this.editForm.controls.socialLinks as FormGroup).controls}
   get f() {return this.editForm.controls}
   get campuses()  {return this.commonService.campuses()}
   get degrees() {return this.f.campus.value ? this.campuses[this.campuses.findIndex((e: Campus) => e.slug === this.f.campus.value)].degrees : [] }

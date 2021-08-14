@@ -16,6 +16,11 @@ export class ShowImageComponent implements OnInit {
   {
     this.modalService.open(this.content);
   }
+  openImage(url:string)
+  {
+    this.imageUrl=url;
+    this.modalService.open(this.content);
+  }
   close() {
     this.modalService.dismissAll();
   }

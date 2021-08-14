@@ -4,7 +4,7 @@
       <div *ngIf="!isLoader" class="col-md-12">
         <div *ngxPermissionsOnly="[userType.user]" class="single-post-card card shadow-sm">
           <div class="back">
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" appBackButton>
               <i class="fas text-purple fa-chevron-left"></i
             ></a>
           </div>
@@ -12,7 +12,7 @@
             <div class="client-header">
               <div>
                 <h6 class="main-color mb-0" [routerLink]="['/community',postData.community.slug]">{{ postData.community.name }}</h6>
-                <!-- <small class="text-muted">{{postData.community.by.firstName}} {{postData.comm  unity.by.lastName}}</small> -->
+                <small class="text-muted" [routerLink]="['/user-profile/'+postData.community.by.email]">{{postData.community.by.firstName}} {{postData.community.by.lastName}}</small>
               </div>
               <div>
 
@@ -40,8 +40,7 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
               veritatis.
             </p>
-            <span class="main-color" (click)="listOfUser.openEntity(postData.community)"><i class="fa icons-color fa-users" aria-hidden="true"></i
-              >{{ postData.community.membersCount }}</span>
+            <span class="main-color" (click)="listOfUser.openEntity(postData.community)"><i class="fa icons-color fa-users" aria-hidden="true"></i>{{ postData.community.membersCount }}</span>
           </div>
         </div>
         <div class="meriDiv">

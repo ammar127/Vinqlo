@@ -17,7 +17,9 @@ export class ProfileComponent implements OnInit {
   myPostUrl = '/posts/get/my';
 
   isJoin = false;
-  constructor(private userService:UserService) {}
+  constructor(private userService:UserService) {
+    console.log(this.user)
+  }
 
   ngOnInit(): void {
   }

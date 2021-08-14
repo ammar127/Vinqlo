@@ -1,9 +1,10 @@
 import { Toast } from './../../../core/constants/Toast';
 import { PostService } from './../../../core/services/post.service';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Post } from 'src/app/core';
+import { Post, User, UserService } from 'src/app/core';
 import { HttpParams } from '@angular/common/http';
 import { ClipboardService } from 'ngx-clipboard';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'post-list',
@@ -19,9 +20,10 @@ export class ListComponent implements OnInit,OnChanges {
   @Input() isNewPost=false;
   hasNextPage = true;
   isLoader = false;
+  currentUser!:User;
   @Input() type:number=0;
   @Input() searchQuery:string='';
-  constructor(private postService: PostService,private clipboardService: ClipboardService) {}
+  constructor(private postService: PostService,private clipboardService: ClipboardService,private userService:UserService) {}
   ngOnChanges()
   {
     this.posts=[];
@@ -32,6 +34,7 @@ export class ListComponent implements OnInit,OnChanges {
   }
   get() {
     this.isLoader = true;
+    this.currentUser=this.userService.getCurrentUser();
     this.postService.getAll(this.url,this.page,this.type,this.searchQuery,this.email).subscribe(res => {
       if(res.status === 200) {
         this.posts.push(...res.data.docs as Post[]) ;
@@ -63,7 +66,15 @@ export class ListComponent implements OnInit,OnChanges {
     this.get();
   }
   copyContent(slug:string) {
-    this.clipboardService.copyFromContent('/post/'+slug)
+    this.clipboardService.copyFromContent(environment.api_url+'/post/'+slug)
     Toast.fire({text:'Copied To Clipboard',icon:'success'})
+  }
+  deletePost(slug:string)
+  {
+    this.postService.deletePost(slug).subscribe(res=>{
+      if(res.status==200){
+        this.posts=this.posts.filter(e=>e.slug!=slug);
+      }
+    })
   }
 }

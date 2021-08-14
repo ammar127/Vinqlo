@@ -12,11 +12,18 @@ export interface User {
     bio:string;
     degree:Degree;
     campus:Campus;
-    phone:string;
+    phone:number;
+    socialLinks:SocialLinks;
     status:number;
     communities: Community[];
     saved:string;
     role:number;
     strikes:number;
     verified:string;
+}
+export interface SocialLinks{
+  instagram:string;
+  twitter:string;
+  facebook:string;
+  tiktok:string;
 }
