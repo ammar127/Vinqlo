@@ -64,7 +64,7 @@ body('community').not().isEmpty(),
         })
     });
 });
-router.put('/slug', auth.isToken, auth.isUser, 
+router.put('/:slug', auth.isToken, auth.isUser, 
 
 body('title').not().isEmpty(),
 body('body').not().isEmpty(),
