@@ -73,4 +73,4 @@
   <loader *ngIf="isLoader"></loader>
 </div>
 <app-create-report #report></app-create-report>
-<post-create #postCreate></post-create>
+<post-create #postCreate (update)="onUpdate($event)"></post-create>

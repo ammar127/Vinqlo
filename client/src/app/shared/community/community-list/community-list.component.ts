@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { Community, CommunityService, Toast } from 'src/app/core';
+import { Community, CommunityService, Toast, UserService } from 'src/app/core';
 
 @Component({
   selector: 'app-community-list',
@@ -21,7 +21,8 @@ export class CommunityListComponent implements OnInit,OnChanges {
   params:any;
   joinSlug:any = null;
 
-  constructor(private communityService: CommunityService) { }
+  constructor(private communityService: CommunityService, private userService:UserService) { }
+  get currentUser() {return this.userService.getCurrentUser()}
   ngOnChanges()
   {
     this.get();

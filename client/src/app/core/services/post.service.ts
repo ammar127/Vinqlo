@@ -17,5 +17,5 @@ export class PostService {
   searchByName(word:string){  return this.api.get('/users/search/'+word)}
   getNoComment(page:number){ return this.api.get(`/posts/get/noComment?limit=3&page=${page}`)}
   deletePost(slug:string){ return this.api.delete(`/posts/${slug}`)}
-  editPost(formData:any): Observable<any>{ return this.api.put('/posts',formData);}
+  editPost(slug:string, formData:any): Observable<any>{ return this.api.put('/posts/'+slug,formData);}
 }

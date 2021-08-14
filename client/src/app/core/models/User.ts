@@ -26,4 +26,5 @@ export interface SocialLinks{
   twitter:string;
   facebook:string;
   tiktok:string;
+  phone: string;
 }

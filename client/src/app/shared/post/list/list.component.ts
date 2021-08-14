@@ -17,10 +17,9 @@ export class ListComponent implements OnInit,OnChanges {
   posts : Post[]=[] ;
   @Input() email='';
   page = 1;
-  @Input() isNewPost=false;
+  
   hasNextPage = true;
   isLoader = false;
-  currentUser!:User;
   @Input() type:number=0;
   @Input() searchQuery:string='';
   constructor(private postService: PostService,private clipboardService: ClipboardService,private userService:UserService) {}
@@ -34,7 +33,6 @@ export class ListComponent implements OnInit,OnChanges {
   }
   get() {
     this.isLoader = true;
-    this.currentUser=this.userService.getCurrentUser();
     this.postService.getAll(this.url,this.page,this.type,this.searchQuery,this.email).subscribe(res => {
       if(res.status === 200) {
         this.posts.push(...res.data.docs as Post[]) ;
@@ -43,6 +41,7 @@ export class ListComponent implements OnInit,OnChanges {
       }
     })
   }
+  get currentUser() {return this.userService.getCurrentUser()}
   toggleLike(like:boolean,slug:string)
   {
       this.postService.toggleLike(like?0:1,slug).subscribe( res=> {
@@ -76,5 +75,8 @@ export class ListComponent implements OnInit,OnChanges {
         this.posts=this.posts.filter(e=>e.slug!=slug);
       }
     })
+  }
+  onUpdate(post: Post) {
+    this.posts = this.posts.map(e => e.slug == post.slug ? post: e )
   }
 }

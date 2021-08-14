@@ -34,7 +34,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 my-3">
-                  <post-list #postList [isNewPost]="isNewPost" [type]="sortType" [searchQuery]="searchQuery" [url]="feedpath" ></post-list>
+                  <post-list #postList  [type]="sortType" [searchQuery]="searchQuery" [url]="feedpath" ></post-list>
                 </div>
               </div>
             </ng-template>
@@ -98,5 +98,5 @@
     </div>
   </div>
 </section>
-<post-create #create (success)="onSuccessPost()"></post-create>
+<post-create #create (success)="onSuccessPost($event)"></post-create>
 <app-community-create #communityCreate></app-community-create>

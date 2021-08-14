@@ -40,12 +40,13 @@ export class EditProfileComponent implements OnInit {
       bio: [this.user.bio, Validators.required],
       degree: [this.user.degree.slug? this.user.degree.slug: null, Validators.required],
       campus:[this.user.campus.slug?this.user.campus.slug: null,Validators.required],
-      phone: [this.user.phone],
+      
       socialLinks: this.fb.group({
         instagram: [this.user.socialLinks.instagram, Validators.required],
         facebook: [this.user.socialLinks.facebook, Validators.required],
         twitter: [this.user.socialLinks.twitter, Validators.required],
-        tiktok: [this.user.socialLinks.tiktok, Validators.required]
+        tiktok: [this.user.socialLinks.tiktok, Validators.required],
+        phone: [this.user.socialLinks.tiktok],
       }),
       image: [this.user.image]
     });

@@ -18,6 +18,7 @@ export class CreateComponent implements OnInit {
   commuities: Community[] = [];
   isLoader = false;
   @Output() success = new EventEmitter;
+  @Output() update = new EventEmitter;
   @ViewChild('content') content!: TemplateRef<any>;
   constructor(private fb: FormBuilder,
     private postService: PostService,
@@ -38,12 +39,12 @@ export class CreateComponent implements OnInit {
   onPost() {
     this.isLoader = true;
     if (this.post) {
-      this.postService.editPost(this.addPostForm.value).subscribe(res => {
+      this.postService.editPost(this.post.slug, this.addPostForm.value).subscribe(res => {
         if (res.status === 200) {
           Toast.fire({ icon: 'success', title: 'Post Updated successfully' });
           this.close();
           this.addPostForm.reset();
-          this.success.emit();
+          this.update.emit(res.data);
         }
         this.isLoader = false;
       }, err => this.isLoader = false);
@@ -55,7 +56,7 @@ export class CreateComponent implements OnInit {
             Toast.fire({ icon: 'success', title: 'Post Created successfully' });
             this.close();
             this.addPostForm.reset();
-            this.success.emit();
+            this.success.emit(res.data);
           }
           this.isLoader = false;
         }, err => this.isLoader = false);
