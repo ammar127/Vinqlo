@@ -33,7 +33,7 @@
           <div >
             <div class="accordian-menu" >
               <div class="accordian-list" *ngFor="let category of categories" [routerLink]="['/category',category.slug]"   (click)="collapse.toggle()">
-                <span class="main-color" ><i [ngClass]="category.icon"></i> {{category.name}}</span>
+                <span style="cursor: pointer;" class="main-color" ><i [ngClass]="category.icon"></i> {{category.name}}</span>
               </div>
             </div>
           </div>

@@ -39,6 +39,12 @@
 ::ng-deep .ng-select.ng-select-single .ng-select-container {
   height: 23px;
 }
+::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input{
+  top: 0px;
+}
+::ng-deep .ng-select .ng-select-container:hover {
+  box-shadow: none;
+}
 @media only screen and (max-width: 768px){
   .btn-post{
   margin: 12px 0px;
