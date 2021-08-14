@@ -18,7 +18,6 @@ export class ProfileComponent implements OnInit {
 
   isJoin = false;
   constructor(private userService:UserService) {
-    console.log(this.user)
   }
 
   ngOnInit(): void {

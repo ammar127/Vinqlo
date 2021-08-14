@@ -17,7 +17,7 @@
             <div  class="card py-2">
               <div class="d-flex">
                 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
-                  <li *ngFor="let cat of categories"  [ngbNavItem]="cat.name" >
+                  <li *ngFor="let cat of categories"  [ngbNavItem]="cat.slug" >
                     <a ngbNavLink (click)="getComunities(cat.slug)"><i [ngClass]="cat.icon"></i> {{cat.name}}</a>
                     <ng-template ngbNavContent>
                       <div *ngIf="!isLoader && communities.length > 0">

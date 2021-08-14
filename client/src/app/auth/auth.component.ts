@@ -85,11 +85,11 @@ export class AuthComponent implements OnInit {
           }
         }
         this.ps.loadPermissions([res.data.user.role.toString()]);
-        //console.log('res.data.user.role', res.data.user.role , route)
         this.router.navigate([route])
       },
       err =>
       {
+        window.scroll(0,0);
         if(err && err == 'Unauthorized') {
           this.errors = ['Invalid Email or Password'];
         } else if(err && err.code === 401.1 ) {

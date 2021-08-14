@@ -33,7 +33,6 @@ import { HomeComponent } from './home/home.component';
           return us.populate().pipe(
             map((user) => {
               if (user) {
-                //console.log('user role', user.role);
                 ps.loadPermissions([user.role.toString()]);
               }
             })
