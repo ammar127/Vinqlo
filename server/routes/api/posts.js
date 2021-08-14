@@ -13,7 +13,7 @@ var {sendNotification} = require('../../utilities/notification');
 
 
 router.param('slug', (req, res, next, slug) => {
-    Post.findOne({slug: slug}, (err, post) => {
+    Post.findOne({slug: slug, status: 1}, (err, post) => {
         if(!err && post !==null){
             req.post = post;
             next();
@@ -24,16 +24,17 @@ router.param('slug', (req, res, next, slug) => {
 });
 
 
-router.get('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+router.get('/:slug', auth.isToken, auth.isUser, async (req, res, next) => {
+    req.post.community.members = await User.find({communities: req.post.community._id} ).select("firstName lastName email image");
     next(new httpResponse.OkResponse(req.post.toJSONFor(req.user)));
 });
 
 
 router.post('/', auth.isToken, auth.isUser, 
 
-body('title').isLength({min: 5}),
-body('body').isLength({min: 5}),
-body('community').isLength({min: 5}),
+body('title').not().isEmpty(),
+body('body').not().isEmpty(),
+body('community').not().isEmpty(),
 
 (req, res, next) => {
     const errors = validationResult(req);
@@ -221,7 +222,7 @@ router.get('/like/:status/:slug', auth.isToken, auth.isUser, async (req, res, ne
             type : 2,
             user : req.user.id,
             sentTo: req.post.by._id,
-            data : req.post.slug
+            data : {slug: req.post.slug}
         })
 
         req.post.likeCount++;
@@ -265,5 +266,18 @@ router.get('/get/noComment', auth.isToken, auth.isUser, auth.isAdmin, (req, res,
     });
 });
 
+
+router.delete('/:slug', auth.isToken, auth.isUser, (req, res, next) => {
+    if(req.post.by._id.equals(req.user._id)){
+        req.post.status = 0;
+        req.post.save((err, post) => {
+            if(err) return next(err);
+            next(new httpResponse.OkResponse({message: 'Successful'}));
+        });
+    }
+    else{
+        next(new httpResponse.UnauthorizedResponse('You are not allowed to delete this post'));
+    }
+});
 
 module.exports = router;

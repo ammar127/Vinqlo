@@ -15,6 +15,7 @@ export class CreateComponent implements OnInit {
   addPostForm!:FormGroup;
   tag = '';
   commuities: Community[] = [];
+  isLoader = false;
   @Output() success = new EventEmitter;
   @ViewChild('content') content! : TemplateRef<any>;
   constructor(private fb: FormBuilder,
@@ -36,7 +37,7 @@ export class CreateComponent implements OnInit {
   }
   onPost()
   {
-
+    this.isLoader = true;
     this.postService.createPost(this.addPostForm.value)
     .subscribe(res=> {
       if(res.status === 200) {
@@ -45,7 +46,8 @@ export class CreateComponent implements OnInit {
         this.addPostForm.reset();
         this.success.emit();
       }
-    });
+      this.isLoader = false;
+    }, err => this.isLoader = false);
   }
   open() {
     this.modalService.open(this.content)
@@ -55,7 +57,7 @@ export class CreateComponent implements OnInit {
   }
   create() {
     this.addPostForm = this.fb.group({
-      community: ['', Validators.required],
+      community: [null, Validators.required],
       title: ['',[ Validators.required, Validators.minLength(10)]],
       body: ['', [ Validators.required, Validators.minLength(10)]],
       tags:[[]],

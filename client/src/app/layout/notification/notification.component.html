@@ -12,7 +12,7 @@
       <ul class="w-17" *ngIf="result && result.docs && result.docs.length > 0; else noData">
         <li ngbDropdownItem *ngFor="let noti of result.docs" (click)="onClickNotification(noti)" [ngClass]="{'read': !noti.isRead}" >
           <div class="media ">
-            <a (click)="noti.isRead=true" [routerLink]="['/post/'+noti.data.slug]"><div *ngIf="noti.type !== 1" class="user-image">
+            <a href="javascript:void(0)"><div *ngIf="noti.type !== 1" class="user-image">
               <img [src]="noti.user.image | image" alt="Generic placeholder image">
             </div>
             <div *ngIf="noti.type == 1" >

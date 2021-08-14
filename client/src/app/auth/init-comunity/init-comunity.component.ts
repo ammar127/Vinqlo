@@ -16,19 +16,23 @@ export class InitComunityComponent implements OnInit {
   joinSlug='';
   communities:Community[]=[];
   get categories()  {return this.commonService.categories(); }
+  isLoader = false;
   constructor(private router:Router,private communityService: CommunityService,private commonService:CommonService) { }
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  
   ngOnInit(): void {
   }
   getComunities(catSlug:string)
   {
-    this.slug=this.categories[0].slug;
-    this.communityService.getCommunitiesByCategory('/communities/get/academics',this.slug).subscribe(res=>
+    this.isLoader = true;
+    this.slug=catSlug;
+    this.communityService.getCommunitiesByCategory('/communities/get/academics',catSlug).subscribe(res=>
       {
         if(res.status==200){
           this.communities=res.data.docs;
         }
-      })
+        this.isLoader = false;
+
+      }, err => {this.isLoader= false; this.communities = [];} )
   }
   checkClick(){
     this.router.navigate(['/feed'])

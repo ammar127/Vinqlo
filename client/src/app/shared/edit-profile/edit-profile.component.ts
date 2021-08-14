@@ -38,9 +38,9 @@ export class EditProfileComponent implements OnInit {
       firstName:[this.user.firstName,Validators.required],
       lastName:[this.user.lastName,Validators.required],
       bio: [this.user.bio, Validators.required],
-      phone: ['', Validators.required],
-      degree: [this.user.degree.slug, Validators.required],
-      campus:[this.user.campus.slug,Validators.required],
+      phone: ['',],
+      degree: [this.user.degree.slug? this.user.degree.slug: null, Validators.required],
+      campus:[this.user.campus.slug?this.user.campus.slug: null,Validators.required],
       image: [this.user.image]
     });
   }

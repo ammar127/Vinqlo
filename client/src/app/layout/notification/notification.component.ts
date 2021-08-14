@@ -1,4 +1,5 @@
 import { Component, OnInit,  } from '@angular/core';
+import { Router } from '@angular/router';
 import { NotificationService, User, UserService } from 'src/app/core';
 
 
@@ -12,7 +13,8 @@ export class NotificationComponent implements OnInit {
 
   result:any = null;
   constructor(private notificationService: NotificationService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,11 @@ export class NotificationComponent implements OnInit {
   }
   onClickNotification(notification: any){
     // open the notification here
-    this.notificationService.markAsRead(notification._id).subscribe((res : any)=> {
+    if(notification.type === 2) {
+      this.router.navigate(['/post/'+notification.data.slug])
+
+    }
+    this.notificationService.markAsRead(notification.slug).subscribe((res : any)=> {
       if(res.status === 200) {
        this.get();
       }
