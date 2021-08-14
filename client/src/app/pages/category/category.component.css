@@ -25,3 +25,9 @@
 ::ng-deep .rounded-pill .ng-select-container {
   border-radius: 30px !important;
 }
+::ng-deep .ng-select-container{
+  height: 38px;
+}
+::ng-deep .ng-value{
+  margin-top: 4px;
+}
