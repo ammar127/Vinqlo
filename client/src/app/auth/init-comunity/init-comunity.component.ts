@@ -20,6 +20,9 @@ export class InitComunityComponent implements OnInit {
   constructor(private router:Router,private communityService: CommunityService,private commonService:CommonService) { }
   
   ngOnInit(): void {
+    this.slug=this.categories[0].slug;
+    this.active = this.slug;
+    this.getComunities(this.slug)
   }
   getComunities(catSlug:string)
   {
