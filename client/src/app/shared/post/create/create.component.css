@@ -19,6 +19,16 @@ fieldset input {
 ::ng-deep.ng-select .ng-select-container {
   border: 0px !important;
 }
+.form-taglist{
+  position: relative;
+}
+.btn-add-tag{
+  position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: right;
+    display: none;
+}
 @media only screen and (max-width: 768px){
   .client-footer{
     display: flex;
@@ -40,5 +50,8 @@ fieldset input {
 }
 .card .client-card p{
 font-size: 14px;
+}
+.btn-add-tag{
+  display: block;
 }
 }
