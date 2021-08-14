@@ -35,3 +35,9 @@ table thead tr th:nth-last-child(1) {
   border: none;
   border-radius: 30px;
 }
+::ng-deep .page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #00EEFF;
+  border-color: #00EEFF;
+}

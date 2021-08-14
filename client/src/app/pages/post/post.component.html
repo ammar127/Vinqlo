@@ -148,19 +148,21 @@
           <div class="comment-box shadow-sm">
             <div *ngFor="let comment of postData.comments" class="comment">
               <p>{{ comment.by.firstName }} {{ comment.by.lastName }}</p>
-             <app-comment [body]="comment.body"></app-comment>
-              <div align="right" *ngIf="by.email == comment.by.email" ngbDropdown class="d-inline-block">
-                <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+           <div class="d-flex">
+            <app-comment [body]="comment.body"></app-comment>
+            <div *ngIf="by.email == comment.by.email" ngbDropdown class="d-inline-block ml-auto">
+              <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
 
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button (click)="editComment(comment.slug)" ngbDropdownItem>
-                    Edit
-                  </button>
-                  <button (click)="deleteComment(comment.slug)" ngbDropdownItem>
-                    Delete
-                  </button>
-                </div>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button (click)="editComment(comment.slug)" ngbDropdownItem>
+                  Edit
+                </button>
+                <button (click)="deleteComment(comment.slug)" ngbDropdownItem>
+                  Delete
+                </button>
               </div>
+            </div>
+          </div>
               <hr />
             </div>
             <div class="comment-input">

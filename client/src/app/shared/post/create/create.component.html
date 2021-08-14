@@ -45,7 +45,7 @@
           ></textarea>
           <errors [control]="f.body"></errors>
         </div>
-        <fieldset class="form-group mt-4">
+        <fieldset class="form-group form-taglist mt-4">
           <input
             class="form-control"
             type="text"
@@ -63,6 +63,7 @@
               <i class="fa fa-close" (click)="onRemoveTag(i)"></i>
               {{ tagValue }}
             </span>
+            <button (click)="onAddTag()" class="btn btn-add-tag"><i class="fa icons-color fa-plus"></i></button>
           </div>
         </fieldset>
         <div class="input-field">
