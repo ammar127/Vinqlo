@@ -66,20 +66,22 @@
           ></textarea>
           <errors [control]="f.bio"></errors>
         </div>
-        <div class="input-field mt-4">
-          <label for=""> Phone</label>
-          <input
-            type="text"
-            formControlName="phone"
-            class="form-control custom-border"
-            placeholder="Phone Number"
-          />
-          <errors [control]="f.phone"></errors>
-        </div>
+       
         <br>
         <h5 class="modal-title text-purple" id="modal-basic-title">Contact Information</h5>
         <form [formGroup]="socialLinks">
-          <div class="form-group">
+         
+          <div class="input-field mt-4">
+            <label for=""> Phone</label>
+            <input
+              type="text"
+              formControlName="phone"
+              class="form-control custom-border"
+              placeholder="Phone Number"
+            />
+            <errors [control]="f.phone"></errors>
+          </div>
+        
             <div class="input-field mt-4">
               <label for=""> Instagram</label>
               <input
@@ -106,7 +108,7 @@
               <label for=""> Tiktok</label>
               <input type="text" formControlName="tiktok" class="form-control custom-border" placeholder="Tiktok username" />
             </div>
-          </div>
+          
         </form>
 
         <div class="input-field mt-3">

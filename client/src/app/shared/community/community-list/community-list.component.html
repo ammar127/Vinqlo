@@ -6,20 +6,22 @@
           <a [routerLink]="['/community',community.slug]" ><h6 class="main-color mb-0">{{community.name}}</h6></a>
           <small class="text-muted" style="cursor: pointer;" [routerLink]="['/user-profile/'+community.by.email]">{{community.by.firstName + ' ' + community.by.lastName  }} </small>
         </div>
-        <div class="community-status" *ngIf="isJoin">
-          <div *ngIf="!community.isJoined">
-            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug,community.isJoined)">
-              <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> join</span>
-            </button>
+     
+          <div class="community-status" *ngIf="isJoin && currentUser.email!==community.by.email">
+            <div *ngIf="!community.isJoined">
+              <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug,community.isJoined)">
+                <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> join</span>
+              </button>
+            </div>
+            <div *ngIf="community.isJoined">
+              <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug,community.isJoined)">
+                <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> leave</span>
+              </button>
+            </div>
           </div>
-          <div *ngIf="community.isJoined">
-            <button class="btn btn-join" [disabled]="joinSlug === community.slug" (click)="onJoinClick(community.slug,community.isJoined)">
-              <i class="fa fa-link icons-color" aria-hidden="true" ></i><span class="main-color"> leave</span>
-            </button>
-          </div>
-        </div>
+ 
 
-        <div ngbDropdown class="d-inline-block">
+        <div *ngIf="currentUser.email!==community.by.email" ngbDropdown class="d-inline-block">
           <button
             class="btn"
             id="dropdownBasic1"

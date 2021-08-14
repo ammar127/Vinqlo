@@ -22,7 +22,7 @@
 
                 </button>
               </div>
-              <div ngbDropdown class="d-inline-block">
+              <div  ngbDropdown class="d-inline-block">
                 <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
@@ -54,7 +54,7 @@
                 >
               </div>
 
-              <div ngbDropdown class="d-inline-block">
+              <div *ngxPermissionsOnly="[userType.user]" ngbDropdown class="d-inline-block">
                 <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
@@ -99,7 +99,7 @@
                   <span *ngIf="i + 1 !== postData.tags.length">, </span>
                 </span>
               </div>
-              <div>
+              <div *ngxPermissionsOnly="[userType.user]">
                 <ul>
                   <li>
                     <a
