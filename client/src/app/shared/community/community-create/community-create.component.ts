@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService, Community, CommunityService, Toast } from 'src/app/core';
@@ -16,6 +16,8 @@ export class CommunityCreateComponent implements OnInit {
   commuities!: Community[];
   isLoader = false;
   @ViewChild('content') content! : TemplateRef<any>;
+
+  @Output() update = new EventEmitter();
   constructor(private fb: FormBuilder,
     private commonService: CommonService,
     private communityService: CommunityService,
@@ -30,21 +32,29 @@ export class CommunityCreateComponent implements OnInit {
   onPost()
   {
    this.isLoader = true;
-    this.communityService.createCommunity(this.addCommunityForm.value)
+   const com = this.addCommunityForm.value;
+    this.communityService.createCommunity(com)
     .subscribe(res=> {
       if(res.status === 200) {
         Toast.fire({icon:'success', title:'Community Created'})
+        let a = res.data;
+        a.category = com.category;
+
+        this.update.emit(a);
         this.close();
+
       }
-     this.isLoader = true;
+     this.isLoader = false;
 
    
-  }, err => this.isLoader = true);
+  }, err => this.isLoader = false);
   }
   open() {
     this.modalService.open(this.content)
   }
   close() {
+    this.addCommunityForm.reset();
+    this.isLoader = false;
     this.modalService.dismissAll();
   }
   create() {

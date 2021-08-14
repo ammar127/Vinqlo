@@ -20,14 +20,14 @@
                   <li *ngFor="let cat of categories"  [ngbNavItem]="cat.name" >
                     <a ngbNavLink (click)="getComunities(cat.slug)"><i [ngClass]="cat.icon"></i> {{cat.name}}</a>
                     <ng-template ngbNavContent>
-                      <ng-template *ngIf="!isLoader && communities.length > 0">
-                        <ul *ngFor="let com of communities" class="nav-tab-list">
-                          <li [class]="com.isJoined?'active':''" ><a class="main-color" href="javascript:void(0)" (click)="onJoinClick(com.slug,com.isJoined)"><i class="fas icons-color fa-link"></i> <span>{{com.name}}</span></a></li>
+                      <div *ngIf="!isLoader && communities.length > 0">
+                        <ul  class="nav-tab-list">
+                          <li *ngFor="let com of communities" [class]="com.isJoined?'active':''" ><a class="main-color" href="javascript:void(0)" (click)="onJoinClick(com.slug,com.isJoined)"><i class="fas icons-color fa-link"></i> <span>{{com.name}}</span></a></li>
                         </ul>
-                      </ng-template>
+                      </div>
                       <no-content *ngIf="!isLoader && communities.length <= 0" [label]="'there are no communities yet'"></no-content>
-                      <div class="row p-5 d-flex justify-content-center">
-                        <loader *ngIf="isLoader"></loader>
+                      <div *ngIf="isLoader" class="row p-5 d-flex justify-content-center">
+                        <loader ></loader>
                       </div>
                     </ng-template>
                   </li>

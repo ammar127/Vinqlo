@@ -269,7 +269,7 @@ router.put('/', auth.isToken, auth.isUser, (req, res, next) => {
     if(typeof req.body.password !== 'undefined' && req.body.password !== null){
         req.user.setPassword(req.body.password);
     }
-    if(typeof req.body.image !== 'undefined' && req.body.image !== null){
+    if(typeof req.body.image !== 'undefined' ){
         req.user.image = req.body.image;
     }
     if(typeof req.body.bio !== 'undefined' && req.body.bio !== null){

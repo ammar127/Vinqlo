@@ -1,7 +1,8 @@
 import { Category } from './../../core/models/category';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from './../../core/services/common.service';
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
+import { CommunityListComponent } from 'src/app/shared/community/community-list/community-list.component';
 
 @Component({
   selector: 'app-category',
@@ -18,6 +19,8 @@ export class CategoryComponent implements OnInit, OnChanges {
   academicesPath = '/communities/get/academics';
   slug!: string;
   searchQuery: string = '';
+
+  @ViewChild(CommunityListComponent) communityListComponent!: CommunityListComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,5 +43,10 @@ export class CategoryComponent implements OnInit, OnChanges {
     this.route.params.subscribe((res) => {
       this.slug = res['slug'];
     });
+  }
+  onCreateCommuntiy(cat: any) {
+    if(cat.category === this.slug) {
+      this.communityListComponent.get()
+    }
   }
 }

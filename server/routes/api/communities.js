@@ -83,7 +83,7 @@ body('category').not().isEmpty()
                     req.user.communities.push(savedCommunity._id);
                     req.user.save((err, user) => {
                         console.log(err);
-                        next(new httpResponse.OkResponse(savedCommunity));
+                        next(new httpResponse.OkResponse(savedCommunity.toJSON()));
                     })
                 });
             });

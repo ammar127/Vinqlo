@@ -89,6 +89,7 @@ var userSchema = mongoose.Schema({
     
     image:{
         type: String,
+        default: null,
     },
 
     socialLinks:{
@@ -104,7 +105,9 @@ var userSchema = mongoose.Schema({
         twitter: {
             type: String
         },
-
+        tiktok: {
+            type: String
+        },
         phone:{
             type: String
         }

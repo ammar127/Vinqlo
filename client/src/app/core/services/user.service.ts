@@ -14,7 +14,7 @@ export class UserService {
   private currentUserSubject = new BehaviorSubject<User>({} as User);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
-  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   constructor (
@@ -24,6 +24,10 @@ export class UserService {
     private permissionsService: NgxPermissionsService,
 
   ) {}
+
+  public get authenticated() {
+    return this.isAuthenticatedSubject.value;
+  }
 
   // Verify JWT in localstorage with server & load user's info.
   // This runs once on application startup.
@@ -38,7 +42,9 @@ export class UserService {
               return res.data.user;
             }
 
-      ), catchError(e => of(null)))
+      ), catchError(e => {
+        this.purgeAuth();
+        return of(null)}))
     } else {
      return  of(null);
     }
