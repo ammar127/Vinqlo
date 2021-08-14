@@ -1,4 +1,4 @@
-<div *ngIf="control.errors && control.invalid && (control.dirty || control.touched)">
+<div *ngIf="control && control.errors && control.invalid && (control.dirty || control.touched)">
  <span
     class="text-danger"
     *ngIf="control.errors.selectionRequired">Selection is required</span>
