@@ -64,6 +64,40 @@ body('community').not().isEmpty(),
         })
     });
 });
+router.put('/slug', auth.isToken, auth.isUser, 
+
+body('title').not().isEmpty(),
+body('body').not().isEmpty(),
+body('community').not().isEmpty(),
+
+(req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        next(new httpResponse.BadRequestResponse(JSON.stringify(errors.array())));
+        return
+    }
+
+    const community = Community.findOne({slug: req.body.community}, (err, community) => {
+        console.log(community, req.user);
+
+        if(req.user.communities.filter(comm => comm._id.toString() === community._id.toString()).length === 0){
+            return next(new httpResponse.BadRequestResponse('You are not part of this community'));
+        }
+
+        let post = req.post;
+        post.title = req.body.title;
+        post.body = req.body.body;
+        post.image = req.body.image;
+        post.by = req.user._id;
+        post.tags = req.body.tags;
+        post.community = community._id;
+
+        post.save((err, savedPost) => {
+            if (err) return next(err);
+            next(new httpResponse.OkResponse(savedPost));
+        })
+    });
+});
 
 
 router.get('/get/feed', auth.isToken, auth.isUser, (req, res, next) => {

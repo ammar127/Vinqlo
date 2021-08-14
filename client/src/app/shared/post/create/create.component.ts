@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
   }
   getCommunities() {
-    this.communityService.getFollowed().subscribe(res => {
+    this.communityService.getFollowedCreated().subscribe(res => {
       if (res.status === 200) {
         this.commuities = res.data.docs;
       }
@@ -45,6 +45,7 @@ export class CreateComponent implements OnInit {
           this.addPostForm.reset();
           this.success.emit();
         }
+        this.isLoader = false;
       }, err => this.isLoader = false);
     } else {
       this.postService.createPost(this.addPostForm.value)
@@ -75,7 +76,7 @@ export class CreateComponent implements OnInit {
   }
   edit() {
     this.addPostForm = this.fb.group({
-      community: [this.post.community, Validators.required],
+      community: [this.post.community.slug, Validators.required],
       title: [this.post.title, [Validators.required, Validators.minLength(10)]],
       body: [this.post.body, [Validators.required, Validators.minLength(10)]],
       tags: [this.post.tags],

@@ -15,5 +15,6 @@ export class CommunityService {
   getCommunitiesByCategory(path:string,slug:string) {  return this.api.get(`${path}?category=${slug}`)}
   getSingleCommunity(slug:string) { return this.api.get('/communities/'+slug)}
   getFollowed() {return this.api.get('/communities/get/followed')}
+  getFollowedCreated() {return this.api.get('/communities/get/followed-created')}
   join(slug: string,type:boolean)  {return this.api.post(`/communities/${type?'leave/':''}${slug}`, {})}
 }

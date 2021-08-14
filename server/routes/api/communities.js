@@ -165,6 +165,32 @@ router.get('/get/followed', auth.isToken, auth.isUser, (req, res, next) => {
         }
     });
 })
+router.get('/get/followed-created', auth.isToken, auth.isUser, (req, res, next) => {
+    const options = {
+        page: req.query.page || 1,
+        limit: req.query.limit || 10,
+        pagination: false
+    };
+
+    Community.paginate(
+        { $or:[
+             {_id: { $in: req.user.communities }},
+             {by: req.user._id, status: 1}
+            ]}, options, async (err, communities) => {
+        if(!err && communities !== null){
+
+            for(var i=0; i<communities.docs.length; i++){
+                communities.docs[i].members = await User.find({communities: communities.docs[i]._id} ).select("firstName lastName email image");
+            }
+
+            communities.docs = communities.docs.map(community => community.toJSONFor(req.user));
+            next(new httpResponse.OkResponse(communities));
+        }
+        else{
+            next(new httpResponse.UnauthorizedResponse(err));
+        }
+    });
+})
 
 router.get('/get/my', auth.isToken, auth.isUser, (req, res, next) => {
     const options = {

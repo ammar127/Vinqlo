@@ -39,7 +39,7 @@ export class CommunityCreateComponent implements OnInit {
         Toast.fire({icon:'success', title:'Community Created'})
         let a = res.data;
         a.category = com.category;
-
+        this.commonService.getCommon();
         this.update.emit(a);
         this.close();
 
