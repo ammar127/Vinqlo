@@ -12,9 +12,9 @@ export class ImagePipe implements PipeTransform {
     if (image && (image.includes('http') || image.includes('https'))) {
       return image;
     } else if (image && image !== '') {
-      return environment.fileUrl +"/"+ image;
+      return environment.fileUrl +"/"+ this.imgSrc;
     }
-      return environment.fileUrl +"/"+ image;;
+      return environment.fileUrl +"/"+ this.imgSrc;
     }
   }
 
