@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
   name: 'image'
 })
 export class ImagePipe implements PipeTransform {
-  imgSrc = 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg';
+  imgSrc = 'images/user.png';
 
   transform(image: any): string {
 
@@ -14,7 +14,7 @@ export class ImagePipe implements PipeTransform {
     } else if (image && image !== '') {
       return environment.fileUrl +"/"+ image;
     }
-      return this.imgSrc;
+      return environment.fileUrl +"/"+ image;;
     }
   }
 

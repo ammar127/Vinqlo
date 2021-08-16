@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row py-3">
       <div class="col-md-12">
-        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" (navChange)="onNavChange()" class="nav-tabs">
           <li [ngbNavItem]="1">
             <a ngbNavLink
               ><img
