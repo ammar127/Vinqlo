@@ -1,3 +1,4 @@
+import  Swal  from 'sweetalert2';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Community, CommunityService, Toast, UserService } from 'src/app/core';
@@ -64,5 +65,23 @@ export class CommunityListComponent implements OnInit,OnChanges {
         this.joinSlug = null;})
       }
     })
+  }
+  deleteCommunity(communitySlug: string) {
+    Swal.fire({ title: 'Are you sure?',text: 'you wanna to delete this community.',showCancelButton: true,confirmButtonColor: '#DD6B55',confirmButtonText: 'Yes, Delete Community !', cancelButtonText: 'No, cancel please!',})
+    .then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        this.communityService.delete(communitySlug).subscribe(
+          (res: any )=>  {
+            if(res.status === 200) {
+              this.communities = this.communities.filter(c => c.slug !== communitySlug);
+              Toast.fire({ text: 'Community deleted Successfully', icon: 'success' })
+            }
+          }
+        )
+      }
+         else {
+        Swal.fire('Cancelled', 'Your community is safe :)', 'error');
+      }
+    });
   }
 }

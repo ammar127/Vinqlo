@@ -17,4 +17,5 @@ export class CommunityService {
   getFollowed() {return this.api.get('/communities/get/followed')}
   getFollowedCreated() {return this.api.get('/communities/get/followed-created')}
   join(slug: string,type:boolean)  {return this.api.post(`/communities/${type?'leave/':''}${slug}`, {})}
+  delete(slug: string) {return this.api.delete(`/communities/${slug}`)}
 }

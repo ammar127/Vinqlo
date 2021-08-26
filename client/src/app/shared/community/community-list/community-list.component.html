@@ -33,6 +33,18 @@
             <button ngbDropdownItem (click)="report.open(2, community.slug)">Report Community</button>
           </div>
         </div>
+        <div *ngIf="currentUser.email===community.by.email" ngbDropdown class="d-inline-block">
+          <button
+            class="btn"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="deleteCommunity(community.slug)"> Delete</button>
+          </div>
+        </div>
       </div>
       <p class="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, veritatis.
       </p>
