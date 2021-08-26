@@ -39,10 +39,10 @@ export class UploadFileComponent implements OnInit {
 
   removeImage(img: string) {
     this.unlinkService.delete(img).subscribe(res => {
-      if (+res.status === 200) {
+      
         this.uploader.queue = [];
         this.remove.emit(img);
-      }
+   
     });
   }
 

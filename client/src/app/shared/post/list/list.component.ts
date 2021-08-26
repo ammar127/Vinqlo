@@ -65,7 +65,7 @@ export class ListComponent implements OnInit,OnChanges {
     this.get();
   }
   copyContent(slug:string) {
-    this.clipboardService.copyFromContent(environment.api_url+'/post/'+slug)
+    this.clipboardService.copyFromContent(environment.host+'/post/'+slug)
     Toast.fire({text:'Copied To Clipboard',icon:'success'})
   }
   deletePost(slug:string)

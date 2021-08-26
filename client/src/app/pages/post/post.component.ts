@@ -134,7 +134,7 @@ export class PostComponent implements OnInit {
     }})
   }
   copyContent(slug:string) {
-    this.clipboardService.copyFromContent(environment.api_url+'/post/'+slug)
+    this.clipboardService.copyFromContent(environment.host+'/post/'+slug)
     Toast.fire({text:'Copied To Clipboard',icon:'success'})
   }
   onJoinClick(slug: string,isJoined:boolean) {
